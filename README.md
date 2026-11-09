@@ -18,3 +18,12 @@ An original Norse-mythology, iPhone-first action roguelike, planned for GitHub P
 **Project constraints:** GitHub + GitHub Pages; iPhone Safari/Home Screen; no required paid hosting or services; no Codex, ChatGPT Work, or Vercel.
 
 **Important:** These documents define the proposed game and roadmap. The version numbers and content targets are *plans*, not verified implementation. Development and deployment status must always be checked against the repository.
+
+## Development baseline
+
+- **Current development milestone:** v0.01 — technical foundation, not a playable game.
+- [Verified release status](docs/RELEASE_STATUS.md) · [Change log](docs/CHANGELOG.md) · [Content ledger](docs/CONTENT_LEDGER.md)
+- Local build: `npm ci && npm test`; static site output: `dist/`.
+- **Next:** v0.02 — GitHub Pages/PWA and separate Norse handheld controller grips with an unobstructed central gameplay canvas.
+
+Implementation and deployment claims must match evidence in the release ledger; the full original roadmap remains locked.

@@ -1,0 +1,12 @@
+import { rmSync, mkdirSync, copyFileSync, cpSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { resolve } from 'node:path';
+const root = resolve(import.meta.dirname, '..');
+const dist = resolve(root, 'dist');
+rmSync(dist, { recursive: true, force: true });
+execFileSync(process.platform === 'win32' ? 'tsc.cmd' : 'tsc', ['-p', resolve(root,'tsconfig.json')], { cwd: root, stdio:'inherit' });
+mkdirSync(dist, { recursive:true });
+copyFileSync(resolve(root,'index.html'), resolve(dist,'index.html'));
+copyFileSync(resolve(root,'styles.css'), resolve(dist,'styles.css'));
+if (existsSync(resolve(root,'public'))) cpSync(resolve(root,'public'), dist, { recursive:true });
+console.log('RUNEGRAVE v0.01 built to dist/; no gameplay is asserted.');
