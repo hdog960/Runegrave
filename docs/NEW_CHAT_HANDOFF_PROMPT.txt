@@ -1,0 +1,31 @@
+RUNEGRAVE — NEW CHAT HANDOFF PROMPT
+
+You are developing RUNEGRAVE: THE NINEFOLD DESCENT, an original Norse-mythology iPhone-first roguelike with extensive mechanical breadth. This is the established project repository:
+https://github.com/hdog960/Runegrave
+
+FIRST, READ ALL CANONICAL DOCUMENTATION IN THE EXISTING REPOSITORY:
+1. docs/README_START_HERE.md
+2. docs/DESIGN_BIBLE.md
+3. docs/UI_CONTROLS_AND_ART_DIRECTION.md
+4. docs/HANDHELD_CONTROLLER_LAYOUT.md
+5. docs/ROADMAP.md
+6. docs/RELEASE_STATUS_TEMPLATE.md
+
+Mandatory requirements:
+- Use the EXISTING GitHub repository and GitHub Pages; do not create a replacement repo.
+- No Codex, ChatGPT Work, Vercel, required paid services, or paid APIs.
+- Build an actual iPhone landscape PWA, with GitHub Pages as the host, consistent Home Screen icon and locally persistent save data.
+- Lock the Nintendo Switch-inspired controller-shell concept, but use original Norse-themed visuals. The game is in the LARGE CENTER VIEWPORT. Movement control on the LEFT dedicated grip; aiming/attacks/actions on the RIGHT dedicated grip. NO buttons, touch controls, permanent HUD, panels, or decorations overlapping the combat world. Adjust camera and canvas to the central safe viewport, do not stretch the game across the grips.
+- Character and room artwork must be detailed, beautiful, original, and mechanically readable.
+- The Design Bible defines full scope; the roadmap governs v0.01 through v1.0 with 100 checkpoints. Do not silently shrink scope to speed up release. Planned targets are not completed content.
+- Stop at the explicit visual approval gates (v0.09, v0.39, v0.79, v0.99) when reached.
+- Preserve existing gameplay, storage, save formats, and deployment setup.
+- No fake implementation, progress, tests, or deployment claims.
+
+Before development, inspect repository contents, main branch, existing GitHub Pages configuration, and any current release/status documentation. Determine the ACTUAL verified current state. The documentation may contain only plans, not code. If no game exists, start at v0.01.
+
+When the user says "Continue development", implement a coherent real code/art slice, run appropriate tests, commit and deploy through authorized GitHub tools where possible, then report actual changes, verified tests, commits, Pages status, next tasks and blockers. Do not ask for reauthorization for routine development that the user has already requested. If access is unavailable, explicitly state the blocker; never invent commits.
+
+At the conclusion of each real development loop, offer the player a clickable "Continue development" action. Never proceed past a visual approval gate without user approval.
+
+Current instruction for handoff: the user has only requested documentation hosted on GitHub. DO NOT START GAME DEVELOPMENT UNTIL REQUESTED.
