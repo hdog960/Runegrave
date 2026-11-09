@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 460" role="img" aria-label="Original Norse World Tree emblem">
+ <defs><linearGradient id="iron" x2="1" y2="1"><stop stop-color="#cbb985"/><stop offset=".5" stop-color="#6e7e71"/><stop offset="1" stop-color="#e0c78a"/></linearGradient><radialGradient id="aura"><stop stop-color="#b3ceaf" stop-opacity=".2"/><stop offset="1" stop-color="#b3ceaf" stop-opacity="0"/></radialGradient></defs>
+ <ellipse cx="190" cy="231" rx="182" ry="225" fill="url(#aura)"/>
+ <g fill="none" stroke="url(#iron)" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke-width="4" d="M190 36L293 91l35 122-39 143-99 68-99-68-39-143L87 91Z"/><path stroke-width="1.5" opacity=".6" d="M190 51L281 100l32 114-35 129-88 63-88-63-35-129L99 100Z"/>
+  <path stroke-width="8" d="M186 335c15-51 2-109 5-159 0-50 1-85-5-118M193 197c-40-12-62-37-87-73M196 180c39-28 55-44 71-75M185 238c-30-24-50-36-88-49M193 226c41-18 73-20 96-51M184 301c-44 1-65-8-94-38M193 298c36 0 70-12 98-39"/>
+  <path stroke-width="5" d="M190 320c-40 24-53 44-85 60m86-58c34 18 51 34 81 58m-80-49c-4 30-4 50-2 62m-76-265c-9-35-10-49-9-59m159 36c20-31 19-42 19-48m-187 132c-18-5-32-13-40-27m229 13c20-7 29-16 37-29M96 261c-23-6-37-18-45-31m241 30c23-10 32-16 39-31"/>
+  <path stroke-width="2" opacity=".7" d="M190 65c-15 15-26 31-22 55 5 26 20 28 22 49m-6-99c13 12 25 27 24 49s-15 29-16 43M111 375c15-9 27-10 37-7m121 6c-15-8-27-10-41-7"/>
+  <circle cx="190" cy="231" r="12" stroke-width="2"/><circle cx="190" cy="231" r="4" fill="#d8b978" stroke="none"/>
+  <path stroke-width="2" d="M186 16l4-10 4 10m-4 426v12m-164-223h15m299 0h15m-277-129l-10-13m248 13l10-13M81 370l-14 12m225-12l14 12"/>
+ </g>
+ <g font-family="serif" font-size="21" fill="#d9c496" text-anchor="middle"><text x="190" y="91">ᛉ</text><text x="88" y="225">ᚱ</text><text x="291" y="225">ᚠ</text><text x="190" y="401">ᛟ</text></g>
+</svg>

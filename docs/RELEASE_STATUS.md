@@ -1,17 +1,27 @@
 # RUNEGRAVE — Verified Release Status
 
-**Active roadmap milestone:** v0.01 — Project audit and foundations.
+**Date:** 2026-11-09
 
-**Source baseline before code:** `a3561cb537be31c2730b10171274bcb2ecb1f3b1` (documentation-only on `main`).
+**Verified repository baseline before this release:** `61d6098296718ed9fe61c46a43f24af4835b730e` on `main` (v0.01, documentation and technical foundation).
 
-**Implemented:** modular TypeScript code, deterministic seed streams, stable IDs, 9 planned-only realm entries, original static preview/art, build and automated test configuration.
+**Active roadmap milestone:** **v0.02 — Pages/PWA and segmented screen shell**.
 
-**Local build and automated tests:** PASS — 6 of 6 tests on Node.js 22 / TypeScript 5.8.3.
+## Implemented and locally checked
 
-**Real gameplay:** NOT PRESENT. **Playable content totals:** all zero. **iPhone Safari / Home Screen test:** NOT RUN.
+- Real three-region landscape layout: original dark ash-and-iron **left and right Norse rune grips**, a physically separate central renderer, and HUD entirely in non-canvas strips/insets.
+- Responsive measured canvas renderer and original **decorative, noninteractive** Midgard burial-hall scene; preview only, *no enemies, combat, movement, or runs*.
+- A user-friendly portrait rotate screen, safe-area responsive sizing, scroll/selection suppression, and explicit compact-device warning.
+- Real static PWA manifest with relative project paths, Apple Home Screen metadata, original 180/192/512 PNG icons, and a versioned service worker. Service worker precaches runtime modules, serves cached assets offline and does **not** force an in-progress game to update; a waiting update needs an explicit press.
+- Both GitHub Actions Pages artifact deployment workflow and compiled static asset files mirrored to repository root (for repositories configured to publish from `main/(root)`). A Pages source setting is still necessary and cannot be inferred from source files.
+- Local `npm test`: **9/9 tests PASS**; `npm run typecheck`: **PASS**. Local in-memory Chromium DOM/canvas test: 4 landscape viewports (667×375, 760×360, 844×390, 932×430) and portrait (390×844); **no script errors, zero DOM-control/HUD intersections, and stage equals center frame**. Browser network navigation is blocked in the tool environment, so service-worker live offline test was **NOT performed**.
 
-**GitHub commit:** see the v0.01 foundation commit on `main` and the [change log](CHANGELOG.md); this ledger does not guess a SHA. **GitHub Pages public endpoint:** NOT VERIFIED; workflow supplied, settings/source and run still require inspection.
+## Not verified; do not promote this milestone to fully approved or deployed
 
-**Player approval:** not requested until v0.09 (then v0.39, v0.79, v0.99). None approved in advance.
+- **Public Pages endpoint:** `https://hdog960.github.io/Runegrave/` — inaccessible to the current verification tools. **NOT VERIFIED**; repository Pages settings and Actions publication result cannot be inspected from these tools.
+- **iPhone Safari / installed Home Screen:** NOT TESTED on a physical iPhone; App Store installation is not applicable.
+- **Playability:** NOT YET PLAYABLE; no playable content registered (relics 0, characters 0, enemies 0, bosses 0, rooms 0). Nine realm IDs are planning metadata, not playable locations.
+- **Player art approval:** NOT REQUESTED until the locked v0.09 Gate A; no approval gates altered.
 
-**Next release:** v0.02 only after v0.01 build/source verification — PWA and true Norse handheld landscape shell with left/right grips and center-only canvas.
+**Release status:** v0.02 code IMPLEMENTED; automated TESTED and local browser geometry TESTED. GitHub `main` commit must be verified after push; **DEPLOYMENT/PWA DEVICE APPROVAL OPEN**.
+
+**Next:** Confirm Pages publishing source and endpoint if possible, then v0.03 dedicated-rail simultaneous touch/aim and cancellation controls. Do not compromise zero-overlap rule or mark controls usable prematurely.

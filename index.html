@@ -2,32 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-  <meta name="theme-color" content="#0d1719">
-  <meta name="description" content="RUNEGRAVE: The Ninefold Descent — an original Norse action roguelike in development.">
-  <title>RUNEGRAVE · The Ninefold Descent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#10191b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Runegrave">
+  <meta name="description" content="RUNEGRAVE: The Ninefold Descent — an original Norse roguelike forged for iPhone landscape.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/runegrave-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/runegrave-192.png">
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./js/main.js"></script>
+  <title>RUNEGRAVE · The Ninefold Descent</title>
 </head>
 <body>
-  <div class="rotate-message" role="note"><span class="rotate-mark" aria-hidden="true">ᛟ</span><h1>TURN THE RUNESTONE</h1><p>RUNEGRAVE is forged for landscape play. Rotate your iPhone to continue.</p></div>
-  <main class="foundation-screen" aria-labelledby="title">
-    <div class="top-rule"><span>ᛟ · N I N E   R E A L M S · ᛟ</span><span data-release>v0.01 · FOUNDATION</span></div>
-    <section class="stone-frame">
-      <div class="carved-edge" aria-hidden="true"></div>
-      <div class="insignia"><img alt="Original stylized World Tree emblem" src="./art/world-tree.svg"></div>
-      <div class="hero-copy">
-        <p class="eyebrow">A SAGA BENEATH THE ROOTS</p>
-        <h1 id="title">RUNEGRAVE</h1>
-        <p class="subtitle">THE NINEFOLD DESCENT</p>
-        <div class="engraved-rule" aria-hidden="true">◇ ᚱ ◇</div>
-        <p class="prologue">Yggdrasil is dying.<br>Every lost soul must descend.</p>
-        <p class="status"><strong>FIRST FORGING</strong> <span>·</span> <span>NOT YET PLAYABLE</span></p>
-        <p class="footnote">Technical foundations only. The separate Norse handheld grips and central combat display begin at v0.02.</p>
+  <div class="rotate-message" role="note"><span class="rotate-mark" aria-hidden="true">ᛟ</span><h1>TURN THE RUNESTONE</h1><p>To enter the Ninefold Descent, turn your device sideways. The runes awaken in landscape.</p></div>
+  <main id="handheld" class="handheld" aria-label="Runegrave landscape handheld shell, no playable combat in this milestone">
+    <aside class="grip grip-left" aria-label="Left movement rune grip, controls arrive at version 0.03">
+      <div class="grip-head"><span class="grip-seal">ᚠ</span><span class="grip-title">WAYFARER</span><span class="grip-number">I</span></div>
+      <div class="rune-socket socket-left" aria-label="Reserved movement thumb disc, not yet interactive">
+        <div class="socket-engraving"></div><div class="rune-disc"><span class="disc-knot">ᛟ</span><span class="disc-cross horizontal"></span><span class="disc-cross vertical"></span></div>
+        <span class="disc-label">MOVE</span>
       </div>
-      <div class="carved-edge right" aria-hidden="true"></div>
+      <div class="action-row" aria-label="Reserved utility buttons"><div class="rune-key"><span>ᛒ</span><small>BOMB</small></div><div class="rune-key"><span>ᚲ</span><small>RUNE</small></div></div>
+      <div class="grip-inset" data-hud aria-label="Health status"><span class="inset-heading">VITAL THREAD</span><span class="heart-line"><span class="heart-icon">◇</span><span class="heart-icon">◇</span><span class="heart-icon">◇</span></span><span class="inset-value">AWAITING SOUL</span></div>
+      <div class="grip-foot"><span class="etched-line">ᛉ ᚨ ᛉ</span><small>ASH / IRON</small></div>
+    </aside>
+
+    <section class="central-screen" aria-label="Dedicated central display">
+      <header class="screen-status" data-hud aria-label="Run HUD outside gameplay canvas">
+        <span class="status-crest">ᛟ</span><span class="status-name">RUNEGRAVE</span>
+        <span class="status-middle">MIDGARD <i>·</i> UNAWAKENED</span>
+        <span class="status-version" data-release>v0.02</span>
+      </header>
+      <div id="world-frame" class="world-frame" aria-label="Unobstructed 2D world display; scenic foundation preview, no playable enemies">
+        <canvas id="gameplay-canvas" width="420" height="240" aria-label="Original Norse dungeon environment preview, game combat not yet implemented">Your browser does not support canvas.</canvas>
+      </div>
+      <footer class="screen-status screen-footer" data-hud aria-label="Run information outside gameplay canvas">
+        <span><b>ᚱ</b> FIRST SOUL</span><span class="run-state" data-run-status>AWAITING THE DESCENT</span><span><b>⌁</b> 00:00</span>
+      </footer>
     </section>
-    <footer class="bottom-rule"><span data-realms>Nine realms in the design bible</span><span data-build-trace>ENGINE SEED CHECK</span><span>THE FIRST SOUL · ERA I</span></footer>
+
+    <aside class="grip grip-right" aria-label="Right aim and fire rune grip, controls arrive at version 0.03">
+      <div class="grip-head"><span class="grip-seal">ᚹ</span><span class="grip-title">FATEBREAKER</span><span class="grip-number">II</span></div>
+      <div class="rune-socket socket-right" aria-label="Reserved aim and fire thumb disc, not yet interactive">
+        <div class="socket-engraving"></div><div class="rune-disc"><span class="disc-knot">ᛏ</span><span class="disc-cross horizontal"></span><span class="disc-cross vertical"></span></div>
+        <span class="disc-label">AIM / SOULBOLT</span>
+      </div>
+      <div class="action-row" aria-label="Reserved combat buttons"><div class="rune-key"><span>ᛇ</span><small>RELIC</small></div><div class="rune-key"><span>ᚷ</span><small>USE</small></div></div>
+      <div class="grip-inset" data-hud aria-label="Inventory status"><span class="inset-heading">BOUND RELIC</span><span class="relic-line"><span class="empty-rune">ᚾ</span><span class="relic-status">UNBOUND<br><span>— / — CHARGE</span></span></span></div>
+      <div class="grip-foot"><span class="etched-line">ᛞ ᚨ ᚷ</span><small>NO RUN ACTIVE</small></div>
+    </aside>
   </main>
+  <div class="size-warning" role="status">This landscape display is too small for safe two-thumb combat. Use a larger landscape viewport.</div>
+  <div class="pwa-update" id="pwa-update" role="status" hidden><span>A NEW FORGING IS READY</span><button type="button" id="apply-update">UPDATE</button></div>
 </body>
 </html>

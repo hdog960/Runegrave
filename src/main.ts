@@ -1,11 +1,15 @@
 import { ROADMAP_VERSION, APP_VERSION } from './core/version.js';
+import { mountStage } from './scene/stage.js';
+import { preparePwa } from './platform/pwa.js';
 import { PLANNED_REALMS } from './content/realmCatalog.js';
-import { rngStream } from './core/rng.js';
 
-const versionLabel = document.querySelector<HTMLElement>('[data-release]');
-if (versionLabel) versionLabel.textContent = `${ROADMAP_VERSION} · FOUNDATION`;
-const realmCount = document.querySelector<HTMLElement>('[data-realms]');
-if (realmCount) realmCount.textContent = `${PLANNED_REALMS.length} realms in the design bible`;
-const trace = document.querySelector<HTMLElement>('[data-build-trace]');
-if (trace) trace.textContent = `ENGINE SEED CHECK ${rngStream(APP_VERSION, 'foundation').nextUint32().toString(16).padStart(8,'0')}`;
+// v0.02: real segmented display/camera + installable offline shell; gameplay begins later.
+const version = document.querySelector<HTMLElement>('[data-release]');
+if (version) version.textContent=`${ROADMAP_VERSION} · SHELL`;
+const canvas = document.querySelector<HTMLCanvasElement>('#gameplay-canvas');
+if (!canvas) throw new Error('Missing central combat canvas');
+const stage = mountStage(canvas);
 document.documentElement.dataset.version = APP_VERSION;
+document.documentElement.dataset.plannedRealms = String(PLANNED_REALMS.length);
+window.addEventListener('pageshow', () => stage.resize());
+void preparePwa();
