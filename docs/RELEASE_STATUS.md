@@ -25,3 +25,10 @@
 **Release status:** v0.02 code IMPLEMENTED; automated TESTED and local browser geometry TESTED. GitHub `main` commit must be verified after push; **DEPLOYMENT/PWA DEVICE APPROVAL OPEN**.
 
 **Next:** Confirm Pages publishing source and endpoint if possible, then v0.03 dedicated-rail simultaneous touch/aim and cancellation controls. Do not compromise zero-overlap rule or mark controls usable prematurely.
+
+## Post-commit GitHub verification
+
+- **v0.02 implementation commit:** [`983e005a2572727f1a5ec6be2e2b4e6b18cd442d`](https://github.com/hdog960/Runegrave/commit/983e005a2572727f1a5ec6be2e2b4e6b18cd442d), confirmed as the head of `main` on 2026-11-09.
+- GitHub repository reads confirmed compiled `js/main.js`, source renderer, service worker, manifest, and `.nojekyll` on `main`.
+- GitHub's commit status endpoint reported no status entries; the available workflow-runs method reports only PR-triggered runs, so it cannot determine the Pages deployment result.
+- Publication still requires the repository's Pages source to be configured (GitHub Actions workflow, or `main/(root)` for the mirrored static output). Actual live deployment and iPhone install remain **UNVERIFIED**.
