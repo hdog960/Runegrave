@@ -1,5 +1,18 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.10 — Room-specific reliefs and live left-grip threat readout (2026-11-10 US Central)
+
+**Release: IMPLEMENTED, AUTOMATED/BROWSER TESTED, VERIFIED PUBLICLY DEPLOYED. GATE A NOT APPROVED; v0.10 LOCKED. NOT YET READY FOR FORMAL REEVALUATION.**
+
+- **Implementation** [0d39f5357b01df5e052a5b23fa8da8a853ab3231](https://github.com/hdog960/Runegrave/commit/0d39f5357b01df5e052a5b23fa8da8a853ab3231), confirmed on main after verified baseline b05b22187224d5c8674c5d8ab7e761000e4971f0. GitHub comparison: 36 changed or added files, zero deleted. All seven canonical documents preserve original blobs, alongside the earlier status ledger and six original PWA icon blobs.
+- **Room art:** one family-matched, individually chiseled masonry relief for each of the existing 25 authored configurations. ASH, IRON, ROOT, SPIRIT and FATE use different designs with five clearly distinguishable notch variations each. Replaces (does not stack on) an older high-draw-cost floor relief layer; all previous mobile mock-painter operation caps still pass. No extra rooms, collisions, AI mechanics or procedural branches.
+- **Threat readout:** the left Norse controller grip, above its movement disc, now displays actual wave/enemy count, named imminent warnings with countdown, or Rootbound Warden HP and phase. Practicing and cleared states are explicit. This supplemental status is noninteractive, has no central-canvas overlap, does not intercept touches, and derives from real encounter snapshots without changing damage, windups or projectile physics.
+- **Preserved:** 25 authored configurations, eight functioning relics, original six enemy kinds and Warden, all previous death/restart and healing, deterministic fixed-step world, separate thumb grips, saved input settings in runegrave:input:v1, pause/resume, PWA update safety, and save schema 1. Roadmap stays v0.09; app 0.09.10, offline cache runegrave-shell-v0.09.10.
+- **Local tests:** TypeScript compile PASS; Node suite **110/110 PASS** (105 existing + five targeted art/threat/PWA checks); Pages compilation/root mirrors PASS. Browser checks PASS: four landscape profiles plus portrait; guided-start on four landscapes; three simulated iPhone interruptions; four actual grip/center-canvas no-overlap checks with test-injected hostile warning states; full eight-room/relic/Warden/victory/restart sequence. **The full-run audit uses test-only repositioning and artificial enemy defeats; it is not a normal human victory.**
+- **Public deployment verified:** public Pages serves index.html, js/core/version.js (v0.09 / 0.09.10), js/scene/roomReliefs.js, js/scene/threatReadout.js and sw.js (runegrave-shell-v0.09.10). GitHub Actions: foundation checks #38, Pages publication #38, and pages-build-deployment #47 all completed successfully for implementation commit 0d39f53.
+- **Still pending:** physical iPhone Safari and installed PWA/offline update test, actual two-thumb comfort, sustained mobile frame/thermal performance, an unaided playthrough, and user art/control approval. **Do not announce ready for formal Gate A reevaluation** from these technical results alone. Gate A remains unapproved; v0.10 and later content are locked pending explicit player permission. Gates v0.39/v0.79/v0.99 remain unchanged.
+
+
 ## v0.09.9 — Gate A Heraldry, Motion and Interruption-Safe Input (2026-11-10 US Eastern)
 
 **STATE: IMPLEMENTED, LOCALLY TESTED, COMMITTED, CI PASSED AND PUBLIC GITHUB PAGES VERIFIED. GATE A IS NOT APPROVED; v0.10 MUST NOT START. NOT YET DECLARED READY FOR FORMAL REEVALUATION.**
