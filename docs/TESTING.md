@@ -1,3 +1,9 @@
+## v0.09.6 — Relic-recognition and warning urgency verification (2026-11-10)
+
+- Strict TypeScript typecheck, full existing Node test suite and new crest/urgency cases: **PASS: TypeScript and 88/88 Node tests (85 earlier cases + 3 v0.09.6 tests)**. Verify eight distinct crest shapes, bounds-safe visible warning beats for combat camera heights, and new modules in PWA cache; ensure existing 25 room configurations and relic effects remain intact.
+- In-memory Chromium verified four landscape + portrait layouts, independent two-thumb controls and zero canvas overlap; four guided-start profiles; three-size idle-HUD mutation check; seven enemy type help panel; eight-relic QA screenshot montage; full eight-chamber, boss, victory and restart mini-run with test-only enemy damage and legal actor teleports. This is NOT an unaided victory.
+- Physical iPhone Safari ergonomics, installed PWA/offline lifecycle, mobile FPS/thermals and explicit Gate A approval: **NOT VERIFIED**.
+
 ## v0.09.5 — Original wall art, enemy-frame and controller-direction validation (2026-11-10)
 
 - Local `npm run typecheck` **PASS**, `npm test` **85/85 PASS** (79 retained cases + six new art/geometry/animation/offline-module tests). All prior health, collision, combat, room, relic, pathfinding and safe-PWA checks continue passing. New tests ensure five materially distinct room monuments; each is bounded and restores context state; seven enemy kinds produce deterministic motion poses; telegraph labels/vectors remain camera-contained; door approaches point into the room for each cardinal direction; eight compass directions and release-on-cancel work; PWA includes both new compiled modules. The older family-art canvas mock was extended with newly used standard canvas operations, not skipped.

@@ -1,3 +1,9 @@
+## v0.09.6 in-world relic crests and attack warning beats
+
+- `run/relicCrests.ts`: eight silhouette-distinct drawn emblems keyed by the existing typed `RelicId`, rendered within `run/lootArt.ts` on real uncollected drops; the graphic has no collision logic, grants no new effects and adds no canvas controls. Silver/heart pickups retain their own labels.
+- `enemies/warningClarity.ts`: bounded, frame-rate-independent 0/1/2/3 windup urgency beats with screen-safe warning inscription placement; no AI/state modification. `enemyArt.ts` uses these warning beats only during an existing warning state.
+- CSS increases coarse-pointer landscape rune-disc hit area within dedicated rails only; `runegrave:input:v1` preference semantics and keyboard/touch setup are unchanged. PWA cache 0.09.6 precaches both modules. v0.09 Gate A is still awaiting explicit user approval.
+
 ## v0.09.5 — Room landmarks, enemy pose and hardware-grip feedback
 
 - Room family painting appends `paintFamilyLandmarks` after the existing material wash. Its five motifs are **non-interactive upper-wall bas-reliefs**, rendered entirely inside the canvas before enemies; decorative shapes have no collision or loot identity. Input, rooms, health, enemy AI, and reward systems are unaffected.

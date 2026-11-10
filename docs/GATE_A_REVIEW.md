@@ -1,3 +1,9 @@
+## v0.09.6 — Player Gate A visual and control review (NOT APPROVED)
+
+Use the live Pages build in landscape. In an uncleared room, an enemy attack warning now has 0–3 discrete illuminated beats that fill as the strike becomes imminent, not just a color change. In a cleared room, collect the mandatory gold relic: each of the eight upgrade types has its own silhouette and a named RELIC inscription attached to its pedestal. The previous before/after stat card still opens when picked up.
+
+On a touch phone, verify that the two grips are comfortable and separate from the center canvas; the touch pads are modestly enlarged only within the left/right rails. Check the red barred doorway and green open passage, north/west/south/east destinations, and glowing floor path. Art quality, warning readability, reward identity, user experience and real iPhone FPS must be personally assessed. Do **not** begin v0.10 until explicitly approved.
+
 ## v0.09.5 — Additional inspection request (GATE A STILL UNAPPROVED)
 
 On the real iPhone in landscape, compare the upper wall and floor identity of at least **Ash, Iron, Root, Spirit and Fate** chambers. Look for distinct furnace, gear, root, ghostglass and loom shapes rather than just another recolored stone floor. During combat, look for the draugr's raised axe, the archer's drawn bow, the charger's hot horns and the Warden's crown and attack warning. Attack labels and arrows should be readable **before** the strike and never go under either controller grip.

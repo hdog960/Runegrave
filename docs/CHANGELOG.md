@@ -1,3 +1,10 @@
+## v0.09.6 — Relic Sigils and Three-Beats-to-Strike (Gate A polish; 2026-11-10)
+
+- Added eight original, independently distinguishable world-space collectible emblems: fang, drum, feather, lens, anchor, root shield, thread, raven hoard, with labelled pedestal silhouettes. Effects remain the exact existing eight working modifiers; no new inventory content is counted.
+- Added deterministic 0–3 visible warning beats to hostile attack windups, with label positions clamped in both world axes at narrow camera heights. Windup times, AI patterns and damage unchanged. Non-color urgency indicators improve recognizability on iPhone.
+- Enlarged coarse-touch rune discs modestly within separated controller grips, with keyboard focus-visible rings. World canvas remains untouched and no HUD overlays introduced.
+- Maintained v0.09 Gate A approval lock, 25 authored room configurations, resource/relic rewards, boss, save schema and input settings. Bumped app/PWA patch to 0.09.6 and cached both new runtime art modules.
+
 ## v0.09.5 — Five Ward Relics of the Wall (Gate A polish; 2026-11-10)
 
 - New original `scene/landmarkArt.ts` paints five **silhouette-distinct Norse architectural landmarks**: Ash furnace/chain bellows, Iron riveted gear vault, Root living-wood relief, Spirit ghostglass lamp, and Fate Norn loom. Two lightweight, wall-recessed miniatures per chamber make the scene recognizable by shape as well as color. Original 25 encounter definitions and 8-room curated route are unchanged.

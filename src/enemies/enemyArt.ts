@@ -4,6 +4,7 @@
 import type { Enemy,HostileEncounter } from './encounters.js';
 import { drawRuneDoor } from '../scene/doorArt.js';
 import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visualMotion.js';
+import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS=Object.freeze({
@@ -25,7 +26,7 @@ function lineHead(g:CanvasRenderingContext2D,x:number,y:number,dx:number,dy:numb
 function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
  if(e.state!=='warning')return;
  const tell=ENEMY_ATTACK_TELLS[e.kind];
- const imminent=e.windup<.27;
+ const imminent=warningBeat(e.windup)===3;
  const r=e.radius+9+Math.sin(t*11)*1.5;
  const tf=g.getTransform();
  const worldWidth=tf.a>0?g.canvas.width/tf.a:420;
@@ -65,11 +66,12 @@ function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
 
  // Short, specific attack labels appear ONLY during windup, not as permanent text clutter.
  const text=tell.label,wide=Math.max(33,Math.ceil(text.length*4.65)+10);
- const yy=Math.max(17,e.y-e.radius-(e.kind==='warden'?34:24));
+ const yy=warningLabelY(e.y,e.radius,worldHeight,e.kind==='warden');
  const labelX=clampWarningLabel(e.x,wide,worldWidth);
- g.fillStyle='#09191dec';g.fillRect(Math.round(labelX-wide/2),Math.round(yy-10),wide,13);
- g.strokeStyle=imminent?'#ff856c':tell.color;g.lineWidth=1;g.strokeRect(Math.round(labelX-wide/2),Math.round(yy-10),wide,13);
- g.fillStyle=imminent?'#ffddd0':'#fff1d5';g.font='bold 8px system-ui,sans-serif';g.textAlign='center';g.fillText(text,labelX,yy);
+ g.fillStyle='#09191dec';g.fillRect(Math.round(labelX-wide/2),Math.round(yy-13),wide,19);
+ g.strokeStyle=imminent?'#ff856c':tell.color;g.lineWidth=1;g.strokeRect(Math.round(labelX-wide/2),Math.round(yy-13),wide,19);
+ g.fillStyle=imminent?'#ffddd0':'#fff1d5';g.font='bold 8px system-ui,sans-serif';g.textAlign='center';g.fillText(text,labelX,yy-3);
+ drawWarningBeats(g,labelX,yy,e.windup,imminent?'#ff8f78':tell.color);
  if(imminent){g.fillStyle='#ff8d70';g.beginPath();g.arc(e.x,e.y-e.radius-4,2.5,0,Math.PI*2);g.fill();}
  g.restore();
 }

@@ -171,3 +171,11 @@ html[data-door-ready="false"] .screen-footer .run-state{color:#ffcb9b}
 .rune-socket[data-role="aim"][data-held="true"]::after{color:#fff0b5;border-color:#e3ac6b}
 @media (orientation:landscape) and (max-width:710px){.rune-socket::after{right:0;top:0;width:14px;height:14px;font-size:10px}}
 @media (prefers-reduced-motion:reduce){.rune-socket .rune-disc{transition:none}}
+
+/* v0.09.6: a slightly broader contact disc on coarse-touch landscape phones,
+ * contained fully within the independent side grips. No canvas touch overlay. */
+@media (hover:none) and (pointer:coarse) and (orientation:landscape){
+ .rune-socket{width:min(98%,clamp(70px,12vw,130px));}
+ .rune-socket .rune-disc{width:86%;height:86%;}
+}
+.rune-socket:focus-visible{outline:2px solid #eed49d;outline-offset:5px;}

@@ -3,6 +3,7 @@
  */
 import type { FirstRoom,RelicDefinition } from './firstSoul.js';
 import type { Vec2 } from '../physics/world.js';
+import { drawRelicCrest, RELIC_CRESTS } from './relicCrests.js';
 export type RoomDrop = {id:string;kind:'relic'|'silver'|'heart';x:number;y:number;relic?:RelicDefinition;amount:number;collected:boolean};
 export function paintRoomSigil(g:CanvasRenderingContext2D,W:number,H:number,t:number,room:FirstRoom){
  const x=W*.5,y=Math.min(H-33,H*.39),col=room.accent;
@@ -26,8 +27,22 @@ export function drawRoomDrops(g:CanvasRenderingContext2D,drops:readonly RoomDrop
   g.fillStyle=drop.kind==='heart'?'#d98b8c':'#233e3a';g.fillRect(-7,-7+Math.sin(t*3+drop.x)*2,14,14);
   g.strokeStyle=col;g.lineWidth=2;g.strokeRect(-7,-7+Math.sin(t*3+drop.x)*2,14,14);
   g.fillStyle=col;g.textAlign='center';g.font='bold 17px Georgia,serif';
-  g.fillText(drop.kind==='relic'?drop.relic?.rune||'ᛟ':drop.kind==='heart'?'♥':'ᚠ',0,5+Math.sin(t*3+drop.x)*2);
-  if(drop.kind==='relic'){g.strokeStyle='#eacb89';g.beginPath();g.moveTo(-12,-13);g.lineTo(0,-23);g.lineTo(12,-13);g.stroke();}
+  if(drop.kind==='relic'&&drop.relic){
+    // The eight relics are visibly different objects, not identical gold boxes.
+    const crest=RELIC_CRESTS[drop.relic.id];
+    g.save();g.translate(0,Math.sin(t*3+drop.x)*2-1);drawRelicCrest(g,drop.relic.id);g.restore();
+    // A world-space inscription tells first-time players what the object IS.
+    // This is attached to the pedestal and never steals a touch target.
+    g.fillStyle='#101a1cd9';g.fillRect(-26,-41,52,11);
+    g.strokeStyle='#d7bb83';g.lineWidth=1;g.strokeRect(-26,-41,52,11);
+    g.fillStyle=crest.color;g.font='bold 7px system-ui,sans-serif';
+    g.fillText(`RELIC · ${crest.label}`,0,-33);
+    g.strokeStyle='#eacb89';g.lineWidth=1.4;g.beginPath();g.moveTo(-13,-13);g.lineTo(0,-25);g.lineTo(13,-13);g.stroke();
+  }else{
+    g.fillText(drop.kind==='heart'?'♥':'ᚠ',0,5+Math.sin(t*3+drop.x)*2);
+    g.fillStyle='#f0dfb6';g.font='bold 7px system-ui,sans-serif';
+    g.fillText(drop.kind==='heart'?'HEAL':'SILVER',0,-19);
+  }
   g.restore();
  }
 }
