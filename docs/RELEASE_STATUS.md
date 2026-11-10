@@ -35,3 +35,13 @@
 **Visual approval:** v0.09 Gate A AWAITING future player review; v0.39/v0.79/v0.99 gates unchanged. v0.04 screenshot available as prototype, not approved as final.
 **GitHub status:** source tree prepared for v0.04 commit; verify actual commit + public Pages publication independently before marking deployed.
 **Next:** v0.05 physics, fixed-step simulation and world collision (keep the original art and zero-overlap three-region viewport).
+
+## v0.04 post-commit publication verification — 2026-11-09
+
+- **Implementation commit:** [`0f3e0cf3ab9381cd25008c3900425eddf400895a`](https://github.com/hdog960/Runegrave/commit/0f3e0cf3ab9381cd25008c3900425eddf400895a) confirmed on GitHub `main`.
+- **Public GitHub Pages static deployment VERIFIED:** successful fresh external public HTTP retrieval from `https://hdog960.github.io/Runegrave/`, `js/core/version.js` explicitly identifying `v0.04 / 0.04.0`, `js/scene/sanctuaryArt.js` containing original Rootvault artwork, and `sw.js` declaring `runegrave-shell-v0.04.0`.
+- GitHub's combined commit-status endpoint returned no CI status records. Do **not** equate a published static site with a separately verified GitHub Actions test run.
+- **Source/automated/browser:** locally typechecked; 16/16 Node tests passed, four landscape viewport tests and one portrait test passed, with simulated multitouch and geometry checks.
+- **iPhone Safari / installed Home Screen / offline service-worker lifecycle / physical two-thumb comfort:** NOT VERIFIED.
+- **Release state:** v0.04 IMPLEMENTED, LOCALLY TESTED, PUBLIC STATIC FILES DEPLOYED; device verification and v0.09 Gate A visual approval remain future steps.
+- **Next v0.05:** deterministic fixed-step simulation and collisions; keep all v0.04 visuals, working v0.03 input, save settings and strict center-canvas boundary.
