@@ -2,6 +2,7 @@ import { wayfarerPose } from './wayfarerMotion.js';
 import { paintWayfarerEmblems } from './wayfarerEmblems.js';
 import { paintWayfarerProfile } from './wayfarerProfileArt.js';
 import { paintWayfarerFrames } from './wayfarerFrameArt.js';
+import { paintHeroActionSilhouette } from './heroActionSilhouette.js';
 import { paintChamberSetpieces } from './chamberSetpieces.js';
 export const ART_PALETTE = Object.freeze({
     void: '#071013', mortar: '#0c1b1c', stone: '#233433', stoneLit: '#415650',
@@ -307,6 +308,7 @@ export function drawWayfarer(g, x, y, t, dx, dy, aimX, aimY, firing, reducedMoti
     paintWayfarerEmblems(g, m, t);
     paintWayfarerProfile(g, m, t);
     paintWayfarerFrames(g, m, t, reducedMotion);
+    paintHeroActionSilhouette(g, m, t, reducedMotion);
     // An active runebound weapon reads as the same arm that launches Soulbolts.
     const handX = faceX * 18, handY = faceY * 15 - 3;
     const recoil = m.recoil * 3;

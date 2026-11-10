@@ -1,3 +1,7 @@
+## v0.09.15 — Combat silhouette-first animation
+
+The Wayfarer now carries clear eighth-turn differences in split cloak shape, forged buckler, shoulder plates and walking greaves. Each hostile warning adds a different readable weapon silhouette instead of depending only on a red flash: claw, orbiting glass, arrow shaft, braced ram horns, casting spokes, veil talons and twin root mauls. Urgency is keyed to actual windup progress and stationary reduced-motion art. All shapes remain in the center world canvas; physical side grips and collision geometry are untouched. Gate A remains pending explicit player acceptance.
+
 ## Gate A v0.09.14 — Bound runes alter real Soulbolt silhouettes
 
 Maintain the original bronze/ash Norse industrial frame, 25 family-matched chamber artworks, seven hostility/hero animation identities and distinct relic pickup silhouettes from v0.09.13. This incremental pass makes actual acquired combat buffs legible after their reveal card closes: five bounded marks appear on **real** moving pooled Soulbolts for Wyrd Fang, Skald Drum, Storm Feather, Hugin Lens and Ash Anchor; a maximum of three unobtrusive rune chips outside the Wayfarer's sprite rotate through all owned relic crests. The marks cannot look like enemy warning labels, alter physics, or turn into touch controls. Small draw budgets and reduced-motion stillness are mandatory. No imported Nintendo/Copyright art; code-drawn original shapes only. Gate A player review remains pending.

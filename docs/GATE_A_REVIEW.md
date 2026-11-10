@@ -1,3 +1,7 @@
+## v0.09.15 — New player review focus (Gate A NOT APPROVED)
+
+On a real iPhone in landscape, inspect all eight hero walking/aiming directions and whether the split cloak, moving greaves, buckler and firing hand read clearly. Watch each of the six enemies and the Rootbound Warden before attacking: claw reach, glass shot, drawn arrow, charging horns, radial cast, blinking veil and root mauls. See whether non-color-only warning shapes are readable at phone scale. Check green/red doorway recognition, relic explanations, two-thumb reach, pause, frame rate and safe areas. These remain an **owner judgment**, not an automated art approval. This update must not authorize v0.10 by itself.
+
 ## v0.09.14 — How to review the earned-relic combat visuals (approval NOT inferred)
 
 During a real iPhone landscape run, collect one or more of the eight mandatory relics. Check whether the **actual fired Soulbolt** takes on subtle fangs/drum markings/feather fins/lens rings/anchor weight as combat bonuses accrue. A maximum of three small bound-rune chips near the hero should help identify run identity without hiding enemies or damage warnings. Both side-grip pads and every persistent status remain separate from the combat canvas. Test your actual thumb reach with simultaneous movement/aim/firing, longer play and reduced-motion settings. Browser screenshots of test-injected item ownership are **not** player approval or proof of a natural run. The assistant must explicitly request Gate A approval before progressing to v0.10.

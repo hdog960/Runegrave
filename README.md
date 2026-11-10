@@ -1,3 +1,9 @@
+## Current release: v0.09.15 — Directional silhouette polish (Gate A awaiting player approval)
+
+The actual Wayfarer now has more distinct eight-facing cloak, greave, shoulder and side-buckler silhouettes with four walking frames. Six enemies and the Rootbound Warden each gain a distinct weapon animation during their **real combat windup**. All changes are world-space presentation only: no combat timing, damage, hitbox, relic, saved settings or PWA architecture has changed. Reduced-motion mode freezes decorative animation. v0.10 and Gate A approval remain locked.
+
+Automated TypeScript, 135 unit/regression tests, four landscape and portrait Chromium layouts, two-thumb grip, guide, mobile pause interruption and test-injected eight-chamber/Warden mini-run passed locally. Physical iPhone Safari, actual offline installed PWA, unaided victory, sustained phone performance and player artistic approval remain unverified.
+
 ## Current release: v0.09.14 — Earned relics now show in live combat (Gate A pending)
 
 The First Soul prototype continues strictly inside **v0.09 Gate A**. Soulbolts now bear visual accents corresponding to the five combat-boosting relics actually held (Wyrd Fang, Skald Drum, Storm Feather, Hugin Lens and Ash Anchor); up to three tiny rune chips near the Wayfarer cycle through the full earned set of eight. No cosmetic mark awards an item, alters hitboxes or damage, or blocks the center canvas. Projectile decorations are capped to 20 active bolts, and reduced-motion freezes all cosmetic motion. This is an ART/REWARD-IDENTITY patch, not new content or v0.10.

@@ -1,3 +1,7 @@
+## v0.09.15 — Visual refinement, zero new playable content
+
+Still exactly **25** authored room configurations, **eight** functional relics, **six** hostile enemy types, **one** Rootbound Warden boss and the existing curated eight-chamber/boss mini-run. Seven enemy art variants are NOT seven additional enemies; eight-direction Wayfarer poses are NOT separate playable characters. No procedural floor graphs, additional relics, talismans, new endings or content-milestone advancement. v0.10 locked; Gate A unapproved.
+
 ## v0.09.14 — Earned-relic visuals, no new functional content
 
 **Counts unchanged:** 25 authored room configurations (eight sampled for a linear first-soul mini-run), eight genuinely functional relics, six hostile kinds, one Rootbound Warden boss and one provisional Wayfarer. Decorative marks on equipped Soulbolts and around the hero are *not* additional relics, active abilities, synergies, enemies or loot. v0.10 branching floors, shops, talismans and complete story routes remain not implemented; **player Gate A approval pending**.

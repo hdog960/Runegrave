@@ -1,3 +1,7 @@
+## v0.09.15 — Visual actor animation contract
+
+New pure render modules `src/scene/heroActionSilhouette.ts` and `src/enemies/strikeSilhouettes.ts` consume the existing WayfarerPose and hostile state/windup. Four gait frames and seven enemy strike shapes do not mutate any simulation state, damage, collision, enemy AI, aim or save schema. The original controllers, 25-room curated route, eight working relics and versioned offline assets remain intact. PWA cache v0.09.15 includes both compiled modules.
+
 ## v0.09.14 — Battle-visible bound relics (visual only)
 
 `paintEarnedSoulboltArt` consumes the existing `SoulboltCombat.bolts` active pool and the exact IDs in `FirstSoulInventory.state.relics`. It draws distinctive geometric imprints for five combat relics, at most 20 active bolts per frame; it never fabricates projectiles, modifies the combat profile, physics or cooldown. `paintBoundRuneHalo` derives a maximum of three colored chips from the same eight-item inventory and canonical `RELIC_CRESTS`, with reduced-motion output fixed across time. Both are called solely in `stage.render`. Item effects are still applied exclusively by the preexisting inventory and combat modules. Existing `runegrave:input:v1` preferences, schema 1, two-grip independence, page install architecture and future Gate A lock remain unchanged.

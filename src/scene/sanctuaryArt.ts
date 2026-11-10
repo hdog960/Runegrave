@@ -2,6 +2,7 @@ import { wayfarerPose } from './wayfarerMotion.js';
 import { paintWayfarerEmblems } from './wayfarerEmblems.js';
 import { paintWayfarerProfile } from './wayfarerProfileArt.js';
 import { paintWayfarerFrames } from './wayfarerFrameArt.js';
+import { paintHeroActionSilhouette } from './heroActionSilhouette.js';
 import { paintChamberSetpieces, type ChamberFamily } from './chamberSetpieces.js';
 type Family=ChamberFamily;
 /** v0.04 original hand-authored procedural 32-bit-inspired Midgard Rootvault art.
@@ -219,6 +220,7 @@ export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,
  paintWayfarerEmblems(g,m,t);
  paintWayfarerProfile(g,m,t);
  paintWayfarerFrames(g,m,t,reducedMotion);
+    paintHeroActionSilhouette(g, m, t, reducedMotion);
  // An active runebound weapon reads as the same arm that launches Soulbolts.
  const handX=faceX*18,handY=faceY*15-3;
  const recoil=m.recoil*3;

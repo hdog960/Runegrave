@@ -1,3 +1,10 @@
+## v0.09.15 — Eight-facing hero and seven attack-pose silhouettes (Gate A PENDING, 2026-11-10)
+
+- Added `heroActionSilhouette.ts`: four-frame motion and eight-direction armor/cloak edges, asymmetric buckler, grounded greaves and motion-reduction stability. Painted inside the world-space hero renderer, beneath the existing firing hand.
+- Added `strikeSilhouettes.ts`: seven individualized weapon poses for draugr claw, wisp glass, archer arrow, charger horns, sentinel cast, shade veil and Warden root mauls. Poses follow existing real enemy windup state and threat countdown. No AI, collision or damage changed.
+- Imported both modules into the original hero/enemy renderers and added root Pages JS copies to the v0.09.15 PWA precache. 135/135 local automated tests and the test-controlled full mini-run passed.
+- Kept all seven canonical documents unchanged. Gate A has not been approved; no v0.10 development.
+
 ## v0.09.14 — Equipped-relic visual impact (Gate A STILL PENDING; 2026-11-10)
 
 - Added `src/run/relicBattleArt.ts`: acquired combat relics now imprint the **actual moving Soulbolt art**, with five distinctive overlays (fang, drum, feather, lens and anchor). Rendering obeys a 20-bolt cap and never spawns visual shots independently of the existing Soulbolt pool.

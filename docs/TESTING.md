@@ -1,3 +1,11 @@
+## v0.09.15 — Actor silhouette and enemy strike Gate A checks
+
+- Local `npm run typecheck`, `npm run export:pages` and `npm test`: PASS, **135/135 tests**. Five new tests cover eight facings/four frames, bounded hero art, seven independent enemy poses, remaining-windup stages, reduced-motion freeze, 25 authored rooms/eight functional relics, PWA preload and locked Gate A.
+- In-memory Chromium: four supported landscape layouts plus portrait, guided start, idle HUD performance, mobile interruption/auto-pause and in-grip threat/readout checks all PASS; no control or status HUD overlaps the center canvas.
+- Full eight-relic/Warden route and restart PASS using **test-only direct hostile hits and legal hero-position changes**. This is not evidence of a natural manual victory.
+- A test-only enemy warning pose and actual paired-thumb firing were captured in Chromium without JavaScript exceptions; these images are not proof of physical Safari or PWA offline behavior.
+- Physical iPhone ergonomics, installed Home Screen/offline updates, sustained GPU performance, unaided win and player Gate A art/control approval remain UNVERIFIED. Do not advance to v0.10.
+
 ## v0.09.14 — Gate A relic-identity browser and regression evidence (2026-11-10)
 
 - Local strict TypeScript PASS; `npm test` **130/130 PASS** (125 preexisting cases retained, five added in `tests/gateA0104.test.mjs`). New tests assert all eight actual owned relic identities, stacked projectile silhouette changes, max 20 decorated real active bolts, balanced canvas state, reduced-motion stability, and no Gate A/version/ASSET regressions.
