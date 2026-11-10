@@ -1,3 +1,14 @@
+## v0.07 — The Mortal Thread (implementation cycle, 2026-11-09)
+
+- Added deterministic, test-covered `MortalHearts` state: 3 Mortal Heart containers, half-heart damage, grace/invulnerability, bounded healing, lethal death, no accidental healing-based revival, and explicit restart reset.
+- Added timed original in-world ember rune hazards with visible telegraph and actual contact damage, plus a refill shrine with finite cooldown. These are environmental training elements, not AI enemies.
+- Moved full/half/empty hearts and numerical Vitality status exclusively into the separate left Norse grip. All gameplay controls and persistent status remain outside the combat canvas.
+- Added paused-simulation-only Norse death/restart panel, disabled controls during death, zero lingering input after restart, and a keyboard R fallback. Death resets the training run and its destructibles, not saved input preferences.
+- Preserved all v0.06 Soulbolt collision, projectile pooling, art/physics, v0.03 handedness and control-settings persistence, and existing PWA identity. Extended offline asset precache to the three new health modules.
+- New 12-case health/trial test suite expands total Node tests to 44, with separate in-memory Chromium death/restart UI regression and four landscape + portrait layout/input checks. Physical iPhone/PWA offline behavior and v0.09 Gate A approval remain unverified.
+
+**Next:** v0.08 six genuinely different hostile enemy AI patterns, combat room locks, clear/exits and first boss. No version skipping or content-count inflation.
+
 # Verified Change Log
 
 ## v0.06 — The First Soulbolt (2026-11-09)

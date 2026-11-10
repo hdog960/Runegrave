@@ -83,3 +83,16 @@
 /* v0.06 training score is in the true, non-canvas footer row only. */
 .combat-readout{color:#d4b482;letter-spacing:.02em;white-space:nowrap;font-size:clamp(6px,.69vw,10px)}
 @media(max-width:730px){.combat-readout{font-size:6px}.status-middle{letter-spacing:0}}
+
+/* v0.07 — Mortal Hearts are wholly in the left grip: never on the active combat canvas. */
+.heart-line[data-heart-icons]{min-height:17px;align-items:center;justify-content:center;gap:clamp(2px,.45vw,6px)}
+.heart-icon{font-family:Georgia,serif;font-size:clamp(15px,2vw,21px);line-height:1.0}
+.mortal-full{color:#e5a18a;text-shadow:0 0 5px #ce6246}
+.mortal-half{color:#f3c58a;text-shadow:0 0 4px #e69c53}
+.mortal-empty{color:#6a7570;text-shadow:none}
+.death-overlay{z-index:4;background:radial-gradient(ellipse,#341d21e8,#090d12f7 80%)}
+.death-stone{border-color:#ce8268;background:linear-gradient(155deg,#44322f,#1b2426 82%);gap:clamp(5px,1vh,9px)}
+.death-stone h2{color:#f1c3a3;font-size:clamp(16px,2.7vw,27px)}
+.death-stone .restart-btn{min-height:32px;background:linear-gradient(#63483a,#312c2b);border-color:#e6b38a}
+.pause-key:disabled{opacity:.55;cursor:not-allowed}
+@media(orientation:landscape) and (max-height:360px){.death-stone{gap:3px;padding:6px}.death-stone h2{font-size:16px}}

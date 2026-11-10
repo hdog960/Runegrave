@@ -9,7 +9,7 @@ DIST=OUT/'dist'
 HTML=re.sub(r'<script[^>]+src="./js/main.js"[^>]*></script>','',(DIST/'index.html').read_text())
 HTML=re.sub(r'<link[^>]+(?:stylesheet|manifest|icon)[^>]*>','',HTML)
 CSS=(DIST/'styles.css').read_text()
-MODULES=['core/version.js','core/rng.js','core/ids.js','content/realmCatalog.js','input/vector.js','input/twinStick.js','scene/sanctuaryArt.js','physics/world.js','physics/fixedStep.js','combat/soulbolts.js','combat/combatArt.js','scene/stage.js','platform/pwa.js','main.js']
+MODULES=['core/version.js','core/rng.js','core/ids.js','content/realmCatalog.js','input/vector.js','input/twinStick.js','scene/sanctuaryArt.js','physics/world.js','physics/fixedStep.js','combat/soulbolts.js','combat/combatArt.js','health/mortalHearts.js','health/emberTrial.js','health/healthArt.js','scene/stage.js','platform/pwa.js','main.js']
 JS='\n'.join((DIST/'js'/m).read_text() for m in MODULES)
 JS=re.sub(r'^import .*?;\s*$','',JS,flags=re.MULTILINE)
 JS=re.sub(r'^export (?=(?:const|class|function|async)\b)','',JS,flags=re.MULTILINE)
@@ -46,11 +46,11 @@ with sync_playwright() as p:
         page.wait_for_timeout(280)
         if name=='portrait':
             assert page.locator('.rotate-message').is_visible();assert not page.locator('.handheld').is_visible()
-            page.screenshot(path=str(OUT/'v006-portrait.png'))
+            page.screenshot(path=str(OUT/'v007-portrait.png'))
             print(name,'portrait orientation gate PASS',errs)
             assert not errs;ctx.close();continue
         before=snapshot(page)
-        assert before['version']=='0.06.0',before
+        assert before['version']=='0.07.0',before
         assert before['canvas']==before['frame'],before
         assert before['canvas']['width']>0 and not before['collisions'],before
         # Camera world geometry must precisely match the measured stage surface.
@@ -120,14 +120,14 @@ with sync_playwright() as p:
         swapped_moving=snapshot(page)
         assert swapped_moving['actor'][0]>swapped['actor'][0]+5, (swapped,swapped_moving)
         assert 'SOULBOLT' in swapped_moving['status'],swapped_moving
-        page.screenshot(path=str(OUT/f'v006-{name}.png'))
+        page.screenshot(path=str(OUT/f'v007-{name}.png'))
         dispatch(page,'#aim-rune-disc','pointercancel',33,.91,.5)
         dispatch(page,'#move-rune-disc','pointercancel',44,.5,.03)
         # Resize in the same running session: stage and status elements remain separate.
         page.set_viewport_size({'width':w+24,'height':h+4});page.wait_for_timeout(180)
         resized=snapshot(page)
         assert resized['canvas']==resized['frame'] and not resized['collisions'],resized
-        assert resized['version']=='0.06.0' and not errs,errs
+        assert resized['version']=='0.07.0' and not errs,errs
         assert page.evaluate("document.querySelector('#gameplay-canvas').dataset.safeSpawn")=='true'
         print(name,'PASS: multitouch, independent cancellation, keyboard, pause, handedness, persistent settings, zero-overlap, errors=0')
         ctx.close()

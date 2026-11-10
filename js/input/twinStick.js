@@ -25,6 +25,7 @@ export class TwinStickControls {
     pointers = new Map();
     vectors = { move: ZERO, aim: ZERO };
     paused = false;
+    dead = false;
     startAt = performance.now();
     controls;
     pads;
@@ -85,7 +86,7 @@ export class TwinStickControls {
         return (side === 'left') !== this.prefs.leftHanded ? 'move' : 'aim';
     }
     down(side, event) {
-        if (this.destroyed || this.paused || !event.isPrimary && event.pointerType === 'mouse')
+        if (this.destroyed || this.paused || this.dead || !event.isPrimary && event.pointerType === 'mouse')
             return;
         const role = this.roleFor(side);
         if ([...this.pointers.values()].some(p => p.role === role) || this.pointers.has(event.pointerId))
@@ -131,6 +132,8 @@ export class TwinStickControls {
     }
     keydown(event) {
         const key = event.key.toLowerCase();
+        if (this.dead)
+            return;
         if (key === 'escape' || key === 'p') {
             if (event.repeat)
                 return;
@@ -161,7 +164,7 @@ export class TwinStickControls {
         this.refreshStatus();
     }
     get snapshot() {
-        if (this.paused)
+        if (this.paused || this.dead)
             return { move: ZERO, aim: ZERO, firing: false, paused: true };
         const keyMove = combineDirections(this.held, ['w', 'arrowup'], ['s', 'arrowdown'], ['a', 'arrowleft'], ['d', 'arrowright']);
         const keyAim = combineDirections(this.held, ['i'], ['k'], ['j'], ['l']);
@@ -171,7 +174,7 @@ export class TwinStickControls {
         return { move, aim, firing, paused: false };
     }
     setPaused(value) {
-        if (this.destroyed)
+        if (this.destroyed || this.dead)
             return;
         const changed = this.paused !== value;
         this.paused = value;
@@ -182,6 +185,20 @@ export class TwinStickControls {
         document.documentElement.dataset.paused = String(value);
         if (changed)
             this.onPauseChange(value);
+    }
+    setDead(value) {
+        if (this.destroyed)
+            return;
+        this.dead = value;
+        this.paused = false;
+        this.overlay.hidden = true;
+        this.clearTransient();
+        this.pauseButton.disabled = value;
+        this.pauseButton.textContent = value ? 'ᛉ FALLEN' : 'ᛏ PAUSE';
+        this.pauseButton.setAttribute('aria-pressed', 'false');
+        document.documentElement.dataset.dead = String(value);
+        document.documentElement.dataset.paused = 'false';
+        this.refreshStatus();
     }
     setPreferences(input) {
         this.prefs = sanitizeSettings({ ...this.prefs, ...input });
@@ -205,7 +222,7 @@ export class TwinStickControls {
     }
     refreshStatus() {
         const s = this.snapshot;
-        this.playStatus.textContent = s.paused ? 'PAUSED · INPUT RELEASED' : s.firing ? 'SOULBOLT INPUT · ACTIVE' : Math.hypot(s.move.x, s.move.y) > .05 ? 'MOVEMENT INPUT · ACTIVE' : 'INPUT TRAINING · NO ENEMIES';
+        this.playStatus.textContent = this.dead ? 'THREAD SEVERED · RESTART' : s.paused ? 'PAUSED · INPUT RELEASED' : s.firing ? 'SOULBOLT INPUT · ACTIVE' : Math.hypot(s.move.x, s.move.y) > .05 ? 'MOVEMENT INPUT · ACTIVE' : 'INPUT TRAINING · NO ENEMIES';
     }
     destroy() { this.destroyed = true; this.clearTransient(); for (const stop of this.stopListeners)
         stop(); this.stopListeners = []; }

@@ -11,4 +11,4 @@ copyFileSync(resolve(root,'styles.css'), resolve(dist,'styles.css'));
 if (existsSync(resolve(root,'public'))) cpSync(resolve(root,'public'), dist, { recursive:true });
 const html = readFileSync(resolve(dist,'index.html'),'utf8');
 if (!html.includes('./js/main.js') || !existsSync(resolve(dist,'sw.js')) || !existsSync(resolve(dist,'manifest.webmanifest'))) throw new Error('Missing Pages shell or PWA files');
-console.log('RUNEGRAVE v0.06 built to dist/ (Soulbolt combat foundation; training destructibles, no enemies).' );
+console.log('RUNEGRAVE v0.07 built to dist/ (Mortal Hearts, hazard training and death/restart; hostile enemies later).' );

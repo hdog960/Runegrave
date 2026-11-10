@@ -1,9 +1,9 @@
 {
   "name": "runegrave-the-ninefold-descent",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "type": "module",
-  "description": "RUNEGRAVE v0.06 real Soulbolt collision, training destructibles, deterministic hits and modular combat hooks",
+  "description": "RUNEGRAVE v0.07 Mortal Hearts, damage, healing, invulnerability and death/restart",
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",

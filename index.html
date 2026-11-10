@@ -17,7 +17,7 @@
 </head>
 <body>
   <div class="rotate-message" role="note"><span class="rotate-mark" aria-hidden="true">ᛟ</span><h1>TURN THE RUNESTONE</h1><p>To enter the Ninefold Descent, turn your device sideways. The runes awaken in landscape.</p></div>
-  <main id="handheld" class="handheld" aria-label="Runegrave original Norse handheld Soulbolt training arena with real destructible damage; enemy AI is scheduled for v0.08">
+  <main id="handheld" class="handheld" aria-label="Runegrave Norse handheld Mortal Hearts and Soulbolt training with deterministic hazards; hostile enemies arrive at v0.08">
     <aside class="grip grip-left" aria-label="Left rune grip">
       <div class="grip-head"><span class="grip-seal">ᚠ</span><span class="grip-title">WAYFARER</span><span class="grip-number">I</span></div>
       <div id="move-rune-disc" class="rune-socket socket-left" role="button" tabindex="0" aria-label="Movement rune thumb disc">
@@ -25,23 +25,23 @@
         <span class="disc-label">MOVE</span>
       </div>
       <div class="action-row" aria-label="Utility buttons reserved for future systems"><button class="rune-key" disabled title="Bombs arrive at v0.12"><span>ᛒ</span><small>BOMB</small></button><button class="rune-key" disabled title="Runes arrive in a later milestone"><span>ᚲ</span><small>RUNE</small></button></div>
-      <div class="grip-inset" data-hud aria-label="Health status"><span class="inset-heading">VITAL THREAD</span><span class="heart-line"><span class="heart-icon">◇</span><span class="heart-icon">◇</span><span class="heart-icon">◇</span></span><span class="inset-value">AWAITING SOUL</span></div>
+      <div class="grip-inset" data-hud aria-label="Health status"><span class="inset-heading">VITAL THREAD</span><span class="heart-line" data-heart-icons aria-label="Mortal Hearts 3 / 3 HEARTS"><span class="heart-icon mortal-full" aria-hidden="true">♥</span><span class="heart-icon mortal-full" aria-hidden="true">♥</span><span class="heart-icon mortal-full" aria-hidden="true">♥</span></span><span class="inset-value" data-heart-readout>3 / 3 HEARTS</span></div>
       <div class="grip-foot"><span class="etched-line">ᛉ ᚨ ᛉ</span><small>ASH / IRON</small></div>
     </aside>
 
     <section class="central-screen" aria-label="Dedicated central display">
       <header class="screen-status" data-hud aria-label="Run HUD outside gameplay canvas">
         <span class="status-crest">ᛟ</span><span class="status-name">RUNEGRAVE</span>
-        <span class="status-middle">MIDGARD <i>·</i> ROOTVAULT SOULBOLT TRIAL</span>
+        <span class="status-middle">MIDGARD <i>·</i> ROOTVAULT MORTAL THREAD</span>
         <span class="status-version" data-release>v0.06</span>
       </header>
       <div id="world-frame" class="world-frame" aria-label="Unobstructed 2D world display; movement and Soulbolt-input demonstration only">
-        <canvas id="gameplay-canvas" width="420" height="240" aria-label="Midgard Rootvault combat training with Soulbolts, damage, breakable rune effigies and no hostile enemies yet">Your browser does not support canvas.</canvas>
+        <canvas id="gameplay-canvas" width="420" height="240" aria-label="Midgard Rootvault Soulbolts, Mortal Hearts, ember hazards, healing and death/restart; no hostile enemies yet">Your browser does not support canvas.</canvas>
         <div id="pause-overlay" class="pause-overlay" role="dialog" aria-label="Paused controls and input preferences" hidden>
           <div class="pause-stone">
             <p class="pause-kicker">THE THREAD IS STILLED</p>
             <h2>PAUSED</h2>
-            <p>Soulbolts now shatter training runestones and urns. Enemy AI, player hearts and death are separate future milestones.</p>
+            <p>Soulbolts break runestones. Ember sigils hurt Mortal Hearts; the blue shrine heals. Hostile enemies begin at v0.08.</p>
             <div class="pause-settings">
               <label><span>LEFT-HANDED · SWAP GRIPS</span><input id="handed-toggle" type="checkbox"></label>
               <label><span>RUNE-DISC SIZE</span><input id="pad-scale" type="range" min="85" max="110" step="5" value="100"></label>
@@ -53,9 +53,19 @@
             <small>KEYBOARD: WASD / ARROWS TO MOVE · IJKL TO AIM · SPACE TO FIRE · ESC TO PAUSE</small>
           </div>
         </div>
+        <div id="death-overlay" class="pause-overlay death-overlay" role="dialog" aria-label="Fallen soul and restart" hidden>
+          <div class="pause-stone death-stone">
+            <p class="pause-kicker">THE THREAD IS SEVERED</p>
+            <h2>YOUR SOUL HAS FALLEN</h2>
+            <p>Fate remains unfinished. The Norns call you back to the Rootvault.</p>
+            <p data-death-summary>0 WOUNDS · 0 RUNESTONES SHATTERED</p>
+            <button type="button" id="restart-btn" class="resume-btn restart-btn">ᚱ REWEAVE THE THREAD</button>
+            <small>TAP TO RESTART · OR PRESS R · PROGRESS FROM THIS TRAINING RUN RESETS</small>
+          </div>
+        </div>
       </div>
       <footer class="screen-status screen-footer" data-hud aria-label="Run information outside gameplay canvas">
-        <span><b>ᚱ</b> FIRST SOUL</span><span class="run-state" data-run-status>SOULBOLT TRIAL · NO ENEMIES</span><span class="combat-readout" data-combat-score>ᛉ 0 SHATTERED</span>
+        <span><b>ᚱ</b> FIRST SOUL</span><span class="run-state" data-run-status>MORTAL THREAD · NO ENEMIES</span><span class="combat-readout" data-combat-score>ᛉ 0 SHATTERED</span>
       </footer>
     </section>
 
@@ -67,7 +77,7 @@
       </div>
       <div class="action-row" aria-label="Future relic buttons"><button class="rune-key" disabled title="Active relics arrive at v0.15"><span>ᛇ</span><small>RELIC</small></button><button class="rune-key" disabled title="Interactions arrive in later milestones"><span>ᚷ</span><small>USE</small></button></div>
       <div class="grip-inset" data-hud aria-label="Inventory status"><span class="inset-heading">BOUND RELIC</span><span class="relic-line"><span class="empty-rune">ᚾ</span><span class="relic-status">UNBOUND<br><span>— / — CHARGE</span></span></span></div>
-      <div class="grip-foot"><button id="pause-btn" class="pause-key" type="button" aria-pressed="false" aria-label="Pause or resume input training">ᛏ PAUSE</button><small>SOULBOLT TRIAL</small></div>
+      <div class="grip-foot"><button id="pause-btn" class="pause-key" type="button" aria-pressed="false" aria-label="Pause or resume input training">ᛏ PAUSE</button><small>MORTAL THREAD</small></div>
     </aside>
   </main>
   <div class="size-warning" role="status">This landscape display is too small for safe two-thumb combat. Use a larger landscape viewport.</div>

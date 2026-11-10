@@ -1,9 +1,9 @@
-/* RUNEGRAVE offline shell v0.06. New builds wait for player-approved refresh. */
-const CACHE_NAME = 'runegrave-shell-v0.06.0';
+/* RUNEGRAVE offline shell v0.07. New builds wait for player-approved refresh. */
+const CACHE_NAME = 'runegrave-shell-v0.07.0';
 const ASSETS = [
   './', './index.html', './styles.css', './js/main.js',
   './js/core/version.js', './js/core/rng.js', './js/core/ids.js', './js/content/realmCatalog.js',
-  './js/scene/stage.js', './js/combat/soulbolts.js', './js/combat/combatArt.js', './js/physics/world.js', './js/physics/fixedStep.js', './js/scene/sanctuaryArt.js', './js/platform/pwa.js', './js/input/vector.js', './js/input/twinStick.js',
+  './js/scene/stage.js', './js/combat/soulbolts.js', './js/health/mortalHearts.js', './js/health/emberTrial.js', './js/health/healthArt.js', './js/combat/combatArt.js', './js/physics/world.js', './js/physics/fixedStep.js', './js/scene/sanctuaryArt.js', './js/platform/pwa.js', './js/input/vector.js', './js/input/twinStick.js',
   './art/world-tree.svg', './manifest.webmanifest',
   './icons/runegrave-180.png', './icons/runegrave-192.png', './icons/runegrave-512.png'
 ];

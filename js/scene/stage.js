@@ -1,5 +1,5 @@
-/** v0.06: real deterministic Soulbolt collision/damage against destructible training props.
- * Enemy AI and player health are NOT implemented until the locked later milestones.
+/** v0.07: deterministic health/death/restart added to the Rootvault Soulbolt training.
+ * Environmental ember glyphs are NOT enemies (enemy AI begins at v0.08).
  */
 import { rngStream } from '../core/rng.js';
 import { paintSanctuary, drawWayfarer } from './sanctuaryArt.js';
@@ -8,6 +8,9 @@ import { FixedStepClock } from '../physics/fixedStep.js';
 import { makeRootvaultWorld, moveCircle, safeSpawn, isPositionFree, WALK_SPEED, HERO_RADIUS } from '../physics/world.js';
 import { SoulboltCombat } from '../combat/soulbolts.js';
 import { drawPracticeTargets, drawSoulbolts, drawCombatSparks } from '../combat/combatArt.js';
+import { MortalHearts, heartSlots } from '../health/mortalHearts.js';
+import { EmberTrial } from '../health/emberTrial.js';
+import { drawEmberTrial } from '../health/healthArt.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -17,7 +20,7 @@ export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
     return { cssWidth, cssHeight, pixelWidth: Math.max(1, Math.round(cssWidth * dpr)), pixelHeight: Math.max(1, Math.round(cssHeight * dpr)), cameraWidth: WIDTH, cameraHeight: WIDTH * cssHeight / cssWidth };
 }
 function rect(g, x, y, w, h, color) { g.fillStyle = color; g.fillRect(x, y, w, h); }
-export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, firing: false, paused: false })) {
+export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, firing: false, paused: false }), onDeath = () => { }) {
     const parent = canvas.parentElement, g = canvas.getContext('2d', { alpha: false });
     if (!parent || !g)
         throw new Error('Runegrave requires a dedicated center-only canvas');
@@ -25,7 +28,13 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     const embers = Array.from({ length: 22 }, () => ({ x: random.next() * WIDTH, y: random.next() * 320, s: 1 + random.next() * 2, pace: .6 + random.next() * .8 }));
     const clock = new FixedStepClock();
     let raf = 0, lastTime = 0, lastFrameMs = -Infinity, paused = false, initialized = false;
-    let walking = ZERO, firing = false, world, combat;
+    let walking = ZERO, firing = false, world, combat, trial;
+    const health = new MortalHearts();
+    let dead = false, restarts = 0;
+    const deathOverlay = document.querySelector('#death-overlay');
+    const heartLine = document.querySelector('[data-heart-icons]');
+    const heartReadout = document.querySelector('[data-heart-readout]');
+    const deathCount = document.querySelector('[data-death-summary]');
     let actor = { x: WIDTH / 2, y: 120 };
     let lastAim = { x: 0, y: 1 };
     const sparks = [];
@@ -60,6 +69,32 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         canvas.dataset.liveTargets = String(state?.liveTargets || 0);
         if (score)
             score.textContent = `ᛉ ${state?.shattered || 0} SHATTERED`;
+        const hs = health.state;
+        canvas.dataset.heartUnits = String(hs.units);
+        canvas.dataset.heartMax = String(hs.maxUnits);
+        canvas.dataset.invulnerability = hs.grace.toFixed(4);
+        canvas.dataset.dead = String(hs.dead);
+        canvas.dataset.healthHits = String(hs.hits);
+        canvas.dataset.healthHealed = String(hs.healed);
+        canvas.dataset.hazardHits = String(trial?.state.contacts || 0);
+        canvas.dataset.shrineReady = String(trial?.shrine.ready ?? false);
+        canvas.dataset.restarts = String(restarts);
+        if (heartLine) {
+            heartLine.replaceChildren();
+            for (const [i, slot] of heartSlots(hs.units, hs.maxUnits).entries()) {
+                const el = document.createElement('span');
+                el.className = `heart-icon mortal-${slot}`;
+                el.textContent = slot === 'full' ? '♥' : slot === 'half' ? '◐' : '♡';
+                el.setAttribute('aria-hidden', 'true');
+                el.dataset.slot = String(i);
+                heartLine.append(el);
+            }
+        }
+        const description = `${(hs.units / 2).toFixed(hs.units % 2 ? 1 : 0)} / ${hs.containers} HEARTS`;
+        if (heartReadout)
+            heartReadout.textContent = hs.dead ? 'THREAD SEVERED' : description;
+        if (heartLine)
+            heartLine.setAttribute('aria-label', `Mortal Hearts ${description}`);
     }
     function resize() {
         const bounds = parent.getBoundingClientRect();
@@ -78,10 +113,14 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         else if (!isPositionFree(world, actor))
             actor = safeSpawn(world, actor);
         // Rebuild training objects to fit the new, physically unobstructed room bounds.
+        const previous = trial?.exportState();
         attachCombat(world);
         const movement = combat?.getMovementWorld() || world;
         if (!isPositionFree(movement, actor))
             actor = safeSpawn(movement, actor);
+        trial = new EmberTrial(world, actor, combat?.targets || []);
+        if (previous)
+            trial.restoreState(previous);
         canvas.width = next.pixelWidth;
         canvas.height = next.pixelHeight;
         canvas.dataset.cameraWidth = next.cameraWidth.toFixed(2);
@@ -95,12 +134,16 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         const W = metrics.cameraWidth, H = metrics.cameraHeight;
         g.setTransform(metrics.pixelWidth / W, 0, 0, metrics.pixelHeight / H, 0, 0);
         paintSanctuary(g, W, H, time);
+        if (trial)
+            drawEmberTrial(g, trial, time);
         if (combat) {
             drawPracticeTargets(g, combat.targets, time);
             drawSoulbolts(g, combat.bolts, time);
         }
         drawCombatSparks(g, sparks);
-        drawWayfarer(g, actor.x, actor.y, time, walking.x, walking.y, lastAim.x, lastAim.y, firing);
+        // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
+        if (health.state.grace === 0 || Math.floor(health.state.grace * 12) % 2 === 0)
+            drawWayfarer(g, actor.x, actor.y, time, walking.x, walking.y, lastAim.x, lastAim.y, firing);
         for (let i = 0; i < embers.length; i++) {
             const e = embers[i], y = (e.y - time * 6 * e.pace % 340 + 340) % 340;
             if (y < H)
@@ -108,7 +151,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         }
     }
     function update(dt) {
-        if (paused || !world || !metrics)
+        if (paused || dead || !world || !metrics)
             return;
         const input = readInput();
         if (input.paused)
@@ -120,6 +163,20 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         if (Math.hypot(input.aim.x, input.aim.y) > .04)
             lastAim = input.aim;
         combat?.update(dt, actor, lastAim, input.firing);
+        health.step(dt);
+        const outcome = trial?.step(dt, actor, health);
+        if (outcome?.damage === 'dead') {
+            dead = true;
+            walking = ZERO;
+            firing = false;
+            if (deathOverlay)
+                deathOverlay.hidden = false;
+            if (deathCount)
+                deathCount.textContent = `${health.state.hits} WOUNDS · ${combat?.state.shattered || 0} RUNESTONES SHATTERED`;
+            // No further simulation when the thread breaks. The replacement menu is only
+            // displayed after the simulation has genuinely stopped.
+            onDeath();
+        }
         for (let i = sparks.length - 1; i >= 0; i--) {
             sparks[i].life -= dt;
             if (sparks[i].life <= 0)
@@ -136,7 +193,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         }
         const delta = lastFrameMs === -Infinity ? 0 : Math.min(.1, Math.max(0, (ms - lastFrameMs) / 1000));
         lastFrameMs = ms;
-        if (!paused) {
+        if (!paused && !dead) {
             clock.advance(delta, dt => update(dt));
             if (ms - lastTime >= 1000 / 45) {
                 lastTime = ms;
@@ -169,8 +226,35 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     window.addEventListener('orientationchange', onOrientation, { passive: true });
     document.addEventListener('visibilitychange', onVisibility);
     return {
-        resize, getMetrics: () => metrics, getActor: () => ({ ...actor, boltCount: combat?.state.activeBolts || 0, physicsTick: clock.ticks, shattered: combat?.state.shattered || 0 }),
-        setPaused: (value) => { paused = value; walking = ZERO; firing = false; clock.reset(); lastFrameMs = -Infinity; if (!value && raf === 0 && !document.hidden)
+        resize, getMetrics: () => metrics,
+        getActor: () => ({ ...actor, boltCount: combat?.state.activeBolts || 0, physicsTick: clock.ticks, shattered: combat?.state.shattered || 0 }),
+        getHealth: () => health.state,
+        restart: () => {
+            if (!world || !dead)
+                return false;
+            health.reset();
+            dead = false;
+            paused = false;
+            restarts++;
+            clock.reset();
+            lastFrameMs = -Infinity;
+            actor = safeSpawn(world);
+            lastAim = { x: 0, y: 1 };
+            walking = ZERO;
+            firing = false;
+            attachCombat(world);
+            actor = safeSpawn(combat?.getMovementWorld() || world, actor);
+            trial = new EmberTrial(world, actor, combat?.targets || []);
+            if (deathOverlay)
+                deathOverlay.hidden = true;
+            emitState();
+            render(lastTime);
+            if (!raf && !document.hidden)
+                raf = requestAnimationFrame(tick);
+            return true;
+        },
+        setPaused: (value) => { if (dead)
+            return; paused = value; walking = ZERO; firing = false; clock.reset(); lastFrameMs = -Infinity; if (!value && raf === 0 && !document.hidden)
             raf = requestAnimationFrame(tick); },
         stop: () => { observer.disconnect(); window.removeEventListener('orientationchange', onOrientation); document.removeEventListener('visibilitychange', onVisibility); if (raf)
             cancelAnimationFrame(raf); }

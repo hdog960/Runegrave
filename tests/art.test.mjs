@@ -6,7 +6,7 @@ import { stageMetrics } from '../dist/js/scene/stage.js';
 
 const dist=(name)=>new URL(`../dist/${name}`, import.meta.url);
 
-test('v0.06 Midgard artwork is a separate modular renderer with defined original materials',()=>{
+test('v0.07 Midgard artwork is a separate modular renderer with defined original materials',()=>{
   assert.equal(typeof paintSanctuary,'function');
   assert.equal(typeof drawWayfarer,'function');
   assert.ok(Object.isFrozen(ART_PALETTE));
@@ -25,16 +25,16 @@ test('camera uses only measured center canvas, preserving correct world aspect a
   }
 });
 
-test('v0.06 training stage and PWA retain independent scene and controller modules',()=>{
+test('v0.07 training stage and PWA retain independent scene and controller modules',()=>{
   const stage=readFileSync(dist('js/scene/stage.js'),'utf8');
   assert.match(stage,/paintSanctuary/);
   assert.match(stage,/drawWayfarer/);
   assert.match(stage,/stageMetrics/);assert.match(stage,/moveCircle/);
   const sw=readFileSync(dist('sw.js'),'utf8');
-  assert.match(sw,/runegrave-shell-v0\.06\.0/);
+  assert.match(sw,/runegrave-shell-v0\.07\.0/);
   assert.match(sw,/js\/scene\/sanctuaryArt\.js/);
   assert.ok(!sw.split("self.addEventListener('install'")[1].split("self.addEventListener('activate'")[0].includes('skipWaiting'));
   const html=readFileSync(dist('index.html'),'utf8');
-  assert.match(html,/ROOTVAULT SOULBOLT TRIAL/);
+  assert.match(html,/ROOTVAULT MORTAL THREAD/);
   assert.match(html,/id="gameplay-canvas"/);
 });
