@@ -1,3 +1,13 @@
+## v0.09.5 — Five Ward Relics of the Wall (Gate A polish; 2026-11-10)
+
+- New original `scene/landmarkArt.ts` paints five **silhouette-distinct Norse architectural landmarks**: Ash furnace/chain bellows, Iron riveted gear vault, Root living-wood relief, Spirit ghostglass lamp, and Fate Norn loom. Two lightweight, wall-recessed miniatures per chamber make the scene recognizable by shape as well as color. Original 25 encounter definitions and 8-room curated route are unchanged.
+- `enemies/visualMotion.ts` supplies bounded deterministic walk/bob/direction/strike poses. All six hostile enemy art renderers and the original two-phase Warden gained individual animated details: draugr armored gait/bone axe, wisp spirit motes, archer drawn bow, charger charging horns, sentinel orbiting runes, shade ghost veil, and Warden root crown. **No change to AI, enemy HP, contact damage, damage windows or hitbox sizes.**
+- Warning labels clamp to the real center-camera width; aimed/charge telegraph endpoints stop at the visible camera edge instead of extending visually under controller rails. Red imminent signals remain distinct from individual warning colors and attack silhouettes.
+- Forged-door rendering now features a deeper carved lintel, unmistakable barred X while locked, bright interior passage when open, and three approach steps aligned with each cardinal exit. Real collision and door requirements are preserved.
+- Twin rune discs show an eight-direction compass glyph only in the external controller grips. Held, cancelled and paused pointers still reset correctly; adjustable thumb size/placement and saved handedness/dead-zone preferences are unchanged.
+- PWA preloads both new compiled scene/animation modules and increments its safe-update cache to `runegrave-shell-v0.09.5` (app patch 0.09.5, **roadmap still v0.09**). All canonical documents, 25 authored rooms, 8 functional relics, Soulbolt/health/boss loops remain intact.
+- **Gate A remains NOT APPROVED**. Do not begin v0.10. Separate automated, browser, public Pages and physical iPhone evidence are recorded in `TESTING.md` and the GitHub release ledger.
+
 ## v0.09.4 — The Five Faces of the Rootvault (Gate A polish; 2026-11-10)
 
 - Added original world-space decorative themes to all five first-soul room families: ash-scorched threshold, iron-and-rivet vault, living-root masonry, spectral ghostglass, and golden fate-knot. The 25 authored configurations, physics geometry, damage, and seed selection are unchanged.

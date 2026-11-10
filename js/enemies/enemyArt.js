@@ -1,4 +1,5 @@
 import { drawRuneDoor } from '../scene/doorArt.js';
+import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visualMotion.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS = Object.freeze({
@@ -26,6 +27,9 @@ function runeWarning(g, e, t) {
     const tell = ENEMY_ATTACK_TELLS[e.kind];
     const imminent = e.windup < .27;
     const r = e.radius + 9 + Math.sin(t * 11) * 1.5;
+    const tf = g.getTransform();
+    const worldWidth = tf.a > 0 ? g.canvas.width / tf.a : 420;
+    const worldHeight = tf.d > 0 ? g.canvas.height / tf.d : 240;
     g.save();
     // Telegraph sits in world space around the attacker; the central HUD remains empty.
     g.strokeStyle = imminent ? '#ff684f' : tell.color;
@@ -41,7 +45,8 @@ function runeWarning(g, e, t) {
     }
     if (e.kind === 'charger' || e.kind === 'archer' || e.kind === 'warden') {
         const length = e.kind === 'charger' ? 104 : e.kind === 'warden' ? 117 : 124;
-        const endX = e.x + e.dx * length, endY = e.y + e.dy * length;
+        const endpoint = visibleWarningEnd(e.x, e.y, e.dx, e.dy, length, worldWidth, worldHeight);
+        const endX = endpoint.x, endY = endpoint.y;
         g.strokeStyle = imminent ? '#ff6b4b' : '#f7c883';
         g.lineWidth = imminent ? 2.5 : 1.7;
         g.setLineDash([7, 4]);
@@ -82,16 +87,17 @@ function runeWarning(g, e, t) {
     }
     // Short, specific attack labels appear ONLY during windup, not as permanent text clutter.
     const text = tell.label, wide = Math.max(33, Math.ceil(text.length * 4.65) + 10);
-    const yy = e.y - e.radius - (e.kind === 'warden' ? 34 : 24);
+    const yy = Math.max(17, e.y - e.radius - (e.kind === 'warden' ? 34 : 24));
+    const labelX = clampWarningLabel(e.x, wide, worldWidth);
     g.fillStyle = '#09191dec';
-    g.fillRect(Math.round(e.x - wide / 2), Math.round(yy - 10), wide, 13);
+    g.fillRect(Math.round(labelX - wide / 2), Math.round(yy - 10), wide, 13);
     g.strokeStyle = imminent ? '#ff856c' : tell.color;
     g.lineWidth = 1;
-    g.strokeRect(Math.round(e.x - wide / 2), Math.round(yy - 10), wide, 13);
+    g.strokeRect(Math.round(labelX - wide / 2), Math.round(yy - 10), wide, 13);
     g.fillStyle = imminent ? '#ffddd0' : '#fff1d5';
     g.font = 'bold 8px system-ui,sans-serif';
     g.textAlign = 'center';
-    g.fillText(text, e.x, yy);
+    g.fillText(text, labelX, yy);
     if (imminent) {
         g.fillStyle = '#ff8d70';
         g.beginPath();
@@ -102,9 +108,12 @@ function runeWarning(g, e, t) {
 }
 function sprite(g, e, t) {
     const x = Math.round(e.x), y = Math.round(e.y), f = e.flash > 0;
-    const bob = Math.round(Math.sin(t * 3 + (e.id.length % 4)) * 1.5);
+    const motion = enemyVisualMotion(e, t);
     g.save();
-    g.translate(x, y + bob);
+    g.translate(x, y + motion.bob);
+    g.scale(motion.facing, 1);
+    if (motion.lean)
+        g.rotate(motion.lean * (motion.facing === 1 ? 1 : -1));
     g.fillStyle = '#0009';
     g.beginPath();
     g.ellipse(0, e.radius * .7, e.radius + 3, 4, 0, 0, Math.PI * 2);
@@ -174,10 +183,23 @@ function sprite(g, e, t) {
         px(g, 3, -13, 6, 4, '#f0b276');
         px(g, -7, -4, 14, 10, '#183035');
         px(g, -3, -2, 6, 6, e.phase === 2 ? '#fd7844' : '#8dd2b0');
-        px(g, -19, 12, 13, 11, '#756d50');
-        px(g, 6, 12, 13, 11, '#756d50');
+        px(g, -19, 12 + (motion.step ? 1 : 0), 13, 11, '#756d50');
+        px(g, 6, 12 + (motion.step ? 0 : 1), 13, 11, '#756d50');
         px(g, -23, -3, 7, 17, '#6a533f');
         px(g, 16, -3, 7, 17, '#6a533f');
+        // Living braided crown and phase-two root glow.
+        g.strokeStyle = e.phase === 2 ? '#ff996a' : '#9cb38d';
+        g.lineWidth = 2;
+        g.beginPath();
+        g.moveTo(-16, -24);
+        g.lineTo(-25, -31);
+        g.lineTo(-23, -37);
+        g.moveTo(16, -24);
+        g.lineTo(25, -31);
+        g.lineTo(23, -37);
+        g.stroke();
+        px(g, -12, -8, 4, 2, e.phase === 2 ? '#ff7854' : '#e9c888');
+        px(g, 8, -8, 4, 2, e.phase === 2 ? '#ff7854' : '#e9c888');
         if (e.phase === 2) {
             g.strokeStyle = '#ff9060';
             g.lineWidth = 2;

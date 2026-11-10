@@ -1,3 +1,11 @@
+## v0.09.5 — Additional inspection request (GATE A STILL UNAPPROVED)
+
+On the real iPhone in landscape, compare the upper wall and floor identity of at least **Ash, Iron, Root, Spirit and Fate** chambers. Look for distinct furnace, gear, root, ghostglass and loom shapes rather than just another recolored stone floor. During combat, look for the draugr's raised axe, the archer's drawn bow, the charger's hot horns and the Warden's crown and attack warning. Attack labels and arrows should be readable **before** the strike and never go under either controller grip.
+
+Check the real LOCKED gate for crossbars and an inaccessible state; after clearing the fight *and* claiming the golden relic, the open gate should show bright depth and small stone steps aligned with the north/south/east/west approach. Drag both thumb discs at once; the small indicator above each grip should show your direction and return to the center dot when you release. These are actual in-game presentation changes in v0.09.5, not changes to enemy balance or the route.
+
+**Still required from the player:** Is the original Norse visual bar genuinely acceptable? Can you recognize enemies, entrances and relic effects instantly? Is two-thumb iPhone movement/aim comfortable? None of the automated checks, screenshots or GitHub deployments counts as explicit Gate A approval. **Do not start v0.10.**
+
 ## v0.09.4 — Additional player-inspection criteria (approval still pending)
 
 Inspect the actual iPhone landscape build. Compare at least two of the five family settings for distinct floor materials and motifs, check one archer/charger warning for its readable projected danger lane, and open **PAUSE → THREAT RUNES** if the enemy patterns are unclear. After clearing and claiming a relic, the green waystones should lead from your current position to the signed door; red LOCKED doors must never pretend to be usable. Try moving/aiming simultaneously while checking heart, objective and relic readouts in the outer grips only.
@@ -42,7 +50,7 @@ Inspect on your real iPhone: Does a green EXIT doorway look like a passage and d
 3. Check the three *physically separate* regions: left engraved movement grip; center unobstructed combat canvas; right engraved aim/fire grip. Touch controls and persistent HUD must not obscure the center, and room warnings should be entirely inside camera view. Check safe areas, pauses, action button reach and legibility.
 4. Move with the **left rune disc**, aim/fire continuously with the **right rune disc**. Compare walking, aiming, dodging and firing simultaneously, portrait rotation, pause/resume, handedness, controller-size and dead-zone preferences.
 5. In the antechamber, test breakable Soulbolt targets, ember hazards and the healing shrine. Enter the glowing east entrance. Each of **eight connected chambers** is chosen deterministically from **25 distinct authored enemy configurations**. Clear enemies, walk over the golden relic sigil to bind it and open the next exit; silver and heart pickups are optional.
-6. Open the **relic ledger while paused** to inspect your acquired bonuses. Complete all eight rooms to face the two-phase Rootbound Warden, then take the final eastern exit. Death restarts an entirely new run and loses all run relics/currency, but **saved input preferences survive**.
+6. Open the **relic ledger while paused** to inspect your acquired bonuses. Complete all eight rooms to face the two-phase Rootbound Warden, then take the final northward exit. Death restarts an entirely new run and loses all run relics/currency, but **saved input preferences survive**.
 7. Specifically judge **visual identity** (premium original Norse handheld), combat visibility and sprite clarity, legibility at native iPhone landscape resolution, no overlapping controls or HUD, and **real two-thumb ergonomic comfort**. Report clipping, lag or accidental input with screenshots.
 
 ## Scope honesty

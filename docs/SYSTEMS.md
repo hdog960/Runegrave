@@ -1,3 +1,11 @@
+## v0.09.5 — Room landmarks, enemy pose and hardware-grip feedback
+
+- Room family painting appends `paintFamilyLandmarks` after the existing material wash. Its five motifs are **non-interactive upper-wall bas-reliefs**, rendered entirely inside the canvas before enemies; decorative shapes have no collision or loot identity. Input, rooms, health, enemy AI, and reward systems are unaffected.
+- Enemy art derives deterministic render-only poses from `enemyVisualMotion` without altering damage or physics. `visibleWarningEnd` and `clampWarningLabel` keep projected warning art inside the measured center canvas. The Warden phase transition still comes from existing combat logic, not visual code.
+- `inwardApproach` adds three world-space stone steps toward each actual signed and reachable doorway; lock state still depends on clearing combat **and collecting the required relic**. It is not a procedural branching floor graph.
+- `stickDirectionGlyph` updates a small `data-direction-glyph` on the external thumb pad only while it changes and resets on pointer cancel, up, blur or pause. Existing `runegrave:input:v1` stored controller settings and the app save schema remain unchanged. No controls or HUD move inside the game world.
+- v0.09.5 PWA precaches `js/scene/landmarkArt.js` and `js/enemies/visualMotion.js`. The existing paused-only update policy remains unchanged; v0.09 Gate A is still locked.
+
 ## v0.09.4 — Nonintrusive UI updates and live wayfinding
 
 `stage.ts` updates heart DOM icons only when the number/capacity changes, writes persistent HUD strings only when changed, and uses change-only dataset updates so 120Hz simulation does not reassign mostly unchanged DOM attributes. Physics remains fixed-step and deterministic; damage, health, collision and save schemas did not change. The available doorway route is recomputed at most every 0.7 seconds from the current player position and remains disabled while the door is locked or its mandatory relic has not been collected. All theme art is purely decorative. The in-world telegraph labels are only active during enemy windups; threat explanations are in a pause-only collapsible panel.

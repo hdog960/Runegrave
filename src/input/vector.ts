@@ -18,3 +18,11 @@ export function combineDirections(keys: ReadonlySet<string>, up: string[], down:
   const pressed=(set:string[])=>set.some(k=>keys.has(k));
   return clampVector(Number(pressed(right))-Number(pressed(left)),Number(pressed(down))-Number(pressed(up)));
 }
+
+/** Eight-way feedback for the physical rune discs, never an overlay over gameplay. */
+export function stickDirectionGlyph(v:Vector2):string {
+ const magnitude=Math.hypot(v.x,v.y);
+ if(!Number.isFinite(magnitude)||magnitude<.04)return '·';
+ const sectors=['→','↘','↓','↙','←','↖','↑','↗'] as const;
+ return sectors[(Math.round(Math.atan2(v.y,v.x)/(Math.PI/4))+8)%8]!;
+}

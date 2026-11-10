@@ -1,4 +1,4 @@
-import { ZERO, normalizeStick, combineDirections, clampVector } from './vector.js';
+import { ZERO, normalizeStick, combineDirections, clampVector, stickDirectionGlyph } from './vector.js';
 export const SETTINGS_KEY = 'runegrave:input:v1';
 const DEFAULTS = { leftHanded: false, padScale: 100, padOffset: 0, deadZone: 0.15 };
 export function sanitizeSettings(value) {
@@ -117,6 +117,8 @@ export class TwinStickControls {
         this.vectors[role] = v;
         this.pads[side].style.setProperty('--stick-x', `${v.x * 22}%`);
         this.pads[side].style.setProperty('--stick-y', `${v.y * 22}%`);
+        this.pads[side].dataset.directionGlyph = stickDirectionGlyph(v);
+        this.pads[side].style.setProperty('--stick-strength', String(Math.round(Math.hypot(v.x, v.y) * 100)));
     }
     end(event) {
         const owner = this.pointers.get(event.pointerId);
@@ -128,6 +130,8 @@ export class TwinStickControls {
         pad.dataset.held = 'false';
         pad.style.setProperty('--stick-x', '0%');
         pad.style.setProperty('--stick-y', '0%');
+        pad.dataset.directionGlyph = '·';
+        pad.style.setProperty('--stick-strength', '0');
         this.refreshStatus();
     }
     keydown(event) {
@@ -160,6 +164,8 @@ export class TwinStickControls {
             pad.dataset.held = 'false';
             pad.style.setProperty('--stick-x', '0%');
             pad.style.setProperty('--stick-y', '0%');
+            pad.dataset.directionGlyph = '·';
+            pad.style.setProperty('--stick-strength', '0');
         }
         this.refreshStatus();
     }
@@ -215,6 +221,8 @@ export class TwinStickControls {
                 label.textContent = role === 'move' ? 'MOVE' : 'AIM / FIRE';
             pad.setAttribute('aria-label', role === 'move' ? 'Movement rune thumb disc' : 'Aim and continuous-fire rune thumb disc');
             pad.dataset.role = role;
+            pad.dataset.directionGlyph = '·';
+            pad.style.setProperty('--stick-strength', '0');
             pad.style.setProperty('--pad-scale', String(this.prefs.padScale / 100));
             pad.style.setProperty('--pad-offset', `${this.prefs.padOffset}px`);
         }

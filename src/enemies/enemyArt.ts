@@ -3,6 +3,7 @@
  */
 import type { Enemy,HostileEncounter } from './encounters.js';
 import { drawRuneDoor } from '../scene/doorArt.js';
+import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visualMotion.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS=Object.freeze({
@@ -26,6 +27,9 @@ function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
  const tell=ENEMY_ATTACK_TELLS[e.kind];
  const imminent=e.windup<.27;
  const r=e.radius+9+Math.sin(t*11)*1.5;
+ const tf=g.getTransform();
+ const worldWidth=tf.a>0?g.canvas.width/tf.a:420;
+ const worldHeight=tf.d>0?g.canvas.height/tf.d:240;
  g.save();
  // Telegraph sits in world space around the attacker; the central HUD remains empty.
  g.strokeStyle=imminent?'#ff684f':tell.color;
@@ -38,7 +42,8 @@ function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
  }
  if(e.kind==='charger'||e.kind==='archer'||e.kind==='warden'){
    const length=e.kind==='charger'?104:e.kind==='warden'?117:124;
-   const endX=e.x+e.dx*length,endY=e.y+e.dy*length;
+   const endpoint=visibleWarningEnd(e.x,e.y,e.dx,e.dy,length,worldWidth,worldHeight);
+   const endX=endpoint.x,endY=endpoint.y;
    g.strokeStyle=imminent?'#ff6b4b':'#f7c883';g.lineWidth=imminent?2.5:1.7;
    g.setLineDash([7,4]);g.beginPath();g.moveTo(e.x,e.y);g.lineTo(endX,endY);g.stroke();g.setLineDash([]);
    // The tip indicates where the windup will travel. Arrowheads and a targeted
@@ -60,18 +65,20 @@ function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
 
  // Short, specific attack labels appear ONLY during windup, not as permanent text clutter.
  const text=tell.label,wide=Math.max(33,Math.ceil(text.length*4.65)+10);
- const yy=e.y-e.radius-(e.kind==='warden'?34:24);
- g.fillStyle='#09191dec';g.fillRect(Math.round(e.x-wide/2),Math.round(yy-10),wide,13);
- g.strokeStyle=imminent?'#ff856c':tell.color;g.lineWidth=1;g.strokeRect(Math.round(e.x-wide/2),Math.round(yy-10),wide,13);
- g.fillStyle=imminent?'#ffddd0':'#fff1d5';g.font='bold 8px system-ui,sans-serif';g.textAlign='center';g.fillText(text,e.x,yy);
+ const yy=Math.max(17,e.y-e.radius-(e.kind==='warden'?34:24));
+ const labelX=clampWarningLabel(e.x,wide,worldWidth);
+ g.fillStyle='#09191dec';g.fillRect(Math.round(labelX-wide/2),Math.round(yy-10),wide,13);
+ g.strokeStyle=imminent?'#ff856c':tell.color;g.lineWidth=1;g.strokeRect(Math.round(labelX-wide/2),Math.round(yy-10),wide,13);
+ g.fillStyle=imminent?'#ffddd0':'#fff1d5';g.font='bold 8px system-ui,sans-serif';g.textAlign='center';g.fillText(text,labelX,yy);
  if(imminent){g.fillStyle='#ff8d70';g.beginPath();g.arc(e.x,e.y-e.radius-4,2.5,0,Math.PI*2);g.fill();}
  g.restore();
 }
 
 function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number){
  const x=Math.round(e.x),y=Math.round(e.y),f=e.flash>0;
- const bob=Math.round(Math.sin(t*3+(e.id.length%4))*1.5);
- g.save();g.translate(x,y+bob);
+ const motion=enemyVisualMotion(e,t);
+ g.save();g.translate(x,y+motion.bob);g.scale(motion.facing,1);
+ if(motion.lean)g.rotate(motion.lean*(motion.facing===1?1:-1));
  g.fillStyle='#0009';g.beginPath();g.ellipse(0,e.radius*.7,e.radius+3,4,0,0,Math.PI*2);g.fill();
  if(e.kind==='draugr'){
   px(g,-7,-13,14,18,f?'#fff2c7':'#5b7772');px(g,-6,-18,12,9,'#7faaa0');px(g,-4,-16,3,3,'#e5cb84');px(g,2,-16,3,3,'#e5cb84');px(g,-10,-5,4,12,'#3b585b');px(g,6,-5,4,12,'#3b585b');px(g,-8,5,16,3,'#8d7350');
@@ -90,7 +97,13 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number){
   px(g,-19,-12,38,27,'#251f24');px(g,-15,-17,30,29,f?'#f9edc1':'#49634e');
   px(g,-12,-22,24,10,'#807251');px(g,-19,-27,8,18,'#9d7952');px(g,11,-27,8,18,'#9d7952');
   px(g,-7,-13,6,4,'#f0b276');px(g,3,-13,6,4,'#f0b276');px(g,-7,-4,14,10,'#183035');px(g,-3,-2,6,6,e.phase===2?'#fd7844':'#8dd2b0');
-  px(g,-19,12,13,11,'#756d50');px(g,6,12,13,11,'#756d50');px(g,-23,-3,7,17,'#6a533f');px(g,16,-3,7,17,'#6a533f');
+  px(g,-19,12+(motion.step?1:0),13,11,'#756d50');px(g,6,12+(motion.step?0:1),13,11,'#756d50');
+  px(g,-23,-3,7,17,'#6a533f');px(g,16,-3,7,17,'#6a533f');
+  // Living braided crown and phase-two root glow.
+  g.strokeStyle=e.phase===2?'#ff996a':'#9cb38d';g.lineWidth=2;
+  g.beginPath();g.moveTo(-16,-24);g.lineTo(-25,-31);g.lineTo(-23,-37);
+  g.moveTo(16,-24);g.lineTo(25,-31);g.lineTo(23,-37);g.stroke();
+  px(g,-12,-8,4,2,e.phase===2?'#ff7854':'#e9c888');px(g,8,-8,4,2,e.phase===2?'#ff7854':'#e9c888');
   if(e.phase===2){g.strokeStyle='#ff9060';g.lineWidth=2;g.beginPath();g.arc(0,-2,23,0,Math.PI*2);g.stroke();}
  }
  g.restore();

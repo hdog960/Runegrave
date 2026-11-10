@@ -157,3 +157,17 @@ html[data-door-ready="false"] .screen-footer .run-state{color:#ffcb9b}
 .threat-guide li{font:8px/1.4 system-ui;color:#d0d8cf}
 .threat-guide li strong{color:#f0d09e}
 @media (orientation:landscape) and (max-height:375px){.threat-guide .threat-contents{max-height:72px}.threat-guide li{font-size:7px}}
+
+/* v0.09.5: physical thumb direction feedback stays exclusively in the grip.
+   No new touch target or overlay covers a single pixel of the game canvas. */
+.rune-socket{--stick-strength:0}
+.rune-socket::after{content:attr(data-direction-glyph);position:absolute;z-index:3;top:-3px;right:3px;
+ color:#abb9ad;background:#12201fe8;border:1px solid #856c4d;border-radius:50%;
+ width:clamp(15px,2.1vw,23px);height:clamp(15px,2.1vw,23px);
+ display:grid;place-items:center;pointer-events:none;font:bold clamp(11px,1.5vw,16px)/1 Georgia,serif;
+ box-shadow:inset 0 1px 2px #000,0 2px 4px #0009}
+.rune-socket[data-held="true"]::after{color:#fff2bb;border-color:#cbbf80;
+ box-shadow:0 0 8px #adcb7b66,inset 0 0 2px #384d34}
+.rune-socket[data-role="aim"][data-held="true"]::after{color:#fff0b5;border-color:#e3ac6b}
+@media (orientation:landscape) and (max-width:710px){.rune-socket::after{right:0;top:0;width:14px;height:14px;font-size:10px}}
+@media (prefers-reduced-motion:reduce){.rune-socket .rune-disc{transition:none}}

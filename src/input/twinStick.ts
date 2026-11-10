@@ -1,4 +1,4 @@
-import { ZERO, normalizeStick, combineDirections, clampVector, type Vector2 } from './vector.js';
+import { ZERO, normalizeStick, combineDirections, clampVector, stickDirectionGlyph, type Vector2 } from './vector.js';
 
 export type StickRole='move'|'aim';
 export type InputSnapshot=Readonly<{move:Vector2; aim:Vector2; firing:boolean; paused:boolean}>;
@@ -95,13 +95,16 @@ export class TwinStickControls {
     this.vectors[role]=v;
     this.pads[side].style.setProperty('--stick-x',`${v.x*22}%`);
     this.pads[side].style.setProperty('--stick-y',`${v.y*22}%`);
+    this.pads[side].dataset.directionGlyph=stickDirectionGlyph(v);
+    this.pads[side].style.setProperty('--stick-strength',String(Math.round(Math.hypot(v.x,v.y)*100)));
   }
   private end(event:PointerEvent){
     const owner=this.pointers.get(event.pointerId);if(!owner)return;
     this.pointers.delete(event.pointerId);
     this.vectors[owner.role]=ZERO;
     const pad=this.pads[owner.side];pad.dataset.held='false';
-    pad.style.setProperty('--stick-x','0%');pad.style.setProperty('--stick-y','0%');this.refreshStatus();
+    pad.style.setProperty('--stick-x','0%');pad.style.setProperty('--stick-y','0%');
+    pad.dataset.directionGlyph='·';pad.style.setProperty('--stick-strength','0');this.refreshStatus();
   }
   private keydown(event:KeyboardEvent){
     const key=event.key.toLowerCase();
@@ -118,6 +121,7 @@ export class TwinStickControls {
     this.held.clear();this.pointers.clear();this.vectors={move:ZERO,aim:ZERO};
     for(const pad of Object.values(this.pads)){
       pad.dataset.held='false';pad.style.setProperty('--stick-x','0%');pad.style.setProperty('--stick-y','0%');
+      pad.dataset.directionGlyph='·';pad.style.setProperty('--stick-strength','0');
     }
     this.refreshStatus();
   }
@@ -162,7 +166,7 @@ export class TwinStickControls {
       const label=pad.querySelector<HTMLElement>('.disc-label');
       if(label)label.textContent=role==='move'?'MOVE':'AIM / FIRE';
       pad.setAttribute('aria-label',role==='move'?'Movement rune thumb disc':'Aim and continuous-fire rune thumb disc');
-      pad.dataset.role=role;
+      pad.dataset.role=role;pad.dataset.directionGlyph='·';pad.style.setProperty('--stick-strength','0');
       pad.style.setProperty('--pad-scale',String(this.prefs.padScale/100));
       pad.style.setProperty('--pad-offset',`${this.prefs.padOffset}px`);
     }

@@ -3,6 +3,7 @@
  * pickups/enemies, and never cover the separate control/HUD rails.
  */
 import type { FirstRoom } from '../run/firstSoul.js';
+import { paintFamilyLandmarks } from './landmarkArt.js';
 
 type G=CanvasRenderingContext2D;
 type Family='ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE';
@@ -99,5 +100,7 @@ export function paintRoomFamily(g:G,W:number,H:number,t:number,room:FirstRoom):v
    line(g,[24,H*.46,46,H*.49,59,H*.45,69,H*.52],theme.light,2);
    line(g,[W-25,H*.57,W-45,H*.55,W-68,H*.61],theme.light,2);
  }
+ g.globalAlpha=1;
+ paintFamilyLandmarks(g,W,H,t,room);
  g.restore();
 }

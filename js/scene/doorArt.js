@@ -1,4 +1,16 @@
 import { EXIT_LABELS } from '../run/wayfinding.js';
+/** Stone approach travels FROM the doorway into the traversable room, so a
+ * clearly chiseled threshold visually connects to the actual gate position. */
+export function inwardApproach(direction, distance) {
+    if (!(Number.isFinite(distance) && distance >= 0))
+        throw new RangeError('Invalid approach distance');
+    switch (direction) {
+        case 'north': return { x: 0, y: distance };
+        case 'south': return { x: 0, y: -distance };
+        case 'east': return { x: -distance, y: 0 };
+        case 'west': return { x: distance, y: 0 };
+    }
+}
 export function drawRuneDoor(g, pos, direction, open, time) {
     const meta = EXIT_LABELS[direction];
     const c = open ? '#9be8aa' : '#e49d7d';
@@ -10,6 +22,16 @@ export function drawRuneDoor(g, pos, direction, open, time) {
     const artX = Math.min(viewW - 44, Math.max(44, pos.x));
     g.save();
     g.translate(Math.round(artX), Math.round(pos.y));
+    // Three staggered stone stairs lead INTO the actual exit, not to a fake icon.
+    // They deliberately use a different broad silhouette than loose silver/relics.
+    for (let i = 0; i < 3; i++) {
+        const step = inwardApproach(direction, 21 + i * 8);
+        const w = (direction === 'north' || direction === 'south') ? 44 - i * 6 : 6;
+        const h = (direction === 'north' || direction === 'south') ? 4 : 44 - i * 6;
+        const tone = open ? '#5d9471' : '#765447';
+        px(step.x - w / 2, step.y - h / 2, w, h, '#263033');
+        px(step.x - w / 2 + 1, step.y - h / 2, w - 2, 1, tone);
+    }
     // Raised threshold and perspective make it identifiable as an actual doorway.
     g.fillStyle = '#020b0dc0';
     g.beginPath();
@@ -24,6 +46,11 @@ export function drawRuneDoor(g, pos, direction, open, time) {
     px(21, -24, 5, 34, '#b7a17a');
     px(-24, -30, 48, 9, '#504a42');
     px(-23, -30, 46, 4, '#dec58e');
+    // Deep chiseled lintel, three-piece keystone and iron runic truss.
+    px(-21, -34, 42, 4, '#80715c');
+    px(-5, -36, 10, 6, '#cfb985');
+    for (const xx of [-17, -10, 8, 15])
+        px(xx, -28, 2, 3, '#1e3431');
     px(-16, -22, 32, 34, '#101e22');
     if (open) {
         px(-15, -21, 30, 33, '#214c3c');
@@ -32,6 +59,10 @@ export function drawRuneDoor(g, pos, direction, open, time) {
         g.fillStyle = `rgba(143,252,167,${pulse})`;
         g.fillRect(-11, -19, 22, 30);
         px(-3, -16, 6, 28, '#82bc93');
+        // Readable tunnel vanishing point: an OPEN doorway, not another collectible.
+        px(-6, -13, 12, 22, '#1a3c30');
+        px(-3, -10, 6, 16, '#7ce9a7');
+        px(-5, 8, 10, 2, '#e5f4bd');
     }
     else {
         px(-15, -21, 30, 33, '#5b3936');
@@ -39,6 +70,15 @@ export function drawRuneDoor(g, pos, direction, open, time) {
         px(-2, -20, 4, 32, '#ae8569');
         for (const yy of [-15, -5, 5])
             px(-12, yy, 24, 2, '#94745a');
+        // Cross-braced locked door has a distinct X, visible even without color.
+        g.strokeStyle = '#d19c75';
+        g.lineWidth = 3;
+        g.beginPath();
+        g.moveTo(-11, -18);
+        g.lineTo(11, 10);
+        g.moveTo(11, -18);
+        g.lineTo(-11, 10);
+        g.stroke();
         px(-3, -5, 6, 7, '#eab68b');
         px(-1, -4, 2, 4, '#2a2525');
     }
