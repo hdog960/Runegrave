@@ -1,3 +1,7 @@
+## v0.09.11 — Distinct foundations, not five color filters
+
+The shared Rootvault backdrop made different encounter families resemble repeated rooms. The game now uses five source-authored wall-brick and floor-tile color/material palettes directly in `src/scene/sanctuaryArt.ts`. The actual side silhouettes change by family: ASH furnaces, IRON astrolabes, SPIRIT ghostglass mirrors, FATE looms, while ROOT retains roots and sarcophagi. Setpieces are low-profile decorative objects placed behind actors, not portals, pickups or colliders. `wayfarerEmblems.ts` gives the player a crest, shoulder plates and embroidery; `armorAccents.ts` adds seven foe-specific material/weapon shapes. The central stage remains clear of HTML controls and permanent HUD, and the PWA caches the modules. These are iterative source-controlled art improvements, **not yet player-approved final art**.
+
 ## v0.09.10 — Authored room reliefs / outside-canvas threat status
 
 The five first-soul families now have additional hand-drawn family-specific incised emblems, with the chisel-notch count + recess offset creating 25 distinct canonical silhouettes across 25 room IDs. Unlike hostile warnings, they are dull engraved stone and sit toward the room's side; they do not imply pickups or collisions. This replaces an older, higher-cost decorative floor-relief layer to preserve headless Chromium and unit painter budgets. Existing upper-landmark silhouettes and original Runegrave handheld stay unchanged.

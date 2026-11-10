@@ -1,3 +1,7 @@
+## v0.09.11 — No fabricated content additions (2026-11-10)
+
+**Counts unchanged:** 25 authored first-soul encounter configurations (eight per curated run), six hostile kinds, one Warden boss, eight genuinely functioning relics, one provisional Wayfarer, silver/healing pickups. This release changes architectural art and enemy/player ornamentation ONLY; the four new side setpiece motifs are decorative replacements for the same non-colliding two props, not new interactive objects. Full procedural floor graph, seven endings, 750 relic target, shops, long-run persistence and future v0.10+ milestones remain LOCKED until explicit Gate A approval. Save schema and gameplay rules unchanged.
+
 ## v0.09.10 — Count remains unchanged
 
 The 25 deterministic authored encounter configurations gain visually unique, family-validated floor reliefs; **these are not 25 additional rooms**. Six real hostile behavior kinds, one Warden boss, eight functioning relics, initial pickups, and one curated eight-chamber/boss route remain exactly as before. The new left-grip threat status and masonry art do not add weapons, enemies, bosses, game routes, shops, transformations, talismans, paid content, or final art approval. Future v0.10 seeded floor graphs remain locked pending explicit Gate A approval.

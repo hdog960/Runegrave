@@ -221,7 +221,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     if(!metrics)return;
     const W=metrics.cameraWidth,H=metrics.cameraHeight;
     g!.setTransform(metrics.pixelWidth/W,0,0,metrics.pixelHeight/H,0,0);
-    paintSanctuary(g!,W,H,time);
+    paintSanctuary(g!,W,H,time,currentRoom?.family||'ROOT',roomIndex);
     if(trial)drawEmberTrial(g!,trial,time);
     if(currentRoom&&mode==='crypt'){paintRoomFamily(g!,W,H,time,currentRoom);paintRoomSigil(g!,W,H,time,currentRoom);}
     motionTrails.paintGround(g!,W,H,currentRoom?.family||'ROOT',reduced.matches);

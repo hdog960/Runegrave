@@ -1,4 +1,7 @@
 import { wayfarerPose } from './wayfarerMotion.js';
+import { paintWayfarerEmblems } from './wayfarerEmblems.js';
+import { paintChamberSetpieces, type ChamberFamily } from './chamberSetpieces.js';
+type Family=ChamberFamily;
 /** v0.04 original hand-authored procedural 32-bit-inspired Midgard Rootvault art.
  * All paint operations are WORLD SPACE and clipped by the dedicated canvas.
  * The rendered art is decorative; no enemy collision or content is implied.
@@ -10,6 +13,15 @@ export const ART_PALETTE = Object.freeze({
   iron:'#101c20', brass:'#ae8b59', jade:'#83c4ae', flame:'#f5bb63'
 });
 const tileSize = 30;
+/** These are actual base masonry palettes, not transparent theme overlays.
+ * The ROOT palette exactly preserves the original Rootvault material. */
+export const BASE_MASONRY:Readonly<Record<Family,Readonly<{mortar:string;slab:string;slabLit:string;wall:string;wallLit:string;accent:string;glint:string}>>> = Object.freeze({
+ ROOT:{mortar:'#142324',slab:'#243735',slabLit:'#30423b',wall:'#334641',wallLit:'#566960',accent:'#596655',glint:'#6c9c83'},
+ ASH:{mortar:'#271b1b',slab:'#43302b',slabLit:'#594138',wall:'#4d352e',wallLit:'#977257',accent:'#b07a57',glint:'#e4a567'},
+ IRON:{mortar:'#18272e',slab:'#293e47',slabLit:'#41575e',wall:'#3c4c54',wallLit:'#9aa8ab',accent:'#a4a9a9',glint:'#b9cfd0'},
+ SPIRIT:{mortar:'#202337',slab:'#30364b',slabLit:'#4d536e',wall:'#414760',wallLit:'#9292b2',accent:'#999dca',glint:'#b7b9e4'},
+ FATE:{mortar:'#29251e',slab:'#473d30',slabLit:'#61543b',wall:'#4c4434',wallLit:'#b09c6f',accent:'#c3a771',glint:'#eed4a0'}
+});
 const floorHash=(x:number,y:number)=>{
   let v=Math.imul(x+12345,374761393)+Math.imul(y+54321,668265263);
   v=Math.imul(v^(v>>>13),1274126177);return (v^(v>>>16))>>>0;
@@ -24,13 +36,14 @@ function knot(g:G,x:number,y:number,s:number,lit:boolean){
  stroke(g,[[0,1],[0,12],[-6,5],[0,-3],[6,5],[0,12]],lit?'#b2dcb4':'#435950',1.5);
  box(g,-2,-14,4,3,lit?'#daefc5':'#899c7f');g.restore();
 }
-function wall(g:G,W:number){
+function wall(g:G,W:number,family:Family){
+ const p=BASE_MASONRY[family];
  box(g,0,0,W,51,'#091418');
  box(g,0,0,W,5,'#48554a');box(g,0,5,W,3,'#161f21');
  for(let x=0;x<W;x+=21){const even=(Math.floor(x/21)%2)===0;
-   box(g,x+(even?0:3),8,19,13,even?'#334641':'#2b3b39');box(g,x+1,8,17,1,'#566960');
-   box(g,x,22,20,13,'#1b2c2c');box(g,x+2,24,15,1,'#43584e');
-   box(g,x+1,35,19,11,even?'#243a38':'#1d302f');box(g,x,48,20,3,'#576e62');
+   box(g,x+(even?0:3),8,19,13,even?p.wall:p.mortar);box(g,x+1,8,17,1,p.wallLit);
+   box(g,x,22,20,13,p.mortar);box(g,x+2,24,15,1,p.wallLit);
+   box(g,x+1,35,19,11,even?p.wall:p.slab);box(g,x,48,20,3,p.wallLit);
  }
  box(g,0,15,W,2,'#111f22');box(g,0,30,W,2,'#0c191c');box(g,0,48,W,3,'#071115');
 }
@@ -53,18 +66,19 @@ function gate(g:G,cx:number,time:number){
  box(g,cx-62,53,124,7,'#171f20');box(g,cx-57,51,114,3,'#b19a6c');box(g,cx-61,58,122,3,'#435c51');
  box(g,cx-65,61,130,7,'#101c1d');
 }
-function floor(g:G,W:number,H:number,time:number){
- const grad=g.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#142324');grad.addColorStop(.52,'#22332f');grad.addColorStop(1,'#0e2021');g.fillStyle=grad;g.fillRect(0,0,W,H);
+function floor(g:G,W:number,H:number,time:number,family:Family){
+ const p=BASE_MASONRY[family];
+ const grad=g.createLinearGradient(0,0,W,H);grad.addColorStop(0,p.mortar);grad.addColorStop(.52,p.slab);grad.addColorStop(1,'#0b181c');g.fillStyle=grad;g.fillRect(0,0,W,H);
  // Offset masonry tiles, mortar and authored hand-chiseled notches.
  for(let row=0;row<Math.ceil(H/tileSize)+1;row++){
   for(let col=-1;col<Math.ceil(W/tileSize)+1;col++){
    const x=col*tileSize+((row&1)?tileSize*.5:0),y=row*tileSize;
    const n=floorHash(col,row)%11;
-   box(g,x,y,tileSize-1,tileSize-2,n<2?'#30423b':n<6?'#243735':n<9?'#1c302f':'#293b37');
-   box(g,x+3,y+2,tileSize-7,1,'#516b5b');box(g,x+2,y+tileSize-4,tileSize-5,1,'#0c1c20');
-   if(n===3||n===7)stroke(g,[[x+7,y+18],[x+13,y+10],[x+18,y+13],[x+21,y+6]],'#596655',1);
-   if(n===6){box(g,x+22,y+9,2,2,'#6c9c83');box(g,x+24,y+11,2,1,'#4b765e');}
-   if(n===10){box(g,x+7,y+15,3,2,'#957b4d');box(g,x+19,y+21,2,2,'#56715d');}
+   box(g,x,y,tileSize-1,tileSize-2,n<2?p.slabLit:n<6?p.slab:n<9?p.mortar:p.wall);
+   box(g,x+3,y+2,tileSize-7,1,p.wallLit);box(g,x+2,y+tileSize-4,tileSize-5,1,'#0c1c20');
+   if(n===3||n===7)stroke(g,[[x+7,y+18],[x+13,y+10],[x+18,y+13],[x+21,y+6]],p.accent,1);
+   if(n===6){box(g,x+22,y+9,2,2,p.glint);box(g,x+24,y+11,2,1,'#4b765e');}
+   if(n===10){box(g,x+7,y+15,3,2,p.accent);box(g,x+19,y+21,2,2,'#56715d');}
   }
  }
  // Soot and floor-side shadows don't enter any separate HUD area.
@@ -125,17 +139,21 @@ function sarcophagus(g:G,x:number,y:number){
  box(g,-19,21,38,7,'#212e2b');box(g,-17,23,33,2,'#7f7557');g.restore();
 }
 /** Pure drawing layer. Inputs are actual camera bounds and animation time. */
-export function paintSanctuary(g:G,W:number,H:number,t:number){
- floor(g,W,H,t);wall(g,W);gate(g,W*.5,t);
+export function paintSanctuary(g:G,W:number,H:number,t:number,family:string='ROOT',variant=0){
+ if(!Object.hasOwn(BASE_MASONRY,family))throw new RangeError('Unknown chamber base');
+ const chosen=family as Family;
+ floor(g,W,H,t,chosen);wall(g,W,chosen);gate(g,W*.5,t);
  // Columns are outside the central dodge ring, with strong original silhouettes.
  column(g,35,H*.38,1.0);column(g,W-35,H*.38,1.0);
  column(g,48,H*.91,.83);column(g,W-48,H*.91,.83);
- sarcophagus(g,75,H*.70);sarcophagus(g,W-75,H*.70);
- // Uneven tree roots grasp the edge architecture; tips stay outside the center safety ring.
- root(g,[[0,H*.63],[15,H*.59],[26,H*.49],[40,H*.45],[56,H*.37]],7);
- root(g,[[W,H*.64],[W-18,H*.58],[W-29,H*.50],[W-42,H*.42],[W-58,H*.39]],7);
- root(g,[[0,H*.89],[26,H*.82],[47,H*.89],[77,H*.80]],10);
- root(g,[[W,H*.90],[W-24,H*.84],[W-47,H*.87],[W-76,H*.79]],10);
+ if(chosen==='ROOT'){
+  sarcophagus(g,75,H*.70);sarcophagus(g,W-75,H*.70);
+  // The living roots are a ROOT material, not a generic dungeon texture.
+  root(g,[[0,H*.63],[15,H*.59],[26,H*.49],[40,H*.45],[56,H*.37]],7);
+  root(g,[[W,H*.64],[W-18,H*.58],[W-29,H*.50],[W-42,H*.42],[W-58,H*.39]],7);
+  root(g,[[0,H*.89],[26,H*.82],[47,H*.89],[77,H*.80]],10);
+  root(g,[[W,H*.90],[W-24,H*.84],[W-47,H*.87],[W-76,H*.79]],10);
+ }else paintChamberSetpieces(g,W,H,t,chosen,variant);
  relief(g,W*.18,H*.82,.64,false);relief(g,W*.82,H*.82,.64,true);
  brazier(g,W*.5-57,73,t);brazier(g,W*.5+57,73,t);
  // Irregular iron bound wall seams provide shape without false enemy/projectile cues.
@@ -196,6 +214,7 @@ export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,
   box(g,-6,-12,4,3,'#e5f4da');box(g,3,-12,4,3,'#e5f4da');
   box(g,-3,-7,7,3,'#263e41');
  }
+ paintWayfarerEmblems(g,m,t);
  // An active runebound weapon reads as the same arm that launches Soulbolts.
  const handX=faceX*18,handY=faceY*15-3;
  const recoil=m.recoil*3;

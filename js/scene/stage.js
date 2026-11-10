@@ -289,7 +289,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             return;
         const W = metrics.cameraWidth, H = metrics.cameraHeight;
         g.setTransform(metrics.pixelWidth / W, 0, 0, metrics.pixelHeight / H, 0, 0);
-        paintSanctuary(g, W, H, time);
+        paintSanctuary(g, W, H, time, currentRoom?.family || 'ROOT', roomIndex);
         if (trial)
             drawEmberTrial(g, trial, time);
         if (currentRoom && mode === 'crypt') {

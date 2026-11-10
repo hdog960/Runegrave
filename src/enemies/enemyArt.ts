@@ -6,6 +6,7 @@ import { drawRuneDoor } from '../scene/doorArt.js';
 import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visualMotion.js';
 import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.js';
 import { drawEnemyGesture } from './gestureArt.js';
+import { paintEnemyAccents } from './armorAccents.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS=Object.freeze({
@@ -110,6 +111,7 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number){
   if(e.phase===2){g.strokeStyle='#ff9060';g.lineWidth=2;g.beginPath();g.arc(0,-2,23,0,Math.PI*2);g.stroke();}
  }
  drawEnemyGesture(g,e.kind,e.state,e.phase,t);
+ paintEnemyAccents(g,e.kind,e.state,e.phase,t);
  g.restore();
  if(e.hp<e.maxHp || e.kind==='warden'||e.state==='warning'){
   const width=e.kind==='warden'?45:19;

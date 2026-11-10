@@ -1,3 +1,7 @@
+## Current release: v0.09.11 — Five distinct Norse foundations (Gate A awaiting approval)
+
+The first playable Gate A build now paints ASH/IRON/ROOT/SPIRIT/FATE with different underlying wall and floor masonry and family-specific side installations, plus original Wayfarer and enemy accessory art. The 25 authored configurations, eight real relics, eight-chamber Warden mini-run, split handheld thumb grips, saved controller settings and PWA are preserved. The full 116-test local suite passes. See `docs/RELEASE_STATUS.md` for separate verified deployment information. Gate A is not yet approved; **v0.10 is locked**.
+
 ## Gate A v0.09.10 — distinct carved chambers and a live combat threat grip
 
 This playable first-soul prototype has 25 authored configurations and eight real relics in a connected mini-run, six hostile archetypes and one Rootbound Warden boss. The new `.threat-strip` sits **outside** the center canvas, above the left movement disc, and shows only real encounter-state/urgent-warning/boss-HP information; it cannot intercept touches. The world masonry has new room-specific incised reliefs, replacing previous higher-cost trim. All preexisting combat, health, entrances, saved input preferences and safe-update PWA continue to function. `npm test`: 110/110 PASS. Detailed test qualifications and unapproved visual gate: `docs/TESTING.md`, `docs/GATE_A_REVIEW.md`, `docs/RELEASE_STATUS.md`.
