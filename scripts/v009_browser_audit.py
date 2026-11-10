@@ -34,13 +34,20 @@ with sync_playwright() as p:
   page.set_content(HTML);page.add_style_tag(content=(DIST/'styles.css').read_text())
   page.add_script_tag(type='module',content=f'import "{data_module("main.js")}";')
   page.wait_for_timeout(350)
+  if name != 'portrait':
+   assert page.locator('#guide-overlay').is_visible(), 'First launch must show HOW TO PLAY'
+   assert page.evaluate('document.documentElement.dataset.paused')=='true', 'Tutorial must pause combat'
+   # The guide is a paused screen, never floating over the live action.
+   page.locator('#guide-start-btn').click();page.wait_for_timeout(75)
+   assert page.locator('#guide-overlay').is_hidden()
+   assert page.evaluate('document.documentElement.dataset.paused')=='false'
   if name=='portrait':
    assert page.locator('.rotate-message').is_visible();assert not errors,errors
    page.screenshot(path=str(ROOT/'v009-portrait.png'))
    print('portrait PASS');page.close();continue
   state=page.evaluate('''() => {const c=document.querySelector('#gameplay-canvas');const r=c.getBoundingClientRect();const frame=document.querySelector('#world-frame').getBoundingClientRect();const overlap=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;return {version:document.documentElement.dataset.version,room:c.dataset.room,frame:[frame.x,frame.y,frame.width,frame.height],canvas:[r.x,r.y,r.width,r.height],intersections:[...document.querySelectorAll('.grip,[data-hud],#pause-btn,.rune-socket')].filter(e=>overlap(r,e.getBoundingClientRect())).length,actor:[+c.dataset.actorX,+c.dataset.actorY],exit:c.dataset.roomPhase,hearts:c.dataset.heartUnits};}''')
   assert not errors,(name,errors)
-  assert state['version']=='0.09.0' and state['room']=='practice',state
+  assert state['version']=='0.09.1' and state['room']=='practice',state
   assert state['frame']==state['canvas'] and not state['intersections'],state
   assert state['actor'][0]>0 and state['hearts']=='6',state
   page.screenshot(path=str(ROOT/f'v009-{name}.png'))

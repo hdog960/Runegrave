@@ -2,6 +2,7 @@ import { ROADMAP_VERSION, APP_VERSION } from './core/version.js';
 import { mountStage } from './scene/stage.js';
 import { TwinStickControls } from './input/twinStick.js';
 import { preparePwa } from './platform/pwa.js';
+import { installFirstRunGuide } from './platform/firstRunGuide.js';
 import { PLANNED_REALMS } from './content/realmCatalog.js';
 
 // v0.09: 25 verified room configurations, eight functioning relic pickups and a connected first-soul mini-run.
@@ -12,6 +13,7 @@ if(!canvas)throw new Error('Missing center-only game canvas');
 let stage:ReturnType<typeof mountStage>|undefined;
 const controls=new TwinStickControls(paused=>stage?.setPaused(paused));
 stage=mountStage(canvas,()=>controls.snapshot,()=>controls.setDead(true));
+installFirstRunGuide(controls);
 document.querySelector<HTMLButtonElement>('#trial-new-run-btn')?.addEventListener('click',()=>{if(stage?.restart())controls.setDead(false);});
 document.querySelector<HTMLButtonElement>('#restart-btn')?.addEventListener('click',()=>{
   if(stage?.restart())controls.setDead(false);

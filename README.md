@@ -27,3 +27,7 @@ An original Norse-mythology, iPhone-first action roguelike, planned for GitHub P
 - **STOP:** v0.09 **Gate A awaits explicit player visual and control approval**. Do not start v0.10 before approval. [Gate A review instructions](docs/GATE_A_REVIEW.md).
 
 Implementation and deployment claims must match evidence in the release ledger; the full original roadmap remains locked.
+
+## Gate A clarity patch — v0.09.1
+
+After the first Gate A review, the player reported they could not tell what was happening. v0.09.1 introduces a first-launch **How to Play** tutorial, a Pause → How to Play replay action, and readable step-by-step footer objectives with no overlay during active play. **Gate A remains awaiting explicit player approval; do not advance to v0.10.** See [Gate A review](docs/GATE_A_REVIEW.md).

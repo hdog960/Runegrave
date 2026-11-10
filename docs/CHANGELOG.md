@@ -1,3 +1,12 @@
+## v0.09.1 — Gate A clarity and guided-start pass (2026-11-09)
+
+- Player reported they could not understand what was going on in v0.09; **Gate A remains NOT APPROVED**. This feedback is treated as a real design failure requiring correction, not a request for more unexplained features.
+- Added a first-visit, paused-only Norse How to Play screen that explains the left movement disc, right continuous-fire disc, defeating enemies, claiming the gold relic, the eastern exit, hearts and the Warden goal. A visible Start button safely activates the simulation after the guide is dismissed.
+- Added **PAUSE → HOW TO PLAY** to replay guidance at any time. The guide disables the exterior pause button while open, ignores accidental Escape/P unpausing, and never interrupts active combat as a floating tutorial HUD. Dismissing it restores normal controls without losing the existing saved control preferences.
+- Replaced cryptic bottom-run state with clear action-directed guidance per phase: **GO RIGHT**, **DEFEAT N ENEMIES**, **PICK UP THE GOLD RELIC**, **NEXT ROOM**, **DODGE BOSS**, and **FINISH THE TRIAL**. All are in the status strip outside the gameplay viewport.
+- Local strict TypeScript pass; all 69 Node tests, four landscape plus portrait in-memory Chromium controls/layout tests, four guided-start/replay acceptance runs, and the existing controlled eight-room/boss/victory/restart flow pass. Tests do not prove physical Safari ergonomics or unaided run success.
+- v0.09 roadmap milestone remains unchanged. No v0.10 features or approval. PWA shell patch version 0.09.1 precaches the new guide JS module; saved input preference key and save schema remain unchanged.
+
 ## v0.09 — First Soul: the Fatebound Eight (local implementation, 2026-11-09)
 
 - Added 25 original curated authored encounter configurations across Ash, Iron, Root, Spirit and Fate floor families. Every configuration has a unique tested enemy/wave lineup, sensible camera-safe spawning, a collision-connected eastern exit and world-space rune-floor identity.

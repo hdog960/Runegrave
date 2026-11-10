@@ -16,6 +16,7 @@ import { HostileEncounter, placeRoomExit, reachableFloor, walkableRoute } from '
 import { drawEncounter } from '../enemies/enemyArt.js';
 import { FIRST_SOUL_CHAMBERS, FIRST_SOUL_RELICS, createFirstSoulRoute, encounterPlan, FirstSoulInventory, type FirstRoom } from '../run/firstSoul.js';
 import { drawRoomDrops, paintRoomSigil, nearDrop, type RoomDrop } from '../run/lootArt.js';
+import { objectiveText } from '../platform/firstRunGuide.js';
 
 const WIDTH=420;
 export type StageMetrics={cssWidth:number;cssHeight:number;pixelWidth:number;pixelHeight:number;cameraWidth:number;cameraHeight:number};
@@ -114,7 +115,12 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     canvas.dataset.enemyProjectiles=String(encounter?.snapshot.projectiles.length||0);
     document.documentElement.dataset.roomName=complete?'COMPLETE':mode.toUpperCase();
     document.documentElement.dataset.roomPhase=mode==='practice'?'ANTEROOM · EAST GATE OPEN':mode==='complete'?'TRIAL COMPLETE':encounter?.snapshot.phase==='gate'?`${mode==='crypt'?'CRYPT CLEARED':'WARDEN FELLED'} · EXIT OPEN`:mode==='crypt'?`CRYPT · WAVE ${encounter?.snapshot.wave||1}/2 · LOCKED`:`WARDEN · PHASE ${encounter?.snapshot.bossPhase||1}/2`;
-    if(mode==='crypt'){document.documentElement.dataset.roomPhase=`CHAMBER ${roomIndex+1}/${FIRST_SOUL_CHAMBERS} · ${encounter?.snapshot.phase==='gate'?(drops.some(d=>d.kind==='relic'&&!d.collected)?'CLAIM RELIC':'GATE OPEN'):'BATTLE LOCKED'}`;}
+    document.documentElement.dataset.roomPhase=objectiveText({
+      mode, phase:encounter?.snapshot.phase||'gate',
+      alive:encounter?.snapshot.enemies.filter(e=>e.alive).length||0,
+      missingRelic:drops.some(d=>d.kind==='relic'&&!d.collected),
+      roomNumber:roomIndex+1, roomTotal:FIRST_SOUL_CHAMBERS
+    });
     const footer=document.querySelector<HTMLElement>('[data-run-status]');if(footer)footer.textContent=document.documentElement.dataset.roomPhase;
     if(silverCounter)silverCounter.textContent=`SILVER ${inventory.state.silver}`;
     if(ledgerCurrency)ledgerCurrency.textContent=`ᚠ ${inventory.state.silver} SILVER · ${roomIndex+1}/${FIRST_SOUL_CHAMBERS} CHAMBERS`;

@@ -37,11 +37,27 @@
       </header>
       <div id="world-frame" class="world-frame" aria-label="Unobstructed center-only combat world: connected first-soul rooms, runic relic pickups and original Norse enemies">
         <canvas id="gameplay-canvas" width="420" height="240" aria-label="Midgard Rootvault: Soulbolt combat, hostile enemies, Rootbound Warden, Mortal Hearts and safe exits">Your browser does not support canvas.</canvas>
+        <div id="guide-overlay" class="pause-overlay guide-overlay" role="dialog" aria-modal="true" aria-label="How to play Runegrave" hidden>
+          <div class="pause-stone guide-stone">
+            <p class="pause-kicker">YOUR FIRST DESCENT · HOW TO PLAY</p>
+            <h2>FIGHT · CLAIM · DESCEND</h2>
+            <p class="guide-intro">You're a Wayfarer trapped below the World Tree. Survive eight rooms, grow stronger with relics, then defeat the Rootbound Warden.</p>
+            <div class="guide-steps">
+              <div class="guide-step"><strong><span class="guide-number">1</span> MOVE</strong><span>Slide the <b>LEFT</b> rune disc to walk around the room.</span></div>
+              <div class="guide-step"><strong><span class="guide-number">2</span> SHOOT</strong><span>Hold the <b>RIGHT</b> rune disc toward an enemy to aim and fire.</span></div>
+              <div class="guide-step"><strong><span class="guide-number">3</span> ADVANCE</strong><span>Defeat enemies → pick up the <b>GOLD relic</b> → walk into the <b>GREEN eastern gate</b>.</span></div>
+            </div>
+            <p class="guide-warning">♥ You have 3 hearts. Dodge glowing attack warnings; blue shrines can heal you. Relics give permanent bonuses for this run.</p>
+            <button type="button" id="guide-start-btn" class="resume-btn guide-start">I UNDERSTAND · START DESCENT</button>
+            <small>Need a reminder? Open PAUSE → HOW TO PLAY. The center canvas stays free of controls while fighting.</small>
+          </div>
+        </div>
         <div id="pause-overlay" class="pause-overlay" role="dialog" aria-label="Paused controls and input preferences" hidden>
           <div class="pause-stone">
             <p class="pause-kicker">THE THREAD IS STILLED</p>
             <h2>PAUSED</h2>
             <p>Begin at the antechamber, then follow eight connected fate chambers chosen from 25 authored combat layouts. Defeat each room, touch its golden relic pedestal to bind a real ability, collect silver and healing runes, and pass the eastern gate to the Rootbound Warden. All controls stay in the carved side grips.</p>
+            <button type="button" id="guide-replay-btn" class="guide-replay-btn">? HOW TO PLAY · WHAT DO I DO NEXT?</button>
             <div class="pause-settings">
               <label><span>LEFT-HANDED · SWAP GRIPS</span><input id="handed-toggle" type="checkbox"></label>
               <label><span>RUNE-DISC SIZE</span><input id="pad-scale" type="range" min="85" max="110" step="5" value="100"></label>
@@ -75,7 +91,7 @@
         </div>
       </div>
       <footer class="screen-status screen-footer" data-hud aria-label="Run information outside gameplay canvas">
-        <span><b>ᚱ</b> FIRST SOUL</span><span class="run-state" data-run-status>ANTECHAMBER · EAST GATE OPEN</span><span class="combat-readout" data-combat-score>ᛉ 0 SHATTERED</span>
+        <span><b>ᚱ</b> FIRST SOUL</span><span class="run-state" data-run-status>GO RIGHT → ENTER THE FIRST ROOM</span><span class="combat-readout" data-combat-score>ᛉ 0 SHATTERED</span>
       </footer>
     </section>
 

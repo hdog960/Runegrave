@@ -112,3 +112,19 @@
 .run-ledger li strong{color:#e2c48a}
 .run-ledger p{margin:4px 0 0!important;color:#b7c8b7!important}
 .grip-foot [data-silver]{min-width:0;text-align:right;font-size:clamp(6px,.66vw,9px)!important;overflow:hidden;white-space:nowrap}
+
+/* v0.09 Gate A clarity: tutorial is shown ONLY while simulation is paused. */
+.guide-overlay{z-index:6;background:radial-gradient(ellipse,#0e2426f2,#060d10fa 90%)}
+.guide-stone{width:min(96%,520px);border-color:#d6bd89;gap:clamp(3px,.8vh,8px);align-content:start}
+.guide-stone h2{font-size:clamp(14px,2.55vw,23px);line-height:1.1;letter-spacing:.07em}
+.guide-stone .guide-intro{font-size:clamp(8px,.9vw,11px);color:#f4e1b9;line-height:1.3}
+.guide-steps{display:grid;gap:clamp(3px,.65vh,6px);text-align:left}
+.guide-step{display:grid;grid-template-columns:minmax(72px,27%) 1fr;align-items:center;gap:8px;min-height:26px;padding:5px 8px;border:1px solid #6d7664;background:#13272a;color:#d9e4d4;font:clamp(8px,.85vw,11px)/1.25 system-ui}
+.guide-step strong{color:#efd499;font-size:clamp(9px,.9vw,12px)}
+.guide-step b{color:#eecb85}
+.guide-number{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;margin-right:4px;color:#0e1a1d;background:#e2c58e}
+.guide-stone .guide-warning{color:#a6d6d0!important;font-size:clamp(7px,.8vw,10px)!important}
+.guide-stone .guide-start{min-height:31px;background:linear-gradient(#537464,#2d5149);font-size:clamp(9px,.95vw,12px);border:2px solid #dfc18d}
+.guide-replay-btn{width:100%;background:#263d3a;border:1px solid #d9bd81;padding:5px;color:#f3dfb0;font:bold clamp(8px,.85vw,10px) system-ui;touch-action:manipulation;letter-spacing:.03em}
+.screen-footer .run-state{color:#e5d5a9;font-weight:900;letter-spacing:0;font-size:clamp(7px,.82vw,11px);max-width:65%;overflow:hidden;text-overflow:ellipsis}
+@media (orientation:landscape) and (max-height:340px){.guide-step{padding:2px 5px;min-height:21px}.guide-stone{gap:2px;padding:5px}.guide-stone .guide-intro{font-size:8px}.guide-stone .guide-warning{font-size:7px!important}.guide-stone small{font-size:6px}}

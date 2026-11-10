@@ -13,6 +13,9 @@ with sync_playwright() as p:
  errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  page.set_content(base.HTML);page.add_style_tag(content=(base.DIST/'styles.css').read_text());page.add_script_tag(type='module',content=f'import "{base.data_module("main.js")}";')
  page.wait_for_timeout(150)
+ assert page.locator('#guide-overlay').is_visible()
+ page.locator('#guide-start-btn').click()
+ page.wait_for_timeout(70)
  def state():return page.evaluate('''() => {const c=document.querySelector('#gameplay-canvas');return {room:c.dataset.room,phase:c.dataset.roomPhase,index:+c.dataset.roomIndex,relics:+c.dataset.relicCount,silver:+c.dataset.silver,remaining:+c.dataset.remainingDrops,gate:c.dataset.relicGateReady,actor:[+c.dataset.actorX,+c.dataset.actorY],exit:[+c.dataset.exitX,+c.dataset.exitY],wave:+c.dataset.roomWave,alive:+c.dataset.hostilesAlive,hearts:+c.dataset.heartUnits,bossDead:c.dataset.bossDefeated}}''')
  def jump(point):page.evaluate('''([x,y])=>window.__runegraveTest.stage.testJump({x,y})''',point);page.wait_for_timeout(120)
  def move_to_exit():
