@@ -1,5 +1,19 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.16 — Real doorway threshold markers, accurate relic inscriptions and carved room variants (2026-11-10 US Central)
+
+**VERIFIED STATE: IMPLEMENTED, TESTED, GITHUB CI PASS, PUBLIC GITHUB PAGES LIVE. GATE A UNAPPROVED; v0.10 LOCKED.**
+
+- **Baseline:** verified v0.09.15 release-ledger main `8bd0a44ae0fe345bbeca5fdccc68fef5a5194d7e`.
+- **Implementation:** `2a2ecdf2585525fc694506c0271b3ec7b64af9be` (door, relic and chamber source). **Final compiled fallback and docs commit:** `e0692dcdc1abe418baded3973ad6376e68fd4665`.
+- **Functional scope unchanged:** Twenty-five authored room configurations; eight functional relics; original combat, collision, health, controls, progress and preferences; save schema 1; GitHub Pages PWA; all seven canonical documents preserved by their original Git blobs.
+- **Visual additions:** six world-space stone threshold beacons per door, actual broken/open versus intact/locked chain geometry, eight pedestal bonus tablets positioned beneath relics, five small architectural finial patterns per room-family side prop (ROOT retains the existing living-root composition). No new interactable entities or collision masks.
+- **Local verification limitations:** Restored v0.09.14 source with only unchanged v0.09.15 modules edited: 134/134 local Node tests, TypeScript build, Chromium four landscape and portrait layout checks, and documented test-controlled eight-room/Warden progression. This does not constitute an unaided win or physical iPhone test.
+- **Current main verification:** GitHub Actions `Runegrave foundation checks #55`, `Build and publish Runegrave to GitHub Pages #55`, and `pages-build-deployment #64` all **completed successfully** for `e0692dc`. Independently fetched live `js/core/version.js` reporting `0.09.16`, live service worker cache `runegrave-shell-v0.09.16`, and public compiled door, relic and chamber art modules.
+- **Integrity:** GitHub comparison from v0.09.15 shows zero removed files. All seven canonical documents have exactly the same Git blob IDs. No later roadmap stage approved.
+- **Review:** Continue Gate A polish. Real iPhone thumb comfort, sustained frame performance, installed PWA refresh, unaided gameplay and the player's visual approval remain unverified. Do NOT announce READY FOR GATE A REEVALUATION.
+
+
 ## v0.09.15 — Eight-way hero and seven enemy strike silhouettes (2026-11-10 US Central)
 
 **VERIFIED STATE: IMPLEMENTED, AUTOMATED/IN-MEMORY BROWSER TESTED, GITHUB CI PASS, PUBLIC PAGES LIVE. GATE A STILL NOT APPROVED. v0.10 IS LOCKED.**
