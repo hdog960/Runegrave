@@ -1,5 +1,5 @@
-/** v0.07: deterministic health/death/restart added to the Rootvault Soulbolt training.
- * Environmental ember glyphs are NOT enemies (enemy AI begins at v0.08).
+/** v0.08: two-wave hostile crypt, Rootbound Warden, and locked-door transitions.
+ * All actual game content stays strictly inside the measured gameplay canvas.
  */
 import { rngStream } from '../core/rng.js';
 import { paintSanctuary, drawWayfarer } from './sanctuaryArt.js';
@@ -11,6 +11,8 @@ import { drawPracticeTargets, drawSoulbolts, drawCombatSparks } from '../combat/
 import { MortalHearts, heartSlots } from '../health/mortalHearts.js';
 import { EmberTrial } from '../health/emberTrial.js';
 import { drawEmberTrial } from '../health/healthArt.js';
+import { HostileEncounter, placeRoomExit, walkableRoute } from '../enemies/encounters.js';
+import { drawEncounter } from '../enemies/enemyArt.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -30,7 +32,12 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     let raf = 0, lastTime = 0, lastFrameMs = -Infinity, paused = false, initialized = false;
     let walking = ZERO, firing = false, world, combat, trial;
     const health = new MortalHearts();
-    let dead = false, restarts = 0;
+    let dead = false, complete = false, restarts = 0;
+    let mode = 'practice';
+    let encounter;
+    let practiceExit;
+    const completeOverlay = document.querySelector('#trial-clear-overlay');
+    const floorLabel = document.querySelector('.status-middle');
     const deathOverlay = document.querySelector('#death-overlay');
     const heartLine = document.querySelector('[data-heart-icons]');
     const heartReadout = document.querySelector('[data-heart-readout]');
@@ -40,7 +47,9 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     const sparks = [];
     const score = document.querySelector('[data-combat-score]');
     function attachCombat(nextWorld) {
-        combat = new SoulboltCombat(nextWorld, actor);
+        combat = new SoulboltCombat(nextWorld, actor, mode === 'practice');
+        if (encounter)
+            combat.setHostileHitHandler((p, radius, damage, dir) => encounter?.hitAt(p, radius, damage, dir) || null);
         sparks.length = 0;
         combat.on('impact', e => {
             if (sparks.length >= 24)
@@ -79,6 +88,24 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         canvas.dataset.hazardHits = String(trial?.state.contacts || 0);
         canvas.dataset.shrineReady = String(trial?.shrine.ready ?? false);
         canvas.dataset.restarts = String(restarts);
+        const activeExit = encounter?.exit || practiceExit;
+        canvas.dataset.exitX = activeExit ? activeExit.x.toFixed(2) : '';
+        canvas.dataset.exitY = activeExit ? activeExit.y.toFixed(2) : '';
+        canvas.dataset.room = mode;
+        canvas.dataset.roomPhase = encounter?.snapshot.phase || (complete ? 'finished' : 'gate');
+        canvas.dataset.roomWave = String(encounter?.snapshot.wave || 0);
+        canvas.dataset.hostilesAlive = String(encounter?.snapshot.enemies.filter(e => e.alive).length || 0);
+        canvas.dataset.hostileKills = String(encounter?.snapshot.kills || 0);
+        canvas.dataset.bossPhase = String(encounter?.snapshot.bossPhase || 0);
+        canvas.dataset.bossDefeated = String(encounter?.snapshot.bossDefeated || false);
+        canvas.dataset.enemyProjectiles = String(encounter?.snapshot.projectiles.length || 0);
+        document.documentElement.dataset.roomName = complete ? 'COMPLETE' : mode.toUpperCase();
+        document.documentElement.dataset.roomPhase = mode === 'practice' ? 'ANTEROOM · EAST GATE OPEN' : mode === 'complete' ? 'TRIAL COMPLETE' : encounter?.snapshot.phase === 'gate' ? `${mode === 'crypt' ? 'CRYPT CLEARED' : 'WARDEN FELLED'} · EXIT OPEN` : mode === 'crypt' ? `CRYPT · WAVE ${encounter?.snapshot.wave || 1}/2 · LOCKED` : `WARDEN · PHASE ${encounter?.snapshot.bossPhase || 1}/2`;
+        const footer = document.querySelector('[data-run-status]');
+        if (footer)
+            footer.textContent = document.documentElement.dataset.roomPhase;
+        if (floorLabel)
+            floorLabel.textContent = mode === 'practice' ? 'MIDGARD · ROOTVAULT ANTECHAMBER' : mode === 'crypt' ? 'MIDGARD · THE SIXFOLD CRYPT' : mode === 'warden' ? 'MIDGARD · ROOTBOUND WARDEN' : 'MIDGARD · ROOTVAULT CLEARED';
         if (heartLine) {
             heartLine.replaceChildren();
             for (const [i, slot] of heartSlots(hs.units, hs.maxUnits).entries()) {
@@ -112,14 +139,17 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         }
         else if (!isPositionFree(world, actor))
             actor = safeSpawn(world, actor);
-        // Rebuild training objects to fit the new, physically unobstructed room bounds.
+        // Reframe hostile positions while retaining their health/wave/progress on orientation change.
         const previous = trial?.exportState();
+        practiceExit = placeRoomExit(world);
+        if (encounter)
+            encounter.reframe(world);
         attachCombat(world);
         const movement = combat?.getMovementWorld() || world;
         if (!isPositionFree(movement, actor))
             actor = safeSpawn(movement, actor);
-        trial = new EmberTrial(world, actor, combat?.targets || []);
-        if (previous)
+        trial = mode === 'practice' ? new EmberTrial(world, actor, combat?.targets || []) : undefined;
+        if (previous && trial)
             trial.restoreState(previous);
         canvas.width = next.pixelWidth;
         canvas.height = next.pixelHeight;
@@ -136,6 +166,17 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         paintSanctuary(g, W, H, time);
         if (trial)
             drawEmberTrial(g, trial, time);
+        if (encounter)
+            drawEncounter(g, encounter, time);
+        if (mode === 'practice' && practiceExit) {
+            const d = practiceExit;
+            g.save();
+            g.translate(d.x, d.y);
+            rect(g, -10, -16, 19, 32, '#222c32');
+            rect(g, -7, -12, 13, 25, '#426b62');
+            rect(g, -2, -8, 4, 17, '#c2e0a5');
+            g.restore();
+        }
         if (combat) {
             drawPracticeTargets(g, combat.targets, time);
             drawSoulbolts(g, combat.bolts, time);
@@ -150,8 +191,33 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
                 rect(g, e.x, y, e.s, e.s, i % 3 === 0 ? '#e9c582' : '#6d9e94');
         }
     }
+    function enterRoom(room) {
+        if (!world)
+            return;
+        mode = room;
+        trial = undefined;
+        sparks.length = 0;
+        clock.reset();
+        actor = safeSpawn(world, { x: world.width * .26, y: world.minY + 24 });
+        encounter = new HostileEncounter(world, room, actor);
+        attachCombat(world);
+        walking = ZERO;
+        firing = false;
+        lastAim = { x: 1, y: 0 };
+        emitState();
+    }
+    function finishTrial() {
+        mode = 'complete';
+        complete = true;
+        walking = ZERO;
+        firing = false;
+        if (completeOverlay)
+            completeOverlay.hidden = false;
+        emitState();
+        onDeath();
+    }
     function update(dt) {
-        if (paused || dead || !world || !metrics)
+        if (paused || dead || complete || !world || !metrics)
             return;
         const input = readInput();
         if (input.paused)
@@ -165,14 +231,15 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         combat?.update(dt, actor, lastAim, input.firing);
         health.step(dt);
         const outcome = trial?.step(dt, actor, health);
-        if (outcome?.damage === 'dead') {
+        encounter?.step(dt, actor, health);
+        if (health.state.dead) {
             dead = true;
             walking = ZERO;
             firing = false;
             if (deathOverlay)
                 deathOverlay.hidden = false;
             if (deathCount)
-                deathCount.textContent = `${health.state.hits} WOUNDS · ${combat?.state.shattered || 0} RUNESTONES SHATTERED`;
+                deathCount.textContent = `${health.state.hits} WOUNDS · ${encounter?.snapshot.kills || 0} HOSTILES FELLED`;
             // No further simulation when the thread breaks. The replacement menu is only
             // displayed after the simulation has genuinely stopped.
             onDeath();
@@ -181,6 +248,20 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             sparks[i].life -= dt;
             if (sparks[i].life <= 0)
                 sparks.splice(i, 1);
+        }
+        if (mode === 'practice' && practiceExit && Math.hypot(actor.x - practiceExit.x, actor.y - practiceExit.y) < 18) {
+            enterRoom('crypt');
+            return;
+        }
+        if (encounter?.canLeave(actor)) {
+            if (mode === 'crypt') {
+                enterRoom('warden');
+                return;
+            }
+            if (mode === 'warden') {
+                finishTrial();
+                return;
+            }
         }
         emitState();
     }
@@ -193,7 +274,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         }
         const delta = lastFrameMs === -Infinity ? 0 : Math.min(.1, Math.max(0, (ms - lastFrameMs) / 1000));
         lastFrameMs = ms;
-        if (!paused && !dead) {
+        if (!paused && !dead && !complete) {
             clock.advance(delta, dt => update(dt));
             if (ms - lastTime >= 1000 / 45) {
                 lastTime = ms;
@@ -228,12 +309,18 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     return {
         resize, getMetrics: () => metrics,
         getActor: () => ({ ...actor, boltCount: combat?.state.activeBolts || 0, physicsTick: clock.ticks, shattered: combat?.state.shattered || 0 }),
+        getEncounter: () => encounter,
         getHealth: () => health.state,
+        isComplete: () => complete,
+        getPathToExit: () => world && walkableRoute(world, actor, encounter?.exit || practiceExit || actor),
         restart: () => {
-            if (!world || !dead)
+            if (!world || (!dead && !complete))
                 return false;
             health.reset();
             dead = false;
+            complete = false;
+            mode = 'practice';
+            encounter = undefined;
             paused = false;
             restarts++;
             clock.reset();
@@ -247,13 +334,15 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             trial = new EmberTrial(world, actor, combat?.targets || []);
             if (deathOverlay)
                 deathOverlay.hidden = true;
+            if (completeOverlay)
+                completeOverlay.hidden = true;
             emitState();
             render(lastTime);
             if (!raf && !document.hidden)
                 raf = requestAnimationFrame(tick);
             return true;
         },
-        setPaused: (value) => { if (dead)
+        setPaused: (value) => { if (dead || complete)
             return; paused = value; walking = ZERO; firing = false; clock.reset(); lastFrameMs = -Infinity; if (!value && raf === 0 && !document.hidden)
             raf = requestAnimationFrame(tick); },
         stop: () => { observer.disconnect(); window.removeEventListener('orientationchange', onOrientation); document.removeEventListener('visibilitychange', onVisibility); if (raf)

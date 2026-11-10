@@ -145,7 +145,7 @@ export class TwinStickControls {
     if(this.destroyed)return;
     this.dead=value;this.paused=false;this.overlay.hidden=true;
     this.clearTransient();this.pauseButton.disabled=value;
-    this.pauseButton.textContent=value?'ᛉ FALLEN':'ᛏ PAUSE';
+    this.pauseButton.textContent=value?(document.documentElement.dataset.roomName==='COMPLETE'?'ᛉ CLEARED':'ᛉ FALLEN'):'ᛏ PAUSE';
     this.pauseButton.setAttribute('aria-pressed','false');
     document.documentElement.dataset.dead=String(value);
     document.documentElement.dataset.paused='false';
@@ -170,7 +170,8 @@ export class TwinStickControls {
   }
   refreshStatus(){
     const s=this.snapshot;
-    this.playStatus.textContent=this.dead?'THREAD SEVERED · RESTART':s.paused?'PAUSED · INPUT RELEASED':s.firing?'SOULBOLT INPUT · ACTIVE':Math.hypot(s.move.x,s.move.y)>.05?'MOVEMENT INPUT · ACTIVE':'INPUT TRAINING · NO ENEMIES';
+    const room=document.documentElement.dataset.roomName||'PRACTICE';
+    this.playStatus.textContent=this.dead?(room==='COMPLETE'?'TRIAL COMPLETE':'THREAD SEVERED · RESTART'):s.paused?'PAUSED · INPUT RELEASED':document.documentElement.dataset.roomPhase||'ANTEROOM · EAST GATE OPEN';
   }
   destroy(){this.destroyed=true;this.clearTransient();for(const stop of this.stopListeners)stop();this.stopListeners=[];}
 }

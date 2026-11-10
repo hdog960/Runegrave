@@ -31,3 +31,16 @@ Physics exists, but neither a walkable scenery trial nor a decorative moving tra
 ## v0.07 — Mortal Thread accounting (2026-11-09)
 
 **Verified functional systems:** Mortal Hearts with half-heart states, timed environmental damage with one-second invulnerability, simple healing shrine, death and restart. Two rune hazards and a refill shrine are environmental test instruments, not distinct enemies. The three previously implemented destructibles remain practice targets. **Full-release count remains unchanged:** relics 0, talismans 0, playable variants 0, hostile enemy types 0, bosses 0, procedurally valid rooms 0, transformations 0, challenges 0, endings/routes 0, authored synergies 0. v0.08 enemy/room/boss milestone and v0.09 Gate A await future verified implementation.
+
+## v0.08 verified implemented gameplay accounting (pending publication verification)
+
+| Gameplay category | Verified code-backed playable units | Evidence |
+|---|---:|---|
+| Distinct hostile enemy kinds | **6** | `src/enemies/encounters.ts`, `src/enemies/enemyArt.ts`, `tests/enemies.test.mjs`: distinct damage/behavior/attack families, deterministic two-wave room, HP/telegraphs |
+| Distinct bosses | **1** | Two-phase **Rootbound Warden** with 28 HP, aimed fan volleys, phase transition, defeat and exit unlocking |
+| Implemented authored encounter sequences | **2** | Two-wave Sixfold Crypt and Warden boss room; these are **not** counted as procedurally generated room configurations |
+| Fully procedural valid rooms credited | **0** | 25-room first prototype is planned at v0.09; seeded graph and mature room library remain future tasks |
+| Playable roster variants counted | **0** | Existing Wayfarer training avatar is not yet audited/approved as a complete character identity |
+| Relics / talismans / transformations / endings / challenge completions | **0** | No fake registry entries or completion rewards |
+
+The practice antechamber remains outside the enemy count. The **six enemy** and **one boss** counts are supported by real instantiated attack and damage rules, but their final mobile balance and artistic acceptance are still pending. This combat trial does **not** satisfy v0.09's 8 relics, 25 rooms, and player Gate A approval. Nothing in the 750-relic / 34-variant / 250-enemy / 100-boss / 5,000-room v1.0 target has been reduced.

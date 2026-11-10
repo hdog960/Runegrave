@@ -46,10 +46,13 @@ export class SoulboltCombat {
     shattered = 0;
     listeners = new Map();
     emitting = false;
-    constructor(world, hero) {
+    hostileHit = null;
+    constructor(world, hero, trainingTargets = true) {
         this.world = world;
-        this.targets = makeTrainingTargets(world, hero);
+        this.targets = trainingTargets ? makeTrainingTargets(world, hero) : [];
     }
+    /** External hostile hit adapter. Damage still originates in this pooled Soulbolt pipeline. */
+    setHostileHitHandler(handler) { this.hostileHit = handler; }
     on(type, listener) {
         let set = this.listeners.get(type);
         if (!set) {
@@ -122,6 +125,13 @@ export class SoulboltCombat {
                 b.active = false;
                 this.emit({ type: 'impact', bulletId: b.id, x, y, targetId: null, damage: 0 });
                 this.emit({ type: 'expire', bulletId: b.id, reason: 'wall' });
+                break;
+            }
+            const hostileId = this.hostileHit?.(p, SOULBOLT_STATS.radius, b.damage, { x: b.dx, y: b.dy });
+            if (hostileId) {
+                b.active = false;
+                this.hits++;
+                this.emit({ type: 'impact', bulletId: b.id, x, y, targetId: hostileId, damage: b.damage });
                 break;
             }
             const victim = this.targets.find(t => t.alive && Math.hypot(x - t.x, y - t.y) <= t.radius + SOULBOLT_STATS.radius);

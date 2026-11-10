@@ -1,4 +1,18 @@
-## v0.07 — The Mortal Thread (implementation cycle, 2026-11-09)
+# Verified Change Log
+
+## v0.08 — The Sixfold Crypt and Rootbound Warden (2026-11-09)
+
+- Added six independently implemented hostile AI families: advancing **draugr**, strafing **wisp**, distance-managing **archer**, telegraphed **charger**, radial-volley **root sentinel**, and vanishing/reappearing **shade**. Each has actual health, damage behavior, unique original authored pixel silhouette and appropriate warning cues. Names and behaviors are project-original.
+- Added first real boss **Rootbound Warden**: 28 HP, two mechanical phases, telegraphed aimed fan volleys, more dangerous phase two, bespoke silhouette and defeat-recorded exit unlocking.
+- Added connected encounter flow: preserved **Rootvault practice antechamber** (existing v0.06 destructibles and v0.07 ember/shrine), then a locked **Sixfold Crypt** with two three-enemy waves, followed by the boss chamber and a stopped-world **trial-cleared** screen. Exits open only after required hostiles are defeated. This is not a final story ending.
+- Added graph-free, camera-aware **walkable route validation** so an apparently clear doorway in an isolated pocket is rejected. Path tests exercise compact and large reference rooms. Camera/world resizing preserves encounter HP, kills, waves and boss phase, and safely removes off-camera hostile projectiles.
+- Integrated actual enemy hitpoints and knockback into the existing pooled Soulbolt collision pipeline via an optional hostile-hit adapter; non-hostile practice targets and associated training hooks are retained separately. Hostile projectile sweeps check solid scenery and room bounds, damage the player via Mortal Hearts and respect invulnerability frames. Warnings precede shots/dashes.
+- Preserved original v0.04 Norse interface and artwork, v0.03 independently captured two-thumb grips, v0.05 fixed 120 Hz physics, v0.06 Soulbolt pooling, v0.07 death/restart, the PWA and saved handedness/input settings. All live HUD remains outside the dedicated gameplay canvas; menus may replace the stage only when stopped.
+- Local evidence: strict TypeScript typecheck PASS; **54/54 Node tests PASS**, plus four landscape and one portrait Chromium input/zero-overlap checks. One integration audit traversed practice by actual movement, while a separate test-only damage injection verified two-wave clear, boss phase changes, exit gating, completion/restart through the real stage UI. These are not real iPhone hardware tests and are not claims of a human-played complete run.
+- All seven canonical documents, v1.0 content targets and Gate A/B/C/D are unchanged. The **first visual approval remains locked at v0.09**, not v0.08.
+- **Deployment and GitHub checks must be verified after publication**; initial local test evidence alone is not a live-deploy claim.
+
+Thread (implementation cycle, 2026-11-09)
 
 - Added deterministic, test-covered `MortalHearts` state: 3 Mortal Heart containers, half-heart damage, grace/invulnerability, bounded healing, lethal death, no accidental healing-based revival, and explicit restart reset.
 - Added timed original in-world ember rune hazards with visible telegraph and actual contact damage, plus a refill shrine with finite cooldown. These are environmental training elements, not AI enemies.

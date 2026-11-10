@@ -21,9 +21,9 @@ An original Norse-mythology, iPhone-first action roguelike, planned for GitHub P
 
 ## Development baseline
 
-- **Current development milestone:** v0.07 — Mortal Hearts, environmental damage, invulnerability, healing and death/restart implemented and tested locally; static Pages deployment tracked in the release ledger.
+- **Current development milestone:** v0.08 — two-wave Sixfold Crypt, six hostile behaviors, first Rootbound Warden boss, reachable gated exits; locally implemented and tested. Public deployment is separately verified in the release ledger.
 - [Verified release status](docs/RELEASE_STATUS.md) · [Change log](docs/CHANGELOG.md) · [Content ledger](docs/CONTENT_LEDGER.md)
 - Local build: `npm ci && npm test`; static site output: `dist/`.
-- **Next:** v0.08 — six enemy behaviors, room combat locks and first boss; v0.09 remains Gate A visual approval.
+- **Next:** v0.09 — first 25-room and eight-relic prototype, additional combat polish, and **mandatory Gate A player visual approval**.
 
 Implementation and deployment claims must match evidence in the release ledger; the full original roadmap remains locked.

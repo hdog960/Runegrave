@@ -14,3 +14,7 @@ The handheld shell now has deeper woodgrain/iron/aged-gold engraving, recesses, 
 ## v0.06 world-space combat visuals
 
 The first live Soulbolts are authored teal-white pixel-geometry projectile sprites with restrained trail illumination, hit motes and break sparks. Carved ash-and-iron practice effigies and an urn are **original non-hostile props** designed to teach impact and damage without suggesting enemies are ready early. The three-region dark ash/bronze handheld and left/right Norse rune grips remain in place; projectile VFX are world objects that never cause HUD or touch controls to overlay active combat. Future enemy telegraphs, health feedback and major UI art still require v0.07–v0.09 work and player approval at Gate A.
+
+## v0.08 — Original hostile silhouettes and telegraphs
+
+Six newly authored pixel-geometry enemies are distinguished by silhouette and movement, not color alone: shielded draugr, hovering wisp, archer, twin-horned charger, iron-root sentinel and fading shade. The Rootbound Warden has a bespoke broad-shouldered root-armored body and changes accent and pattern in phase two. Enemy windups use circular runic warnings and, where meaningful, dotted aim lines inside the world canvas. Health is context-anchored to each enemy; player hearts and stage information remain wholly outside the canvas. Original artwork is still a development prototype and needs explicit **v0.09 Gate A** visual/player approval; no approval is presumed.
