@@ -1,0 +1,50 @@
+# RUNEGRAVE — Verified Release Status
+
+## v0.05 — Rootvault Physics and Collision (2026-11-09)
+
+**Milestone:** v0.05 implemented and locally tested; GitHub deployment status is recorded below. **No enemy damage, true Soulbolt combat, health/death or valid roguelike run is claimed.**
+
+- **Baseline:** `003780679dc2af165aaae9caae72287b29ea689c` on `main` (latest v0.04 release ledger). Original v0.04 artwork and the entire v0.03 dual-rail control system are preserved.
+- **Implementation:** New pure `src/physics/world.ts` describes room boundaries, sarcophagi, pillars, and tree roots as typed boxes/circles/capsules; collision-free spawn selection and root-aware movement are deterministic and resolution-aware. New `src/physics/fixedStep.ts` advances the simulation at **120 ticks/second** independent of rendering, with bounded catch-up, resume clearing and safe pause handling. Stage renderer still draws only into the measured central canvas.
+- **Regression:** Saved control settings continue under the unchanged `runegrave:input:v1` key. Save schema remains 1 (run-save persistence not implemented until v0.18). PWA asset cache `runegrave-shell-v0.05.0` includes both new runtime physics modules. No gameplay controls/HUD over the live playfield.
+- **Local checks:** `npm run typecheck` **PASS**; `npm test` **26/26 PASS**, including fixed-step determinism at 30/60/120/144 Hz, wall/tomb/root collisions, safe spawns, no high-speed tunneling, invalid input rejection, and replay reproducibility.
+- **Browser checks:** Local in-memory Chromium **PASS** at 667×375, 760×360, 844×390, 932×430 landscape + 390×844 portrait; tested simultaneous movement/aim, touch cancel, keyboard, pause, left-handed preference storage, viewport resize, wall contact, root collision safety, camera match and zero HUD/controls intersection. These are NOT physical iPhone tests.
+- **Content ledger:** 0 implemented relics, 0 playable characters, 0 actual enemies, 0 bosses, 0 valid procedural rooms. The scenic training avatar and decorative training bolts are not counted as playable combat.
+- **Approval gates:** v0.09, v0.39, v0.79, v0.99 remain unchanged. Gate A not yet reached.
+- **Next:** v0.06 real Soulbolt attack pipeline, damage and projectile collision, pooling, destructible practice objects, and combat hooks, within the existing central camera.
+
+**GitHub commit:** see latest v0.05 implementation commit on `main` after publication. **GitHub Pages status:** to be verified by public asset fetch after commit; do not equate a local build or workflow config with successful deployment. **Physical iPhone Safari/Home Screen and offline PWA lifecycle:** not yet verified.
+
+**Date:** 2026-11-09
+**Starting verified main:** `5bd5fa488e0be66aef032472ea821ddf8c408df2` (v0.02 source + status).
+**Active roadmap release:** **v0.03 — Twin-stick iPhone input**.
+
+## Implemented and locally tested
+
+- Dedicated left movement and right aim/continuous-fire rune discs, independent captured pointer IDs, multi-touch, radial dead zones, safe cancellation, left-handed swap, adjustable size/height within grips, keyboard fallback, pause/resume and background input clearing.
+- Responsive training avatar moves and emits **cosmetic training bolts** inside the true central-only stage canvas. No real collision, enemies, combat damage, boss, health, or run loop is implemented; all combat content totals remain zero.
+- On-screen paused-only controller preferences panel, validated local settings; waiting service worker update moved inside the paused panel to preserve zero-obscuration during live input. Utility actions not yet implemented stay disabled.
+- PWA cache upgraded to `runegrave-shell-v0.03.0`, compiled `js/` and mirrored branch-root runtime updated.
+- `npm run typecheck`: **PASS**. `npm test`: **13/13 PASS**. Headless local Chromium in-memory tests: **4 landscape profiles + portrait PASS** with simulated simultaneous touch pointers, cancellation, keyboard and paused-state checks, left-hand swapping, zero HUD/control overlap and no page errors.
+
+## Deployment evidence
+
+- **v0.02 public site verified reachable** before beginning: fetched `https://hdog960.github.io/Runegrave/`, `manifest.webmanifest`, and `js/main.js` successfully; fetched root displayed `v0.02` and appropriate title/manifest. Prior Pages blocker resolved.
+- **v0.03 GitHub source status:** commit evidence to be added after push. Repository update alone does not prove live Pages publication.
+- **v0.03 public site:** PENDING POST-PUSH VERIFICATION, not yet claimed as deployed.
+- **Real iPhone Safari, installed standalone PWA, offline update and physical two-thumb ergonomics:** NOT TESTED, remain open verification requirements.
+
+## Content and approvals
+
+- **Playable content:** relics 0; playable variants 0; enemies 0; bosses 0; procedurally valid rooms 0; transformations 0; endings 0. Nine realm identifiers are planned metadata. Moving preview character and decorative training bolts are not a completed gameplay encounter.
+- **Visual gate:** v0.09 Gate A remains locked; no player approval asserted. Future checkpoints v0.39, v0.79, v0.99 unchanged.
+- **Next roadmap release:** v0.04 — polish authentic Norse shell art, camera framing, central scene and HUD. Do not skip simulation/combat releases v0.05–v0.09 or any approval gate.
+
+## v0.04 post-commit publication verification — 2026-11-09 (historical evidence preserved)
+
+- **Implementation commit:** [`0f3e0cf3ab9381cd25008c3900425eddf400895a`](https://github.com/hdog960/Runegrave/commit/0f3e0cf3ab9381cd25008c3900425eddf400895a) confirmed on GitHub `main`.
+- **Public GitHub Pages static deployment VERIFIED:** successful fresh external public HTTP retrieval from `https://hdog960.github.io/Runegrave/`, `js/core/version.js` explicitly identifying `v0.04 / 0.04.0`, `js/scene/sanctuaryArt.js` containing original Rootvault artwork, and `sw.js` declaring `runegrave-shell-v0.04.0`.
+- GitHub combined commit status showed no CI records; publication does not establish a GitHub Actions test run.
+- v0.04 source locally typechecked; 16 Node tests and four landscape + one portrait browser viewport simulations passed.
+- Real iPhone Safari, installed Home Screen, offline SW lifecycle and user visual approval were NOT verified.
+- Historical release state: v0.04 implemented, locally tested, and publicly served; visual Gate A remains v0.09.
