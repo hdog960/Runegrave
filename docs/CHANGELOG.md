@@ -1,5 +1,14 @@
 # Verified Change Log
 
+## v0.05 — Rootvault Physics: The Stone Remembers (2026-11-09)
+
+- Established a reproducible 120 Hz fixed-step simulation fully separated from the v0.04 renderer and the v0.03 pointer/keyboard input layer, with bounded resume/catch-up.
+- Added camera-aware room geometry and collision shapes: stone wall limits, upper/lower columns, sarcophagi and capsule-shaped tree roots. Fixed-step movement slides around obstacles without clipping behind controls; deterministic tests cover replay seeds and multiple rendering frame rates.
+- Added safe, collision-free spawn selection and viewport resize relocation, including regression tests for narrow layouts and dangerous obstacle edges.
+- Retained handcrafted original Rootvault scene, Wayfarer art, two-thumb rail-only controls, saved handedness/preferences, portrait UI, external Norse HUD and paused-only update activation.
+- Updated v0.05 static Pages output, cache version and new offline modules; no enemy damage or true combat is counted early.
+- Local: 26/26 Node tests, TypeScript strict check and four landscape + one portrait headless browser input/geometry profiles pass. Device/Pages verification must be recorded separately.
+
 ## v0.03 — The Two Runes Answer (local implementation, 2026-11-09)
 
 - Independently controlled, pointer-captured left/right rune-disc input with two-pointer ownership, cancellation, 15% radial dead zone, directional scaling and simultaneous movement/continuous-fire aim. The right disc fires while held; left-handed mode swaps movement and aim between physical grips.

@@ -9,7 +9,7 @@ DIST=OUT/'dist'
 HTML=re.sub(r'<script[^>]+src="./js/main.js"[^>]*></script>','',(DIST/'index.html').read_text())
 HTML=re.sub(r'<link[^>]+(?:stylesheet|manifest|icon)[^>]*>','',HTML)
 CSS=(DIST/'styles.css').read_text()
-MODULES=['core/version.js','core/rng.js','core/ids.js','content/realmCatalog.js','input/vector.js','input/twinStick.js','scene/sanctuaryArt.js','scene/stage.js','platform/pwa.js','main.js']
+MODULES=['core/version.js','core/rng.js','core/ids.js','content/realmCatalog.js','input/vector.js','input/twinStick.js','scene/sanctuaryArt.js','physics/world.js','physics/fixedStep.js','scene/stage.js','platform/pwa.js','main.js']
 JS='\n'.join((DIST/'js'/m).read_text() for m in MODULES)
 JS=re.sub(r'^import .*?;\s*$','',JS,flags=re.MULTILINE)
 JS=re.sub(r'^export (?=(?:const|class|function|async)\b)','',JS,flags=re.MULTILINE)
@@ -46,11 +46,11 @@ with sync_playwright() as p:
         page.wait_for_timeout(280)
         if name=='portrait':
             assert page.locator('.rotate-message').is_visible();assert not page.locator('.handheld').is_visible()
-            page.screenshot(path=str(OUT/'v004-portrait.png'))
+            page.screenshot(path=str(OUT/'v005-portrait.png'))
             print(name,'portrait orientation gate PASS',errs)
             assert not errs;ctx.close();continue
         before=snapshot(page)
-        assert before['version']=='0.04.0',before
+        assert before['version']=='0.05.0',before
         assert before['canvas']==before['frame'],before
         assert before['canvas']['width']>0 and not before['collisions'],before
         # Camera world geometry must precisely match the measured stage surface.
@@ -58,6 +58,7 @@ with sync_playwright() as p:
         assert abs(cam['w']/cam['h']-before['frame']['width']/before['frame']['height'])<.002,(cam,before)
         assert cam['w']>=400 and cam['h']>=100,(cam,before)
         assert before['panelHidden'] and not errs,(before,errs)
+        assert page.evaluate("document.querySelector('#gameplay-canvas').dataset.safeSpawn")=='true'
         # Two simultaneous independent touch pointers, each tracked by pointer ID in a separate grip.
         dispatch(page,'#move-rune-disc','pointerdown',11,.92,.5)
         dispatch(page,'#aim-rune-disc','pointerdown',22,.5,.05)
@@ -67,6 +68,7 @@ with sync_playwright() as p:
         assert 'SOULBOLT' in active['status'],active
         assert active['bolts']>0,active
         assert not active['collisions'],active
+        assert page.evaluate("document.querySelector('#gameplay-canvas').dataset.safeSpawn")=='true'
         # Releasing only movement must not release the other thumb's aim.
         dispatch(page,'#move-rune-disc','pointerup',11,.92,.5)
         page.wait_for_timeout(110)
@@ -76,6 +78,14 @@ with sync_playwright() as p:
         page.wait_for_timeout(120)
         released=snapshot(page)
         assert 'SOULBOLT' not in released['status'],released
+        # World collision integration: pressing into an impassable top wall never enters it.
+        page.keyboard.down('KeyW');page.wait_for_timeout(1100)
+        boundary=snapshot(page)
+        assert boundary['actor'][1]>=86,(name,boundary)
+        assert page.evaluate("document.querySelector('#gameplay-canvas').dataset.safeSpawn")=='true',boundary
+        page.keyboard.up('KeyW')
+        # Layout and camera still match after simulating independent physics ticks.
+        assert not boundary['collisions'] and not errs,(boundary,errs)
         # Keyboard fallback including auto-release upon background interruption.
         page.keyboard.down('KeyA');page.wait_for_timeout(100)
         moving=snapshot(page)
@@ -110,14 +120,15 @@ with sync_playwright() as p:
         swapped_moving=snapshot(page)
         assert swapped_moving['actor'][0]>swapped['actor'][0]+5, (swapped,swapped_moving)
         assert 'SOULBOLT' in swapped_moving['status'],swapped_moving
-        page.screenshot(path=str(OUT/f'v004-{name}.png'))
+        page.screenshot(path=str(OUT/f'v005-{name}.png'))
         dispatch(page,'#aim-rune-disc','pointercancel',33,.91,.5)
         dispatch(page,'#move-rune-disc','pointercancel',44,.5,.03)
         # Resize in the same running session: stage and status elements remain separate.
         page.set_viewport_size({'width':w+24,'height':h+4});page.wait_for_timeout(180)
         resized=snapshot(page)
         assert resized['canvas']==resized['frame'] and not resized['collisions'],resized
-        assert resized['version']=='0.04.0' and not errs,errs
+        assert resized['version']=='0.05.0' and not errs,errs
+        assert page.evaluate("document.querySelector('#gameplay-canvas').dataset.safeSpawn")=='true'
         print(name,'PASS: multitouch, independent cancellation, keyboard, pause, handedness, persistent settings, zero-overlap, errors=0')
         ctx.close()
     browser.close()

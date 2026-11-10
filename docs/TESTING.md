@@ -39,3 +39,10 @@ Do not report GitHub Pages deployment or visual device acceptance from a local b
 - The new scenic renderer completed without JavaScript exceptions at all browser dimensions. The UI footer engraving was corrected after the first visual review to avoid crowding at narrow screen sizes.
 - Browser navigation to localhost is blocked by the test container (ERR_BLOCKED_BY_ADMINISTRATOR), so real HTTP/service-worker offline lifecycle testing was **not possible locally**. `npm ci --offline` likewise could not install the uncached TypeScript tarball; the installed TypeScript compiler compiled and type-checked successfully. These environment limitations must not be described as passing.
 - **Physical iPhone Safari/Home Screen, two-thumb ergonomics and user visual approval NOT YET VERIFIED.** v0.04 screenshot shown as a prototype for feedback, not Gate A approval.
+
+## v0.05 deterministic collision and stage-integration audit — 2026-11-09
+
+- `npm run typecheck` PASS; `npm test` **26/26 PASS** on Node 22 and TypeScript 5.8.3. Added 10 deterministic physics tests for 30/60/120/144 FPS equivalence, bounded frame catch-up, circle/AABB/capsule collision, safe spawn, high-speed obstacle crossing, sliding, wall containment, invalid inputs and replay stability.
+- A first edge-case regression caught a capsule-root versus upper-wall pinch that could leave the player inside collidable scenery; the solver was corrected to accept **only collision-free candidate positions** and the test retained.
+- `python scripts/input_browser_audit.py`: four simulated landscape iPhone viewport profiles (667×375, 760×360, 844×390, 932×430) plus portrait (390×844) all PASS with no uncaught page errors. Tested input and pause regression, left-handed swap and persisted settings, resized camera rectangle, a sustained physical wall movement, collision-safe actor telemetry, and no control/HUD/canvas intersection.
+- Chromium testing is local/in-memory and **not** a Safari physical device check, service worker network lifecycle test, or proof of player-art approval. The full game, enemies, actual damage and seeded rooms are future milestones.

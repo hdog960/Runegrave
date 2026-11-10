@@ -37,3 +37,10 @@
 - `stageMetrics(cssWidth, cssHeight, dpr)` receives only the center `#world-frame` bounds and sizes canvas backing pixels; its virtual width is 420 and height `420 * cssHeight / cssWidth`. World paint never extends under grip elements.
 - `scene/sanctuaryArt.ts` draws decoration in world space, before player/projections; no UI overlay is drawn within the active world canvas. Scene layout is preview art without wall collision or enemy hazards, which are planned for v0.05–v0.08.
 - `input/twinStick.ts` retains independent pointer and keyboard input. Pause/menu overlays only replace the renderer when the simulation is paused. `runegrave:input:v1` is unchanged.
+
+## v0.05 physics contract
+
+- `src/physics/fixedStep.ts`: fixed 1/120-second simulation ticks with accumulator and 12-step maximum catch-up. Frame rendering and real elapsed browser seconds do not change physics step length; pause and page background reset carried fractional time.
+- `src/physics/world.ts`: deterministic, browser-free collision geometry, circle-vs-box/circle/capsule contact checks, small-step solid movement with axis sliding, validated spawn search, and geometry rebuilt on camera resize. Collision bodies match the visible Rootvault sarcophagi, columns and roots. Art-only decorative floor markings are intentionally walkable.
+- `src/scene/stage.ts`: reads `TwinStickControls.snapshot`, applies movement at a stable speed without diagonal inflation, respects the physically bounded center canvas, and exports numeric canvas data attributes for browser verification. Attack tracers are still **cosmetic** pending v0.06 combat. The PWA assets are versioned to include the two physics modules.
+- The runtime does not add run-save data or change the `runegrave:input:v1` preference schema. Other character, enemy, collision layers and real weapons are intentionally not counted until later roadmap milestones.

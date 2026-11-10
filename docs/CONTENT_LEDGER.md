@@ -17,3 +17,7 @@ The canonical targets in [ROADMAP.md](ROADMAP.md) and [DESIGN_BIBLE.md](DESIGN_B
 | Realm floor implementations | 9 | 0 | 9 planned IDs only |
 
 An ID, display name, sprite sketch, or registry stub counts as zero until gameplay, validity tests, and release verification prove the content is functional. Future updates must link concrete evidence.
+
+## v0.05 verified count (2026-11-09)
+
+Physics exists, but neither a walkable scenery trial nor a decorative moving training avatar counts as a procedural room or playable character. **All functional content totals remain zero; nine realm IDs remain planned metadata only.**

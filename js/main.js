@@ -3,10 +3,10 @@ import { mountStage } from './scene/stage.js';
 import { TwinStickControls } from './input/twinStick.js';
 import { preparePwa } from './platform/pwa.js';
 import { PLANNED_REALMS } from './content/realmCatalog.js';
-// v0.04 visual prototype: responsive original pixel art, preserved v0.03 inputs; no enemy combat.
+// v0.05 deterministic physical collision prototype; no enemy combat or damage yet.
 const version = document.querySelector('[data-release]');
 if (version)
-    version.textContent = `${ROADMAP_VERSION} · ART TRIAL`;
+    version.textContent = `${ROADMAP_VERSION} · PHYSICS TRIAL`;
 const canvas = document.querySelector('#gameplay-canvas');
 if (!canvas)
     throw new Error('Missing center-only game canvas');
