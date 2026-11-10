@@ -8,6 +8,7 @@ import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.j
 import { drawEnemyGesture } from './gestureArt.js';
 import { paintEnemyAccents } from './armorAccents.js';
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
+import { paintEnemyActionFrame } from './attackPoseFrames.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS=Object.freeze({
@@ -79,7 +80,7 @@ function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
  g.restore();
 }
 
-function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number){
+function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number,reducedMotion=false){
  const x=Math.round(e.x),y=Math.round(e.y),f=e.flash>0;
  const motion=enemyVisualMotion(e,t);
  g.save();g.translate(x,y+motion.bob);g.scale(motion.facing,1);
@@ -113,6 +114,7 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number){
  }
  drawEnemyGesture(g,e.kind,e.state,e.phase,t);
  paintEnemyAccents(g,e.kind,e.state,e.phase,t);
+ paintEnemyActionFrame(g,e,t,reducedMotion);
  g.restore();
  if(e.hp<e.maxHp || e.kind==='warden'||e.state==='warning'){
   const width=e.kind==='warden'?45:19;
@@ -120,13 +122,13 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number){
   px(g,x-width/2,y-e.radius-17,width*e.hp/e.maxHp,3,e.kind==='warden'?'#d3a15c':'#b5c68a');
  }
 }
-export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncounter,t:number,relicCollected=true){
+export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncounter,t:number,relicCollected=true,reducedMotion=false){
  const state=encounter.snapshot;
  for(const e of state.enemies){if(!e.alive)continue;
    if(e.state==='hidden'){
      g.strokeStyle='#a697c1';g.setLineDash([2,3]);g.beginPath();g.arc(e.x,e.y,e.radius+6,0,Math.PI*2);g.stroke();g.setLineDash([]);continue;
    }
-   runeWarning(g,e,t);sprite(g,e,t);
+   runeWarning(g,e,t);sprite(g,e,t,reducedMotion);
  }
  paintHostileProjectiles(g,state.projectiles,t);
  // Large recognizable carved doorway with LOCKED / EXIT sign and compass arrow.

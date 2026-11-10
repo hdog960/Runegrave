@@ -1,3 +1,10 @@
+## v0.09.13 — Gate A hero/environment/hostile-frame validation (2026-11-10)
+
+- `npm run typecheck`: PASS. `npm test`: **125/125 PASS**, including four new art tests checking eight facing silhouettes, four walking frames and recoil, seven enemy kinds' distinct attack poses and reduced-motion stability, five chamber depth motifs, bounded edge geometry, and preserved 25 authored rooms, eight functional relics, saved schema 1 and Gate A lock.
+- Chromium `scripts/v009_browser_audit.py`: PASS at 667x375, 760x360, 844x390, 932x430 landscape and 390x844 portrait; independent left/right pointer controls and no canvas overlap. `scripts/guide_browser_audit.py`: PASS all four landscape sizes; guide remains paused and replayable. The guide audit waits for module initialization rather than relying on a 180ms delay, fixing an intermittent *test harness* timing failure.
+- `scripts/v0095_visual_audit.py`: PASS, five actual chamber-family screenshots in in-memory Chromium, independent two-thumb input and no JS exceptions. `scripts/v009_full_run_audit.py`: PASS full practice -> eight chamber rewards -> Warden victory -> restart using test-only enemy damage and actor repositioning. `scripts/v0099_mobile_browser_audit.py`: PASS three auto-pause/interruption/resume layouts. `scripts/v0100_threat_browser_audit.py`: PASS four landscape warning/no-overlap layouts.
+- No physical iPhone Safari, Home Screen offline service-worker lifecycle, sustained mobile frame-time, unaided game clear or user visual approval has been verified. Do not declare Gate A approved or v0.10 started.
+
 ## v0.09.12 — Visual readability / mobile regression (2026-11-10)
 
 - Local strict TypeScript **PASS**, Node **121/121 PASS** (116 original + 5 tests for family ambient silhouettes, 25 authored variants, 2 hostile projectile weights, 8-direction mantle art, and offline module/cache completeness). Existing deterministic physics, all room/relic/health tests preserved.

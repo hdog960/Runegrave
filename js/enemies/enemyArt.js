@@ -4,6 +4,7 @@ import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.j
 import { drawEnemyGesture } from './gestureArt.js';
 import { paintEnemyAccents } from './armorAccents.js';
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
+import { paintEnemyActionFrame } from './attackPoseFrames.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS = Object.freeze({
@@ -111,7 +112,7 @@ function runeWarning(g, e, t) {
     }
     g.restore();
 }
-function sprite(g, e, t) {
+function sprite(g, e, t, reducedMotion = false) {
     const x = Math.round(e.x), y = Math.round(e.y), f = e.flash > 0;
     const motion = enemyVisualMotion(e, t);
     g.save();
@@ -215,6 +216,7 @@ function sprite(g, e, t) {
     }
     drawEnemyGesture(g, e.kind, e.state, e.phase, t);
     paintEnemyAccents(g, e.kind, e.state, e.phase, t);
+    paintEnemyActionFrame(g, e, t, reducedMotion);
     g.restore();
     if (e.hp < e.maxHp || e.kind === 'warden' || e.state === 'warning') {
         const width = e.kind === 'warden' ? 45 : 19;
@@ -222,7 +224,7 @@ function sprite(g, e, t) {
         px(g, x - width / 2, y - e.radius - 17, width * e.hp / e.maxHp, 3, e.kind === 'warden' ? '#d3a15c' : '#b5c68a');
     }
 }
-export function drawEncounter(g, encounter, t, relicCollected = true) {
+export function drawEncounter(g, encounter, t, relicCollected = true, reducedMotion = false) {
     const state = encounter.snapshot;
     for (const e of state.enemies) {
         if (!e.alive)
@@ -237,7 +239,7 @@ export function drawEncounter(g, encounter, t, relicCollected = true) {
             continue;
         }
         runeWarning(g, e, t);
-        sprite(g, e, t);
+        sprite(g, e, t, reducedMotion);
     }
     paintHostileProjectiles(g, state.projectiles, t);
     // Large recognizable carved doorway with LOCKED / EXIT sign and compass arrow.

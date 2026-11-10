@@ -23,7 +23,7 @@ with sync_playwright() as p:
   page=browser.new_page(viewport={'width':w,'height':h},is_mobile=True,has_touch=True,device_scale_factor=2)
   errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.set_content(HTML);page.evaluate('''() => {const storage={};Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=String(v)}});}''');page.add_style_tag(content=(DIST/'styles.css').read_text());page.add_script_tag(type='module',content=f'import "{data_module("main.js")}";')
-  page.wait_for_timeout(180)
+  page.locator('#guide-overlay').wait_for(state='visible',timeout=8000)
   assert page.locator('#guide-overlay').is_visible(),name
   assert page.evaluate('document.documentElement.dataset.paused')=='true',name
   assert page.locator('#pause-btn').is_disabled(), 'External PAUSE may not unpause behind guide'

@@ -1,6 +1,7 @@
 import { wayfarerPose } from './wayfarerMotion.js';
 import { paintWayfarerEmblems } from './wayfarerEmblems.js';
 import { paintWayfarerProfile } from './wayfarerProfileArt.js';
+import { paintWayfarerFrames } from './wayfarerFrameArt.js';
 import { paintChamberSetpieces, type ChamberFamily } from './chamberSetpieces.js';
 type Family=ChamberFamily;
 /** v0.04 original hand-authored procedural 32-bit-inspired Midgard Rootvault art.
@@ -168,7 +169,7 @@ export function paintSanctuary(g:G,W:number,H:number,t:number,family:string='ROO
  */
 /** Full Wayfarer silhouette with distinct eight-direction helmet, active attack
  * recoil, alternating boots and cloak panels. All paint remains WORLD SPACE. */
-export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,aimX:number,aimY:number,firing:boolean){
+export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,aimX:number,aimY:number,firing:boolean,reducedMotion=false){
  const m=wayfarerPose(t,dx,dy,aimX,aimY,firing);
  const faceX=m.aimX,faceY=m.aimY;
  g.save();g.translate(Math.round(x),Math.round(y));
@@ -217,6 +218,7 @@ export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,
  }
  paintWayfarerEmblems(g,m,t);
  paintWayfarerProfile(g,m,t);
+ paintWayfarerFrames(g,m,t,reducedMotion);
  // An active runebound weapon reads as the same arm that launches Soulbolts.
  const handX=faceX*18,handY=faceY*15-3;
  const recoil=m.recoil*3;

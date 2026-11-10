@@ -25,6 +25,7 @@ import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
 import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience } from './chamberAmbience.js';
+import { paintVaultDepth } from './vaultDepthArt.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -291,6 +292,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         const W = metrics.cameraWidth, H = metrics.cameraHeight;
         g.setTransform(metrics.pixelWidth / W, 0, 0, metrics.pixelHeight / H, 0, 0);
         paintSanctuary(g, W, H, time, currentRoom?.family || 'ROOT', roomIndex);
+        if (currentRoom && mode === 'crypt')
+            paintVaultDepth(g, W, H, time, currentRoom.family, roomIndex, reduced.matches);
         if (trial)
             drawEmberTrial(g, trial, time);
         if (currentRoom && mode === 'crypt') {
@@ -303,7 +306,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         if (exitTrail.length)
             paintWaystones(g, exitTrail, time);
         if (encounter)
-            drawEncounter(g, encounter, time, !drops.some(d => d.kind === 'relic' && !d.collected));
+            drawEncounter(g, encounter, time, !drops.some(d => d.kind === 'relic' && !d.collected), reduced.matches);
         drawRoomDrops(g, drops, time);
         if (mode === 'practice' && practiceExit)
             drawRuneDoor(g, practiceExit, 'east', true, time);
@@ -317,7 +320,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         feedback.paint(g, W, H);
         // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
         if (health.state.grace === 0 || Math.floor(health.state.grace * 12) % 2 === 0)
-            drawWayfarer(g, actor.x, actor.y, time, walking.x, walking.y, lastAim.x, lastAim.y, firing);
+            drawWayfarer(g, actor.x, actor.y, time, walking.x, walking.y, lastAim.x, lastAim.y, firing, reduced.matches);
         for (let i = 0; i < embers.length; i++) {
             const e = embers[i], y = (e.y - time * 6 * e.pace % 340 + 340) % 340;
             if (y < H)

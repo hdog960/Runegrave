@@ -1,6 +1,7 @@
 import { wayfarerPose } from './wayfarerMotion.js';
 import { paintWayfarerEmblems } from './wayfarerEmblems.js';
 import { paintWayfarerProfile } from './wayfarerProfileArt.js';
+import { paintWayfarerFrames } from './wayfarerFrameArt.js';
 import { paintChamberSetpieces } from './chamberSetpieces.js';
 export const ART_PALETTE = Object.freeze({
     void: '#071013', mortar: '#0c1b1c', stone: '#233433', stoneLit: '#415650',
@@ -251,7 +252,7 @@ export function paintSanctuary(g, W, H, t, family = 'ROOT', variant = 0) {
  */
 /** Full Wayfarer silhouette with distinct eight-direction helmet, active attack
  * recoil, alternating boots and cloak panels. All paint remains WORLD SPACE. */
-export function drawWayfarer(g, x, y, t, dx, dy, aimX, aimY, firing) {
+export function drawWayfarer(g, x, y, t, dx, dy, aimX, aimY, firing, reducedMotion = false) {
     const m = wayfarerPose(t, dx, dy, aimX, aimY, firing);
     const faceX = m.aimX, faceY = m.aimY;
     g.save();
@@ -305,6 +306,7 @@ export function drawWayfarer(g, x, y, t, dx, dy, aimX, aimY, firing) {
     }
     paintWayfarerEmblems(g, m, t);
     paintWayfarerProfile(g, m, t);
+    paintWayfarerFrames(g, m, t, reducedMotion);
     // An active runebound weapon reads as the same arm that launches Soulbolts.
     const handX = faceX * 18, handY = faceY * 15 - 3;
     const recoil = m.recoil * 3;

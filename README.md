@@ -1,3 +1,9 @@
+## Current release: v0.09.13 — Eight-way animated hero frames, seven enemy actions and authored vault depth (Gate A still awaiting approval)
+
+The v0.09 Gate A prototype remains a curated eight-chamber mini-run chosen from 25 authored configurations, with eight real relic effects, six hostile kinds and one Rootbound Warden boss. The v0.09.13 visual pass adds four-step Wayfarer locomotion details in eight directions, seven distinct state-linked attack silhouettes, and five near-wall architectural-depth motifs. All effects are world-space only, bounded, and do not alter combat, character hitboxes, room collision, camera framing, resource inventory, saved input preferences, or PWA update rules.
+
+**Gate A: NOT APPROVED.** Physical iPhone Safari and installed offline PWA, sustained performance, natural unaided victory and player visual/control approval have **not** been verified. v0.10 remains locked.
+
 ## Current release: v0.09.12 — Five Norse ambient signatures and clearer hostile shots (Gate A awaiting approval)
 
 The first playable Gate A build now paints ASH/IRON/ROOT/SPIRIT/FATE with different underlying wall and floor masonry and family-specific side installations, plus original Wayfarer and enemy accessory art. The 25 authored configurations, eight real relics, eight-chamber Warden mini-run, split handheld thumb grips, saved controller settings and PWA are preserved. The full 121-test local suite passes. See `docs/RELEASE_STATUS.md` for separate verified deployment information. Gate A is not yet approved; **v0.10 is locked**.

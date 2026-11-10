@@ -26,6 +26,7 @@ import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
 import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience, type ChamberAmbientFamily } from './chamberAmbience.js';
+import { paintVaultDepth, type VaultFamily } from './vaultDepthArt.js';
 
 const WIDTH=420;
 export type StageMetrics={cssWidth:number;cssHeight:number;pixelWidth:number;pixelHeight:number;cameraWidth:number;cameraHeight:number};
@@ -223,12 +224,13 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     const W=metrics.cameraWidth,H=metrics.cameraHeight;
     g!.setTransform(metrics.pixelWidth/W,0,0,metrics.pixelHeight/H,0,0);
     paintSanctuary(g!,W,H,time,currentRoom?.family||'ROOT',roomIndex);
+    if(currentRoom&&mode==='crypt')paintVaultDepth(g!,W,H,time,currentRoom.family as VaultFamily,roomIndex,reduced.matches);
     if(trial)drawEmberTrial(g!,trial,time);
     if(currentRoom&&mode==='crypt'){paintRoomFamily(g!,W,H,time,currentRoom);paintRoomSigil(g!,W,H,time,currentRoom);}
     if(currentRoom&&mode==='crypt')paintChamberAmbience(g!,W,H,time,currentRoom.family as ChamberAmbientFamily,roomIndex);
     motionTrails.paintGround(g!,W,H,currentRoom?.family||'ROOT',reduced.matches);
     if(exitTrail.length)paintWaystones(g!,exitTrail,time);
-    if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected));
+    if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected),reduced.matches);
     drawRoomDrops(g!,drops,time);
     if(mode==='practice'&&practiceExit)drawRuneDoor(g!,practiceExit,'east',true,time);
     if(combat){drawPracticeTargets(g!,combat.targets,time);drawSoulbolts(g!,combat.bolts,time);}
@@ -238,7 +240,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     feedback.paint(g!,W,H);
     // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
     if(health.state.grace===0||Math.floor(health.state.grace*12)%2===0)
-      drawWayfarer(g!,actor.x,actor.y,time,walking.x,walking.y,lastAim.x,lastAim.y,firing);
+      drawWayfarer(g!,actor.x,actor.y,time,walking.x,walking.y,lastAim.x,lastAim.y,firing,reduced.matches);
     for(let i=0;i<embers.length;i++){
       const e=embers[i]!,y=(e.y-time*6*e.pace%340+340)%340;
       if(y<H)rect(g!,e.x,y,e.s,e.s,i%3===0?'#e9c582':'#6d9e94');

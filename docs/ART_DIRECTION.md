@@ -1,3 +1,9 @@
+## v0.09.13 — Eight-direction Wayfarer and state-linked enemy frames
+
+The hero now has an additional four-frame two-leg cadence in all eight aim-facing states, paired with different front/back chest/cloak ornaments, a quarter-turn shoulder profile and a short attack recoil glint. This is modular hand-drawn Canvas pixel geometry, **not** a claim of an imported professionally authored spritesheet or finished avatar art. All six hostile species and the Rootbound Warden receive threat-state-driven silhouettes: extended claws, drawn bow, braced horns, wheel-cast rune prongs, spectral veils, and root mauls. Five family-specific outer-arch motif sets add grounded depth, kept away from the central dodge ring. Reduced-motion prefs freeze the new decorative frame cycles; no art changes are applied to hitboxes or enemy state.
+
+The overall aesthetic is still in active Gate A refinement; do not treat browser art screenshots as the user's approval.
+
 ## v0.09.12 — Clear silhouettes in a restrained combat arena
 
 The camera retains a high-contrast, unobstructed central dodge ring. The five real masonry foundations now feature a subtle edge-only atmospheric signature (embers, sparks, spores, ghostglass, woven threads); 10 bounded motifs per active room, no additional interaction or collision. Hostile spectral darts and heavy Warden embers have separate motion-facing silhouettes and tails; they remain color-independent shapes against Soulbolts. The Wayfarer receives eight-direction mantle stitches, helmet crest and firing-ring highlights but retains the same collision radius and authored facing pose. All new art stays INSIDE the canvas; thumb grips remain untouched.

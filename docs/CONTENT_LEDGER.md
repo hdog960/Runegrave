@@ -1,3 +1,7 @@
+## v0.09.13 — Cosmetic-only Gate A patch, no new game content
+
+Still **25 authored encounter configurations** (eight selected per linear mini-run), **eight functional relics**, one provisional playable Wayfarer, **six hostile enemy kinds** and **one Rootbound Warden boss**. Additional 4-step hero pose geometry, seven hostile stance sets, and five decorative architecture variants are *art*, not new characters, enemies, procedural rooms, bosses, story paths, synergies, or achievements. No shops, talismans, branching v0.10 floor graphs or ending routes claimed. Gate A remains unapproved.
+
 ## v0.09.12 — Art-only Gate A progression, no fabricated new content
 
 Existing cumulative tested content remains: 25 authored combat-room configurations (eight chosen in the curated mini-run), eight functional relics, six hostile enemy behaviors, one Rootbound Warden, silver/healing pickups, one provisional hero and one boss path. Five ambient art signatures and two projectile visual weights are **presentation**, not new rooms/enemies, and do not count toward planned full game content. Gate A **UNAPPROVED**. No v0.10 floor graph or late-game system started.

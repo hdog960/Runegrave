@@ -1,3 +1,11 @@
+## v0.09.13 — Eight-way Wayfarer frames and readable hostile stances (Gate A STILL PENDING; 2026-11-10)
+
+- Added `src/scene/wayfarerFrameArt.ts`: eight facing-specific helmet jewels, visible front/back cloak and armor details, four-frame grounded walking plate animation, short recoil accent only while actually firing. Reduced-motion setting freezes added cosmetic frames. This layer never influences the existing aiming/physics model.
+- Added `src/enemies/attackPoseFrames.ts`: all six hostile kinds and the existing Warden now have authored idle/windup/charge silhouettes (draugr claws, wisp trails, archer bow, charger horns/hooves, sentinel casting prongs, shade cloth and Warden root mauls). Actual attack timing, projectile speed, enemy state and damage do not change.
+- Added `src/scene/vaultDepthArt.ts`: distinct side-wall architectural framing for Ash, Iron, Root, Spirit and Fate, with variable engraved panels. Bounded to outer edges and drawn before any actor/telegraph so central combat stays readable. No collision or room data changes.
+- Extended the compiled PWA precache with the three new JavaScript modules and incremented the app/cache to `0.09.13`. Existing seven authoritative documents and version roadmap remain unchanged (`v0.09`, Gate A unapproved).
+- Local: TypeScript PASS; **125/125 Node tests PASS**. Four landscape + portrait Chromium scene/dual-grip checks PASS; all four guide/replay checks PASS; five-family visual screenshot comparison PASS; test-injected eight-chamber + Warden + restart PASS; three mobile interruption checks PASS; four threat-readout checks PASS. The full run is *not* an unaided human victory; no physical iPhone or true offline PWA lifecycle verification.
+
 ## v0.09.12 — Ambient room signatures and legible hostile projectiles (Gate A STILL PENDING; 2026-11-10)
 
 - Added five subtle original, world-space edge animations: furnace embers in ASH, cool gear sparks in IRON, breathing spores in ROOT, ghostglass memory shards in SPIRIT, and short woven thread movements in FATE. All are deterministic render-time effects with strict draw-operation budgets, no RNG/DOM/timers/colliders, and **no particles over the central dodge ring or controller rails**. Reduced-motion gets t=0 static effects.
