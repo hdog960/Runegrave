@@ -26,6 +26,7 @@ import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience } from './chamberAmbience.js';
 import { paintVaultDepth } from './vaultDepthArt.js';
+import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -313,6 +314,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         if (combat) {
             drawPracticeTargets(g, combat.targets, time);
             drawSoulbolts(g, combat.bolts, time);
+            paintEarnedSoulboltArt(g, combat.bolts, inventory.state.relics, time, reduced.matches);
         }
         drawCombatSparks(g, sparks);
         motionTrails.paintDissolves(g, W, H, reduced.matches);
@@ -321,6 +323,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
         if (health.state.grace === 0 || Math.floor(health.state.grace * 12) % 2 === 0)
             drawWayfarer(g, actor.x, actor.y, time, walking.x, walking.y, lastAim.x, lastAim.y, firing, reduced.matches);
+        paintBoundRuneHalo(g, actor, inventory.state.relics, time, reduced.matches);
         for (let i = 0; i < embers.length; i++) {
             const e = embers[i], y = (e.y - time * 6 * e.pace % 340 + 340) % 340;
             if (y < H)

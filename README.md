@@ -1,3 +1,9 @@
+## Current release: v0.09.14 — Earned relics now show in live combat (Gate A pending)
+
+The First Soul prototype continues strictly inside **v0.09 Gate A**. Soulbolts now bear visual accents corresponding to the five combat-boosting relics actually held (Wyrd Fang, Skald Drum, Storm Feather, Hugin Lens and Ash Anchor); up to three tiny rune chips near the Wayfarer cycle through the full earned set of eight. No cosmetic mark awards an item, alters hitboxes or damage, or blocks the center canvas. Projectile decorations are capped to 20 active bolts, and reduced-motion freezes all cosmetic motion. This is an ART/REWARD-IDENTITY patch, not new content or v0.10.
+
+**Verification:** 130/130 automated Node tests, strict TypeScript, exported Pages files, Chromium landscape and portrait dual-thumb and guide checks, TEST-INJECTED complete eight-room/Warden restart, mobile interruption testing, and a test-injected all-relic combat screenshot PASS. Public Pages and CI publication are recorded separately only **after** independent verification in `docs/RELEASE_STATUS.md`. Physical iPhone, PWA offline lifecycle and natural unaided victory are NOT verified. **Gate A remains unapproved; v0.10 LOCKED.**
+
 ## Current release: v0.09.13 — Eight-way animated hero frames, seven enemy actions and authored vault depth (Gate A still awaiting approval)
 
 The v0.09 Gate A prototype remains a curated eight-chamber mini-run chosen from 25 authored configurations, with eight real relic effects, six hostile kinds and one Rootbound Warden boss. The v0.09.13 visual pass adds four-step Wayfarer locomotion details in eight directions, seven distinct state-linked attack silhouettes, and five near-wall architectural-depth motifs. All effects are world-space only, bounded, and do not alter combat, character hitboxes, room collision, camera framing, resource inventory, saved input preferences, or PWA update rules.

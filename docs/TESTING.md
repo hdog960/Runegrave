@@ -1,3 +1,11 @@
+## v0.09.14 — Gate A relic-identity browser and regression evidence (2026-11-10)
+
+- Local strict TypeScript PASS; `npm test` **130/130 PASS** (125 preexisting cases retained, five added in `tests/gateA0104.test.mjs`). New tests assert all eight actual owned relic identities, stacked projectile silhouette changes, max 20 decorated real active bolts, balanced canvas state, reduced-motion stability, and no Gate A/version/ASSET regressions.
+- `npm run export:pages` PASS; compiled `js/run/relicBattleArt.js` mirrored at repo root and included in versioned `sw.js` offline asset list. Runtime sprite decorations never own damage, range, firing cadence, state transitions or hitboxes.
+- In-memory Chromium `scripts/v009_browser_audit.py` PASS four landscape viewports and portrait; `scripts/guide_browser_audit.py` PASS four landscape sizes; `scripts/v009_full_run_audit.py` PASS eight rooms, mandatory relic pickups, Warden, victory and reset with **TEST-ONLY enemy damage / actor-position injection**; `scripts/v0099_mobile_browser_audit.py` PASS three landscape interruption layouts. These are browser emulations, not physical Safari or standalone offline PWA verification.
+- `scripts/v0104_relic_combat_audit.py` PASS 844×390 Chromium with **TEST-ONLY relic acquisitions**, then real pressed right-grip firing and actual compiled stage rendering; 8/8 relics displayed, no JavaScript errors, grip/canvas overlap zero. The injected acquisition is only for a screenshot, not evidence of a natural playthrough.
+- Physical iPhone two-thumb ergonomics, user Gate A visual approval, natural human victory, real installed PWA update/offline operation and sustained battery/FPS have NOT been verified. **Gate A unapproved; v0.10 blocked**.
+
 ## v0.09.13 — Gate A hero/environment/hostile-frame validation (2026-11-10)
 
 - `npm run typecheck`: PASS. `npm test`: **125/125 PASS**, including four new art tests checking eight facing silhouettes, four walking frames and recoil, seven enemy kinds' distinct attack poses and reduced-motion stability, five chamber depth motifs, bounded edge geometry, and preserved 25 authored rooms, eight functional relics, saved schema 1 and Gate A lock.

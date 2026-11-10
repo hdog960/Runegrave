@@ -27,6 +27,7 @@ import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience, type ChamberAmbientFamily } from './chamberAmbience.js';
 import { paintVaultDepth, type VaultFamily } from './vaultDepthArt.js';
+import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
 
 const WIDTH=420;
 export type StageMetrics={cssWidth:number;cssHeight:number;pixelWidth:number;pixelHeight:number;cameraWidth:number;cameraHeight:number};
@@ -233,7 +234,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected),reduced.matches);
     drawRoomDrops(g!,drops,time);
     if(mode==='practice'&&practiceExit)drawRuneDoor(g!,practiceExit,'east',true,time);
-    if(combat){drawPracticeTargets(g!,combat.targets,time);drawSoulbolts(g!,combat.bolts,time);}
+    if(combat){drawPracticeTargets(g!,combat.targets,time);drawSoulbolts(g!,combat.bolts,time);paintEarnedSoulboltArt(g!,combat.bolts,inventory.state.relics,time,reduced.matches);}
     drawCombatSparks(g!,sparks);
     motionTrails.paintDissolves(g!,W,H,reduced.matches);
     paintSoulboltHeading(g!,actor,lastAim,firing,time,reduced.matches);
@@ -241,6 +242,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
     if(health.state.grace===0||Math.floor(health.state.grace*12)%2===0)
       drawWayfarer(g!,actor.x,actor.y,time,walking.x,walking.y,lastAim.x,lastAim.y,firing,reduced.matches);
+    paintBoundRuneHalo(g!,actor,inventory.state.relics,time,reduced.matches);
     for(let i=0;i<embers.length;i++){
       const e=embers[i]!,y=(e.y-time*6*e.pace%340+340)%340;
       if(y<H)rect(g!,e.x,y,e.s,e.s,i%3===0?'#e9c582':'#6d9e94');

@@ -1,3 +1,11 @@
+## v0.09.14 — Equipped-relic visual impact (Gate A STILL PENDING; 2026-11-10)
+
+- Added `src/run/relicBattleArt.ts`: acquired combat relics now imprint the **actual moving Soulbolt art**, with five distinctive overlays (fang, drum, feather, lens and anchor). Rendering obeys a 20-bolt cap and never spawns visual shots independently of the existing Soulbolt pool.
+- A tight three-mark rune halo beside the Wayfarer displays the earned eight-relic collection in rotation, freezing completely with reduced-motion. Colors are read from the pre-existing canonical relic crest registry; no duplicate content definitions or gameplay bonuses.
+- Source `src/scene/stage.ts` integrates both world-space overlays at render time, after actual combat/hero state, without touching collision, damage, AI, aim, physics, camera, save schema or thumb grips. SW app version/cache now `0.09.14`/`runegrave-shell-v0.09.14`.
+- Local `npm run typecheck` PASS; **130/130 Node tests PASS** (125 previous plus five genuine visual regressions). Chromium mobile layout and guide checks, TEST-CONTROLLED eight-room/Warden/restart run, 3-size interruption check, and compiled runtime screenshot with TEST-INJECTED eight relics and REAL fired Soulbolts PASS. This is not a natural full human playthrough or physical iPhone inspection.
+- **Gate A still explicitly NOT APPROVED.** No v0.10 production, new enemies/rooms, relic slots or other later roadmap systems. Canonical documents unchanged.
+
 ## v0.09.13 — Eight-way Wayfarer frames and readable hostile stances (Gate A STILL PENDING; 2026-11-10)
 
 - Added `src/scene/wayfarerFrameArt.ts`: eight facing-specific helmet jewels, visible front/back cloak and armor details, four-frame grounded walking plate animation, short recoil accent only while actually firing. Reduced-motion setting freezes added cosmetic frames. This layer never influences the existing aiming/physics model.

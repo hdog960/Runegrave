@@ -1,3 +1,7 @@
+## v0.09.14 — How to review the earned-relic combat visuals (approval NOT inferred)
+
+During a real iPhone landscape run, collect one or more of the eight mandatory relics. Check whether the **actual fired Soulbolt** takes on subtle fangs/drum markings/feather fins/lens rings/anchor weight as combat bonuses accrue. A maximum of three small bound-rune chips near the hero should help identify run identity without hiding enemies or damage warnings. Both side-grip pads and every persistent status remain separate from the combat canvas. Test your actual thumb reach with simultaneous movement/aim/firing, longer play and reduced-motion settings. Browser screenshots of test-injected item ownership are **not** player approval or proof of a natural run. The assistant must explicitly request Gate A approval before progressing to v0.10.
+
 ## v0.09.10 — Interim status (not yet ready for formal reinspection)
 
 A named warning appears above the **left movement disc**, but entirely within the separate Norse grip. It changes from WAVE/ENEMIES REMAIN to DODGE/ENEMY/STRIKE IN when an actual hostile enters its existing warning state, and switches to Warden HP/phase in the boss chamber. This is extra help, not a replacement for in-world telegraphs. The 25 encounter configurations also receive distinct family-matched engraved masonry reliefs while remaining a **curated, linear** eight-chamber mini-run (not the v0.10 branching floor system). Verify whether the additional detail helps at native iPhone screen size without cluttering gameplay or the thumb disc.
