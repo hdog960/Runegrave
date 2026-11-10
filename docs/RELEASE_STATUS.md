@@ -15,9 +15,9 @@
 ## Deployment evidence
 
 - **v0.02 public site verified reachable** before beginning: fetched `https://hdog960.github.io/Runegrave/`, `manifest.webmanifest`, and `js/main.js` successfully; fetched root displayed `v0.02` and appropriate title/manifest. Prior Pages blocker resolved.
-- **v0.03 GitHub source status:** commit evidence to be added after push. Repository update alone does not prove live Pages publication.
-- **v0.03 public site:** PENDING POST-PUSH VERIFICATION, not yet claimed as deployed.
-- **Real iPhone Safari, installed standalone PWA, offline update and physical two-thumb ergonomics:** NOT TESTED, remain open verification requirements.
+- **v0.03 GitHub source:** implementation commit [`5ddedb42c9300916777fa9dfddbc8c6fb1d841c6`](https://github.com/hdog960/Runegrave/commit/5ddedb42c9300916777fa9dfddbc8c6fb1d841c6), confirmed on `main` with compiled twin-stick module present.
+- **v0.03 public site:** **VERIFIED STATIC DEPLOYMENT** — on 2026-11-09 external fresh public requests succeeded for the Pages root, `js/main.js` with the v0.03 input-trial code, `js/input/twinStick.js`, and `sw.js` containing `runegrave-shell-v0.03.0`. This confirms public static asset publication only, not physical Safari input or service-worker offline lifecycle.
+- **GitHub Actions run / CI logs:** not separately verified; static asset fetches establish publication, not Actions success.\n- **Real iPhone Safari, installed standalone PWA, offline update and physical two-thumb ergonomics:** NOT TESTED, remain open verification requirements.
 
 ## Content and approvals
 
