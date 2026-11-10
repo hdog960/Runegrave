@@ -1,5 +1,19 @@
 # RUNEGRAVE — Verified Release Status
 
+## Latest verified release — v0.07 Mortal Thread (2026-11-09 US Central)
+
+**State:** v0.07 IMPLEMENTED, LOCALLY TESTED and PUBLICLY DEPLOYED. This is a training milestone, not the first completed roguelike run or v0.09 art approval.
+
+- **Verified code commit:** [`f99148a9f87f0be106ac36e345fb8343aefa5fa5`](https://github.com/hdog960/Runegrave/commit/f99148a9f87f0be106ac36e345fb8343aefa5fa5) on `main`; comparison against v0.06 `8159f83d0749513036f2b056696a2128b1fc3757` showed no deleted files; all seven authoritative documents retain their original Git blob SHA.
+- **Implemented:** `src/health/mortalHearts.ts` tracks three Mortal Heart containers in six half-heart units, fixed-step invulnerability, damage source, capped healing, lethal death, and restart reset. `src/health/emberTrial.ts` places two telegraphed pulsing environmental ember runes and a healing shrine with a ten-second recharge. `src/health/healthArt.ts` displays the hazards in world space while full/half/empty heart icons and numerical HP are drawn only in the left grip. Death pauses simulation, clears inputs, disables controls, and presents a stopped-world death/restart panel.
+- **Regressions preserved:** v0.06 pooled Soulbolts/target knockback/damage, v0.05 fixed-step collision and safe spawning, v0.04 original art, v0.03 independent grips and existing saved `runegrave:input:v1` preferences, relative PWA paths and cache update safety. Save schema remains 1; run-save/export is still scheduled for v0.18.
+- **Local tests:** `npm run typecheck` PASS; `npm test` **44/44 PASS**. Four simulated landscape Chromium profiles (667×375, 760×360, 844×390, 932×430) and 390×844 portrait PASS for pointer independence, cancellation, keyboard, pause, handedness, resize and zero control/HUD intersection with gameplay. Separate in-memory Chromium death/restart test PASS with a clearly labeled **test-only fatal damage injection**; true ember collision and healing are independently covered by deterministic unit tests.
+- **Public GitHub Pages static deployment VERIFIED:** fresh public retrieval succeeded for `https://hdog960.github.io/Runegrave/index.html` (v0.07 new pause/death descriptions), `js/core/version.js` (v0.07 / 0.07.0), `js/health/mortalHearts.js`, `js/health/emberTrial.js`, `js/health/healthArt.js` and `sw.js` (`runegrave-shell-v0.07.0`). GitHub Actions listing confirmed successful v0.07 push-triggered foundation CI and Pages publication runs.
+- **Content ledger:** relics **0**, talismans **0**, playable variants **0**, hostile enemy types **0**, bosses **0**, procedurally valid rooms **0**, transformations **0**, challenges **0**, authored synergies **0**, major routes **0**. Ember pads, the shrine and non-hostile effigies are training mechanisms, not counted game content.
+- **Unverified:** Physical iPhone Safari and standalone Home Screen behavior, real two-thumb ergonomics, true offline service-worker update testing, and user visual approval. Do not infer these from Chromium or public file fetches.
+- **Next incomplete roadmap milestone:** **v0.08**, six distinct hostile AI patterns, lockable combat rooms, room clear/exit flow, and first actual boss. **Stop at v0.09 Gate A** for player visual approval; Gates B/C/D remain locked at v0.39/v0.79/v0.99.
+
+
 ## Current verified state — v0.06 (2026-11-09 US Central)
 
 - **Latest verified roadmap version:** **v0.06 — First Soulbolt combat foundation**, implemented, local/browser tested and publicly deployed.
