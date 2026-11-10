@@ -1,3 +1,13 @@
+## v0.09.9 — Local Gate A QA (2026-11-10)
+
+**Automated:** `npm run typecheck` PASS; `npm test` **105/105 PASS** (99 previous + six new tests). New tests verify real-event-only limited enemy defeats, fixed-step footprint aging and capacity, reduced-motion draws no extra visuals, 25 nonrepeating canonical room heraldry plates, mobile draw-operation budget, and the new PWA/cache/controls integrity.
+
+**Chromium in-memory browser checks** (not Safari/physical iPhone): `scripts/v009_browser_audit.py` PASS on 667×375, 760×360, 844×390, 932×430 landscape + portrait; `scripts/guide_browser_audit.py` PASS on four landscape sizes; `scripts/v0094_polish_audit.py` PASS on 667×375, 844×390, 932×430 with zero heart/footer mutations during 650ms idle and no JavaScript exceptions; `scripts/v0095_visual_audit.py` PASS with **test-only canonical room-ID and family swaps** to capture five architecture comparisons; `scripts/v0099_mobile_browser_audit.py` PASS on 667×375, 844×390 and 932×430 for blur auto-pause, held pointer cancellation, frozen ticks, deliberate Resume and a 34px Pause target wholly within the right grip. `scripts/v009_full_run_audit.py` PASS all eight required relics, locked/unlocked cardinal exits, Warden kill, victory and restart **using test-only enemy damage and legal actor teleports**. Screenshots were produced from actual compiled in-memory Chromium gameplay, not ImageGen, Safari or remote browser automation.
+
+**Deployment evidence:** see `docs/RELEASE_STATUS.md` for actual GitHub implementation SHA, GitHub Actions status, and fresh public Pages asset retrieval. An uploaded or committed patch alone does NOT constitute a verified public deployment.
+
+**NOT verified:** physical iPhone Safari two-thumb ergonomics, physical offline Home Screen update, natural unaided full run, accessibility audits on real device, or player Gate A art/control approval. The visual-approval gate remains pending; do not advance to v0.10.
+
 ## v0.09.8 — Gate A runtime + regression evidence (2026-11-10)
 
 - Local strict TypeScript `npm run typecheck` **PASS**. `npm test` **99/99 PASS**: prior 93 regression tests plus six focused 0.09.8 cases for actual damage/heart/pickup values, bounded fixed-step marks and pause-stable lifetimes, central-canvas-only aim cue, five unique floor-relief silhouettes under the pre-existing draw-call limit, visibly distinct open/barred portals, and stable relic counts/offline module cache. All historic tests retained, including deterministic physics, 25 room configs, eight relic effects, save preferences and no control-to-canvas overlap.

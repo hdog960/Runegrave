@@ -47,7 +47,7 @@ with sync_playwright() as p:
    print('portrait PASS');page.close();continue
   state=page.evaluate('''() => {const c=document.querySelector('#gameplay-canvas');const r=c.getBoundingClientRect();const frame=document.querySelector('#world-frame').getBoundingClientRect();const overlap=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;return {version:document.documentElement.dataset.version,room:c.dataset.room,frame:[frame.x,frame.y,frame.width,frame.height],canvas:[r.x,r.y,r.width,r.height],intersections:[...document.querySelectorAll('.grip,[data-hud],#pause-btn,.rune-socket')].filter(e=>overlap(r,e.getBoundingClientRect())).length,actor:[+c.dataset.actorX,+c.dataset.actorY],exit:c.dataset.roomPhase,hearts:c.dataset.heartUnits};}''')
   assert not errors,(name,errors)
-  assert state['version']=='0.09.8' and state['room']=='practice',state
+  assert state['version']=='0.09.9' and state['room']=='practice',state
   assert state['frame']==state['canvas'] and not state['intersections'],state
   assert state['actor'][0]>0 and state['hearts']=='6',state
   page.screenshot(path=str(ROOT/f'v009-{name}.png'))

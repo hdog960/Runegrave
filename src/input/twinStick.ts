@@ -51,9 +51,11 @@ export class TwinStickControls {
     }
     this.listen(window,'keydown',event=>this.keydown(event as KeyboardEvent));
     this.listen(window,'keyup',event=>this.keyup(event as KeyboardEvent));
-    this.listen(window,'blur',()=>this.clearTransient());
-    this.listen(window,'pagehide',()=>this.clearTransient());
-    this.listen(document,'visibilitychange',()=>{if(document.hidden)this.clearTransient();});
+    // On iPhone, interruptions must not silently resume live combat. A deliberate
+    // RESUME tap is required on return; saved input preferences remain unchanged.
+    this.listen(window,'blur',()=>this.pauseForInterruption());
+    this.listen(window,'pagehide',()=>this.pauseForInterruption());
+    this.listen(document,'visibilitychange',()=>{if(document.hidden)this.pauseForInterruption();});
     this.listen(this.pauseButton,'click',()=>this.setPaused(!this.paused));
     this.listen(get('#resume-btn'),'click',()=>this.setPaused(false));
     const mirror=get<HTMLInputElement>('#handed-toggle');
@@ -105,6 +107,11 @@ export class TwinStickControls {
     const pad=this.pads[owner.side];pad.dataset.held='false';
     pad.style.setProperty('--stick-x','0%');pad.style.setProperty('--stick-y','0%');
     pad.dataset.directionGlyph='·';pad.style.setProperty('--stick-strength','0');this.refreshStatus();
+  }
+  private pauseForInterruption(){
+    if(this.destroyed||this.dead)return;
+    if(this.paused){this.clearTransient();return;}
+    this.setPaused(true);
   }
   private keydown(event:KeyboardEvent){
     const key=event.key.toLowerCase();

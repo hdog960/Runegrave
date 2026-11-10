@@ -1,3 +1,11 @@
+## v0.09.9 — Fixed-step animation events and interruption-safe iPhone play
+
+`src/scene/motionTrails.ts` owns a 14-footstep/8-hostile-dissolve bounded world-space visual queue. Only live physics ticks move its clock; the renderer never advances timestamps. Footsteps arise from actual nonzero movement, disappear on idle/fade, and adapt the neutral palettes of the five existing chamber families. Kill blooms require observed `alive: true` → `false` transitions, not mere spawns; they distinguish a boss from common enemies. Render output is suppressed with `prefers-reduced-motion`. Room entry, resize, death/restart clean the queue. No AI, hitbox, damage, RNG or persisted schema changes.
+
+`src/scene/roomHeraldry.ts` validates the 25 canonical room `fs-01` through `fs-25` IDs and correct five-family association. Distinct numbered carved plates are rendered behind combat, near the upper wall. They are non-interactive and cannot be mistaken for exit doors or relics. Unit tests assert 25 distinct visual signatures and enforce the existing mobile draw-operation limit.
+
+`src/input/twinStick.ts` now invokes the ordinary pause callback on background/blur/pagehide only while alive and active. It releases captured vectors and requires a deliberate resume after a real iPhone interruption, preventing invisible combat while the browser is backgrounded. Saved `runegrave:input:v1` preferences and in-grip handedness remain intact. The coarse-touch right-grip Pause button receives a tested 34-pixel target; no input region crosses into the central canvas.
+
 ## v0.09.8 — Fixed-step world-space clarity and room silhouettes
 
 `src/scene/combatFeedback.ts` contains a capped 18-entry feedback queue with fixed-step aging (never render-clock aging), actual event amounts, canvas-local text clamping, and a short heading arrow on active fire. `stage.ts` listens for `SoulboltCombat` impact/break hooks, compares actual Mortal Heart units on the same simulation step, and binds pickup readouts only after a legitimate collection; all queues clear at room changes, reframe and restart. This is render-only; no projectile, damage, AI, collision, RNG, save schema or gameplay progression changes.

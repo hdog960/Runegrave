@@ -189,3 +189,10 @@ html[data-door-ready="false"] .screen-footer .run-state{color:#ffcb9b}
  .rune-socket::after{min-width:19px;min-height:19px;}
 }
 @media(prefers-reduced-motion:reduce){.rune-socket[data-held="true"] .rune-disc{transition:none}}
+
+/* Gate A v0.09.9: larger iPhone Pause target within the right grip.
+ * No enlargement of the canvas overlay or central HUD regions. */
+@media (hover:none) and (pointer:coarse) and (orientation:landscape){
+ .pause-key{min-height:34px;min-width:56px;touch-action:manipulation}
+ .grip-foot{min-height:34px}
+}

@@ -1,3 +1,11 @@
+## v0.09.9 — Norse room heraldry, bounded motion and safe mobile interruptions (Gate A; 2026-11-10)
+
+- Every one of the 25 existing authored combat configurations now bears a unique, original stone heraldry plate matched to its canonical ASH/IRON/ROOT/SPIRIT/FATE family and numbered cut pattern. Plates are recessed into the upper world wall, not collectibles, enemy warnings, or touch overlays. The eight-stage curated route and 25-definition content count are unchanged.
+- The Wayfarer leaves light alternating floor footprints while actually moving; genuinely killed hostiles leave brief soul-ash dissolving rings at their true death positions (larger phase for the existing Warden). These effects use a fixed-step, bounded queue with no new physics collisions, AI, damage, randomness, DOM layers or lasting performance cost. Effects are suppressed by the reduced-motion preference and clear on room transition, orientation reframe and restart.
+- On iPhone-like interruptions (window blur, pagehide, document hidden), transient thumb pointers are cancelled and live simulation is **paused**; returning to the game requires an explicit Resume tap. This prevents hidden-world heart loss and does not change persisted `runegrave:input:v1` settings. Coarse-touch Pause receives a 34-pixel-high in-grip target; the gameplay canvas remains untouched.
+- Six new targeted Node tests raised the suite to **105/105 PASS**. Four landscape browser profiles plus portrait, first-run guide, input/PWA geometry, three-size HUD mutation, full eight-room/boss state traversal with **test-injected enemy defeats/teleports**, five-family art audit, and new three-viewport interruption/Resume test all PASS. This is **not** proof of physical Safari ergonomics, offline installed PWA lifecycle, or unaided human victory.
+- App `0.09.9`, roadmap **v0.09 Gate A**, and offline shell `runegrave-shell-v0.09.9`. The seven canonical documents are unchanged. The user has **not** approved Gate A; v0.10 remains locked.
+
 ## v0.09.8 — Actual impact feedback and deeper floor-family identity (2026-11-10)
 
 - All Soulbolt impacts against real hostiles/training targets now emit bounded world-space numeric damage marks derived from actual combat events (including eight-relic damage modifiers); smashed practice props show SHATTERED.

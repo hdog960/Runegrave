@@ -53,3 +53,7 @@ Real damage/wound/pickup readouts now respond only to actual fixed-step combat e
 ### Gate A polish — v0.09.7 (art and clarity; awaiting player review)
 
 Latest local work improves 8-direction Wayfarer silhouettes, all seven enemy gesture signatures, five authentic chamber-floor trims, engraved physical doorway arrows and pressed rune-disc feedback. No mechanics or progression changes. The 25 authored encounter configurations, eight functional relics and entire eight-chamber Warden mini-run remain. The 7 canonical documents are unchanged; Gate A is still unapproved. See `docs/TESTING.md` and `docs/GATE_A_REVIEW.md`.
+
+### Gate A v0.09.9 — 25 chamber coats-of-arms, real-event motion, mobile interruption safety
+
+All 25 authored first-soul chamber configurations now have a distinct family-appropriate carved crest. Moving Wayfarers leave restrained footsteps and actually defeated enemies briefly dissolve; these world-space effects are capped, fixed-step aged and suppressed by reduced-motion settings. Backgrounding the app intentionally pauses the game and clears live sticks, requiring a Resume tap on return; coarse-touch Pause has a larger in-grip target. `runegrave:input:v1` preferences, core gameplay, 25 rooms, eight working relics, all canonical docs and PWA remain preserved. **This is still v0.09 Gate A, not v0.10, and the player has NOT approved the art or controls.**

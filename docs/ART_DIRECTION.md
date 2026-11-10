@@ -1,3 +1,7 @@
+## v0.09.9 — Historical heraldry and responsive world animation
+
+Carved upper-wall heraldry now gives each of 25 authored room configurations a distinct five-family crest with numbered cuts; each is shaped and muted like stone, not an item, door, or telegraph. The Wayfarer leaves small family-colored footprints while moving and real hostile deaths dissolve with short-lived stone/soul-ash rings; the existing Warden has a larger boss-specific pulse. These are lightweight world-space marks, never extra HUD, hitboxes, or virtual controls. Reduced-motion preferences suppress the transient effects entirely. A 34px right-grip Pause target and explicit return-from-background Pause reinforce iPhone comfort without ever obscuring the playable viewport. Art still requires the player's explicit Gate A approval.
+
 ## v0.09.8 Gate A art refinements
 
 Combat legibility: impacts briefly display real numeric damage beside the actual enemy contact; wounds show real lost half-hearts at the Wayfarer's feet; pickups display actual earned silver/healing or a BOUND cue. All float inside the game's measured center canvas and fade from fixed ticks, without mounting touch regions. A restrained 32-pixel heading glyph appears while firing. Colors retain neutral gold for damage, coral for wounds, pale green for healing and silver; none are enemy telegraph colors.

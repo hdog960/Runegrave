@@ -1,3 +1,7 @@
+## v0.09.9 — Counts unchanged (art/UX-only release)
+
+25 authored mechanically valid room configurations, five family materials and **25 new heraldry variants** (cosmetic decoration, NOT 25 extra playable rooms); eight functional relics; one provisional Wayfarer; six true hostile enemy kinds; one Warden boss; one curated eight-room-plus-boss mini-run; silver/heal pickups. Cosmetic footfalls and defeat blooms are NOT additional enemies, rooms, drops or collectibles. Zero full procedural branching graphs, talismans, complete alternate routes or player-approved final art. Gate A remains unapproved; v0.10 locked.
+
 ## v0.09.8 audit — no new content counted
 
 25 authored mechanically valid room configs (eight per connected demo run), six hostile enemy kinds, one Rootbound Warden boss, eight genuinely functional relics and initial healing/silver pickups are unchanged. The five new reliefs are visual variants of existing five families, **not** five new rooms. World-space hit numbers and reward labels are UI presentation, **not** relic synergies or a new HUD inventory. Procedural floor graph, full shop economy, route endings, additional characters and final aesthetic approval remain future work. Gate A v0.09 is NOT APPROVED.

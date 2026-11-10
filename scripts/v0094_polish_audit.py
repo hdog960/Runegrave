@@ -53,7 +53,7 @@ with sync_playwright() as p:
         page.evaluate('''xy=>window.__runegraveTest.stage.testJump({x:xy[0],y:xy[1]})''',xy)
         page.wait_for_timeout(250)
         state=page.evaluate('''() => ({room:document.querySelector('#gameplay-canvas').dataset.room, family:window.__runegraveTest.stage.getRoute()[0].family,version:document.documentElement.dataset.version})''')
-        assert state['room']=='crypt' and state['version']=='0.09.8',state
+        assert state['room']=='crypt' and state['version']=='0.09.9',state
         if label=='regular':
             page.screenshot(path=str(ROOT/'gate-a-v0094-chamber.png'))
             # Only the QA browser may alter an enemy's warn state for an exact art

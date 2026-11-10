@@ -23,6 +23,7 @@ import { paintRoomFamily } from './familyArt.js';
 import { carvedWaystones, paintWaystones } from './routeArt.js';
 import { describeRelicImpact } from '../run/relicImpact.js';
 import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
+import { MotionTrails } from './motionTrails.js';
 
 const WIDTH=420;
 export type StageMetrics={cssWidth:number;cssHeight:number;pixelWidth:number;pixelHeight:number;cameraWidth:number;cameraHeight:number};
@@ -80,6 +81,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
   let actor={x:WIDTH/2,y:120};let lastAim:Vector2={x:0,y:1};
   const sparks:CombatSpark[]=[];
   const feedback=new CombatFeedback();
+  const motionTrails=new MotionTrails();
   let previousHeartUnits=health.state.units;
   const score=document.querySelector<HTMLElement>('[data-combat-score]');
   function attachCombat(nextWorld:CollisionWorld){
@@ -196,7 +198,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     const previous=trial?.exportState();
     practiceExit=placeDirectedExit(world,actor,'east');
     if(encounter){encounter.reframe(world);gateDirection=encounter.exitDirection;}
-    exitTrail=[];routeRefresh=0;feedback.reset();
+    exitTrail=[];routeRefresh=0;feedback.reset();motionTrails.reset();
     attachCombat(world);
     const movement=combat?.getMovementWorld()||world;
     if(!isPositionFree(movement,actor))actor=safeSpawn(movement,actor);
@@ -213,12 +215,14 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     paintSanctuary(g!,W,H,time);
     if(trial)drawEmberTrial(g!,trial,time);
     if(currentRoom&&mode==='crypt'){paintRoomFamily(g!,W,H,time,currentRoom);paintRoomSigil(g!,W,H,time,currentRoom);}
+    motionTrails.paintGround(g!,W,H,currentRoom?.family||'ROOT',reduced.matches);
     if(exitTrail.length)paintWaystones(g!,exitTrail,time);
     if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected));
     drawRoomDrops(g!,drops,time);
     if(mode==='practice'&&practiceExit)drawRuneDoor(g!,practiceExit,'east',true,time);
     if(combat){drawPracticeTargets(g!,combat.targets,time);drawSoulbolts(g!,combat.bolts,time);}
     drawCombatSparks(g!,sparks);
+    motionTrails.paintDissolves(g!,W,H,reduced.matches);
     paintSoulboltHeading(g!,actor,lastAim,firing,time,reduced.matches);
     feedback.paint(g!,W,H);
     // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
@@ -236,12 +240,12 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
       if(roomIndex>=FIRST_SOUL_CHAMBERS){enterRoom('warden');return;}
       currentRoom=route[roomIndex];
     }else currentRoom=undefined;
-    mode=room;trial=undefined;sparks.length=0;feedback.reset();clock.reset();
+    mode=room;trial=undefined;sparks.length=0;feedback.reset();motionTrails.reset();clock.reset();
     gateDirection=room==='warden'?'north':directionForChamber(roomIndex);
     drops=[];roomRewardPlaced=false;exitTrail=[];routeRefresh=0;
     actor=safeSpawn(world,{x:world.width*.26,y:world.minY+24});
     encounter=new HostileEncounter(world,room,actor,room==='crypt'&&currentRoom?encounterPlan(currentRoom):undefined,gateDirection);
-    attachCombat(world);walking=ZERO;firing=false;lastAim={x:1,y:0};emitState();
+    attachCombat(world);motionTrails.observeEnemies(encounter.snapshot.enemies);walking=ZERO;firing=false;lastAim={x:1,y:0};emitState();
   }
   function finishTrial(){
     mode='complete';complete=true;walking=ZERO;firing=false;
@@ -296,6 +300,8 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     health.step(dt);
     const outcome=trial?.step(dt,actor,health);
     encounter?.step(dt,actor,health);
+    if(encounter)motionTrails.observeEnemies(encounter.snapshot.enemies);
+    motionTrails.step(dt,actor,walking);
     if(health.state.units<previousHeartUnits)feedback.add(actor,'hurt',previousHeartUnits-health.state.units);
     previousHeartUnits=health.state.units;
     feedback.step(dt);
@@ -359,7 +365,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     getPathToExit:()=>world&&walkableRoute(world,actor,encounter?.exit||practiceExit||actor),
     restart:()=>{
       if(!world||(!dead&&!complete))return false;
-      health.reset();previousHeartUnits=health.state.units;feedback.reset();inventory.reset();dead=false;complete=false;mode='practice';encounter=undefined;paused=false;restarts++;clock.reset();lastFrameMs=-Infinity;
+      health.reset();previousHeartUnits=health.state.units;feedback.reset();motionTrails.reset();inventory.reset();dead=false;complete=false;mode='practice';encounter=undefined;paused=false;restarts++;clock.reset();lastFrameMs=-Infinity;
       roomIndex=-1;currentRoom=undefined;gateDirection='east';
       if(pickupInfo)pickupInfo.textContent='GOLD = UPGRADE · SILVER = CURRENCY';
       route=createFirstSoulRoute(`first-soul-${String(restarts+1).padStart(4,'0')}`);drops=[];roomRewardPlaced=false;exitTrail=[];routeRefresh=0;

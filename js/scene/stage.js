@@ -22,6 +22,7 @@ import { paintRoomFamily } from './familyArt.js';
 import { carvedWaystones, paintWaystones } from './routeArt.js';
 import { describeRelicImpact } from '../run/relicImpact.js';
 import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
+import { MotionTrails } from './motionTrails.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -83,6 +84,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     let lastAim = { x: 0, y: 1 };
     const sparks = [];
     const feedback = new CombatFeedback();
+    const motionTrails = new MotionTrails();
     let previousHeartUnits = health.state.units;
     const score = document.querySelector('[data-combat-score]');
     function attachCombat(nextWorld) {
@@ -252,6 +254,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         exitTrail = [];
         routeRefresh = 0;
         feedback.reset();
+        motionTrails.reset();
         attachCombat(world);
         const movement = combat?.getMovementWorld() || world;
         if (!isPositionFree(movement, actor))
@@ -278,6 +281,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             paintRoomFamily(g, W, H, time, currentRoom);
             paintRoomSigil(g, W, H, time, currentRoom);
         }
+        motionTrails.paintGround(g, W, H, currentRoom?.family || 'ROOT', reduced.matches);
         if (exitTrail.length)
             paintWaystones(g, exitTrail, time);
         if (encounter)
@@ -290,6 +294,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             drawSoulbolts(g, combat.bolts, time);
         }
         drawCombatSparks(g, sparks);
+        motionTrails.paintDissolves(g, W, H, reduced.matches);
         paintSoulboltHeading(g, actor, lastAim, firing, time, reduced.matches);
         feedback.paint(g, W, H);
         // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
@@ -318,6 +323,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         trial = undefined;
         sparks.length = 0;
         feedback.reset();
+        motionTrails.reset();
         clock.reset();
         gateDirection = room === 'warden' ? 'north' : directionForChamber(roomIndex);
         drops = [];
@@ -327,6 +333,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         actor = safeSpawn(world, { x: world.width * .26, y: world.minY + 24 });
         encounter = new HostileEncounter(world, room, actor, room === 'crypt' && currentRoom ? encounterPlan(currentRoom) : undefined, gateDirection);
         attachCombat(world);
+        motionTrails.observeEnemies(encounter.snapshot.enemies);
         walking = ZERO;
         firing = false;
         lastAim = { x: 1, y: 0 };
@@ -421,6 +428,9 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         health.step(dt);
         const outcome = trial?.step(dt, actor, health);
         encounter?.step(dt, actor, health);
+        if (encounter)
+            motionTrails.observeEnemies(encounter.snapshot.enemies);
+        motionTrails.step(dt, actor, walking);
         if (health.state.units < previousHeartUnits)
             feedback.add(actor, 'hurt', previousHeartUnits - health.state.units);
         previousHeartUnits = health.state.units;
@@ -536,6 +546,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             health.reset();
             previousHeartUnits = health.state.units;
             feedback.reset();
+            motionTrails.reset();
             inventory.reset();
             dead = false;
             complete = false;

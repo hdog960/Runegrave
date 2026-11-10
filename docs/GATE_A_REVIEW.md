@@ -1,3 +1,13 @@
+## v0.09.9 — Next Gate A inspection checklist (no automatic approval)
+
+- Do the five family interiors and the new 25 canonical cut-crest plaques read as distinctive Norse chambers rather than identical wallpaper? Look for subdued heraldry near the wall; it must not resemble a collectible.
+- Does moving leave restrained ground-bound footfalls, and do actual hostile defeats leave short soul-ash dissolves? They should improve impact without hiding attack warnings or implying false pickups.
+- On iPhone Safari, switch to another app and return **during active combat**. Verify the game returns paused, both thumb grips are released, and nothing moves until you explicitly tap Resume. This was tested in Chromium, **not yet verified on a real iPhone**.
+- Confirm that the right-grip Pause button is comfortable to tap, and try the handedness, pad size/offset and dead-zone controls on actual hardware.
+- Manually play, collect relics, traverse doors, and fight the Rootbound Warden without using the automated test-only teleport/kills. The browser harness alone cannot certify game feel or natural victory.
+
+**Current verdict: Still not declared READY FOR GATE A REEVALUATION.** Authoritative Gate A approval remains pending; keep v0.10 locked.
+
 ## v0.09.8 reevaluation checklist addition
 
 During the next **player-initiated** iPhone inspection, check that Soulbolt damage numbers agree with real relic upgrades, a heart loss produces clear but unobtrusive damage feedback, the new floor reliefs make the five environments feel more different, the short aim cue clarifies firing direction, and green open doors look like traversable two-leaf portals. Also evaluate actual thumb reach, iPhone temperature/fps, and whether the effects clutter the small center canvas. This new build is **NOT automatically ready/approved**; continue Gate A refinements if any critical aspect fails. Explicit approval is required before v0.10.

@@ -17,7 +17,7 @@ def data_module(path):
     src=re.sub(r'''(from\s+['"])(\.{1,2}/[^'"\n]+)(['"])''',repl,src)
     if path=='scene/stage.js':
         src=src.replace('getActor: () => ({', '''testJump: (p) => {actor={...p};},
-          testFamily: (family) => {if(currentRoom)currentRoom={...currentRoom,family};},
+          testFamily: (family) => {if(currentRoom){const ix=['ASH','IRON','ROOT','SPIRIT','FATE'].indexOf(family);if(ix<0)throw new Error('Bad test family');currentRoom={...currentRoom,id:'fs-'+String(ix*5+1).padStart(2,'0'),family};}},
           getActor: () => ({''')
     if path=='main.js':src+='\nwindow.__runegraveTest={stage,controls};\n'
     return 'data:text/javascript;base64,'+base64.b64encode(src.encode()).decode()
