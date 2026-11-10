@@ -79,3 +79,7 @@
   .screen-status{font-size:clamp(7px,.75vw,10px)}
   .rune-socket{width:min(88%,clamp(67px,11vw,115px))}
 }
+
+/* v0.06 training score is in the true, non-canvas footer row only. */
+.combat-readout{color:#d4b482;letter-spacing:.02em;white-space:nowrap;font-size:clamp(6px,.69vw,10px)}
+@media(max-width:730px){.combat-readout{font-size:6px}.status-middle{letter-spacing:0}}

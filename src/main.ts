@@ -4,9 +4,9 @@ import { TwinStickControls } from './input/twinStick.js';
 import { preparePwa } from './platform/pwa.js';
 import { PLANNED_REALMS } from './content/realmCatalog.js';
 
-// v0.05 deterministic physical collision prototype; no enemy combat or damage yet.
+// v0.06 deterministic Soulbolt damage/training destructible foundation; hostile enemies arrive at v0.08.
 const version=document.querySelector<HTMLElement>('[data-release]');
-if(version)version.textContent=`${ROADMAP_VERSION} · PHYSICS TRIAL`;
+if(version)version.textContent=`${ROADMAP_VERSION} · SOULBOLT TRIAL`;
 const canvas=document.querySelector<HTMLCanvasElement>('#gameplay-canvas');
 if(!canvas)throw new Error('Missing center-only game canvas');
 let stage:ReturnType<typeof mountStage>|undefined;

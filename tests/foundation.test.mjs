@@ -8,8 +8,8 @@ import { ROADMAP_VERSION, PLAYER_APPROVAL_GATES } from '../dist/js/core/version.
 import { stageMetrics } from '../dist/js/scene/stage.js';
 const dist = (file) => new URL(`../dist/${file}`, import.meta.url);
 
-test('v0.05 physics milestone and four player approval gates stay explicit', () => {
-  assert.equal(ROADMAP_VERSION,'v0.05');
+test('v0.06 physics milestone and four player approval gates stay explicit', () => {
+  assert.equal(ROADMAP_VERSION,'v0.06');
   assert.deepEqual(PLAYER_APPROVAL_GATES, ['v0.09','v0.39','v0.79','v0.99']);
 });
 test('stable content IDs reject malformed and duplicated entries', () => {
@@ -41,7 +41,7 @@ test('static Github Pages build uses relative asset paths and separate canvas', 
   const html=readFileSync(dist('index.html'),'utf8');
   assert.match(html,/\.\/js\/main\.js/);assert.match(html,/viewport-fit=cover/);
   assert.match(html,/id="gameplay-canvas"/);assert.match(html,/class="grip grip-left"/);assert.match(html,/class="grip grip-right"/);
-  assert.match(html,/class="central-screen"/);assert.match(html,/PHYSICS TRIAL/);
+  assert.match(html,/class="central-screen"/);assert.match(html,/SOULBOLT TRIAL/);
   assert.ok(!html.includes('style="position: absolute"'));
   assert.ok(existsSync(dist('js/scene/sanctuaryArt.js','js/physics/world.js','js/physics/fixedStep.js')));assert.ok(existsSync(dist('js/main.js')));assert.ok(existsSync(dist('art/world-tree.svg')));
 });
@@ -52,7 +52,7 @@ test('PWA manifest, icons, service worker are within relative Pages project scop
     const icon=readFileSync(dist(`icons/runegrave-${size}.png`));
     assert.equal(icon.readUInt32BE(16),size);assert.equal(icon.readUInt32BE(20),size);
   }
-  const sw=readFileSync(dist('sw.js'),'utf8');assert.match(sw,/CACHE_NAME = 'runegrave-shell-v0\.05\.0'/);
+  const sw=readFileSync(dist('sw.js'),'utf8');assert.match(sw,/CACHE_NAME = 'runegrave-shell-v0\.06\.0'/);
   assert.match(sw,/ACTIVATE_UPDATE/);assert.match(sw,/registration\.scope/);
   const installBlock=sw.split("self.addEventListener('install'")[1].split("self.addEventListener('activate'")[0];
   assert.ok(!installBlock.includes('skipWaiting('),'installation must not forcibly activate over live gameplay');
@@ -63,9 +63,9 @@ test('world camera derives precisely from available canvas geometry',()=>{
   assert.equal(rect.pixelWidth,1250);assert.equal(rect.pixelHeight,650);
   assert.throws(()=>stageMetrics(0,200));assert.throws(()=>stageMetrics(300,-1));
 });
-test('service worker precaches JS modules used by the v0.05 app',()=>{
+test('service worker precaches JS modules used by the v0.06 app',()=>{
   const sw=readFileSync(dist('sw.js'),'utf8');
-  for (const filename of ['js/main.js','js/scene/stage.js','js/platform/pwa.js','js/core/version.js','js/core/ids.js','js/content/realmCatalog.js','js/input/vector.js','js/input/twinStick.js','js/scene/sanctuaryArt.js','js/physics/world.js','js/physics/fixedStep.js']) {
+  for (const filename of ['js/main.js','js/scene/stage.js','js/platform/pwa.js','js/core/version.js','js/core/ids.js','js/content/realmCatalog.js','js/input/vector.js','js/input/twinStick.js','js/scene/sanctuaryArt.js','js/physics/world.js','js/physics/fixedStep.js','js/combat/soulbolts.js','js/combat/combatArt.js']) {
     assert.ok(existsSync(dist(filename)),`${filename} is compiled`);
     assert.ok(sw.includes(filename),`${filename} is precached`);
   }

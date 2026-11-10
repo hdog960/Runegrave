@@ -44,3 +44,13 @@
 - `src/physics/world.ts`: deterministic, browser-free collision geometry, circle-vs-box/circle/capsule contact checks, small-step solid movement with axis sliding, validated spawn search, and geometry rebuilt on camera resize. Collision bodies match the visible Rootvault sarcophagi, columns and roots. Art-only decorative floor markings are intentionally walkable.
 - `src/scene/stage.ts`: reads `TwinStickControls.snapshot`, applies movement at a stable speed without diagonal inflation, respects the physically bounded center canvas, and exports numeric canvas data attributes for browser verification. Attack tracers are still **cosmetic** pending v0.06 combat. The PWA assets are versioned to include the two physics modules.
 - The runtime does not add run-save data or change the `runegrave:input:v1` preference schema. Other character, enemy, collision layers and real weapons are intentionally not counted until later roadmap milestones.
+
+## v0.06 Soulbolt combat foundation (training, not enemies)
+
+- `combat/soulbolts.ts` is independent of the DOM and browser clock. `SoulboltCombat.update()` advances only with fixed `1/120` steps from the v0.05 `FixedStepClock`; it produces a `CombatState` snapshot useful for release tests.
+- Real Soulbolts have damage 2, fire cooldown 0.20 seconds, speed 258 world units/sec, range 274 units, radius 3, and 10-unit knockback. All values are initial **training tuning**, not final balance.
+- Collision uses 2.5-unit movement slices through world boxes and root capsules; scenery/bounds stop Soulbolts before any destructible damage can propagate behind obstructions. Finite 48-slot pooling and stable iteration avoid unbounded projectile accumulation.
+- Extensible hooks `shot`, `impact`, `break`, `expire` are registered by `SoulboltCombat.on()`, return unsubscribe functions, and forbid reentrant dispatch. Existing `stage.ts` uses events for original world-space sparks (no persistent popups on combat canvas).
+- Three non-hostile breakable props are positioned through deterministic safe-area checks. Health, knockback, collision solids, break behavior and safe timed respawn are implemented; a broken prop is removed from actor collision. These do not count as enemies, bosses, relics, valid procedural rooms or player achievements.
+- Directional movement, aim/fire, keyboard, pause and player settings are unchanged. Hit/shot/break telemetry is exposed as data attributes on the existing **center-only** canvas for tests, while a shatter count is shown in the separate footer HUD.
+- Player health/death remains planned for v0.07, enemy AI/room locks/boss for v0.08, and full first prototype/relics/room graph for v0.09 Gate A.

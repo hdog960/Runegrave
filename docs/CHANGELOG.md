@@ -1,5 +1,15 @@
 # Verified Change Log
 
+## v0.06 — The First Soulbolt (2026-11-09)
+
+- Replaced noninteractive training tracers with fixed-step **real Soulbolt** projectile attacks: finite damage, cooldown, speed, reach, small hitboxes, collision with stone/root scenery and room boundaries, and no tunneling through thin geometry.
+- Added a fixed-capacity reusable 48-slot projectile pool (no per-shot projectile object allocation), event hooks for shot/impact/break/expiry and an explicitly non-hostile trio of respawning training destructibles (two rune effigies and an oath urn).
+- Training objects take real damage, flash on impact, move under bounded knockback and break into authored original pixel-style sparks. They become non-solid when destroyed and respawn when safe after a delay. **They are not enemies**, awards, health systems or room progression; these arrive in later locked versions.
+- Preserved 120 Hz v0.05 physics, mobile thumb pads and pointer ownership, saved input preferences (`runegrave:input:v1`), original Norse Rootvault materials and center-canvas/external HUD separation. Save schema stays at 1.
+- External, non-canvas footer displays the training shatter count; art/aiming controls remain entirely outside the actual combat renderer.
+- Build and physics/combat/viewport tests added, plus an in-memory Chromium two-thumb shooting/destruction trial. Public GitHub Pages deployment and physical iPhone tests must be verified separately.
+
+
 ## v0.05 — Rootvault Physics: The Stone Remembers (2026-11-09)
 
 - Established a reproducible 120 Hz fixed-step simulation fully separated from the v0.04 renderer and the v0.03 pointer/keyboard input layer, with bounded resume/catch-up.
