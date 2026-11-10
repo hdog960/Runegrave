@@ -1,3 +1,4 @@
+import { wayfarerPose } from './wayfarerMotion.js';
 /** v0.04 original hand-authored procedural 32-bit-inspired Midgard Rootvault art.
  * All paint operations are WORLD SPACE and clipped by the dedicated canvas.
  * The rendered art is decorative; no enemy collision or content is implied.
@@ -146,36 +147,66 @@ export function paintSanctuary(g:G,W:number,H:number,t:number){
 /** Frame-based hero with eight-direction facing cues, idle and locomotion frames.
  * Pure art state: real hitboxes/weapon damage are future milestones.
  */
+/** Full Wayfarer silhouette with distinct eight-direction helmet, active attack
+ * recoil, alternating boots and cloak panels. All paint remains WORLD SPACE. */
 export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,aimX:number,aimY:number,firing:boolean){
- const moving=Math.hypot(dx,dy)>.1;
- const direction=Math.hypot(aimX,aimY)>.12?Math.atan2(aimY,aimX):moving?Math.atan2(dy,dx):Math.PI/2;
- const faceX=Math.cos(direction), faceY=Math.sin(direction);
- const stride=moving?Math.sin(t*11)*3:Math.sin(t*1.2)*.7;
+ const m=wayfarerPose(t,dx,dy,aimX,aimY,firing);
+ const faceX=m.aimX,faceY=m.aimY;
  g.save();g.translate(Math.round(x),Math.round(y));
- ellipse(g,0,19,18,6,'#020909ad');
- // Split cloak with travel-dependent flutter.
- shape(g,[[-10,-2],[-14,10],[-12,22],[0,17],[12,22],[14,10],[10,-2]],'#10262d');
- shape(g,[[-8,0],[-11,14],[-8,19],[0,15],[9,19],[11,14],[8,0]],'#2e5963');
- box(g,-9,18+stride,7,6,'#615745');box(g,3,18-stride,7,6,'#645644');
- box(g,-12,1,5,12,'#8b8d74');box(g,8,1,5,12,'#9e8f76');
- box(g,-9,-3,18,9,'#455a57');box(g,-8,-2,16,4,'#a7a68a');
- // Helmet and face are redrawn for up/down/side facing, not rotated blurred sprites.
- shape(g,[[-10,-5],[-11,-17],[-5,-23],[4,-23],[11,-17],[10,-6],[5,1],[-6,1]],'#10252b');
- shape(g,[[-7,-17],[-3,-21],[5,-20],[8,-15],[7,-5],[-5,-5]],'#677e72');
- box(g,-7,-22,12,3,'#87978c');box(g,2,-26,3,7,'#c9a363');
- if(faceY>-.45){
-  const eyeShift=faceX>0.4?2:faceX<-.4?-2:0;
-  box(g,-5+eyeShift,-12,3,2,'#d9ead6');box(g,3+eyeShift,-12,3,2,'#d9ead6');
-  box(g,-3+eyeShift,-7,6,2,'#283d3f');
- }else{
-  stroke(g,[[-6,-18],[5,-18]],'#273b3d',2);
-  box(g,-4,-12,8,4,'#405e5a');
+ // Matte floor shadow: important for showing feet remain on solid ground.
+ ellipse(g,0,23,17,5,'#020b0bb8');
+ ellipse(g,0,21,12,3,'#273b393b');
+ // Two independent boots alternate in movement, with heel and toe plates.
+ box(g,-10,15+m.bootLeft,8,8,'#1c2928');
+ box(g,-9,17+m.bootLeft,7,5,'#8b7553');
+ box(g,3,15+m.bootRight,8,8,'#1c2928');
+ box(g,3,17+m.bootRight,7,5,'#927958');
+ box(g,-8,20+m.bootLeft,7,2,'#d0b37b');
+ box(g,4,20+m.bootRight,7,2,'#d0b37b');
+ // Inverted triangular split cloak with moving border, never a square blob.
+ shape(g,[[-11,-3],[-15,10],[-13+m.cape,20],[-3,17],[0,18],[4,17],[13-m.cape,20],[15,9],[11,-3]],'#0e2329');
+ shape(g,[[-9,-1],[-12,12],[-9+m.cape,17],[0,14],[9-m.cape,17],[12,12],[9,-1]],m.back?'#30545a':'#2b5961');
+ stroke(g,[[-10,3],[-9,14],[-8,17]],'#76a6a1',1.4);
+ stroke(g,[[10,3],[9,14],[8,17]],'#789a8d',1.4);
+ // Layered chest mail and four sharply readable gold armor corners.
+ box(g,-11,-4,22,17,'#172b2f');
+ box(g,-8,-3,16,13,'#56736c');
+ box(g,-5,0,10,8,m.back?'#364b4e':'#25474e');
+ box(g,-8,10,16,3,'#c3a36b');
+ for(const sx of [-1,1]){
+  box(g,sx*9-3,-5+m.shoulder,7,7,'#7f8c79');
+  box(g,sx*9-3,-6+m.shoulder,7,2,'#e4bf7b');
+  box(g,sx*11-2,3,5,10,'#41545a');
+  box(g,sx*11-2,8,5,2,'#aeb8a3');
  }
- const sx=faceX*19,sy=faceY*17-4;
- stroke(g,[[0,-5],[sx,sy]],firing?'#bcead4':'#a9a58a',3);
- box(g,sx-3,sy-3,6,6,firing?'#e5f9be':'#bdaf72');
- if(firing){ellipse(g,sx,sy,7,7,'#a9dbb449');box(g,sx-2,sy-2,4,4,'#e6ffd8');}
- // Narrow runic crest follows hero orientation but never becomes a screen HUD.
- box(g,faceX*10-1,faceY*10-29,3,3,'#d5bd83');
+ // Forged helmet with embossed brow, crested ridge and orientation-specific visor.
+ shape(g,[[-10,-6],[-12,-17],[-6,-25],[4,-25],[11,-19],[12,-7],[7,1],[-7,1]],'#102129');
+ shape(g,[[-8,-17],[-3,-23],[5,-22],[9,-17],[8,-7],[-7,-7]],'#81938a');
+ box(g,-8,-21,16,3,'#c1b18a');box(g,-1,-27,3,9,'#deb778');
+ box(g,-6,-18,12,2,m.back?'#394f51':'#e9c58d');
+ if(m.back){
+  box(g,-6,-12,12,6,'#38585b');
+  box(g,-3,-8,6,3,'#6b8a83');
+ }else if(m.side!==0){
+  // Side and diagonal profiles reveal a single glowing eye under a sloping cheek.
+  box(g,m.side>0?1:-5,-12,5,3,'#e5f3d7');
+  box(g,m.side>0?4:-6,-10,4,5,'#2e4c4a');
+  box(g,m.side>0?-7:5,-10,3,6,'#6b8177');
+ }else{
+  box(g,-6,-12,4,3,'#e5f4da');box(g,3,-12,4,3,'#e5f4da');
+  box(g,-3,-7,7,3,'#263e41');
+ }
+ // An active runebound weapon reads as the same arm that launches Soulbolts.
+ const handX=faceX*18,handY=faceY*15-3;
+ const recoil=m.recoil*3;
+ stroke(g,[[m.side<0?-5:5,-3],[handX-faceX*recoil,handY-faceY*recoil]],'#c1a984',3.5);
+ ellipse(g,handX-faceX*recoil,handY-faceY*recoil,5,5,'#16383b');
+ ellipse(g,handX-faceX*recoil,handY-faceY*recoil,3.2,3.2,firing?'#e6ffd1':'#a3ded1');
+ // A three-rune firing crown remains tiny enough not to obscure enemy warnings.
+ if(firing){
+  const ux=handX-faceX*recoil,uy=handY-faceY*recoil;
+  stroke(g,[[ux-4,uy-5],[ux,uy-8],[ux+4,uy-5]],'#ffdf95',1.1);
+  box(g,ux-1,uy-1,2,2,'#fff4ca');
+ }
  g.restore();
 }

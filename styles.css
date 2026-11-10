@@ -179,3 +179,13 @@ html[data-door-ready="false"] .screen-footer .run-state{color:#ffcb9b}
  .rune-socket .rune-disc{width:86%;height:86%;}
 }
 .rune-socket:focus-visible{outline:2px solid #eed49d;outline-offset:5px;}
+
+/* v0.09.7: bright, tactile physical rune-groove embossing ONLY in side rails.
+ * Clear non-color touch feedback: the pressed disc physically depresses. */
+.rune-socket[data-held="true"] .rune-disc{filter:brightness(1.19);transform:translate(var(--stick-x,0%),var(--stick-y,0%)) scale(.96);border-style:inset}
+.rune-socket[data-role="aim"][data-held="true"] .disc-label{color:#ffe3a5}
+.rune-socket[data-role="move"][data-held="true"] .disc-label{color:#cdf6d4}
+@media (hover:none) and (pointer:coarse) and (orientation:landscape){
+ .rune-socket::after{min-width:19px;min-height:19px;}
+}
+@media(prefers-reduced-motion:reduce){.rune-socket[data-held="true"] .rune-disc{transition:none}}

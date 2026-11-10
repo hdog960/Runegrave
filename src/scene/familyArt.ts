@@ -4,6 +4,7 @@
  */
 import type { FirstRoom } from '../run/firstSoul.js';
 import { paintFamilyLandmarks } from './landmarkArt.js';
+import { paintFamilyTrim } from './familyTrim.js';
 
 type G=CanvasRenderingContext2D;
 type Family='ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE';
@@ -102,5 +103,6 @@ export function paintRoomFamily(g:G,W:number,H:number,t:number,room:FirstRoom):v
  }
  g.globalAlpha=1;
  paintFamilyLandmarks(g,W,H,t,room);
+ paintFamilyTrim(g,W,H,t,room);
  g.restore();
 }

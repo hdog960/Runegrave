@@ -45,3 +45,7 @@ The marked red/green Norse stone doors are now framed and inset so side-edge lab
 ### Gate A collectible and attack readability — v0.09.6
 
 Eight hand-drawn relic emblems now make different upgrade pickups distinguishable *before* collection, with a short ``RELIC · TYPE`` world-space label. Enemy windups display three visible warning beats instead of only changing outline color; the labels remain confined to the center camera, including at compact iPhone dimensions. Coarse-touch screens receive slightly larger thumb-discs **only inside the separate Norse side grips**. All are presentation refinements within locked v0.09; no enemy damage/timing, relic effects, inventory, 25-room catalog or v0.10 procedural progression changed.
+
+### Gate A polish — v0.09.7 (art and clarity; awaiting player review)
+
+Latest local work improves 8-direction Wayfarer silhouettes, all seven enemy gesture signatures, five authentic chamber-floor trims, engraved physical doorway arrows and pressed rune-disc feedback. No mechanics or progression changes. The 25 authored encounter configurations, eight functional relics and entire eight-chamber Warden mini-run remain. The 7 canonical documents are unchanged; Gate A is still unapproved. See `docs/TESTING.md` and `docs/GATE_A_REVIEW.md`.

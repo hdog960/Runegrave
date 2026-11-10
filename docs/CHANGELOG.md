@@ -1,3 +1,13 @@
+## v0.09.7 — Distinct combat silhouettes, floor identity, and tactile grip polish (2026-11-10)
+
+- Added a purely visual eight-direction Wayfarer pose model (`src/scene/wayfarerMotion.ts`) with different helmet-facing and eye configurations, alternating boots, responsive split-cloak fabric and directional Soulbolt arm recoil. It never modifies player physics, hitbox radius or projectile damage. Reduced-motion static rendering remains supported.
+- Added unique gesture art for all six actual hostile archetypes plus the Rootbound Warden (`src/enemies/gestureArt.ts`): an iron claw, orbiting will-lights, drawn bow, sparking horns, rotating rune teeth, spectral cloth and phase-sensitive root crown. Gestures reflect *existing* windup states; attack timelines remain unchanged.
+- Further distinguished the five established chamber families with floor-edge material inlays (`src/scene/familyTrim.ts`), avoiding the colors/shapes of usable items and attack targets. These are non-colliding marks on world masonry.
+- Added compass-accurate engraved stone arrows into the existing north/south/east/west doors, entirely in world space. Doors remain physically placed, reachable and locked until the actual clear+relic conditions are met; no new route graph was introduced.
+- Added a physical pressed/depressed ring effect inside the existing touch-sensitive controller grip. No controls/HUD were placed over gameplay; no saved-input key changes.
+- Version is **roadmap v0.09, app v0.09.7**, service-worker shell `runegrave-shell-v0.09.7` with all three new compiled art modules precached. **v0.10 remains locked for explicit player Gate A approval.**
+- Content totals unchanged: 25 authored room configurations; eight real relics; six hostile behavior types; one Warden boss; one curated 8-chamber mini-run. The future seeded branching floor graph and finished game art are not claimed.
+
 ## v0.09.6 — Relic Sigils and Three-Beats-to-Strike (Gate A polish; 2026-11-10)
 
 - Added eight original, independently distinguishable world-space collectible emblems: fang, drum, feather, lens, anchor, root shield, thread, raven hoard, with labelled pedestal silhouettes. Effects remain the exact existing eight working modifiers; no new inventory content is counted.

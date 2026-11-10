@@ -1,3 +1,7 @@
+## v0.09.7 — Gate A visual comparison (NOT APPROVED)
+
+Review the updated Wayfarer facing/recoil frames, all seven enemy attack gestures, five room-border materials, engraved physical doorway arrows and tactile grip response at real iPhone landscape sizes. These changes improve comprehension but do **not** count as player approval, natural unaided play, or validation of a finished premium-art standard. Continue refining within v0.09 until the player explicitly approves Gate A; **v0.10 is blocked**.
+
 ## v0.09.6 — Player Gate A visual and control review (NOT APPROVED)
 
 Use the live Pages build in landscape. In an uncleared room, an enemy attack warning now has 0–3 discrete illuminated beats that fill as the strike becomes imminent, not just a color change. In a cleared room, collect the mandatory gold relic: each of the eight upgrade types has its own silhouette and a named RELIC inscription attached to its pedestal. The previous before/after stat card still opens when picked up.

@@ -1,3 +1,11 @@
+## v0.09.7 — Local Gate A physics-and-art regression (2026-11-10)
+
+- **Build:** TypeScript strict typecheck PASS; `npm test` **93/93 PASS** (previous 88 + five new Gate A 0.09.7 tests). Tests inspect eight-direction Wayfarer poses, all seven distinct enemy gestures, five different bounded trim draw signatures, four compass-accurate floor arrows, and new offline precache entries. The original 25-room connectivity/relic/combat tests remain intact.
+- **In-memory Chromium browser:** `scripts/v009_browser_audit.py` PASS at 667×375, 760×360, 844×390, 932×430 landscape and 390×844 portrait; no JS exceptions and zero canvas/HUD/control intersections. `scripts/guide_browser_audit.py` PASS for four landscape sizes and pause/guide/replay. `scripts/v0094_polish_audit.py` PASS three sizes with zero redundant static HUD mutation and about 77–80 canvas attribute updates in a 650 ms idle interval. New artwork is presentation only.
+- **Full mini-run:** `scripts/v009_full_run_audit.py` PASS eight selected room configurations, all mandatory relic dialogs, boss defeat, victory and restart. **This uses test-only hostile damage and actor teleport acceleration**, not natural unaided player victory.
+- **Five family screenshots and independent simultaneous two-thumb input:** `scripts/v0095_visual_audit.py` PASS; no JS errors. Enemy attack frame and chamber screenshots captured for art review.
+- **Physical iPhone Safari/installed Home Screen offline/service-worker lifecycle, true two-thumb comfort, natural unaided victory and player visual judgement:** **NOT TESTED**. Gate A **UNAPPROVED**. Local admin blocks real HTTP browser navigation; in-memory rendering and public file retrieval are not device verification.
+
 ## v0.09.6 — Relic-recognition and warning urgency verification (2026-11-10)
 
 - Strict TypeScript typecheck, full existing Node test suite and new crest/urgency cases: **PASS: TypeScript and 88/88 Node tests (85 earlier cases + 3 v0.09.6 tests)**. Verify eight distinct crest shapes, bounds-safe visible warning beats for combat camera heights, and new modules in PWA cache; ensure existing 25 room configurations and relic effects remain intact.

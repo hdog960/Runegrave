@@ -17,6 +17,20 @@ export function inwardApproach(direction:ExitDirection,distance:number):{x:numbe
  }
 }
 
+/** A floor-engraved compass arrow pointing INTO the real doorway, never a false
+ * pickup or touch target. Its origin is on the walkable side of the threshold. */
+export function doorEntryArrow(direction:ExitDirection,distance:number):readonly Vec2[]{
+ if(!Number.isFinite(distance)||distance<0)throw new RangeError('Invalid door arrow distance');
+ const step=inwardApproach(direction,distance);
+ const heading=direction==='north'?{x:0,y:-1}:direction==='south'?{x:0,y:1}:direction==='west'?{x:-1,y:0}:{x:1,y:0};
+ const sideways={x:-heading.y,y:heading.x};
+ return [
+  {x:step.x+heading.x*8,y:step.y+heading.y*8},
+  {x:step.x-heading.x*5+sideways.x*5,y:step.y-heading.y*5+sideways.y*5},
+  {x:step.x-heading.x*5-sideways.x*5,y:step.y-heading.y*5-sideways.y*5}
+ ];
+}
+
 export function drawRuneDoor(g:CanvasRenderingContext2D,pos:Vec2,direction:ExitDirection,open:boolean,time:number):void {
  const meta=EXIT_LABELS[direction];const c=open?'#9be8aa':'#e49d7d';
  const px=(x:number,y:number,w:number,h:number,color:string)=>{g.fillStyle=color;g.fillRect(x,y,w,h);};
@@ -36,6 +50,14 @@ export function drawRuneDoor(g:CanvasRenderingContext2D,pos:Vec2,direction:ExitD
    px(step.x-w/2,step.y-h/2,w,h,'#263033');
    px(step.x-w/2+1,step.y-h/2,w-2,1,tone);
  }
+ // Three shallow chiselled arrows mark the ENTIRE approach as traversable.
+ // The arrows remain visible when the gate turns green but never move its hitbox.
+ for(const distance of [31,45]){
+   const [tip,a,b]=doorEntryArrow(direction,distance);
+   g.fillStyle=open?'#9ac99e':'#b49a79';g.globalAlpha=open?.85:.43;
+   g.beginPath();g.moveTo(tip!.x,tip!.y);g.lineTo(a!.x,a!.y);g.lineTo(b!.x,b!.y);g.closePath();g.fill();
+ }
+ g.globalAlpha=1;
  // Raised threshold and perspective make it identifiable as an actual doorway.
  g.fillStyle='#020b0dc0';g.beginPath();g.ellipse(0,16,31,8,0,0,Math.PI*2);g.fill();
  px(-29,11,58,6,'#554e43');px(-25,13,50,3,'#c2af82');
