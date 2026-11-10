@@ -4,6 +4,14 @@
 import type { FirstRoom,RelicDefinition } from './firstSoul.js';
 import type { Vec2 } from '../physics/world.js';
 import { drawRelicCrest, RELIC_CRESTS } from './relicCrests.js';
+/** Mechanics-accurate small engravings: exact values from the eight functional relics. */
+export const RELIC_PEDESTAL_BONUS=Object.freeze({
+ 'wyrd-fang':'DMG +1','skald-drum':'FIRE +20%',
+ 'storm-feather':'BOLT +25%','hugin-lens':'REACH +30%',
+ 'ash-anchor':'PUSH +70%','shieldroot':'HEART +1',
+ 'eir-thread':'ROOM HEAL','raven-hoard':'SILVER +3'
+} as const satisfies Record<import('./firstSoul.js').RelicId,string>);
+
 export type RoomDrop = {id:string;kind:'relic'|'silver'|'heart';x:number;y:number;relic?:RelicDefinition;amount:number;collected:boolean};
 export function paintRoomSigil(g:CanvasRenderingContext2D,W:number,H:number,t:number,room:FirstRoom){
  const x=W*.5,y=Math.min(H-33,H*.39),col=room.accent;
@@ -37,6 +45,14 @@ export function drawRoomDrops(g:CanvasRenderingContext2D,drops:readonly RoomDrop
     g.strokeStyle='#d7bb83';g.lineWidth=1;g.strokeRect(-26,-41,52,11);
     g.fillStyle=crest.color;g.font='bold 7px system-ui,sans-serif';
     g.fillText(`RELIC · ${crest.label}`,0,-33);
+    // Under-pedestal tablet avoids collision with the actual door plaque.
+    const bonus=RELIC_PEDESTAL_BONUS[drop.relic.id];
+    g.fillStyle='#0b1b1dcc';g.fillRect(-26,23,52,12);
+    g.fillStyle='#cfe8ce';g.font='bold 8px system-ui,sans-serif';g.fillText(bonus,0,32);
+    for(const s of [-1,1]){
+      g.fillStyle=crest.color;g.fillRect(s*22-1,24,3,9);
+      g.fillStyle='#efd9a3';g.fillRect(s*22,26,1,4);
+    }
     g.strokeStyle='#eacb89';g.lineWidth=1.4;g.beginPath();g.moveTo(-13,-13);g.lineTo(0,-25);g.lineTo(13,-13);g.stroke();
   }else{
     g.fillText(drop.kind==='heart'?'♥':'ᚠ',0,5+Math.sin(t*3+drop.x)*2);

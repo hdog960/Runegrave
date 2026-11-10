@@ -8,6 +8,11 @@ export const SETPIECE_MOTIFS = Object.freeze({
   ASH:'ember-forge', IRON:'iron-astrolabe', ROOT:'living-roots',
   SPIRIT:'ghostglass-lantern', FATE:'norn-thread-loom'
 } as const satisfies Record<Family,string>);
+/** Deterministic five-finial grouping within all 25 authored chamber identities. */
+export function chamberFrameVariant(roomIndex:number):number {
+ if(!Number.isSafeInteger(roomIndex)||roomIndex<0||roomIndex>24)throw new RangeError('Invalid room index');
+ return roomIndex%5;
+}
 const px=(g:G,x:number,y:number,w:number,h:number,color:string)=>{g.fillStyle=color;g.fillRect(Math.round(x),Math.round(y),w,h);};
 const stroke=(g:G,x1:number,y1:number,x2:number,y2:number,c:string,width=1.5)=>{
   g.strokeStyle=c;g.lineWidth=width;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();
@@ -63,6 +68,20 @@ export function paintChamberSetpieces(g:G,W:number,H:number,t:number,family:Fami
       stroke(g,-12,1,13,1,'#c49a54',3);px(g,-4,-7,8,8,'#d8bc7f');
       px(g,-15,12,30,4,'#b19a6b');px(g,-20,10,3,6,'#e1be7e');
     }
+    // Five hand-authored finial variants; peripheral stonework only.
+    const tones=family==='ASH'?['#b88564','#ce9a66']:family==='IRON'?['#829c9c','#bdc4b2']:
+      family==='SPIRIT'?['#8786ae','#c1bdd5']:['#b89d65','#e1c78b'];
+    const v=((variant%5)+5)%5;
+    for(let k=0;k<3;k++){
+      const xx=-13+k*13,yy=-33-((v+k)%3)*3;
+      px(g,xx,yy,4,4,tones[(k+v)%2]!);
+      px(g,xx+1,yy-3,2,3,'#1a2326');
+    }
+    if(v===0)stroke(g,-14,-32,14,-32,tones[1]!,2);
+    if(v===1)stroke(g,-14,-36,0,-42,tones[1]!,2);
+    if(v===2)stroke(g,-14,-33,14,-41,tones[1]!,2);
+    if(v===3)stroke(g,-14,-41,14,-33,tones[1]!,2);
+    if(v===4)stroke(g,-14,-36,14,-36,tones[1]!,2);
     g.restore();
   }
 }
