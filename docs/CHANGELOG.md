@@ -1,3 +1,12 @@
+## v0.09.8 — Actual impact feedback and deeper floor-family identity (2026-11-10)
+
+- All Soulbolt impacts against real hostiles/training targets now emit bounded world-space numeric damage marks derived from actual combat events (including eight-relic damage modifiers); smashed practice props show SHATTERED.
+- Genuine player heart loss emits a brief half-heart unit readout; silver/healing/relic pickups mark the amount or reward as applied, not merely on approach. 18-mark pool; fixed-step lifetime; immediate reset on room switch/restart; canvas-edge clamping and no touch controls/HUD over gameplay.
+- A short world-space direction arrow beside the Wayfarer appears only when actually firing, including keyboard aim; this is not a full-screen trajectory indicator or a collision prediction.
+- Five new authored low-contrast floor relief styles distinguish ASH molten drains, IRON gear plates, ROOT living boughs, SPIRIT ghostglass panels and FATE woven looms. These replace older repetitive floor trim rather than stacking costs and preserve the existing mobile draw-operation test budget; no collision, enemy, room reward or room selection changes.
+- Open doorway adds visibly separated heavy gate leaves; barred lock state remains. Existing route waystones still lead only to real, connected open exits.
+- Roadmap remains **v0.09 Gate A**; app **0.09.8**, shell **runegrave-shell-v0.09.8**. Full room graph (v0.10) and player approval remain locked. No real iPhone Safari/standalone PWA, human victory or user art approval claims.
+
 ## v0.09.7 — Distinct combat silhouettes, floor identity, and tactile grip polish (2026-11-10)
 
 - Added a purely visual eight-direction Wayfarer pose model (`src/scene/wayfarerMotion.ts`) with different helmet-facing and eye configurations, alternating boots, responsive split-cloak fabric and directional Soulbolt arm recoil. It never modifies player physics, hitbox radius or projectile damage. Reduced-motion static rendering remains supported.

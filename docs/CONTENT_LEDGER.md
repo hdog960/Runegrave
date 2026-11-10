@@ -1,3 +1,7 @@
+## v0.09.8 audit — no new content counted
+
+25 authored mechanically valid room configs (eight per connected demo run), six hostile enemy kinds, one Rootbound Warden boss, eight genuinely functional relics and initial healing/silver pickups are unchanged. The five new reliefs are visual variants of existing five families, **not** five new rooms. World-space hit numbers and reward labels are UI presentation, **not** relic synergies or a new HUD inventory. Procedural floor graph, full shop economy, route endings, additional characters and final aesthetic approval remain future work. Gate A v0.09 is NOT APPROVED.
+
 # Content Ledger — Implementation Evidence
 
 The canonical targets in [ROADMAP.md](ROADMAP.md) and [DESIGN_BIBLE.md](DESIGN_BIBLE.md) are not reduced by this ledger.

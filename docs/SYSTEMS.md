@@ -1,3 +1,9 @@
+## v0.09.8 — Fixed-step world-space clarity and room silhouettes
+
+`src/scene/combatFeedback.ts` contains a capped 18-entry feedback queue with fixed-step aging (never render-clock aging), actual event amounts, canvas-local text clamping, and a short heading arrow on active fire. `stage.ts` listens for `SoulboltCombat` impact/break hooks, compares actual Mortal Heart units on the same simulation step, and binds pickup readouts only after a legitimate collection; all queues clear at room changes, reframe and restart. This is render-only; no projectile, damage, AI, collision, RNG, save schema or gameplay progression changes.
+
+`src/scene/familyRelief.ts` contains five independently designed architecture motifs. `paintRoomFamily` replaces the existing trim pass with these floor reliefs to keep drawing cost under the existing 550-op per-family budget. They are painted before enemies, drops and doors, with no world hitboxes. Open gates now show two pulled-apart heavy panels while retaining their original reachable hitboxes. New modules are explicitly cached in the relative-scope offline service worker.
+
 ## v0.09.7 — Distinct combat silhouettes, floor identity, and tactile grip polish (2026-11-10)
 
 - Added a purely visual eight-direction Wayfarer pose model (`src/scene/wayfarerMotion.ts`) with different helmet-facing and eye configurations, alternating boots, responsive split-cloak fabric and directional Soulbolt arm recoil. It never modifies player physics, hitbox radius or projectile damage. Reduced-motion static rendering remains supported.

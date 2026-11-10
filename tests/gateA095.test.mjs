@@ -81,12 +81,12 @@ test('physical stick feedback covers 8 vectors, resets on release, and is never 
 });
 test('v0.09.5 PWA precaches every new runtime module; canonical Gate A gates remain unchanged',()=>{
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
- assert.match(sw,/runegrave-shell-v0\.09\.7/);
+ assert.match(sw,/runegrave-shell-v0\.09\.8/);
  for(const file of ['js/scene/landmarkArt.js','js/enemies/visualMotion.js']){
    assert.ok(sw.includes(file),file);
    assert.ok(existsSync(new URL(`../dist/${file}`,import.meta.url)),file);
  }
  const v=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
- assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);assert.match(v,/APP_VERSION = '0\.09\.7'/);
+ assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);assert.match(v,/APP_VERSION = '0\.09\.8'/);
  assert.match(v,/\['v0\.09', 'v0\.39', 'v0\.79', 'v0\.99'\]/);
 });

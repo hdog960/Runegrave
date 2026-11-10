@@ -91,6 +91,14 @@ export function drawRuneDoor(g, pos, direction, open, time) {
         px(-6, -13, 12, 22, '#1a3c30');
         px(-3, -10, 6, 16, '#7ce9a7');
         px(-5, 8, 10, 2, '#e5f4bd');
+        // Both heavy stone leaves are visibly pulled apart, exposing the tunnel.
+        px(-17, -20, 5, 32, '#567b62');
+        px(12, -20, 5, 32, '#567b62');
+        for (const yy of [-15, -4, 7]) {
+            px(-17, yy, 5, 2, '#c5b98a');
+            px(12, yy, 5, 2, '#c5b98a');
+        }
+        px(-10, 12, 20, 2, '#a4c99e');
     }
     else {
         px(-15, -21, 30, 33, '#5b3936');

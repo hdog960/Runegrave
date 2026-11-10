@@ -1,3 +1,7 @@
+## v0.09.8 reevaluation checklist addition
+
+During the next **player-initiated** iPhone inspection, check that Soulbolt damage numbers agree with real relic upgrades, a heart loss produces clear but unobtrusive damage feedback, the new floor reliefs make the five environments feel more different, the short aim cue clarifies firing direction, and green open doors look like traversable two-leaf portals. Also evaluate actual thumb reach, iPhone temperature/fps, and whether the effects clutter the small center canvas. This new build is **NOT automatically ready/approved**; continue Gate A refinements if any critical aspect fails. Explicit approval is required before v0.10.
+
 ## v0.09.7 — Gate A visual comparison (NOT APPROVED)
 
 Review the updated Wayfarer facing/recoil frames, all seven enemy attack gestures, five room-border materials, engraved physical doorway arrows and tactile grip response at real iPhone landscape sizes. These changes improve comprehension but do **not** count as player approval, natural unaided play, or validation of a finished premium-art standard. Continue refining within v0.09 until the player explicitly approves Gate A; **v0.10 is blocked**.

@@ -1,3 +1,9 @@
+## v0.09.8 Gate A art refinements
+
+Combat legibility: impacts briefly display real numeric damage beside the actual enemy contact; wounds show real lost half-hearts at the Wayfarer's feet; pickups display actual earned silver/healing or a BOUND cue. All float inside the game's measured center canvas and fade from fixed ticks, without mounting touch regions. A restrained 32-pixel heading glyph appears while firing. Colors retain neutral gold for damage, coral for wounds, pale green for healing and silver; none are enemy telegraph colors.
+
+Environment: five unique floor reliefs at the perimeter—cracked ash drains, riveted iron plinths, braided living roots, staggered ghostglass mirrors and fate-loom thread-stone—replace old repetitive floor trim. Distinct silhouettes and materials matter more than tiny decoration. No lighting/prop silhouettes should deceive the player into thinking a wall engraving is a collectible, attack, or door. Keep both controller rails entirely separate. **This is still not certified to the player's visual standard.**
+
 ## v0.09.4 — Five authored visual room materials and combat legibility
 
 ":[...]" is not used as a gameplay asset. The existing original Rootvault stone architecture stays recognizable, while `scene/familyArt.ts` distinguishes **ASH** (vitrified amber cracks), **IRON** (cold blue riveted plates), **ROOT** (living green-veined stones), **SPIRIT** (soft violet ghostglass), and **FATE** (golden interlocked knotwork). World-space frescoes and wall trim do not affect enemy collision. Do not create fake doors/pickups out of non-interactive decor. `enemies/enemyArt.ts` adds danger lanes, arrowheads and rings in world space with readable labels; the permanent HUD remains outside the canvas. Gate A art is still subject to player approval.

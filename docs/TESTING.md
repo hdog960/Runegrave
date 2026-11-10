@@ -1,3 +1,11 @@
+## v0.09.8 — Gate A runtime + regression evidence (2026-11-10)
+
+- Local strict TypeScript `npm run typecheck` **PASS**. `npm test` **99/99 PASS**: prior 93 regression tests plus six focused 0.09.8 cases for actual damage/heart/pickup values, bounded fixed-step marks and pause-stable lifetimes, central-canvas-only aim cue, five unique floor-relief silhouettes under the pre-existing draw-call limit, visibly distinct open/barred portals, and stable relic counts/offline module cache. All historic tests retained, including deterministic physics, 25 room configs, eight relic effects, save preferences and no control-to-canvas overlap.
+- `npm run export:pages` **PASS**, compiles both new modules and mirrors build files to repository root.
+- In-memory Chromium `scripts/v009_browser_audit.py` **PASS** four landscape iPhone-like reference viewports and portrait, including independently held move and aim grips, zero gameplay/HUD overlap and no browser exceptions. `scripts/guide_browser_audit.py` **PASS** four landscape viewports: guide safely pauses, resumes and reopens.
+- `scripts/v009_full_run_audit.py` **PASS** practice → eight authored encounter rooms → eight mandatory real relic pickup/confirmation panels → Rootbound Warden → victory → restart, with test-injected hostile damage and actor movement; **not** a natural unaided playthrough. `scripts/v0095_visual_audit.py` **PASS**, five actual browser family variants and simultaneous two-grip pointer handling, including cancellation. `scripts/v0094_polish_audit.py` **PASS** three-size idle HUD mutation check (zero heart/footer text changes) and valid entry into crypt through real exit.
+- **Not verified on hardware:** iPhone Safari or standalone PWA, offline cache lifecycle, physical two-thumb feel, long-duration battery/fps, unaided victory, player's aesthetic Gate A review. No user approval implied.
+
 ## v0.09.7 — Local Gate A physics-and-art regression (2026-11-10)
 
 - **Build:** TypeScript strict typecheck PASS; `npm test` **93/93 PASS** (previous 88 + five new Gate A 0.09.7 tests). Tests inspect eight-direction Wayfarer poses, all seven distinct enemy gestures, five different bounded trim draw signatures, four compass-accurate floor arrows, and new offline precache entries. The original 25-room connectivity/relic/combat tests remain intact.

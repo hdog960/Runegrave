@@ -21,6 +21,7 @@ import { drawRuneDoor } from './doorArt.js';
 import { paintRoomFamily } from './familyArt.js';
 import { carvedWaystones, paintWaystones } from './routeArt.js';
 import { describeRelicImpact } from '../run/relicImpact.js';
+import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -81,6 +82,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     let actor = { x: WIDTH / 2, y: 120 };
     let lastAim = { x: 0, y: 1 };
     const sparks = [];
+    const feedback = new CombatFeedback();
+    let previousHeartUnits = health.state.units;
     const score = document.querySelector('[data-combat-score]');
     function attachCombat(nextWorld) {
         combat = new SoulboltCombat(nextWorld, actor, mode === 'practice');
@@ -89,11 +92,14 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             combat.setHostileHitHandler((p, radius, damage, dir) => encounter?.hitAt(p, radius, damage, dir) || null);
         sparks.length = 0;
         combat.on('impact', e => {
+            if (e.targetId && e.damage > 0)
+                feedback.add({ x: e.x, y: e.y }, 'hit', e.damage);
             if (sparks.length >= 24)
                 sparks.shift();
             sparks.push({ x: e.x, y: e.y, life: .3, maxLife: .3, kind: e.targetId ? 'impact' : 'wall' });
         });
         combat.on('break', e => {
+            feedback.add({ x: e.x, y: e.y }, 'shatter');
             if (sparks.length >= 24)
                 sparks.shift();
             sparks.push({ x: e.x, y: e.y, life: .65, maxLife: .65, kind: 'break' });
@@ -245,6 +251,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         }
         exitTrail = [];
         routeRefresh = 0;
+        feedback.reset();
         attachCombat(world);
         const movement = combat?.getMovementWorld() || world;
         if (!isPositionFree(movement, actor))
@@ -283,6 +290,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             drawSoulbolts(g, combat.bolts, time);
         }
         drawCombatSparks(g, sparks);
+        paintSoulboltHeading(g, actor, lastAim, firing, time, reduced.matches);
+        feedback.paint(g, W, H);
         // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
         if (health.state.grace === 0 || Math.floor(health.state.grace * 12) % 2 === 0)
             drawWayfarer(g, actor.x, actor.y, time, walking.x, walking.y, lastAim.x, lastAim.y, firing);
@@ -308,6 +317,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         mode = room;
         trial = undefined;
         sparks.length = 0;
+        feedback.reset();
         clock.reset();
         gateDirection = room === 'warden' ? 'north' : directionForChamber(roomIndex);
         drops = [];
@@ -375,6 +385,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
                 combat?.setProfile(inventory.profile());
                 const change = describeRelicImpact(drop.relic.id, before, { profile: inventory.profile(), heartContainers: health.state.containers, heartUnits: health.state.units });
                 if (acquired) {
+                    feedback.add(drop, 'relic');
                     if (pickupInfo)
                         pickupInfo.textContent = `RELIC BOUND: ${drop.relic.description}`;
                     window.dispatchEvent(new CustomEvent('runegrave:relic-acquired', { detail: { name: drop.relic.name, rune: drop.relic.rune, effect: drop.relic.description, change } }));
@@ -382,11 +393,13 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             }
             else if (drop.kind === 'silver') {
                 const gained = inventory.collectSilver(drop.amount);
+                feedback.add(drop, 'silver', gained);
                 if (pickupInfo)
                     pickupInfo.textContent = `+${gained} SILVER · SAVED THIS RUN (SHOPS LATER)`;
             }
             else if (drop.kind === 'heart') {
                 const restored = health.heal(drop.amount);
+                feedback.add(drop, 'heal', restored);
                 if (pickupInfo)
                     pickupInfo.textContent = restored ? `HEALED ${restored / 2} HEART · MORE HEALTH` : 'HEART PICKUP · ALREADY FULL';
             }
@@ -408,6 +421,10 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         health.step(dt);
         const outcome = trial?.step(dt, actor, health);
         encounter?.step(dt, actor, health);
+        if (health.state.units < previousHeartUnits)
+            feedback.add(actor, 'hurt', previousHeartUnits - health.state.units);
+        previousHeartUnits = health.state.units;
+        feedback.step(dt);
         if (encounter?.snapshot.phase === 'gate' && !roomRewardPlaced)
             placeDrops();
         collectDrops();
@@ -517,6 +534,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             if (!world || (!dead && !complete))
                 return false;
             health.reset();
+            previousHeartUnits = health.state.units;
+            feedback.reset();
             inventory.reset();
             dead = false;
             complete = false;
