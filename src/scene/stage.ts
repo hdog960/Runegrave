@@ -19,6 +19,8 @@ import { drawRoomDrops, paintRoomSigil, nearDrop, type RoomDrop } from '../run/l
 import { objectiveText } from '../platform/firstRunGuide.js';
 import { directionForChamber, EXIT_LABELS, type ExitDirection } from '../run/wayfinding.js';
 import { drawRuneDoor } from './doorArt.js';
+import { carvedWaystones, paintWaystones } from './routeArt.js';
+import { describeRelicImpact } from '../run/relicImpact.js';
 
 const WIDTH=420;
 export type StageMetrics={cssWidth:number;cssHeight:number;pixelWidth:number;pixelHeight:number;cameraWidth:number;cameraHeight:number};
@@ -55,6 +57,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
   let displayedRelicLedger='';
   let encounter:HostileEncounter|undefined;
   let practiceExit:Vector2|undefined;
+  let exitTrail:readonly Vector2[]=[];
   let gateDirection:ExitDirection='east';
   const completeOverlay=document.querySelector<HTMLElement>('#trial-clear-overlay');
   const floorLabel=document.querySelector<HTMLElement>('.status-middle');
@@ -113,6 +116,8 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     canvas.dataset.silver=String(inventory.state.silver);
     canvas.dataset.remainingDrops=String(drops.filter(d=>!d.collected).length);
     canvas.dataset.relicGateReady=String(!drops.some(d=>d.kind==='relic'&&!d.collected));
+    const exitOpen=mode==='practice'||encounter?.snapshot.phase==='gate'&&!drops.some(d=>d.kind==='relic'&&!d.collected);
+    document.documentElement.dataset.doorReady=String(Boolean(exitOpen));
     canvas.dataset.roomPhase=encounter?.snapshot.phase|| (complete?'finished':'gate');
     canvas.dataset.roomWave=String(encounter?.snapshot.wave||0);
     canvas.dataset.hostilesAlive=String(encounter?.snapshot.enemies.filter(e=>e.alive).length||0);
@@ -167,6 +172,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     const previous=trial?.exportState();
     practiceExit=placeDirectedExit(world,actor,'east');
     if(encounter){encounter.reframe(world);gateDirection=encounter.exitDirection;}
+    exitTrail=[];
     attachCombat(world);
     const movement=combat?.getMovementWorld()||world;
     if(!isPositionFree(movement,actor))actor=safeSpawn(movement,actor);
@@ -183,6 +189,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     paintSanctuary(g!,W,H,time);
     if(trial)drawEmberTrial(g!,trial,time);
     if(currentRoom&&mode==='crypt')paintRoomSigil(g!,W,H,time,currentRoom);
+    if(exitTrail.length)paintWaystones(g!,exitTrail,time);
     if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected));
     drawRoomDrops(g!,drops,time);
     if(mode==='practice'&&practiceExit)drawRuneDoor(g!,practiceExit,'east',true,time);
@@ -205,7 +212,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     }else currentRoom=undefined;
     mode=room;trial=undefined;sparks.length=0;clock.reset();
     gateDirection=room==='warden'?'north':directionForChamber(roomIndex);
-    drops=[];roomRewardPlaced=false;
+    drops=[];roomRewardPlaced=false;exitTrail=[];
     actor=safeSpawn(world,{x:world.width*.26,y:world.minY+24});
     encounter=new HostileEncounter(world,room,actor,room==='crypt'&&currentRoom?encounterPlan(currentRoom):undefined,gateDirection);
     attachCombat(world);walking=ZERO;firing=false;lastAim={x:1,y:0};emitState();
@@ -239,10 +246,12 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
   function collectDrops():void {
     for(const drop of drops){if(!nearDrop(actor,drop))continue;drop.collected=true;
       if(drop.kind==='relic'&&drop.relic){
+        const before={profile:inventory.profile(),heartContainers:health.state.containers,heartUnits:health.state.units};
         const acquired=inventory.acquire(drop.relic.id,health);combat?.setProfile(inventory.profile());
+        const change=describeRelicImpact(drop.relic.id,before,{profile:inventory.profile(),heartContainers:health.state.containers,heartUnits:health.state.units});
         if(acquired){
           if(pickupInfo)pickupInfo.textContent=`RELIC BOUND: ${drop.relic.description}`;
-          window.dispatchEvent(new CustomEvent('runegrave:relic-acquired',{detail:{name:drop.relic.name,rune:drop.relic.rune,effect:drop.relic.description}}));
+          window.dispatchEvent(new CustomEvent('runegrave:relic-acquired',{detail:{name:drop.relic.name,rune:drop.relic.rune,effect:drop.relic.description,change}}));
         }
       }
       else if(drop.kind==='silver'){const gained=inventory.collectSilver(drop.amount);if(pickupInfo)pickupInfo.textContent=`+${gained} SILVER · SAVED THIS RUN (SHOPS LATER)`;}
@@ -262,6 +271,11 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     encounter?.step(dt,actor,health);
     if(encounter?.snapshot.phase==='gate'&&!roomRewardPlaced)placeDrops();
     collectDrops();
+    if(!exitTrail.length&&world){
+      const ready=mode==='practice'||encounter?.snapshot.phase==='gate'&&!drops.some(d=>d.kind==='relic'&&!d.collected);
+      const target=mode==='practice'?practiceExit:encounter?.exit;
+      if(ready&&target)exitTrail=carvedWaystones(walkableRoute(world,actor,target));
+    }
     if(health.state.dead){
       dead=true;walking=ZERO;firing=false;
       if(deathOverlay)deathOverlay.hidden=false;
@@ -313,7 +327,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
       health.reset();inventory.reset();dead=false;complete=false;mode='practice';encounter=undefined;paused=false;restarts++;clock.reset();lastFrameMs=-Infinity;
       roomIndex=-1;currentRoom=undefined;gateDirection='east';
       if(pickupInfo)pickupInfo.textContent='GOLD = UPGRADE · SILVER = CURRENCY';
-      route=createFirstSoulRoute(`first-soul-${String(restarts+1).padStart(4,'0')}`);drops=[];roomRewardPlaced=false;
+      route=createFirstSoulRoute(`first-soul-${String(restarts+1).padStart(4,'0')}`);drops=[];roomRewardPlaced=false;exitTrail=[];
       actor=safeSpawn(world);lastAim={x:0,y:1};walking=ZERO;firing=false;
       attachCombat(world);
       actor=safeSpawn(combat?.getMovementWorld()||world,actor);

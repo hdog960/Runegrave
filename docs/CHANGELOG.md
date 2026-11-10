@@ -1,3 +1,11 @@
+## v0.09.3 — Gate A readability, guidance and feedback (2026-11-10)
+
+- Reworked original, signed Norse doors with clearer stone jambs, iron bars, carved lintels and lit locked/open state; green waystones trace a *reachable* floor route to the unlocked gate.
+- Added unique windup labels and heightened imminent warnings for six enemy kinds and Warden.
+- Relic popups now show real before/after combat or heart stats, with clear permanent per-run benefits and no live-play overlay.
+- Polished pressed-state of separate left/right grips; no changes to saved input or service-worker update semantics.
+- Preserved all 25 authored encounter layouts, eight relics, room route, and v0.09 Gate A approval lock.
+
 ## v0.09.1 — Gate A clarity and guided-start pass (2026-11-09)
 
 - Player reported they could not understand what was going on in v0.09; **Gate A remains NOT APPROVED**. This feedback is treated as a real design failure requiring correction, not a request for more unexplained features.

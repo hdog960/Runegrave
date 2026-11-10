@@ -6,6 +6,16 @@
 
 The player explicitly could not tell what was happening in v0.09. This is an unresolved onboarding/clarity issue for **Gate A**, not art/control acceptance. A corrective subrelease adds a mandatory first-visit (and replayable from Pause) **How to Play** screen with three visible steps (MOVE, SHOOT, ADVANCE), a large Start button, safe paused simulation, and dynamic plain-English objectives outside the gameplay canvas. Do not advance to v0.10 unless the player actually tries the new build, understands room goals and controls, and explicitly approves the v0.09 art/control experience. The added browser checks do not substitute for actual iPhone feedback.
 
+## v0.09.3 — Gate A additional legibility refinement (approval still pending)
+
+- Distinct labeled enemy wind-up warning describes the upcoming attack while the enemy is preparing, with brighter red signals close to execution; check readability during actual play.
+- Gold/green carved floor stones trace the physically traversable route to the exit **only when it unlocks**; the player can follow them without a permanently overlaid world arrow.
+- Heavy original stone/ash doorway art has an explicit direction + LOCKED/EXIT sign and is inset at the world edge to avoid clipped labels.
+- Relic acquisition compares the exact applied values before and after the upgrade (e.g. damage 2 → 3), and the side grip reflects the latest relic.
+- Rune grips illuminate only while held, with no touch buttons on the central viewport.
+
+Player evaluation still needed: Do attacks and doors read instantly at iPhone landscape size, are floor-waystones useful, do the real stat comparisons make relic impact clear, and are two-thumb controls comfortable? No approval is inferred from automated checks.
+
 ## v0.09.2 — Player feedback: doors, one-way pathing, and relic meaning (Gate A NOT APPROVED)
 
 The player reported three concrete observations after v0.09.1: **doors did not read as doors**, **every step seemed to go right**, and **collecting items gave no visible explanation of their effect**. These are specific pending Gate A experience issues, not an approval.

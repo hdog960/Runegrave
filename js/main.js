@@ -1,4 +1,4 @@
-import { ROADMAP_VERSION, APP_VERSION } from './core/version.js';
+import { APP_VERSION } from './core/version.js';
 import { mountStage } from './scene/stage.js';
 import { TwinStickControls } from './input/twinStick.js';
 import { preparePwa } from './platform/pwa.js';
@@ -8,7 +8,7 @@ import { PLANNED_REALMS } from './content/realmCatalog.js';
 // v0.09: 25 verified room configurations, eight functioning relic pickups and a connected first-soul mini-run.
 const version = document.querySelector('[data-release]');
 if (version)
-    version.textContent = `${ROADMAP_VERSION} · GATE A PROTOTYPE`;
+    version.textContent = `${APP_VERSION} · GATE A REVIEW`;
 const canvas = document.querySelector('#gameplay-canvas');
 if (!canvas)
     throw new Error('Missing center-only game canvas');

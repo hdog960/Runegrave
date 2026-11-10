@@ -35,3 +35,7 @@ After the first Gate A review, the player reported they could not tell what was 
 ### Gate A usability refinement — v0.09.2
 
 After player feedback, exit doors now show signed red LOCKED / green EXIT states and vary north/west/south/east across the curated mini-run. Each collected relic pauses to explain its exact active bonus; a permanent right-rail effect label and item pickup feedback remain visible outside the world. **Still v0.09; Gate A awaits explicit player approval; v0.10 remains locked.**
+
+### Gate A readability/art polish — v0.09.3
+
+The marked red/green Norse stone doors are now framed and inset so side-edge labels remain fully visible. After both room-clear and mandatory relic collection, green carved floor waystones trace a verified collision-connected path toward the exit. Enemies visibly announce their distinct attack while winding up (with red imminent warnings). Relic cards now show actual applied **before → after** stats and the thumb-discs light up when held. No persistent overlay moves into the combat viewport. **Gate A remains unapproved; v0.10 is not started.**

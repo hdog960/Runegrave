@@ -141,3 +141,12 @@
 .relic-reveal-stone .relic-reveal-hint{color:#b8d6d0;font-size:clamp(8px,.85vw,10px)}
 .relic-reveal-stone .resume-btn{min-height:32px;background:linear-gradient(#4a7057,#2b4c3d);font-size:clamp(10px,1vw,12px)}
 @media (orientation:landscape) and (max-height:375px){.grip-right .grip-inset{min-height:49px;padding:2px 1px;gap:1px}.relic-effect{font-size:7px}.pickup-info{font-size:6px}.relic-count{margin-top:0}}
+
+/* v0.09.3: real rail press-state and legible, out-of-combat impact accounting. */
+.rune-socket[data-held="true"] .socket-engraving{border-color:#d3e7b2;box-shadow:0 0 0 4px #132722,0 0 0 6px #b3c988,inset 0 0 10px 4px #aee4af33}
+.rune-socket[data-held="true"] .disc-label{color:#efffce;text-shadow:0 0 6px #85cd9a}
+.rune-socket[data-role="aim"][data-held="true"] .rune-disc{box-shadow:inset 0 3px 8px #000d,inset 0 0 0 3px #cbac73,0 0 14px #f6b26088}
+.rune-socket[data-role="aim"][data-held="true"] .disc-knot{color:#ffe9ac}
+.relic-impact{border:1px solid #b8d29b;background:#122c23;padding:clamp(5px,1vw,10px);color:#e0ffe1;font:bold clamp(10px,1.3vw,15px)/1.4 system-ui,sans-serif;letter-spacing:.01em;text-align:center}
+html[data-door-ready="true"] .screen-footer .run-state{color:#c4f5ad;text-shadow:0 0 8px #71be8266}
+html[data-door-ready="false"] .screen-footer .run-state{color:#ffcb9b}

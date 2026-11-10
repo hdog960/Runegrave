@@ -94,3 +94,12 @@ Do not report GitHub Pages deployment or visual device acceptance from a local b
 - `scripts/v009_browser_audit.py` four landscape reference viewport profiles plus portrait PASS; `scripts/guide_browser_audit.py` four landscape PASS with paused guide. Zero persistent HUD/controller intersections with the active canvas.
 - `scripts/v009_full_run_audit.py` full practice → eight chambers → relic pickup explanation and continue → compass exits → Warden → victory → restart PASS; verified all four cardinal directions occur in one run and pickup cards expose a concrete benefit before controls resume. **Test-only actor teleportation and hostile HP reduction used; this is not an unaided normal human win or physical iPhone ergonomics test.**
 - New `doorArt`, `wayfinding` and `relicDiscovery` PWA assets mirror to the repository-root static site. Public deployment verification is separate and only recorded upon successful remote asset requests and Actions status. Physical iPhone testing remains pending.
+
+
+## v0.09.3 Gate A visual clarity refinement (local evidence)
+
+- Dedicated original ash/iron door art revised for stronger jambs, direction plaque, lit locks and readable sealed/open states.
+- A safe-connected route of animated **carved floor waystones** appears only after the fight and mandatory relic reward have unlocked the exit. These world-space stones are not touch controls or HUD overlays.
+- Each of the six hostile kinds and the Warden now communicates its specific windup attack through distinct in-world text, color and a stronger imminent-danger warning.
+- Relic acquisition panels report live before→after combat stats, heart capacity or silver benefit. Finger-pressed rune discs brighten within their dedicated controller grips.
+- **Automated/local browser evidence** is reported in the release ledger only after tests complete. No physical iPhone, offline installed PWA, unaided clear or player approval is inferred.

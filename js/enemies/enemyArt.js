@@ -1,29 +1,63 @@
 import { drawRuneDoor } from '../scene/doorArt.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
+/** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
+export const ENEMY_ATTACK_TELLS = Object.freeze({
+    draugr: { label: 'CLAW', color: '#f5c78b' },
+    wisp: { label: 'SPIRIT SHOT', color: '#9fe6f2' },
+    archer: { label: 'AIMED SHOT', color: '#f3cb94' },
+    charger: { label: 'CHARGE!', color: '#ffa47a' },
+    sentinel: { label: 'RUNE VOLLEY', color: '#f5c27d' },
+    shade: { label: 'BLINK', color: '#c6b2fa' },
+    warden: { label: 'WARDEN STRIKE', color: '#f6a37b' }
+});
 function runeWarning(g, e, t) {
     if (e.state !== 'warning')
         return;
-    const r = e.radius + 8 + Math.sin(t * 13) * 2;
-    g.strokeStyle = e.kind === 'warden' ? '#ffb96b' : '#ffcb80';
-    g.lineWidth = 2;
+    const tell = ENEMY_ATTACK_TELLS[e.kind];
+    const imminent = e.windup < .27;
+    const r = e.radius + 9 + Math.sin(t * 11) * 1.5;
+    g.save();
+    // Telegraph sits in world space around the attacker; the central HUD remains empty.
+    g.strokeStyle = imminent ? '#ff684f' : tell.color;
+    g.lineWidth = imminent ? 3 : 2;
     g.beginPath();
     g.arc(e.x, e.y, r, 0, Math.PI * 2);
     g.stroke();
+    g.strokeStyle = imminent ? '#ffab8a' : tell.color;
+    g.lineWidth = 1.5;
     for (let a = 0; a < 4; a++) {
-        const theta = Math.PI * a / 2 + t * .35;
-        const x = e.x + Math.cos(theta) * (r + 4), y = e.y + Math.sin(theta) * (r + 4);
-        px(g, x - 2, y - 2, 4, 4, '#f5d59c');
+        const theta = Math.PI * a / 2 + t * .25, x = e.x + Math.cos(theta) * (r + 5), y = e.y + Math.sin(theta) * (r + 5);
+        px(g, x - 3, y - 2, 6, 4, imminent ? '#ff855e' : tell.color);
     }
     if (e.kind === 'charger' || e.kind === 'archer' || e.kind === 'warden') {
-        g.strokeStyle = '#f7b86a';
-        g.lineWidth = 1.5;
-        g.setLineDash([5, 4]);
+        g.strokeStyle = imminent ? '#ff6b4b' : '#f7c883';
+        g.lineWidth = imminent ? 2.5 : 1.7;
+        g.setLineDash([7, 4]);
         g.beginPath();
         g.moveTo(e.x, e.y);
-        g.lineTo(e.x + e.dx * 85, e.y + e.dy * 85);
+        g.lineTo(e.x + e.dx * 92, e.y + e.dy * 92);
         g.stroke();
         g.setLineDash([]);
     }
+    // Short, specific attack labels appear ONLY during windup, not as permanent text clutter.
+    const text = tell.label, wide = Math.max(33, Math.ceil(text.length * 4.65) + 10);
+    const yy = e.y - e.radius - (e.kind === 'warden' ? 34 : 24);
+    g.fillStyle = '#09191dec';
+    g.fillRect(Math.round(e.x - wide / 2), Math.round(yy - 10), wide, 13);
+    g.strokeStyle = imminent ? '#ff856c' : tell.color;
+    g.lineWidth = 1;
+    g.strokeRect(Math.round(e.x - wide / 2), Math.round(yy - 10), wide, 13);
+    g.fillStyle = imminent ? '#ffddd0' : '#fff1d5';
+    g.font = 'bold 8px system-ui,sans-serif';
+    g.textAlign = 'center';
+    g.fillText(text, e.x, yy);
+    if (imminent) {
+        g.fillStyle = '#ff8d70';
+        g.beginPath();
+        g.arc(e.x, e.y - e.radius - 4, 2.5, 0, Math.PI * 2);
+        g.fill();
+    }
+    g.restore();
 }
 function sprite(g, e, t) {
     const x = Math.round(e.x), y = Math.round(e.y), f = e.flash > 0;
@@ -112,7 +146,7 @@ function sprite(g, e, t) {
         }
     }
     g.restore();
-    if (e.hp < e.maxHp || e.kind === 'warden') {
+    if (e.hp < e.maxHp || e.kind === 'warden' || e.state === 'warning') {
         const width = e.kind === 'warden' ? 45 : 19;
         px(g, x - width / 2, y - e.radius - 17, width, 4, '#171d21');
         px(g, x - width / 2, y - e.radius - 17, width * e.hp / e.maxHp, 3, e.kind === 'warden' ? '#d3a15c' : '#b5c68a');

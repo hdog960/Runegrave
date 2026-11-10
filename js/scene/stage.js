@@ -18,6 +18,8 @@ import { drawRoomDrops, paintRoomSigil, nearDrop } from '../run/lootArt.js';
 import { objectiveText } from '../platform/firstRunGuide.js';
 import { directionForChamber, EXIT_LABELS } from '../run/wayfinding.js';
 import { drawRuneDoor } from './doorArt.js';
+import { carvedWaystones, paintWaystones } from './routeArt.js';
+import { describeRelicImpact } from '../run/relicImpact.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -54,6 +56,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     let displayedRelicLedger = '';
     let encounter;
     let practiceExit;
+    let exitTrail = [];
     let gateDirection = 'east';
     const completeOverlay = document.querySelector('#trial-clear-overlay');
     const floorLabel = document.querySelector('.status-middle');
@@ -121,6 +124,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         canvas.dataset.silver = String(inventory.state.silver);
         canvas.dataset.remainingDrops = String(drops.filter(d => !d.collected).length);
         canvas.dataset.relicGateReady = String(!drops.some(d => d.kind === 'relic' && !d.collected));
+        const exitOpen = mode === 'practice' || encounter?.snapshot.phase === 'gate' && !drops.some(d => d.kind === 'relic' && !d.collected);
+        document.documentElement.dataset.doorReady = String(Boolean(exitOpen));
         canvas.dataset.roomPhase = encounter?.snapshot.phase || (complete ? 'finished' : 'gate');
         canvas.dataset.roomWave = String(encounter?.snapshot.wave || 0);
         canvas.dataset.hostilesAlive = String(encounter?.snapshot.enemies.filter(e => e.alive).length || 0);
@@ -218,6 +223,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             encounter.reframe(world);
             gateDirection = encounter.exitDirection;
         }
+        exitTrail = [];
         attachCombat(world);
         const movement = combat?.getMovementWorld() || world;
         if (!isPositionFree(movement, actor))
@@ -242,6 +248,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             drawEmberTrial(g, trial, time);
         if (currentRoom && mode === 'crypt')
             paintRoomSigil(g, W, H, time, currentRoom);
+        if (exitTrail.length)
+            paintWaystones(g, exitTrail, time);
         if (encounter)
             drawEncounter(g, encounter, time, !drops.some(d => d.kind === 'relic' && !d.collected));
         drawRoomDrops(g, drops, time);
@@ -281,6 +289,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         gateDirection = room === 'warden' ? 'north' : directionForChamber(roomIndex);
         drops = [];
         roomRewardPlaced = false;
+        exitTrail = [];
         actor = safeSpawn(world, { x: world.width * .26, y: world.minY + 24 });
         encounter = new HostileEncounter(world, room, actor, room === 'crypt' && currentRoom ? encounterPlan(currentRoom) : undefined, gateDirection);
         attachCombat(world);
@@ -337,12 +346,14 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
                 continue;
             drop.collected = true;
             if (drop.kind === 'relic' && drop.relic) {
+                const before = { profile: inventory.profile(), heartContainers: health.state.containers, heartUnits: health.state.units };
                 const acquired = inventory.acquire(drop.relic.id, health);
                 combat?.setProfile(inventory.profile());
+                const change = describeRelicImpact(drop.relic.id, before, { profile: inventory.profile(), heartContainers: health.state.containers, heartUnits: health.state.units });
                 if (acquired) {
                     if (pickupInfo)
                         pickupInfo.textContent = `RELIC BOUND: ${drop.relic.description}`;
-                    window.dispatchEvent(new CustomEvent('runegrave:relic-acquired', { detail: { name: drop.relic.name, rune: drop.relic.rune, effect: drop.relic.description } }));
+                    window.dispatchEvent(new CustomEvent('runegrave:relic-acquired', { detail: { name: drop.relic.name, rune: drop.relic.rune, effect: drop.relic.description, change } }));
                 }
             }
             else if (drop.kind === 'silver') {
@@ -376,6 +387,12 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         if (encounter?.snapshot.phase === 'gate' && !roomRewardPlaced)
             placeDrops();
         collectDrops();
+        if (!exitTrail.length && world) {
+            const ready = mode === 'practice' || encounter?.snapshot.phase === 'gate' && !drops.some(d => d.kind === 'relic' && !d.collected);
+            const target = mode === 'practice' ? practiceExit : encounter?.exit;
+            if (ready && target)
+                exitTrail = carvedWaystones(walkableRoute(world, actor, target));
+        }
         if (health.state.dead) {
             dead = true;
             walking = ZERO;
@@ -481,6 +498,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             route = createFirstSoulRoute(`first-soul-${String(restarts + 1).padStart(4, '0')}`);
             drops = [];
             roomRewardPlaced = false;
+            exitTrail = [];
             actor = safeSpawn(world);
             lastAim = { x: 0, y: 1 };
             walking = ZERO;
