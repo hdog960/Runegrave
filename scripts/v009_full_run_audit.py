@@ -32,8 +32,10 @@ with sync_playwright() as p:
  assert state()['room']=='practice',state()
  move_to_exit();assert state()['room']=='crypt' and state()['index']==1,state()
  page.screenshot(path=str(ROOT/'v009-first-chamber.png'))
+ directions=[]
  for chamber in range(1,9):
   s=state();assert s['room']=='crypt' and s['index']==chamber,(chamber,s)
+  directions.append(page.evaluate('document.querySelector("#gameplay-canvas").dataset.exitDirection'))
   for round in range(3):
    if state()['phase']=='gate':break
    wipe_wave()
@@ -45,12 +47,17 @@ with sync_playwright() as p:
   move_to_exit();assert state()['room']=='crypt' and state()['index']==chamber,'exit did not enforce relic pickup'
   assert collect('relic'),('no pickup',chamber)
   assert state()['relics']==chamber,('relic failed to bind',state())
+  assert page.locator('#relic-reveal-overlay').is_visible(),'Acquisition must explain bonus'
+  if chamber==1:page.screenshot(path=str(ROOT/'v009-relic-meaning.png'))
+  assert page.locator('#relic-reveal-effect').inner_text().strip(),'Missing relic explanation'
+  page.locator('#relic-reveal-continue').click();page.wait_for_timeout(80)
   if chamber==6:assert state()['hearts']>=6,'Shieldroot should increase heart capacity or preserve damage'
   collect('silver');collect('heart')
   if chamber==8:page.screenshot(path=str(ROOT/'v009-eight-relics.png'))
   move_to_exit()
   if chamber<8:assert state()['room']=='crypt' and state()['index']==chamber+1,(chamber,state())
   else:assert state()['room']=='warden',state()
+ assert set(directions)=={'north','south','east','west'},directions
  assert state()['relics']==8 and state()['silver']>0,state()
  page.screenshot(path=str(ROOT/'v009-warden.png'))
  wipe_wave();assert state()['phase']=='gate' and state()['bossDead']=='true',state()

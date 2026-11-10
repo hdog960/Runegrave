@@ -31,3 +31,7 @@ Implementation and deployment claims must match evidence in the release ledger; 
 ## Gate A clarity patch — v0.09.1
 
 After the first Gate A review, the player reported they could not tell what was happening. v0.09.1 introduces a first-launch **How to Play** tutorial, a Pause → How to Play replay action, and readable step-by-step footer objectives with no overlay during active play. **Gate A remains awaiting explicit player approval; do not advance to v0.10.** See [Gate A review](docs/GATE_A_REVIEW.md).
+
+### Gate A usability refinement — v0.09.2
+
+After player feedback, exit doors now show signed red LOCKED / green EXIT states and vary north/west/south/east across the curated mini-run. Each collected relic pauses to explain its exact active bonus; a permanent right-rail effect label and item pickup feedback remain visible outside the world. **Still v0.09; Gate A awaits explicit player approval; v0.10 remains locked.**

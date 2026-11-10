@@ -1,3 +1,4 @@
+import { drawRuneDoor } from '../scene/doorArt.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 function runeWarning(g, e, t) {
     if (e.state !== 'warning')
@@ -117,7 +118,7 @@ function sprite(g, e, t) {
         px(g, x - width / 2, y - e.radius - 17, width * e.hp / e.maxHp, 3, e.kind === 'warden' ? '#d3a15c' : '#b5c68a');
     }
 }
-export function drawEncounter(g, encounter, t) {
+export function drawEncounter(g, encounter, t, relicCollected = true) {
     const state = encounter.snapshot;
     for (const e of state.enemies) {
         if (!e.alive)
@@ -143,15 +144,6 @@ export function drawEncounter(g, encounter, t) {
         g.lineWidth = 1;
         g.stroke();
     }
-    // Door is a physical world object; no button, map, or permanent HUD intrudes.
-    const door = encounter.exit;
-    g.save();
-    g.translate(door.x, door.y);
-    px(g, -9, -16, 16, 32, '#1b252b');
-    px(g, -7, -13, 12, 25, state.phase === 'gate' ? '#547e72' : '#473f3c');
-    px(g, -3, -10, 4, 18, state.phase === 'gate' ? '#b8e5ac' : '#a17c57');
-    g.strokeStyle = state.phase === 'gate' ? '#d4e5ae' : '#ac735b';
-    g.lineWidth = 1.5;
-    g.strokeRect(-10, -17, 18, 34);
-    g.restore();
+    // Large recognizable carved doorway with LOCKED / EXIT sign and compass arrow.
+    drawRuneDoor(g, encounter.exit, encounter.exitDirection, state.phase === 'gate' && relicCollected, t);
 }

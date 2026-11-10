@@ -2,18 +2,20 @@
  * The only guide overlay is visible while the fixed-step simulation is paused.
  */
 import type { TwinStickControls } from '../input/twinStick.js';
+import { EXIT_LABELS, type ExitDirection } from '../run/wayfinding.js';
 
 export const GUIDE_SEEN_KEY = 'runegrave:guided-start:v1';
 export type ObjectiveContext = Readonly<{
   mode:'practice'|'crypt'|'warden'|'complete';
-  phase:string;alive:number;missingRelic:boolean;roomNumber:number;roomTotal:number;
+  phase:string;alive:number;missingRelic:boolean;roomNumber:number;roomTotal:number;exitDirection?:ExitDirection;
 }>;
 export function objectiveText(s:ObjectiveContext):string {
   if(s.mode==='complete')return 'TRIAL CLEARED · RESTART TO PLAY AGAIN';
-  if(s.mode==='practice')return 'GO RIGHT → ENTER THE FIRST ROOM';
+  if(s.mode==='practice')return 'ENTER THE GREEN EAST DOOR TO START';
+  const door=EXIT_LABELS[s.exitDirection||'east'];
   if(s.phase==='gate') {
     if(s.missingRelic)return 'PICK UP THE GOLD RELIC TO OPEN THE EXIT';
-    return s.mode==='warden'?'GO RIGHT → FINISH THE TRIAL':'GO RIGHT → NEXT ROOM';
+    return s.mode==='warden'?`BOSS DEFEATED · ENTER ${door.label} EXIT`:`ENTER ${door.label} DOOR ${door.arrow} TO CONTINUE`;
   }
   if(s.mode==='warden')return 'BOSS: DODGE WARNINGS · FIRE BACK';
   return `ROOM ${s.roomNumber}/${s.roomTotal} · DEFEAT ${s.alive} ENEM${s.alive===1?'Y':'IES'}`;

@@ -45,9 +45,9 @@
             <div class="guide-steps">
               <div class="guide-step"><strong><span class="guide-number">1</span> MOVE</strong><span>Slide the <b>LEFT</b> rune disc to walk around the room.</span></div>
               <div class="guide-step"><strong><span class="guide-number">2</span> SHOOT</strong><span>Hold the <b>RIGHT</b> rune disc toward an enemy to aim and fire.</span></div>
-              <div class="guide-step"><strong><span class="guide-number">3</span> ADVANCE</strong><span>Defeat enemies → pick up the <b>GOLD relic</b> → walk into the <b>GREEN eastern gate</b>.</span></div>
+              <div class="guide-step"><strong><span class="guide-number">3</span> ADVANCE</strong><span>Defeat enemies → claim the <b>GOLD relic</b> → enter the glowing <b>EXIT doorway</b>. Doors can be north, south, east or west.</span></div>
             </div>
-            <p class="guide-warning">♥ You have 3 hearts. Dodge glowing attack warnings; blue shrines can heal you. Relics give permanent bonuses for this run.</p>
+            <p class="guide-warning">♥ Three hearts. Dodge warnings and use blue healing shrines. Each gold relic pauses to explain its ability; silver is currency for future shops.</p>
             <button type="button" id="guide-start-btn" class="resume-btn guide-start">I UNDERSTAND · START DESCENT</button>
             <small>Need a reminder? Open PAUSE → HOW TO PLAY. The center canvas stays free of controls while fighting.</small>
           </div>
@@ -56,7 +56,7 @@
           <div class="pause-stone">
             <p class="pause-kicker">THE THREAD IS STILLED</p>
             <h2>PAUSED</h2>
-            <p>Begin at the antechamber, then follow eight connected fate chambers chosen from 25 authored combat layouts. Defeat each room, touch its golden relic pedestal to bind a real ability, collect silver and healing runes, and pass the eastern gate to the Rootbound Warden. All controls stay in the carved side grips.</p>
+            <p>Begin at the antechamber, then follow eight connected fate chambers chosen from 25 authored combat layouts. Defeat each room, touch its golden relic pedestal to bind a real ability, collect silver and healing runes, and follow the signed green EXIT doors around each room (not just east) to the Rootbound Warden. All controls stay in the carved side grips.</p>
             <button type="button" id="guide-replay-btn" class="guide-replay-btn">? HOW TO PLAY · WHAT DO I DO NEXT?</button>
             <div class="pause-settings">
               <label><span>LEFT-HANDED · SWAP GRIPS</span><input id="handed-toggle" type="checkbox"></label>
@@ -68,6 +68,15 @@
             <div id="pwa-update" class="pwa-update" role="status" hidden><span>NEW FORGING READY</span><button type="button" id="apply-update">UPDATE</button></div>
             <button type="button" id="resume-btn" class="resume-btn">ᛏ RETURN TO DESCENT</button>
             <small>KEYBOARD: WASD / ARROWS TO MOVE · IJKL TO AIM · SPACE TO FIRE · ESC TO PAUSE</small>
+          </div>
+        </div>
+        <div id="relic-reveal-overlay" class="pause-overlay relic-reveal-overlay" role="dialog" aria-modal="true" aria-label="Relic collected and its effects" hidden>
+          <div class="pause-stone relic-reveal-stone">
+            <p class="pause-kicker">RELIC ACQUIRED · POWER ACTIVATED</p>
+            <h2 id="relic-reveal-name">THE FATES HAVE SPOKEN</h2>
+            <p id="relic-reveal-effect">An ability is now active for this run.</p>
+            <p class="relic-reveal-hint">This bonus is already working. The right-hand grip always shows your latest relic and what it does.</p>
+            <button type="button" id="relic-reveal-continue" class="resume-btn">GOT IT · CONTINUE</button>
           </div>
         </div>
         <div id="death-overlay" class="pause-overlay death-overlay" role="dialog" aria-label="Fallen soul and restart" hidden>
@@ -91,7 +100,7 @@
         </div>
       </div>
       <footer class="screen-status screen-footer" data-hud aria-label="Run information outside gameplay canvas">
-        <span><b>ᚱ</b> FIRST SOUL</span><span class="run-state" data-run-status>GO RIGHT → ENTER THE FIRST ROOM</span><span class="combat-readout" data-combat-score>ᛉ 0 SHATTERED</span>
+        <span><b>ᚱ</b> FIRST SOUL</span><span class="run-state" data-run-status>ENTER THE GREEN EAST DOOR TO START</span><span class="combat-readout" data-combat-score>ᛉ 0 SHATTERED</span>
       </footer>
     </section>
 
@@ -102,8 +111,8 @@
         <span class="disc-label">AIM / SOULBOLT</span>
       </div>
       <div class="action-row" aria-label="Future relic buttons"><button class="rune-key" disabled title="Active relics arrive at v0.15"><span>ᛇ</span><small>RELIC</small></button><button class="rune-key" disabled title="Interactions arrive in later milestones"><span>ᚷ</span><small>USE</small></button></div>
-      <div class="grip-inset" data-hud aria-label="Relic inventory"><span class="inset-heading">FATEBOUND RELICS</span><span class="relic-line"><span class="empty-rune">ᚾ</span><span class="relic-status" data-relic-readout>UNBOUND</span></span><span class="inset-value relic-count" data-relic-line>0/8 RELICS</span></span></div>
-      <div class="grip-foot"><button id="pause-btn" class="pause-key" type="button" aria-pressed="false" aria-label="Pause or resume input training">ᛏ PAUSE</button><small>MORTAL THREAD</small></div>
+      <div class="grip-inset" data-hud aria-label="Relic inventory"><span class="inset-heading">FATEBOUND RELICS</span><span class="relic-line"><span class="empty-rune">ᚾ</span><span class="relic-status" data-relic-readout>UNBOUND</span></span><span class="inset-value relic-count" data-relic-line>0/8 RELICS</span><span class="relic-effect" data-relic-effect>PICK UP GOLD FOR A POWER-UP</span><span class="pickup-info" data-pickup-info aria-live="polite">GOLD: POWER · SILVER: CURRENCY</span></div>
+      <div class="grip-foot"><button id="pause-btn" class="pause-key" type="button" aria-pressed="false" aria-label="Pause or resume input training">ᛏ PAUSE</button><small data-door-hint aria-live="polite">→ EAST DOOR</small></div>
     </aside>
   </main>
   <div class="size-warning" role="status">This landscape display is too small for safe two-thumb combat. Use a larger landscape viewport.</div>

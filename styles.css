@@ -128,3 +128,16 @@
 .guide-replay-btn{width:100%;background:#263d3a;border:1px solid #d9bd81;padding:5px;color:#f3dfb0;font:bold clamp(8px,.85vw,10px) system-ui;touch-action:manipulation;letter-spacing:.03em}
 .screen-footer .run-state{color:#e5d5a9;font-weight:900;letter-spacing:0;font-size:clamp(7px,.82vw,11px);max-width:65%;overflow:hidden;text-overflow:ellipsis}
 @media (orientation:landscape) and (max-height:340px){.guide-step{padding:2px 5px;min-height:21px}.guide-stone{gap:2px;padding:5px}.guide-stone .guide-intro{font-size:8px}.guide-stone .guide-warning{font-size:7px!important}.guide-stone small{font-size:6px}}
+
+/* v0.09.2 Gate A response: instantly understandable rewards and varied, signed doors. */
+.relic-effect{display:block;max-width:100%;font:750 clamp(7px,.73vw,10px)/1.16 system-ui,sans-serif;text-align:center;color:#f1d9a4;overflow-wrap:anywhere}
+.pickup-info{display:block;max-width:100%;font:650 clamp(6px,.65vw,9px)/1.18 system-ui,sans-serif;text-align:center;color:#a5cfbd;overflow-wrap:anywhere}
+.grip-right .grip-inset{padding-block:clamp(3px,.8vh,6px);gap:2px;min-height:59px}
+[data-door-hint]{color:#c9ecb5!important;font-size:clamp(7px,.72vw,10px)!important;text-shadow:0 0 4px #6ca97d;letter-spacing:0!important}
+.relic-reveal-overlay{z-index:7;background:radial-gradient(ellipse,#172a21f2,#081012fb 84%)}
+.relic-reveal-stone{width:min(96%,430px);border-color:#d6b872;background:linear-gradient(#314c40,#162b2a);gap:clamp(5px,.8vh,9px)}
+.relic-reveal-stone h2{color:#ffe0a2;font-size:clamp(17px,2.4vw,26px)}
+.relic-reveal-stone #relic-reveal-effect{font:bold clamp(12px,1.5vw,16px)/1.25 system-ui;color:#e1f7ca}
+.relic-reveal-stone .relic-reveal-hint{color:#b8d6d0;font-size:clamp(8px,.85vw,10px)}
+.relic-reveal-stone .resume-btn{min-height:32px;background:linear-gradient(#4a7057,#2b4c3d);font-size:clamp(10px,1vw,12px)}
+@media (orientation:landscape) and (max-height:375px){.grip-right .grip-inset{min-height:49px;padding:2px 1px;gap:1px}.relic-effect{font-size:7px}.pickup-info{font-size:6px}.relic-count{margin-top:0}}

@@ -18,6 +18,14 @@
 
 # Verified Change Log
 
+## v0.09.2 — The Door and the Relic (Gate A feedback revision)
+
+- Converted tiny ambiguous gate tiles into original readable stone-and-iron EXIT/LOCKED doors, which now show the actual open/closed state and direction. LOCKED stays red until both enemies and the required relic have been cleared.
+- Varied the eight curated chamber exit directions north/west/south/east while preserving all room configurations, combat, rewards and boss path; did not implement or claim the future v0.10 procedural branching graph.
+- Added a paused-only acquired-relic card explaining the precise active bonus on pickup, persistent right-hand-grip latest-effect text, silver/heal pickup feedback, and external compass door hints.
+- Preserved input preferences, save schema and PWA refresh handling; upgraded cache to v0.09.2, with all new modules included. Gate A remains awaiting explicit player approval.
+
+
 ## v0.08 — The Sixfold Crypt and Rootbound Warden (2026-11-09)
 
 - Added six independently implemented hostile AI families: advancing **draugr**, strafing **wisp**, distance-managing **archer**, telegraphed **charger**, radial-volley **root sentinel**, and vanishing/reappearing **shade**. Each has actual health, damage behavior, unique original authored pixel silhouette and appropriate warning cues. Names and behaviors are project-original.
@@ -42,6 +50,14 @@ Thread (implementation cycle, 2026-11-09)
 **Next:** v0.08 six genuinely different hostile enemy AI patterns, combat room locks, clear/exits and first boss. No version skipping or content-count inflation.
 
 # Verified Change Log
+
+## v0.09.2 — The Door and the Relic (Gate A feedback revision)
+
+- Converted tiny ambiguous gate tiles into original readable stone-and-iron EXIT/LOCKED doors, which now show the actual open/closed state and direction. LOCKED stays red until both enemies and the required relic have been cleared.
+- Varied the eight curated chamber exit directions north/west/south/east while preserving all room configurations, combat, rewards and boss path; did not implement or claim the future v0.10 procedural branching graph.
+- Added a paused-only acquired-relic card explaining the precise active bonus on pickup, persistent right-hand-grip latest-effect text, silver/heal pickup feedback, and external compass door hints.
+- Preserved input preferences, save schema and PWA refresh handling; upgraded cache to v0.09.2, with all new modules included. Gate A remains awaiting explicit player approval.
+
 
 ## v0.06 — The First Soulbolt (2026-11-09)
 

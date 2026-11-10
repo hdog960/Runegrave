@@ -2,6 +2,7 @@
  * Rendered strictly inside the scene canvas; only in-world combat information is drawn here.
  */
 import type { Enemy,HostileEncounter } from './encounters.js';
+import { drawRuneDoor } from '../scene/doorArt.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
  if(e.state!=='warning')return;
@@ -44,7 +45,7 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number){
   px(g,x-width/2,y-e.radius-17,width*e.hp/e.maxHp,3,e.kind==='warden'?'#d3a15c':'#b5c68a');
  }
 }
-export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncounter,t:number){
+export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncounter,t:number,relicCollected=true){
  const state=encounter.snapshot;
  for(const e of state.enemies){if(!e.alive)continue;
    if(e.state==='hidden'){
@@ -53,9 +54,6 @@ export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncoun
    runeWarning(g,e,t);sprite(g,e,t);
  }
  for(const b of state.projectiles){g.fillStyle=b.damage===2?'#e5916b':'#c7b7a0';g.beginPath();g.arc(b.x,b.y,b.radius,0,Math.PI*2);g.fill();g.strokeStyle='#713f3b';g.lineWidth=1;g.stroke();}
- // Door is a physical world object; no button, map, or permanent HUD intrudes.
- const door=encounter.exit;
- g.save();g.translate(door.x,door.y);px(g,-9,-16,16,32,'#1b252b');px(g,-7,-13,12,25,state.phase==='gate'?'#547e72':'#473f3c');
- px(g,-3,-10,4,18,state.phase==='gate'?'#b8e5ac':'#a17c57');
- g.strokeStyle=state.phase==='gate'?'#d4e5ae':'#ac735b';g.lineWidth=1.5;g.strokeRect(-10,-17,18,34);g.restore();
+ // Large recognizable carved doorway with LOCKED / EXIT sign and compass arrow.
+ drawRuneDoor(g,encounter.exit,encounter.exitDirection,state.phase==='gate'&&relicCollected,t);
 }

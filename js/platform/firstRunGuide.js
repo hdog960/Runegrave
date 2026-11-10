@@ -1,13 +1,15 @@
+import { EXIT_LABELS } from '../run/wayfinding.js';
 export const GUIDE_SEEN_KEY = 'runegrave:guided-start:v1';
 export function objectiveText(s) {
     if (s.mode === 'complete')
         return 'TRIAL CLEARED · RESTART TO PLAY AGAIN';
     if (s.mode === 'practice')
-        return 'GO RIGHT → ENTER THE FIRST ROOM';
+        return 'ENTER THE GREEN EAST DOOR TO START';
+    const door = EXIT_LABELS[s.exitDirection || 'east'];
     if (s.phase === 'gate') {
         if (s.missingRelic)
             return 'PICK UP THE GOLD RELIC TO OPEN THE EXIT';
-        return s.mode === 'warden' ? 'GO RIGHT → FINISH THE TRIAL' : 'GO RIGHT → NEXT ROOM';
+        return s.mode === 'warden' ? `BOSS DEFEATED · ENTER ${door.label} EXIT` : `ENTER ${door.label} DOOR ${door.arrow} TO CONTINUE`;
     }
     if (s.mode === 'warden')
         return 'BOSS: DODGE WARNINGS · FIRE BACK';

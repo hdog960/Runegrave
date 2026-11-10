@@ -11,11 +11,13 @@ import { drawPracticeTargets, drawSoulbolts, drawCombatSparks } from '../combat/
 import { MortalHearts, heartSlots } from '../health/mortalHearts.js';
 import { EmberTrial } from '../health/emberTrial.js';
 import { drawEmberTrial } from '../health/healthArt.js';
-import { HostileEncounter, placeRoomExit, reachableFloor, walkableRoute } from '../enemies/encounters.js';
+import { HostileEncounter, placeDirectedExit, reachableFloor, walkableRoute } from '../enemies/encounters.js';
 import { drawEncounter } from '../enemies/enemyArt.js';
 import { FIRST_SOUL_CHAMBERS, FIRST_SOUL_RELICS, createFirstSoulRoute, encounterPlan, FirstSoulInventory } from '../run/firstSoul.js';
 import { drawRoomDrops, paintRoomSigil, nearDrop } from '../run/lootArt.js';
 import { objectiveText } from '../platform/firstRunGuide.js';
+import { directionForChamber, EXIT_LABELS } from '../run/wayfinding.js';
+import { drawRuneDoor } from './doorArt.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -43,12 +45,16 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     const silverCounter = document.querySelector('[data-silver]');
     const relicReadout = document.querySelector('[data-relic-readout]');
     const relicLine = document.querySelector('[data-relic-line]');
+    const relicEffect = document.querySelector('[data-relic-effect]');
+    const pickupInfo = document.querySelector('[data-pickup-info]');
+    const doorHint = document.querySelector('[data-door-hint]');
     const ledger = document.querySelector('#run-ledger');
     const ledgerList = document.querySelector('#ledger-relics');
     const ledgerCurrency = document.querySelector('[data-ledger-currency]');
     let displayedRelicLedger = '';
     let encounter;
     let practiceExit;
+    let gateDirection = 'east';
     const completeOverlay = document.querySelector('#trial-clear-overlay');
     const floorLabel = document.querySelector('.status-middle');
     const deathOverlay = document.querySelector('#death-overlay');
@@ -106,6 +112,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         canvas.dataset.exitX = activeExit ? activeExit.x.toFixed(2) : '';
         canvas.dataset.exitY = activeExit ? activeExit.y.toFixed(2) : '';
         canvas.dataset.room = mode;
+        canvas.dataset.exitDirection = gateDirection;
         canvas.dataset.roomId = currentRoom?.id || '';
         canvas.dataset.roomIndex = String(roomIndex + 1);
         canvas.dataset.roomTotal = String(FIRST_SOUL_CHAMBERS);
@@ -122,16 +129,17 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         canvas.dataset.bossDefeated = String(encounter?.snapshot.bossDefeated || false);
         canvas.dataset.enemyProjectiles = String(encounter?.snapshot.projectiles.length || 0);
         document.documentElement.dataset.roomName = complete ? 'COMPLETE' : mode.toUpperCase();
-        document.documentElement.dataset.roomPhase = mode === 'practice' ? 'ANTEROOM · EAST GATE OPEN' : mode === 'complete' ? 'TRIAL COMPLETE' : encounter?.snapshot.phase === 'gate' ? `${mode === 'crypt' ? 'CRYPT CLEARED' : 'WARDEN FELLED'} · EXIT OPEN` : mode === 'crypt' ? `CRYPT · WAVE ${encounter?.snapshot.wave || 1}/2 · LOCKED` : `WARDEN · PHASE ${encounter?.snapshot.bossPhase || 1}/2`;
         document.documentElement.dataset.roomPhase = objectiveText({
             mode, phase: encounter?.snapshot.phase || 'gate',
             alive: encounter?.snapshot.enemies.filter(e => e.alive).length || 0,
             missingRelic: drops.some(d => d.kind === 'relic' && !d.collected),
-            roomNumber: roomIndex + 1, roomTotal: FIRST_SOUL_CHAMBERS
+            roomNumber: roomIndex + 1, roomTotal: FIRST_SOUL_CHAMBERS, exitDirection: gateDirection
         });
         const footer = document.querySelector('[data-run-status]');
         if (footer)
             footer.textContent = document.documentElement.dataset.roomPhase;
+        if (doorHint)
+            doorHint.textContent = `${EXIT_LABELS[gateDirection].arrow} ${EXIT_LABELS[gateDirection].label} DOOR`;
         if (silverCounter)
             silverCounter.textContent = `SILVER ${inventory.state.silver}`;
         if (ledgerCurrency)
@@ -161,6 +169,10 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             const last = inventory.state.relics.at(-1);
             const item = FIRST_SOUL_RELICS.find(x => x.id === last);
             relicReadout.textContent = item ? item.name.toUpperCase() : 'UNBOUND';
+        }
+        if (relicEffect) {
+            const newest = FIRST_SOUL_RELICS.find(x => x.id === inventory.state.relics.at(-1));
+            relicEffect.textContent = newest?.description || 'GOLD PICKUP = NEW POWER';
         }
         if (relicLine)
             relicLine.textContent = `${inventory.state.relics.length}/8 RELICS`;
@@ -201,9 +213,11 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             actor = safeSpawn(world, actor);
         // Reframe hostile positions while retaining their health/wave/progress on orientation change.
         const previous = trial?.exportState();
-        practiceExit = placeRoomExit(world);
-        if (encounter)
+        practiceExit = placeDirectedExit(world, actor, 'east');
+        if (encounter) {
             encounter.reframe(world);
+            gateDirection = encounter.exitDirection;
+        }
         attachCombat(world);
         const movement = combat?.getMovementWorld() || world;
         if (!isPositionFree(movement, actor))
@@ -229,17 +243,10 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         if (currentRoom && mode === 'crypt')
             paintRoomSigil(g, W, H, time, currentRoom);
         if (encounter)
-            drawEncounter(g, encounter, time);
+            drawEncounter(g, encounter, time, !drops.some(d => d.kind === 'relic' && !d.collected));
         drawRoomDrops(g, drops, time);
-        if (mode === 'practice' && practiceExit) {
-            const d = practiceExit;
-            g.save();
-            g.translate(d.x, d.y);
-            rect(g, -10, -16, 19, 32, '#222c32');
-            rect(g, -7, -12, 13, 25, '#426b62');
-            rect(g, -2, -8, 4, 17, '#c2e0a5');
-            g.restore();
-        }
+        if (mode === 'practice' && practiceExit)
+            drawRuneDoor(g, practiceExit, 'east', true, time);
         if (combat) {
             drawPracticeTargets(g, combat.targets, time);
             drawSoulbolts(g, combat.bolts, time);
@@ -271,10 +278,11 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         trial = undefined;
         sparks.length = 0;
         clock.reset();
+        gateDirection = room === 'warden' ? 'north' : directionForChamber(roomIndex);
         drops = [];
         roomRewardPlaced = false;
         actor = safeSpawn(world, { x: world.width * .26, y: world.minY + 24 });
-        encounter = new HostileEncounter(world, room, actor, room === 'crypt' && currentRoom ? encounterPlan(currentRoom) : undefined);
+        encounter = new HostileEncounter(world, room, actor, room === 'crypt' && currentRoom ? encounterPlan(currentRoom) : undefined, gateDirection);
         attachCombat(world);
         walking = ZERO;
         firing = false;
@@ -329,13 +337,24 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
                 continue;
             drop.collected = true;
             if (drop.kind === 'relic' && drop.relic) {
-                inventory.acquire(drop.relic.id, health);
+                const acquired = inventory.acquire(drop.relic.id, health);
                 combat?.setProfile(inventory.profile());
+                if (acquired) {
+                    if (pickupInfo)
+                        pickupInfo.textContent = `RELIC BOUND: ${drop.relic.description}`;
+                    window.dispatchEvent(new CustomEvent('runegrave:relic-acquired', { detail: { name: drop.relic.name, rune: drop.relic.rune, effect: drop.relic.description } }));
+                }
             }
-            else if (drop.kind === 'silver')
-                inventory.collectSilver(drop.amount);
-            else if (drop.kind === 'heart')
-                health.heal(drop.amount);
+            else if (drop.kind === 'silver') {
+                const gained = inventory.collectSilver(drop.amount);
+                if (pickupInfo)
+                    pickupInfo.textContent = `+${gained} SILVER · SAVED THIS RUN (SHOPS LATER)`;
+            }
+            else if (drop.kind === 'heart') {
+                const restored = health.heal(drop.amount);
+                if (pickupInfo)
+                    pickupInfo.textContent = restored ? `HEALED ${restored / 2} HEART · MORE HEALTH` : 'HEART PICKUP · ALREADY FULL';
+            }
         }
     }
     function update(dt) {
@@ -456,6 +475,9 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             lastFrameMs = -Infinity;
             roomIndex = -1;
             currentRoom = undefined;
+            gateDirection = 'east';
+            if (pickupInfo)
+                pickupInfo.textContent = 'GOLD = UPGRADE · SILVER = CURRENCY';
             route = createFirstSoulRoute(`first-soul-${String(restarts + 1).padStart(4, '0')}`);
             drops = [];
             roomRewardPlaced = false;

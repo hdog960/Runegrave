@@ -26,7 +26,7 @@ export function findEnemySpawn(world, preferred, radius, hero, others) {
         }
     throw new Error('No unobstructed enemy spawn in current camera');
 }
-/** Reachability-validated grid for east gates; an unconnected pocket is not a legal exit. */
+/** Reachability-validated grid for cardinal gates; an unconnected pocket is not a legal exit. */
 export function reachableFloor(world, from, radius = HERO_RADIUS) {
     const step = 5, x0 = world.minX + radius, y0 = world.minY + radius;
     const nx = Math.floor((world.maxX - radius - x0) / step) + 1;
@@ -108,18 +108,33 @@ export function walkableRoute(world, from, to, radius = HERO_RADIUS) {
     steps.reverse();
     return steps;
 }
-export function placeRoomExit(world) {
-    const entry = safeSpawn(world, { x: world.width * .27, y: world.minY + 24 });
-    const candidates = reachableFloor(world, entry).filter(p => p.x > world.width * .55);
+/** Prefer a room edge in the indicated compass direction, but only within the
+ * entrance player's actually walkable floor component (never through scenery).
+ * Doorways are room transitions, not a claim of v0.10 branching floor graphs.
+ */
+export function placeDirectedExit(world, entry, direction) {
+    const lanes = reachableFloor(world, entry);
+    const candidates = lanes.filter(p => Math.hypot(p.x - entry.x, p.y - entry.y) > 65);
     if (!candidates.length)
-        throw new Error('No connected east exit in combat camera');
-    candidates.sort((a, b) => {
-        // Prefer the furthest east reachable spot, then upper corridor for predictable readability.
-        const sa = a.x - Math.abs(a.y - (world.minY + 24)) * .16;
-        const sb = b.x - Math.abs(b.y - (world.minY + 24)) * .16;
-        return sb - sa || a.y - b.y;
-    });
+        throw new Error(`No reachable ${direction} exit`);
+    const centerY = world.minY + (world.maxY - world.minY) * .58;
+    const laneX = world.width * .5;
+    function score(p) {
+        switch (direction) {
+            case 'north': return -(p.y - world.minY) - Math.abs(p.x - laneX) * .29;
+            case 'south': return p.y - world.maxY - Math.abs(p.x - laneX) * .29;
+            case 'west': return -(p.x - world.minX) - Math.abs(p.y - centerY) * .30;
+            case 'east': return p.x - world.maxX - Math.abs(p.y - centerY) * .30;
+            default: throw new RangeError('Unknown exit compass direction');
+        }
+    }
+    // A maximum-score chosen from the same connected flood fill is guaranteed reachable.
+    candidates.sort((a, b) => score(b) - score(a) || a.y - b.y || a.x - b.x);
     return candidates[0];
+}
+/** Backward-compatible east-door helper for legacy practice rooms and tests. */
+export function placeRoomExit(world) {
+    return placeDirectedExit(world, safeSpawn(world, { x: world.width * .27, y: world.minY + 24 }), 'east');
 }
 function enemyOf(id, kind, p) { return { id, kind, ...p, radius: ENEMY_RADII[kind], hp: ENEMY_HP[kind], maxHp: ENEMY_HP[kind], alive: true, flash: 0, cooldown: 1.1, windup: 0, state: 'idle', dx: 0, dy: 1, time: 0, phase: 1, attackCount: 0 }; }
 export class HostileEncounter {
@@ -129,6 +144,7 @@ export class HostileEncounter {
     projectiles = [];
     exit;
     room;
+    exitDirection;
     state = 'locked';
     wave = 0;
     kills = 0;
@@ -136,14 +152,15 @@ export class HostileEncounter {
     lastId = 0;
     bossDefeated = false;
     spawn;
-    constructor(world, room, hero, plan) {
+    constructor(world, room, hero, plan, exitDirection = 'east') {
         this.world = world;
         this.plan = plan;
         if (plan && (room !== 'crypt' || !plan.id || plan.waves.length < 1 || plan.waves.length > 3 || plan.waves.some(w => w.length < 1 || w.length > 3) || !Number.isSafeInteger(plan.strength) || plan.strength < 1 || plan.strength > 4))
             throw new RangeError('Invalid authored encounter plan');
         this.room = room;
+        this.exitDirection = exitDirection;
         this.spawn = hero ? { ...hero } : safeSpawn(world, { x: world.width * .27, y: world.minY + 24 });
-        this.exit = placeRoomExit(world);
+        this.exit = placeDirectedExit(world, this.spawn, this.exitDirection);
         if (room === 'warden') {
             const p = findEnemySpawn(world, { x: world.width * .74, y: world.minY + (world.maxY - world.minY) * .56 }, ENEMY_RADII.warden, this.spawn, []);
             this.enemies.push(enemyOf('rootbound-warden', 'warden', p));
@@ -157,7 +174,7 @@ export class HostileEncounter {
         const previous = this.world;
         this.world = world;
         this.spawn = safeSpawn(world, { x: this.spawn.x * world.width / previous.width, y: this.spawn.y * world.height / previous.height });
-        this.exit = placeRoomExit(world);
+        this.exit = placeDirectedExit(world, this.spawn, this.exitDirection);
         const settled = [];
         for (const enemy of this.enemies) {
             if (!enemy.alive)
