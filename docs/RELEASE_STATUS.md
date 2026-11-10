@@ -1,5 +1,23 @@
 # RUNEGRAVE — Verified Release Status
 
+## Current verified state — v0.06 (2026-11-09 US Central)
+
+- **Latest verified roadmap version:** **v0.06 — First Soulbolt combat foundation**, implemented, local/browser tested and publicly deployed.
+- **Implementation commit:** [`7a8bb92c7acd8547672f252850cc91085298c3f2`](https://github.com/hdog960/Runegrave/commit/7a8bb92c7acd8547672f252850cc91085298c3f2); verified at the tip of `main`. GitHub comparison to v0.05 reports **zero deleted files**. All seven authoritative documents are retained unchanged.
+- **Implemented:** real cooldown-based Soulbolt projectiles with damage, range, speed, collision against world walls/roots, deterministic substeps, reusable fixed 48-slot pool, modular hooks `shot`/`impact`/`break`/`expire`, physical knockback, and three non-hostile breakable training targets with distinct visuals, finite health, safe placement and delayed respawn. Status is presented in a separate external HUD. Original Rootvault art, 120Hz physics, saved `runegrave:input:v1` settings, split Norse rune grips, and Home Screen PWA architecture are preserved. Save schema remains 1.
+- **Local tests:** `npm run typecheck` PASS; `npm test` **32/32 PASS**, including six new combat tests. Static publication root mirror matched all compiled modules; 14 JavaScript modules and their 15 relative import links were checked.
+- **Local browser tests:** four landscape screen profiles (667×375, 760×360, 844×390, 932×430) plus portrait (390×844) PASS, with simulated dual pointers, cancellation, pause/resume, handedness and settings persistence, camera resize, and **zero control/HUD-to-canvas intersections**. An independent 844×390 in-memory Chromium real combat test fired nine Soulbolts, recorded three hits and shattered one practice target, without JavaScript exceptions.
+- **GitHub Actions:** public workflow listing reports successful **Build and publish Runegrave to GitHub Pages #12** and **Runegrave foundation checks #12** for implementation commit `7a8bb92` (runs dated Nov 10 UTC).
+- **Public Pages:** **VERIFIED v0.06 static publication** by fresh requests for `https://hdog960.github.io/Runegrave/index.html`, `js/core/version.js` (`v0.06`/`0.06.0`), `js/combat/soulbolts.js`, `js/combat/combatArt.js`, and `sw.js` (cache `runegrave-shell-v0.06.0`). This confirms public assets only, not physical Safari input or offline service-worker lifecycle.
+- **Content accounting:** **0** actual enemies, bosses, playable-character variants (beyond demonstration avatar), functional relics, procedural rooms, talismans, transformations, challenges, and endings. Training props do not inflate these quotas.
+- **Still unverified:** real iPhone Safari / installed Home Screen offline updates, physical thumb ergonomics, device FPS/battery, actual player visual approval. The mandatory **v0.09 Gate A**, then v0.39/v0.79/v0.99, remain unchanged; no approval inferred.
+- **Next locked milestone:** **v0.07 — Mortal Hearts, incoming damage, invulnerability, healing and death/restart**. No v0.08 enemy AI or v0.09 prototype content is credited early.
+
+---
+
+## Historical release-status records
+
+
 ## v0.05 — Rootvault Physics and Collision (2026-11-09)
 
 **Milestone:** v0.05 implemented and locally tested; GitHub deployment status is recorded below. **No enemy damage, true Soulbolt combat, health/death or valid roguelike run is claimed.**
