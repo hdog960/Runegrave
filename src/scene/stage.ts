@@ -25,6 +25,7 @@ import { describeRelicImpact } from '../run/relicImpact.js';
 import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
 import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
+import { paintChamberAmbience, type ChamberAmbientFamily } from './chamberAmbience.js';
 
 const WIDTH=420;
 export type StageMetrics={cssWidth:number;cssHeight:number;pixelWidth:number;pixelHeight:number;cameraWidth:number;cameraHeight:number};
@@ -224,6 +225,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     paintSanctuary(g!,W,H,time,currentRoom?.family||'ROOT',roomIndex);
     if(trial)drawEmberTrial(g!,trial,time);
     if(currentRoom&&mode==='crypt'){paintRoomFamily(g!,W,H,time,currentRoom);paintRoomSigil(g!,W,H,time,currentRoom);}
+    if(currentRoom&&mode==='crypt')paintChamberAmbience(g!,W,H,time,currentRoom.family as ChamberAmbientFamily,roomIndex);
     motionTrails.paintGround(g!,W,H,currentRoom?.family||'ROOT',reduced.matches);
     if(exitTrail.length)paintWaystones(g!,exitTrail,time);
     if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected));

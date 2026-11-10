@@ -1,6 +1,6 @@
-## Current release: v0.09.11 — Five distinct Norse foundations (Gate A awaiting approval)
+## Current release: v0.09.12 — Five Norse ambient signatures and clearer hostile shots (Gate A awaiting approval)
 
-The first playable Gate A build now paints ASH/IRON/ROOT/SPIRIT/FATE with different underlying wall and floor masonry and family-specific side installations, plus original Wayfarer and enemy accessory art. The 25 authored configurations, eight real relics, eight-chamber Warden mini-run, split handheld thumb grips, saved controller settings and PWA are preserved. The full 116-test local suite passes. See `docs/RELEASE_STATUS.md` for separate verified deployment information. Gate A is not yet approved; **v0.10 is locked**.
+The first playable Gate A build now paints ASH/IRON/ROOT/SPIRIT/FATE with different underlying wall and floor masonry and family-specific side installations, plus original Wayfarer and enemy accessory art. The 25 authored configurations, eight real relics, eight-chamber Warden mini-run, split handheld thumb grips, saved controller settings and PWA are preserved. The full 121-test local suite passes. See `docs/RELEASE_STATUS.md` for separate verified deployment information. Gate A is not yet approved; **v0.10 is locked**.
 
 ## Gate A v0.09.10 — distinct carved chambers and a live combat threat grip
 

@@ -1,3 +1,7 @@
+## v0.09.12 — Art-only Gate A progression, no fabricated new content
+
+Existing cumulative tested content remains: 25 authored combat-room configurations (eight chosen in the curated mini-run), eight functional relics, six hostile enemy behaviors, one Rootbound Warden, silver/healing pickups, one provisional hero and one boss path. Five ambient art signatures and two projectile visual weights are **presentation**, not new rooms/enemies, and do not count toward planned full game content. Gate A **UNAPPROVED**. No v0.10 floor graph or late-game system started.
+
 ## v0.09.11 — No fabricated content additions (2026-11-10)
 
 **Counts unchanged:** 25 authored first-soul encounter configurations (eight per curated run), six hostile kinds, one Warden boss, eight genuinely functioning relics, one provisional Wayfarer, silver/healing pickups. This release changes architectural art and enemy/player ornamentation ONLY; the four new side setpiece motifs are decorative replacements for the same non-colliding two props, not new interactive objects. Full procedural floor graph, seven endings, 750 relic target, shops, long-run persistence and future v0.10+ milestones remain LOCKED until explicit Gate A approval. Save schema and gameplay rules unchanged.

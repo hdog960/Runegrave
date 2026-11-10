@@ -1,3 +1,10 @@
+## v0.09.12 — Visual readability / mobile regression (2026-11-10)
+
+- Local strict TypeScript **PASS**, Node **121/121 PASS** (116 original + 5 tests for family ambient silhouettes, 25 authored variants, 2 hostile projectile weights, 8-direction mantle art, and offline module/cache completeness). Existing deterministic physics, all room/relic/health tests preserved.
+- In-memory Chromium four landscape (667×375, 760×360, 844×390, 932×430) and portrait (390×844) browser controls/canvas tests PASS; guided-start four-size test PASS; simultaneous dual-grip and five-family comparison PASS; three-size auto-pause and four-size external threat readout PASS, with zero browser JS errors. Full connected mini-run PASS through eight relic dialogs, Warden, victory and restart using **test-injected enemy hits and actor jumps**, not unaided human play.
+- Visual-only modules are strictly bounded and use no RNG, timers, hitboxes, or player-control layers; colors/shapes differ for friendly versus hostile bolts. 7 authoritative docs remain immutable and Gate A **NOT APPROVED**.
+- Physical iPhone Safari touch comfort, PWA offline lifecycle, sustained FPS/heat and unassisted victory **NOT VERIFIED**. Public Pages availability requires separate post-commit confirmation.
+
 ## v0.09.11 Gate A architecture and actor-art regression (2026-11-10)
 
 **Strict TypeScript PASS; Node test suite 116/116 PASS; Pages root export PASS.** Six additional tests cover distinct BASE floor/wall palettes, five setpiece motifs, all 25 room/family mappings, original hero ornament states and seven enemy armor/weapon accents, and PWA module precaching. Bounded painter draw-operation checks and balanced canvas save/restore guards pass at 420×220 and 420×235 simulated camera dimensions. Existing deterministic physics, health, eight relic effects, hostile AI, doorway reachability and control geometry tests remain passing.

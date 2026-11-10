@@ -1,3 +1,10 @@
+## v0.09.12 — Ambient room signatures and legible hostile projectiles (Gate A STILL PENDING; 2026-11-10)
+
+- Added five subtle original, world-space edge animations: furnace embers in ASH, cool gear sparks in IRON, breathing spores in ROOT, ghostglass memory shards in SPIRIT, and short woven thread movements in FATE. All are deterministic render-time effects with strict draw-operation budgets, no RNG/DOM/timers/colliders, and **no particles over the central dodge ring or controller rails**. Reduced-motion gets t=0 static effects.
+- Replaced undifferentiated circular enemy projectiles with **visible pointed spectral darts** and heavier **Rootbound Warden ember shots**, with directional trails. Projectile velocities, damage and hitboxes are unchanged; only the canvas artwork differs.
+- Added original eight-direction Wayfarer mantle stitches, helmet crest and firing detail, derived from the existing authoritative facing/aim pose without changing aiming or movement.
+- Verified TypeScript and **121/121 Node tests**, four landscape plus portrait Chromium input/layout checks, guided-start, five-family visual comparison, three-size auto-pause, four-size threat-display checks and full eight-chamber/Warden/restart browser flow with TEST-ONLY enemy-hit/actor-position injection. Original **v0.09** roadmap, save schema 1, input preferences and the seven canonical documents remain unchanged. PWA cache updated to **0.09.12**. Hardware Safari, offline PWA lifecycle, sustained FPS and player Gate A approval are NOT VERIFIED. v0.10 remains LOCKED.
+
 ## v0.09.11 — Family-specific base architecture and actor-detail pass (Gate A PENDING; 2026-11-10)
 
 - Replaced the reused universal Rootvault floor-and-wall foundation in first-soul rooms with five **actual authored base masonry palettes**: ember-scorched ASH, riveted steel IRON, living-green ROOT, slate-violet SPIRIT, and woven-brass FATE. Material changes occur at the tile and wall-brick rendering layer, not only in translucent overlays. Rootvault practice and the boss chamber retain the original living-root architecture.

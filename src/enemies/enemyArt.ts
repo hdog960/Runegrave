@@ -7,6 +7,7 @@ import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visua
 import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.js';
 import { drawEnemyGesture } from './gestureArt.js';
 import { paintEnemyAccents } from './armorAccents.js';
+import { paintHostileProjectiles } from './hostileProjectileArt.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS=Object.freeze({
@@ -127,7 +128,7 @@ export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncoun
    }
    runeWarning(g,e,t);sprite(g,e,t);
  }
- for(const b of state.projectiles){g.fillStyle=b.damage===2?'#e5916b':'#c7b7a0';g.beginPath();g.arc(b.x,b.y,b.radius,0,Math.PI*2);g.fill();g.strokeStyle='#713f3b';g.lineWidth=1;g.stroke();}
+ paintHostileProjectiles(g,state.projectiles,t);
  // Large recognizable carved doorway with LOCKED / EXIT sign and compass arrow.
  drawRuneDoor(g,encounter.exit,encounter.exitDirection,state.phase==='gate'&&relicCollected,t);
 }

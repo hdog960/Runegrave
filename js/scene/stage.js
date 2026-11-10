@@ -24,6 +24,7 @@ import { describeRelicImpact } from '../run/relicImpact.js';
 import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
 import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
+import { paintChamberAmbience } from './chamberAmbience.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -296,6 +297,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             paintRoomFamily(g, W, H, time, currentRoom);
             paintRoomSigil(g, W, H, time, currentRoom);
         }
+        if (currentRoom && mode === 'crypt')
+            paintChamberAmbience(g, W, H, time, currentRoom.family, roomIndex);
         motionTrails.paintGround(g, W, H, currentRoom?.family || 'ROOT', reduced.matches);
         if (exitTrail.length)
             paintWaystones(g, exitTrail, time);

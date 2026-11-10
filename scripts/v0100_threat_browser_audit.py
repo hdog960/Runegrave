@@ -1,4 +1,4 @@
-"""v0.09.11 in-memory Chromium bounds + live threat test, not physical Safari.
+"""v0.09.12 in-memory Chromium bounds + live threat test, not physical Safari.
 Real UI and simulation, with test-only character repositioning/attack-state injection.
 """
 from pathlib import Path

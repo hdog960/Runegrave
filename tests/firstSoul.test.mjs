@@ -108,7 +108,7 @@ test('PWA precaches v0.09 run modules and Gate A artwork approval is not silentl
  const read=x=>readFileSync(new URL(`../dist/${x}`,import.meta.url),'utf8');
  const sw=read('sw.js'),html=read('index.html'),stage=read('js/scene/stage.js');
  for(const p of ['js/run/firstSoul.js','js/run/lootArt.js'])assert.ok(sw.includes(p));
- assert.ok(sw.includes('runegrave-shell-v0.09.11'));
+ assert.ok(sw.includes('runegrave-shell-v0.09.12'));
  assert.match(html,/GATE A .*APPROVAL REQUIRED/);
  assert.match(html,/data-relic-line/);assert.match(html,/data-silver/);
  assert.match(stage,/setCanvasData\('roomIndex'|data\.roomIndex|dataset\.roomIndex/);
