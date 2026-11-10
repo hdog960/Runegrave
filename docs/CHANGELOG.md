@@ -1,3 +1,13 @@
+## v0.09.4 — The Five Faces of the Rootvault (Gate A polish; 2026-11-10)
+
+- Added original world-space decorative themes to all five first-soul room families: ash-scorched threshold, iron-and-rivet vault, living-root masonry, spectral ghostglass, and golden fate-knot. The 25 authored configurations, physics geometry, damage, and seed selection are unchanged.
+- Clarified the six enemies and first boss through differentiated in-world danger signs: archer/warden aiming reticles, charger corridor plus arrowhead, spirit/radial volley rings, imminent warning color and stronger enemy labels. Added a seven-entry pause-only threat glossary, never overlaying active combat.
+- Recalculated the reachable green exit waystones approximately every 0.7 fixed-step seconds from the player position, rather than leaving a route anchored where it first appeared. Locked room doors remain closed until the fight and mandatory relic are complete.
+- Reduced iPhone DOM pressure: fixed-step state still advances at 120 Hz, but 43 debug data attributes, heart icons, and persistent objective/status strings are written only when changed. This is a renderer/UI optimization, not a faster-CPU or physical-iPhone benchmark claim.
+- Retained the original iron/ash-wood grips and independent simultaneous two-thumb input, previously saved preferences, v0.09 room/relic progression, health/death/boss flow, PWA, and the seven authoritative project documents byte-for-byte.
+- Local: TypeScript strict check PASS; Node 79/79 PASS; four landscape and one portrait Chromium UI profile PASS; guided-start profiles PASS; full test-injected eight-room/boss/restart route PASS. Additional browser audit passed on three landscape profiles: 0 heart and 0 footer DOM mutations while idle for 650 ms, 78–79 canvas data mutations, readable pause threat guide and real practice→crypt passage. None are physical iPhone or unaided human run evidence.
+- **Gate A is still awaiting the player’s explicit visual/control approval. Do not begin v0.10.**
+
 ## v0.09.3 — Gate A readability, guidance and feedback (2026-11-10)
 
 - Reworked original, signed Norse doors with clearer stone jambs, iron bars, carved lintels and lit locked/open state; green waystones trace a *reachable* floor route to the unlocked gate.

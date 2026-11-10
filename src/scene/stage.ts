@@ -19,6 +19,7 @@ import { drawRoomDrops, paintRoomSigil, nearDrop, type RoomDrop } from '../run/l
 import { objectiveText } from '../platform/firstRunGuide.js';
 import { directionForChamber, EXIT_LABELS, type ExitDirection } from '../run/wayfinding.js';
 import { drawRuneDoor } from './doorArt.js';
+import { paintRoomFamily } from './familyArt.js';
 import { carvedWaystones, paintWaystones } from './routeArt.js';
 import { describeRelicImpact } from '../run/relicImpact.js';
 
@@ -58,6 +59,16 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
   let encounter:HostileEncounter|undefined;
   let practiceExit:Vector2|undefined;
   let exitTrail:readonly Vector2[]=[];
+  let routeRefresh=0;
+  let lastHeartSignature="";
+  let lastObjective="";
+  let lastScore="";
+  const statusFooter=document.querySelector<HTMLElement>('[data-run-status]');
+  const updateText=(el:HTMLElement|null,value:string)=>{if(el&&el.textContent!==value)el.textContent=value;};
+  // Avoid thousands of redundant DOM attribute writes every second on iPhone.
+  // Debug/test dataset values remain up to date when the underlying state changes.
+  const setCanvasData=(key:string,value:string)=>{if(canvas.dataset[key]!==value)canvas.dataset[key]=value;};
+  const setRootData=(key:string,value:string)=>{if(document.documentElement.dataset[key]!==value)document.documentElement.dataset[key]=value;};
   let gateDirection:ExitDirection='east';
   const completeOverlay=document.querySelector<HTMLElement>('#trial-clear-overlay');
   const floorLabel=document.querySelector<HTMLElement>('.status-middle');
@@ -85,79 +96,87 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
   let metrics:StageMetrics|undefined;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   function emitState(){
-    canvas.dataset.actorX=actor.x.toFixed(2);canvas.dataset.actorY=actor.y.toFixed(2);
+    setCanvasData('actorX',actor.x.toFixed(2));setCanvasData('actorY',actor.y.toFixed(2));
     const state=combat?.state;
-    canvas.dataset.boltCount=String(state?.activeBolts||0);
-    canvas.dataset.physicsTick=String(clock.ticks);
-    canvas.dataset.hitboxRadius=String(HERO_RADIUS);
-    canvas.dataset.safeSpawn=String(Boolean(world&&isPositionFree(world,actor)));
-    canvas.dataset.shots=String(state?.shots||0);
-    canvas.dataset.hits=String(state?.hits||0);
-    canvas.dataset.shattered=String(state?.shattered||0);
-    canvas.dataset.liveTargets=String(state?.liveTargets||0);
-    if(score)score.textContent=`ᛉ ${state?.shattered||0} SHATTERED`;
+    setCanvasData('boltCount',String(state?.activeBolts||0));
+    setCanvasData('physicsTick',String(clock.ticks));
+    setCanvasData('hitboxRadius',String(HERO_RADIUS));
+    setCanvasData('safeSpawn',String(Boolean(world&&isPositionFree(world,actor))));
+    setCanvasData('shots',String(state?.shots||0));
+    setCanvasData('hits',String(state?.hits||0));
+    setCanvasData('shattered',String(state?.shattered||0));
+    setCanvasData('liveTargets',String(state?.liveTargets||0));
+    const scoreText=`ᛉ ${state?.shattered||0} SHATTERED`;
+    if(lastScore!==scoreText){lastScore=scoreText;updateText(score,scoreText);}
     const hs=health.state;
-    canvas.dataset.heartUnits=String(hs.units);canvas.dataset.heartMax=String(hs.maxUnits);
-    canvas.dataset.invulnerability=hs.grace.toFixed(4);canvas.dataset.dead=String(hs.dead);
-    canvas.dataset.healthHits=String(hs.hits);canvas.dataset.healthHealed=String(hs.healed);
-    canvas.dataset.hazardHits=String(trial?.state.contacts||0);
-    canvas.dataset.shrineReady=String(trial?.shrine.ready??false);
-    canvas.dataset.restarts=String(restarts);
+    setCanvasData('heartUnits',String(hs.units));setCanvasData('heartMax',String(hs.maxUnits));
+    setCanvasData('invulnerability',hs.grace.toFixed(4));setCanvasData('dead',String(hs.dead));
+    setCanvasData('healthHits',String(hs.hits));setCanvasData('healthHealed',String(hs.healed));
+    setCanvasData('hazardHits',String(trial?.state.contacts||0));
+    setCanvasData('shrineReady',String(trial?.shrine.ready??false));
+    setCanvasData('restarts',String(restarts));
     const activeExit=encounter?.exit||practiceExit;
-    canvas.dataset.exitX=activeExit?activeExit.x.toFixed(2):'';
-    canvas.dataset.exitY=activeExit?activeExit.y.toFixed(2):'';
-    canvas.dataset.room=mode;
-    canvas.dataset.exitDirection=gateDirection;
-    canvas.dataset.roomId=currentRoom?.id||'';
-    canvas.dataset.roomIndex=String(roomIndex+1);
-    canvas.dataset.roomTotal=String(FIRST_SOUL_CHAMBERS);
-    canvas.dataset.catalogCount=String(25);
-    canvas.dataset.relicCount=String(inventory.state.relics.length);
-    canvas.dataset.silver=String(inventory.state.silver);
-    canvas.dataset.remainingDrops=String(drops.filter(d=>!d.collected).length);
-    canvas.dataset.relicGateReady=String(!drops.some(d=>d.kind==='relic'&&!d.collected));
+    setCanvasData('exitX',activeExit?activeExit.x.toFixed(2):'');
+    setCanvasData('exitY',activeExit?activeExit.y.toFixed(2):'');
+    setCanvasData('room',mode);
+    setCanvasData('exitDirection',gateDirection);
+    setCanvasData('roomId',currentRoom?.id||'');
+    setCanvasData('roomIndex',String(roomIndex+1));
+    setCanvasData('roomTotal',String(FIRST_SOUL_CHAMBERS));
+    setCanvasData('catalogCount',String(25));
+    setCanvasData('relicCount',String(inventory.state.relics.length));
+    setCanvasData('silver',String(inventory.state.silver));
+    setCanvasData('remainingDrops',String(drops.filter(d=>!d.collected).length));
+    setCanvasData('relicGateReady',String(!drops.some(d=>d.kind==='relic'&&!d.collected)));
     const exitOpen=mode==='practice'||encounter?.snapshot.phase==='gate'&&!drops.some(d=>d.kind==='relic'&&!d.collected);
-    document.documentElement.dataset.doorReady=String(Boolean(exitOpen));
-    canvas.dataset.roomPhase=encounter?.snapshot.phase|| (complete?'finished':'gate');
-    canvas.dataset.roomWave=String(encounter?.snapshot.wave||0);
-    canvas.dataset.hostilesAlive=String(encounter?.snapshot.enemies.filter(e=>e.alive).length||0);
-    canvas.dataset.hostileKills=String(encounter?.snapshot.kills||0);
-    canvas.dataset.bossPhase=String(encounter?.snapshot.bossPhase||0);
-    canvas.dataset.bossDefeated=String(encounter?.snapshot.bossDefeated||false);
-    canvas.dataset.enemyProjectiles=String(encounter?.snapshot.projectiles.length||0);
-    document.documentElement.dataset.roomName=complete?'COMPLETE':mode.toUpperCase();
-    document.documentElement.dataset.roomPhase=objectiveText({
+    setRootData('doorReady',String(Boolean(exitOpen)));
+    setCanvasData('roomPhase',encounter?.snapshot.phase|| (complete?'finished':'gate'));
+    setCanvasData('roomWave',String(encounter?.snapshot.wave||0));
+    setCanvasData('hostilesAlive',String(encounter?.snapshot.enemies.filter(e=>e.alive).length||0));
+    setCanvasData('hostileKills',String(encounter?.snapshot.kills||0));
+    setCanvasData('bossPhase',String(encounter?.snapshot.bossPhase||0));
+    setCanvasData('bossDefeated',String(encounter?.snapshot.bossDefeated||false));
+    setCanvasData('enemyProjectiles',String(encounter?.snapshot.projectiles.length||0));
+    setRootData('roomName',complete?'COMPLETE':mode.toUpperCase());
+    setRootData('roomPhase',objectiveText({
       mode, phase:encounter?.snapshot.phase||'gate',
       alive:encounter?.snapshot.enemies.filter(e=>e.alive).length||0,
       missingRelic:drops.some(d=>d.kind==='relic'&&!d.collected),
       roomNumber:roomIndex+1, roomTotal:FIRST_SOUL_CHAMBERS,exitDirection:gateDirection
-    });
-    const footer=document.querySelector<HTMLElement>('[data-run-status]');if(footer)footer.textContent=document.documentElement.dataset.roomPhase;
-    if(doorHint)doorHint.textContent=`${EXIT_LABELS[gateDirection].arrow} ${EXIT_LABELS[gateDirection].label} DOOR`;
-    if(silverCounter)silverCounter.textContent=`SILVER ${inventory.state.silver}`;
-    if(ledgerCurrency)ledgerCurrency.textContent=`ᚠ ${inventory.state.silver} SILVER · ${roomIndex+1}/${FIRST_SOUL_CHAMBERS} CHAMBERS`;
+    }));
+    const objective=document.documentElement.dataset.roomPhase||'';
+    if(lastObjective!==objective){lastObjective=objective;updateText(statusFooter,objective);}
+    updateText(doorHint,`${EXIT_LABELS[gateDirection].arrow} ${EXIT_LABELS[gateDirection].label} DOOR`);
+    updateText(silverCounter,`SILVER ${inventory.state.silver}`);
+    updateText(ledgerCurrency,`ᚠ ${inventory.state.silver} SILVER · ${roomIndex+1}/${FIRST_SOUL_CHAMBERS} CHAMBERS`);
     const ids=inventory.state.relics;
     if(displayedRelicLedger!==ids.join(',')){
       displayedRelicLedger=ids.join(',');
-      if(ledger)ledger.querySelector('summary')!.textContent=`ᛟ BOUND RELICS · ${ids.length}/8`;
+      if(ledger)updateText(ledger.querySelector('summary'),`ᛟ BOUND RELICS · ${ids.length}/8`);
       if(ledgerList){ledgerList.replaceChildren();
         if(!ids.length){const li=document.createElement('li');li.textContent='Fate has not yet bound a relic.';ledgerList.append(li);}
         for(const id of ids){const item=FIRST_SOUL_RELICS.find(x=>x.id===id)!;const li=document.createElement('li'),name=document.createElement('strong');
           name.textContent=`${item.rune} ${item.name} — `;li.append(name,item.description);ledgerList.append(li);}
       }
     }
-    if(relicReadout){const last=inventory.state.relics.at(-1);const item=FIRST_SOUL_RELICS.find(x=>x.id===last);relicReadout.textContent=item?item.name.toUpperCase():'UNBOUND';}
-    if(relicEffect){const newest=FIRST_SOUL_RELICS.find(x=>x.id===inventory.state.relics.at(-1));relicEffect.textContent=newest?.description||'GOLD PICKUP = NEW POWER';}
-    if(relicLine)relicLine.textContent=`${inventory.state.relics.length}/8 RELICS`;
-    if(floorLabel)floorLabel.textContent=mode==='practice'?'MIDGARD · ROOTVAULT ANTECHAMBER':mode==='crypt'?`MIDGARD · ${currentRoom?.title||'FIRST SOUL CHAMBER'}`:mode==='warden'?'MIDGARD · ROOTBOUND WARDEN':'MIDGARD · ROOTVAULT CLEARED';
-    if(heartLine){heartLine.replaceChildren();for(const [i,slot] of heartSlots(hs.units,hs.maxUnits).entries()){
-      const el=document.createElement('span');el.className=`heart-icon mortal-${slot}`;
-      el.textContent=slot==='full'?'♥':slot==='half'?'◐':'♡';
-      el.setAttribute('aria-hidden','true');el.dataset.slot=String(i);heartLine.append(el);
-    }}
+    if(relicReadout){const last=inventory.state.relics.at(-1);const item=FIRST_SOUL_RELICS.find(x=>x.id===last);updateText(relicReadout,item?item.name.toUpperCase():'UNBOUND');}
+    if(relicEffect){const newest=FIRST_SOUL_RELICS.find(x=>x.id===inventory.state.relics.at(-1));updateText(relicEffect,newest?.description||'GOLD PICKUP = NEW POWER');}
+    updateText(relicLine,`${inventory.state.relics.length}/8 RELICS`);
+    updateText(floorLabel,mode==='practice'?'MIDGARD · ROOTVAULT ANTECHAMBER':mode==='crypt'?`MIDGARD · ${currentRoom?.title||'FIRST SOUL CHAMBER'}`:mode==='warden'?'MIDGARD · ROOTBOUND WARDEN':'MIDGARD · ROOTVAULT CLEARED');
+    // Health may tick at 120 Hz, but the external heart DOM is only rebuilt when
+    // a heart is actually damaged, healed, gained or reset.
+    const heartSignature=`${hs.units}/${hs.maxUnits}`;
+    if(heartLine&&lastHeartSignature!==heartSignature){
+      lastHeartSignature=heartSignature;heartLine.replaceChildren();
+      for(const [i,slot] of heartSlots(hs.units,hs.maxUnits).entries()){
+        const el=document.createElement('span');el.className=`heart-icon mortal-${slot}`;
+        el.textContent=slot==='full'?'♥':slot==='half'?'◐':'♡';
+        el.setAttribute('aria-hidden','true');el.dataset.slot=String(i);heartLine.append(el);
+      }
+    }
     const description=`${(hs.units/2).toFixed(hs.units%2?1:0)} / ${hs.containers} HEARTS`;
-    if(heartReadout)heartReadout.textContent=hs.dead?'THREAD SEVERED':description;
-    if(heartLine)heartLine.setAttribute('aria-label',`Mortal Hearts ${description}`);
+    updateText(heartReadout,hs.dead?'THREAD SEVERED':description);
+    if(heartLine){const label=`Mortal Hearts ${description}`;if(heartLine.getAttribute('aria-label')!==label)heartLine.setAttribute('aria-label',label);}
   }
   function resize(){
     const bounds=parent!.getBoundingClientRect();if(bounds.width<1||bounds.height<1)return;
@@ -172,14 +191,14 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     const previous=trial?.exportState();
     practiceExit=placeDirectedExit(world,actor,'east');
     if(encounter){encounter.reframe(world);gateDirection=encounter.exitDirection;}
-    exitTrail=[];
+    exitTrail=[];routeRefresh=0;
     attachCombat(world);
     const movement=combat?.getMovementWorld()||world;
     if(!isPositionFree(movement,actor))actor=safeSpawn(movement,actor);
     trial=mode==='practice'?new EmberTrial(world,actor,combat?.targets||[]):undefined;
     if(previous&&trial)trial.restoreState(previous);
     canvas.width=next.pixelWidth;canvas.height=next.pixelHeight;
-    canvas.dataset.cameraWidth=next.cameraWidth.toFixed(2);canvas.dataset.cameraHeight=next.cameraHeight.toFixed(2);
+    setCanvasData('cameraWidth',next.cameraWidth.toFixed(2));setCanvasData('cameraHeight',next.cameraHeight.toFixed(2));
     emitState();render(lastTime);
   }
   function render(time:number){
@@ -188,7 +207,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     g!.setTransform(metrics.pixelWidth/W,0,0,metrics.pixelHeight/H,0,0);
     paintSanctuary(g!,W,H,time);
     if(trial)drawEmberTrial(g!,trial,time);
-    if(currentRoom&&mode==='crypt')paintRoomSigil(g!,W,H,time,currentRoom);
+    if(currentRoom&&mode==='crypt'){paintRoomFamily(g!,W,H,time,currentRoom);paintRoomSigil(g!,W,H,time,currentRoom);}
     if(exitTrail.length)paintWaystones(g!,exitTrail,time);
     if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected));
     drawRoomDrops(g!,drops,time);
@@ -212,7 +231,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     }else currentRoom=undefined;
     mode=room;trial=undefined;sparks.length=0;clock.reset();
     gateDirection=room==='warden'?'north':directionForChamber(roomIndex);
-    drops=[];roomRewardPlaced=false;exitTrail=[];
+    drops=[];roomRewardPlaced=false;exitTrail=[];routeRefresh=0;
     actor=safeSpawn(world,{x:world.width*.26,y:world.minY+24});
     encounter=new HostileEncounter(world,room,actor,room==='crypt'&&currentRoom?encounterPlan(currentRoom):undefined,gateDirection);
     attachCombat(world);walking=ZERO;firing=false;lastAim={x:1,y:0};emitState();
@@ -271,10 +290,15 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     encounter?.step(dt,actor,health);
     if(encounter?.snapshot.phase==='gate'&&!roomRewardPlaced)placeDrops();
     collectDrops();
-    if(!exitTrail.length&&world){
+    // Waystones follow the current position instead of pointing toward the
+    // location where the hero happened to stand when the door first opened.
+    // Recompute at a bounded rate, not on every 120-Hz physics step.
+    if(world){
       const ready=mode==='practice'||encounter?.snapshot.phase==='gate'&&!drops.some(d=>d.kind==='relic'&&!d.collected);
       const target=mode==='practice'?practiceExit:encounter?.exit;
-      if(ready&&target)exitTrail=carvedWaystones(walkableRoute(world,actor,target));
+      if(ready&&target){routeRefresh-=dt;if(routeRefresh<=0){
+        exitTrail=carvedWaystones(walkableRoute(world,actor,target));routeRefresh=.7;
+      }}else if(exitTrail.length){exitTrail=[];routeRefresh=0;}
     }
     if(health.state.dead){
       dead=true;walking=ZERO;firing=false;
@@ -327,7 +351,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
       health.reset();inventory.reset();dead=false;complete=false;mode='practice';encounter=undefined;paused=false;restarts++;clock.reset();lastFrameMs=-Infinity;
       roomIndex=-1;currentRoom=undefined;gateDirection='east';
       if(pickupInfo)pickupInfo.textContent='GOLD = UPGRADE · SILVER = CURRENCY';
-      route=createFirstSoulRoute(`first-soul-${String(restarts+1).padStart(4,'0')}`);drops=[];roomRewardPlaced=false;exitTrail=[];
+      route=createFirstSoulRoute(`first-soul-${String(restarts+1).padStart(4,'0')}`);drops=[];roomRewardPlaced=false;exitTrail=[];routeRefresh=0;
       actor=safeSpawn(world);lastAim={x:0,y:1};walking=ZERO;firing=false;
       attachCombat(world);
       actor=safeSpawn(combat?.getMovementWorld()||world,actor);

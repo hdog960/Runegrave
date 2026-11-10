@@ -150,3 +150,10 @@
 .relic-impact{border:1px solid #b8d29b;background:#122c23;padding:clamp(5px,1vw,10px);color:#e0ffe1;font:bold clamp(10px,1.3vw,15px)/1.4 system-ui,sans-serif;letter-spacing:.01em;text-align:center}
 html[data-door-ready="true"] .screen-footer .run-state{color:#c4f5ad;text-shadow:0 0 8px #71be8266}
 html[data-door-ready="false"] .screen-footer .run-state{color:#ffcb9b}
+
+/* v0.09.4 Gate A: pause-only enemy guide, never an overlay on live combat. */
+.threat-guide summary{color:#f0bb96}.threat-guide .threat-contents{max-height:98px;overflow:auto}
+.threat-guide ul{padding-left:15px;margin:0;display:grid;gap:4px}
+.threat-guide li{font:8px/1.4 system-ui;color:#d0d8cf}
+.threat-guide li strong{color:#f0d09e}
+@media (orientation:landscape) and (max-height:375px){.threat-guide .threat-contents{max-height:72px}.threat-guide li{font-size:7px}}

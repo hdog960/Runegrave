@@ -1,3 +1,13 @@
+## v0.09.4 — Theme, telegraph and DOM regression (2026-11-10)
+
+- Baseline version 0.09.3, roadmap milestone v0.09. Strict TypeScript check PASS and `npm test` **79/79** PASS, including two new theme tests ensuring 25 rooms map to five distinct material treatments and all art saves/restores world canvas state.
+- `scripts/v009_browser_audit.py`: PASS at 667×375, 760×360, 844×390, 932×430 and portrait 390×844; no JS exceptions, two-thumb simulation and zero HUD/control intersection with center canvas.
+- `scripts/guide_browser_audit.py`: PASS at four landscape sizes. Guide/replay controls stop the simulation without overlaying active combat.
+- `scripts/v009_full_run_audit.py`: PASS entire eight-room, eight-relic, boss completion, victory and restart state machine. Enemy damage and legal repositioning are **test injected**; this is not evidence of natural human completion.
+- `scripts/v0094_polish_audit.py`: three real Chromium DOM/layout profiles PASS. In a 650ms idle interval, heart-icon child mutations = **0**, objective-footer mutations = **0**, canvas debug attribute writes = **78–79** per profile (physics tick still updates). Pause-only threat guide has all seven descriptions, resume works, practice eastern gate transitions to crypt, no JS errors. Screenshot art warnings have a **test-injected attacker windup state**; they demonstrate rendering, not ordinary combat timing.
+- Local `npm run export:pages` copied compiled JS and service worker into the repository-root mirror. The public Pages/CI result, if any, must be confirmed independently after committing.
+- **Unverified:** physical iPhone Safari, standalone PWA offline lifecycle, sustained mobile FPS, two-thumb comfort, unaided Warden victory, and player Gate A approval.
+
 # Test Matrix — Evidence, Not Assumptions
 
 Run `npm ci && npm test` (Node.js 22) for build + foundation checks. Local initial authoring also ran `npm test` using locally available TypeScript 5.8.3; six tests passed. CI workflows are provided but GitHub Actions and Pages status require independent confirmation.

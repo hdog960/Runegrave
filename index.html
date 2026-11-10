@@ -33,7 +33,7 @@
       <header class="screen-status" data-hud aria-label="Run HUD outside gameplay canvas">
         <span class="status-crest">ᛟ</span><span class="status-name">RUNEGRAVE</span>
         <span class="status-middle">MIDGARD <i>·</i> THE FIRST SOUL</span>
-        <span class="status-version" data-release>v0.09.3</span>
+        <span class="status-version" data-release>v0.09.4</span>
       </header>
       <div id="world-frame" class="world-frame" aria-label="Unobstructed center-only combat world: connected first-soul rooms, runic relic pickups and original Norse enemies">
         <canvas id="gameplay-canvas" width="420" height="240" aria-label="Midgard Rootvault: Soulbolt combat, hostile enemies, Rootbound Warden, Mortal Hearts and safe exits">Your browser does not support canvas.</canvas>
@@ -65,6 +65,15 @@
               <label><span>THUMBSTICK DEAD ZONE</span><input id="dead-zone" type="range" min="8" max="30" step="2" value="14"></label>
             </div>
             <details id="run-ledger" class="run-ledger"><summary>ᛟ BOUND RELICS · 0/8</summary><div class="ledger-contents"><ol id="ledger-relics"><li>Fate has not yet bound a relic.</li></ol><p data-ledger-currency>SILVER 0 · ENCOUNTER REWARDS</p></div></details>
+            <details id="threat-guide" class="run-ledger threat-guide"><summary>⚔ THREAT RUNES · ENEMY ATTACK GUIDE</summary><div class="ledger-contents threat-contents"><ul>
+              <li><strong>DRAUGR · CLAW</strong> — Keep moving; it follows you into melee.</li>
+              <li><strong>WISP · SPIRIT SHOT</strong> — Circles you; dodge the pale-blue shot.</li>
+              <li><strong>ARCHER · AIMED SHOT</strong> — Sidestep the lined-up arrow.</li>
+              <li><strong>CHARGER · CHARGE</strong> — Leave the warning lane before it dashes.</li>
+              <li><strong>ROOT SENTINEL · VOLLEY</strong> — Dodge the outward rune burst.</li>
+              <li><strong>SHADE · BLINK</strong> — Watch the ghost outline; it reappears.</li>
+              <li><strong>ROOTBOUND WARDEN</strong> — Watch its aimed attack line; phase two is faster.</li>
+            </ul></div></details>
             <div id="pwa-update" class="pwa-update" role="status" hidden><span>NEW FORGING READY</span><button type="button" id="apply-update">UPDATE</button></div>
             <button type="button" id="resume-btn" class="resume-btn">ᛏ RETURN TO DESCENT</button>
             <small>KEYBOARD: WASD / ARROWS TO MOVE · IJKL TO AIM · SPACE TO FIRE · ESC TO PAUSE</small>

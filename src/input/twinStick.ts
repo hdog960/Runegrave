@@ -171,7 +171,8 @@ export class TwinStickControls {
   refreshStatus(){
     const s=this.snapshot;
     const room=document.documentElement.dataset.roomName||'PRACTICE';
-    this.playStatus.textContent=this.dead?(room==='COMPLETE'?'TRIAL COMPLETE':'THREAD SEVERED · RESTART'):s.paused?'PAUSED · INPUT RELEASED':document.documentElement.dataset.roomPhase||'ANTEROOM · EAST GATE OPEN';
+    const label=this.dead?(room==='COMPLETE'?'TRIAL COMPLETE':'THREAD SEVERED · RESTART'):s.paused?'PAUSED · INPUT RELEASED':document.documentElement.dataset.roomPhase||'ANTEROOM · EAST GATE OPEN';
+    if(this.playStatus.textContent!==label)this.playStatus.textContent=label;
   }
   destroy(){this.destroyed=true;this.clearTransient();for(const stop of this.stopListeners)stop();this.stopListeners=[];}
 }

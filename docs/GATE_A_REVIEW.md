@@ -1,3 +1,9 @@
+## v0.09.4 — Additional player-inspection criteria (approval still pending)
+
+Inspect the actual iPhone landscape build. Compare at least two of the five family settings for distinct floor materials and motifs, check one archer/charger warning for its readable projected danger lane, and open **PAUSE → THREAT RUNES** if the enemy patterns are unclear. After clearing and claiming a relic, the green waystones should lead from your current position to the signed door; red LOCKED doors must never pretend to be usable. Try moving/aiming simultaneously while checking heart, objective and relic readouts in the outer grips only.
+
+The software optimizations reduce repeated DOM updates in Chromium but **do not prove better FPS or mobile thermals**. **No Gate A approval has been given.** Keep v0.10 locked. Report confusion, clutter, legibility, actual thumb comfort, and art issues for further v0.09 changes.
+
 # v0.09 — Gate A: Player Visual and Control Review
 
 **Status:** AWAITING EXPLICIT PLAYER APPROVAL. This review does not approve itself. **v0.10 must not begin until the player explicitly accepts the visual and controller standard.**

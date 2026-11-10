@@ -1,3 +1,7 @@
+## v0.09.4 — Five authored visual room materials and combat legibility
+
+":[...]" is not used as a gameplay asset. The existing original Rootvault stone architecture stays recognizable, while `scene/familyArt.ts` distinguishes **ASH** (vitrified amber cracks), **IRON** (cold blue riveted plates), **ROOT** (living green-veined stones), **SPIRIT** (soft violet ghostglass), and **FATE** (golden interlocked knotwork). World-space frescoes and wall trim do not affect enemy collision. Do not create fake doors/pickups out of non-interactive decor. `enemies/enemyArt.ts` adds danger lanes, arrowheads and rings in world space with readable labels; the permanent HUD remains outside the canvas. Gate A art is still subject to player approval.
+
 # Art and Controller Layout — Locked Direction
 
 Canonical: [UI_CONTROLS_AND_ART_DIRECTION.md](UI_CONTROLS_AND_ART_DIRECTION.md) and [HANDHELD_CONTROLLER_LAYOUT.md](HANDHELD_CONTROLLER_LAYOUT.md). The preview uses original, hand-authored World Tree SVG art and carved-stone styling as an **early visual tone study only**, not final or player-approved art.

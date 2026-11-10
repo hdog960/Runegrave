@@ -10,6 +10,16 @@ export const ENEMY_ATTACK_TELLS = Object.freeze({
     shade: { label: 'BLINK', color: '#c6b2fa' },
     warden: { label: 'WARDEN STRIKE', color: '#f6a37b' }
 });
+function lineHead(g, x, y, dx, dy, color) {
+    const nx = -dy, ny = dx;
+    g.fillStyle = color;
+    g.beginPath();
+    g.moveTo(x, y);
+    g.lineTo(x - dx * 11 + nx * 5, y - dy * 11 + ny * 5);
+    g.lineTo(x - dx * 11 - nx * 5, y - dy * 11 - ny * 5);
+    g.closePath();
+    g.fill();
+}
 function runeWarning(g, e, t) {
     if (e.state !== 'warning')
         return;
@@ -30,14 +40,45 @@ function runeWarning(g, e, t) {
         px(g, x - 3, y - 2, 6, 4, imminent ? '#ff855e' : tell.color);
     }
     if (e.kind === 'charger' || e.kind === 'archer' || e.kind === 'warden') {
+        const length = e.kind === 'charger' ? 104 : e.kind === 'warden' ? 117 : 124;
+        const endX = e.x + e.dx * length, endY = e.y + e.dy * length;
         g.strokeStyle = imminent ? '#ff6b4b' : '#f7c883';
         g.lineWidth = imminent ? 2.5 : 1.7;
         g.setLineDash([7, 4]);
         g.beginPath();
         g.moveTo(e.x, e.y);
-        g.lineTo(e.x + e.dx * 92, e.y + e.dy * 92);
+        g.lineTo(endX, endY);
         g.stroke();
         g.setLineDash([]);
+        // The tip indicates where the windup will travel. Arrowheads and a targeted
+        // endpoint stay visible in both color-vision and reduced-motion modes.
+        const nx = -e.dy, ny = e.dx;
+        lineHead(g, endX, endY, e.dx, e.dy, imminent ? '#ff816a' : tell.color);
+        if (e.kind === 'charger') {
+            g.strokeStyle = imminent ? '#ff816a' : '#aa7658';
+            g.lineWidth = 1;
+            for (const side of [-1, 1]) {
+                g.beginPath();
+                g.moveTo(e.x + nx * 12 * side, e.y + ny * 12 * side);
+                g.lineTo(endX + nx * 12 * side, endY + ny * 12 * side);
+                g.stroke();
+            }
+        }
+        else {
+            g.strokeStyle = imminent ? '#ff9b7c' : '#dfc18e';
+            g.lineWidth = 1;
+            g.beginPath();
+            g.arc(endX, endY, 6, 0, Math.PI * 2);
+            g.stroke();
+        }
+    }
+    else if (e.kind === 'sentinel' || e.kind === 'wisp') {
+        // Distinguish an expanding volley from a single spirit shot.
+        g.strokeStyle = tell.color;
+        g.lineWidth = 1.4;
+        g.beginPath();
+        g.arc(e.x, e.y, e.radius + (e.kind === 'sentinel' ? 18 : 14), 0, Math.PI * 2);
+        g.stroke();
     }
     // Short, specific attack labels appear ONLY during windup, not as permanent text clutter.
     const text = tell.label, wide = Math.max(33, Math.ceil(text.length * 4.65) + 10);

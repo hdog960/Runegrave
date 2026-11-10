@@ -1,3 +1,7 @@
+## v0.09.4 — Nonintrusive UI updates and live wayfinding
+
+`stage.ts` updates heart DOM icons only when the number/capacity changes, writes persistent HUD strings only when changed, and uses change-only dataset updates so 120Hz simulation does not reassign mostly unchanged DOM attributes. Physics remains fixed-step and deterministic; damage, health, collision and save schemas did not change. The available doorway route is recomputed at most every 0.7 seconds from the current player position and remains disabled while the door is locked or its mandatory relic has not been collected. All theme art is purely decorative. The in-world telegraph labels are only active during enemy windups; threat explanations are in a pause-only collapsible panel.
+
 # Systems Architecture — v0.01
 
 **Implemented foundation:** TypeScript compiled to native browser ES modules, zero runtime dependencies, stable typed content IDs (`src/core/ids.ts`), deterministic PRNG with independently named streams (`src/core/rng.ts`), release constants (`src/core/version.ts`), a build script and automated tests.
