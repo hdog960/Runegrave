@@ -4,9 +4,9 @@ import { TwinStickControls } from './input/twinStick.js';
 import { preparePwa } from './platform/pwa.js';
 import { PLANNED_REALMS } from './content/realmCatalog.js';
 
-// v0.03 input training: movement + independent aim + cosmetic Soulbolt, not enemy combat.
+// v0.04 visual prototype: responsive original pixel art, preserved v0.03 inputs; no enemy combat.
 const version=document.querySelector<HTMLElement>('[data-release]');
-if(version)version.textContent=`${ROADMAP_VERSION} · INPUT TRIAL`;
+if(version)version.textContent=`${ROADMAP_VERSION} · ART TRIAL`;
 const canvas=document.querySelector<HTMLCanvasElement>('#gameplay-canvas');
 if(!canvas)throw new Error('Missing center-only game canvas');
 let stage:ReturnType<typeof mountStage>|undefined;

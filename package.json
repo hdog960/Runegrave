@@ -1,9 +1,9 @@
 {
   "name": "runegrave-the-ninefold-descent",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "type": "module",
-  "description": "RUNEGRAVE v0.03 input-trial foundation; no enemy combat yet",
+  "description": "RUNEGRAVE v0.04 premium-art and viewport prototype; no enemy combat yet",
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",

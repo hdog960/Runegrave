@@ -24,3 +24,14 @@
 - **Playable content:** relics 0; playable variants 0; enemies 0; bosses 0; procedurally valid rooms 0; transformations 0; endings 0. Nine realm identifiers are planned metadata. Moving preview character and decorative training bolts are not a completed gameplay encounter.
 - **Visual gate:** v0.09 Gate A remains locked; no player approval asserted. Future checkpoints v0.39, v0.79, v0.99 unchanged.
 - **Next roadmap release:** v0.04 — polish authentic Norse shell art, camera framing, central scene and HUD. Do not skip simulation/combat releases v0.05–v0.09 or any approval gate.
+
+## v0.04 — Rootvault art, camera, thematic HUD (2026-11-09)
+
+**Starting verified source:** `70b126ac8224b011b007597474008c01626b8c28` on main, v0.03 public Pages build confirmed before work.
+**Implementation:** New original `src/scene/sanctuaryArt.ts` authored Midgard rootvault environment; separate original directional Wayfarer animation cues; refined ash/iron/gold runic grips and outside-canvas header/footer. Existing independent left/right controls, handedness, pause, persistent `runegrave:input:v1` settings, and PWA remain unchanged; save schema 1.
+**Local evidence:** strict TypeScript typecheck **PASS**; `npm test` **16/16 PASS**; static Pages root mirror verified byte-for-byte for compiled art module and SW; local in-memory Chromium browser audit **4 landscape sizes + portrait PASS** with simulated multitouch, cancellation, keyboard, pause, handedness, no page errors, zero HUD/control-to-canvas intersections, camera frame/aspect and live viewport resize.
+**Limitations:** Chromium HTTP navigation blocked by admin; `npm ci --offline` could not fetch uncached TypeScript tarball. Physical iPhone Safari/standalone PWA and true service-worker offline testing NOT PERFORMED.
+**Content audit:** relics 0, playable characters 0, distinct combat enemies 0, bosses 0, valid procedural rooms 0, endings 0. The art room and moving/aiming avatar are **training visuals, not completed combat content**.
+**Visual approval:** v0.09 Gate A AWAITING future player review; v0.39/v0.79/v0.99 gates unchanged. v0.04 screenshot available as prototype, not approved as final.
+**GitHub status:** source tree prepared for v0.04 commit; verify actual commit + public Pages publication independently before marking deployed.
+**Next:** v0.05 physics, fixed-step simulation and world collision (keep the original art and zero-overlap three-region viewport).

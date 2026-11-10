@@ -21,9 +21,9 @@ An original Norse-mythology, iPhone-first action roguelike, planned for GitHub P
 
 ## Development baseline
 
-- **Current development milestone:** v0.03 — dual-grip input trial implemented and locally tested; enemy combat not implemented.
+- **Current development milestone:** v0.04 — art/camera/thematic HUD prototype locally tested; live deployment verified separately in release ledger.
 - [Verified release status](docs/RELEASE_STATUS.md) · [Change log](docs/CHANGELOG.md) · [Content ledger](docs/CONTENT_LEDGER.md)
 - Local build: `npm ci && npm test`; static site output: `dist/`.
-- **Next:** v0.04 — Norse artwork, central camera and external HUD refinement. Keep v0.09 Gate A locked.
+- **Next:** v0.05 — deterministic fixed-step world movement, collision and simulation; v0.09 remains Gate A visual approval.
 
 Implementation and deployment claims must match evidence in the release ledger; the full original roadmap remains locked.

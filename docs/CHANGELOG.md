@@ -34,3 +34,12 @@
 - Created accurate feature ledgers and technical registers without inflating playable content.
 
 **Next:** v0.02 — actual external HUD, side controller grips, central separate playfield and PWA.
+
+## v0.04 — Rootvault Art, Camera and HUD Prototype (2026-11-09)
+
+- Replaced the v0.03 repeated floor/background composition with modular original Midgard Rootvault artwork: layered burial masonry, ceremonial gate, bronze/stone columns, sarcophagi, tree roots, engraved fate-knot, emissive braziers, and restrained torch motes.
+- Rebuilt the Wayfarer preview silhouette and directional idle/walking/aim/fire art cues without changing combat rules.
+- Enhanced the Norse iron/ash-wood handheld with engraved disc rings, textured grip materials, refined gold seams and external HUD readability. Removed crowding decorative lettering in the compact layout.
+- Preserved the central-only world canvas and all v0.03 dual-pointer, keyboard, left-handed, pause and input preference systems, including `runegrave:input:v1` data. Save schema unchanged.
+- Advanced static shell and service worker asset list to 0.04.0, including the new renderer; retained paused-only service-worker update activation. Mirrored build output to root for GitHub Pages branch-source fallback.
+- Browser tests, screenshots and locally verified status live in `TESTING.md`. This release is an **art and camera trial only**, not an enemy combat milestone and not an approved Gate A.

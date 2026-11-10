@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { normalizeStick, clampVector, combineDirections } from '../dist/js/input/vector.js';
 import { sanitizeSettings, SETTINGS_KEY } from '../dist/js/input/twinStick.js';
 
-test('v0.03 stick uses radial dead-zone and normalized unit-range movement',()=>{
+test('v0.04 stick uses radial dead-zone and normalized unit-range movement',()=>{
   assert.deepEqual(normalizeStick(1,1,50),{x:0,y:0});
   const east=normalizeStick(100,0,50);assert.deepEqual(east,{x:1,y:0});
   const north=normalizeStick(0,-30,50);assert.ok(north.y<-.4&&north.y>-.6);

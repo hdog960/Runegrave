@@ -31,3 +31,9 @@
 - `TwinStickControls.snapshot` returns normalized movement, aim, firing and paused state. Its `onPauseChange` callback stops the stage update loop while a center overlay is shown; overlay is **only visible when paused**. Settings storage uses a validated, independent `runegrave:input:v1` key; this is not a run save or substitute for the v0.18 save system.
 - `src/scene/stage.ts` demonstrates moving the Vargr preview with a bounded avatar position and visible short-lived directional training bolts. **No physics/collision pipeline or damage is implemented**, so these input tracers do not count as real Soulbolts or combat content. Real simulation and collision arrive v0.05 and v0.06.
 - PWA update offers are now inside paused-only UI rather than a bottom-center fixed banner over active playfield. Service worker assets/cache include the new input modules in v0.03.
+
+## v0.04 presentation boundary and camera
+
+- `stageMetrics(cssWidth, cssHeight, dpr)` receives only the center `#world-frame` bounds and sizes canvas backing pixels; its virtual width is 420 and height `420 * cssHeight / cssWidth`. World paint never extends under grip elements.
+- `scene/sanctuaryArt.ts` draws decoration in world space, before player/projections; no UI overlay is drawn within the active world canvas. Scene layout is preview art without wall collision or enemy hazards, which are planned for v0.05–v0.08.
+- `input/twinStick.ts` retains independent pointer and keyboard input. Pause/menu overlays only replace the renderer when the simulation is paused. `runegrave:input:v1` is unchanged.
