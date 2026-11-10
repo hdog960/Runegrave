@@ -1,5 +1,19 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.1 — Player clarity patch at Gate A (2026-11-09 US Central)
+
+**Status: DEPLOYED AND AUTOMATED TESTED; GATE A STILL AWAITING THE PLAYER'S EXPLICIT APPROVAL. DO NOT START v0.10.**
+
+- **Player feedback:** The user said "It's tough to judge because I have no idea what is going on" about the v0.09 first playable. This was treated as substantive onboarding and goal-comprehension failure rather than a rejection of the art alone. Approval was **not** given.
+- **Implementation:** [`d21ca70215c778b3e9d57220324cbf7dd7ea4200`](https://github.com/hdog960/Runegrave/commit/d21ca70215c778b3e9d57220324cbf7dd7ea4200) on `main`. Compare against prior Gate A ledger `9c9a86db6f58aaa5648e1f3caac231cf4eb84336` showed 24 added/modified files, **zero removed**. All seven original canonical docs, current save schema 1, original icon data, and existing game mechanics preserved.
+- **Actual v0.09 repair:** First-visit **How to Play** screen shown while the simulation is safely paused. Three concise steps explain **left MOVE**, **right AIM & SHOOT**, then **DEFEAT enemies → CLAIM the gold relic → ENTER the green eastern exit**. Introduction explains the eight-chamber run, three hearts, shrine and Rootbound Warden. A prominent Start button begins combat. The pause menu has **? HOW TO PLAY** to replay it without changing saved controller preferences. The guide disables exterior PAUSE and intercepts Escape/P so combat cannot accidentally resume behind the tutorial.
+- **Clear external objective strip:** Practice `GO RIGHT → ENTER THE FIRST ROOM`; combat `ROOM N/8 · DEFEAT N ENEMIES`; post-wave `PICK UP THE GOLD RELIC` until collected, then `GO RIGHT → NEXT ROOM`; boss `DODGE WARNINGS · FIRE BACK`; final gate `FINISH THE TRIAL`. These are in the physical status strip **outside** the combat canvas, not a persistent overlay.
+- **Version semantics:** Roadmap remains `v0.09` and **not** v0.10; app patch `0.09.1` and PWA shell `runegrave-shell-v0.09.1` precache the new `js/platform/firstRunGuide.js` module. Existing input preferences remain under `runegrave:input:v1`; guide-seen data is separately namespaced under `runegrave:guided-start:v1`. Game content count and full v1.0 scope unchanged.
+- **Local TypeScript check PASS**, `npm test` **69/69 PASS** (previous 63 + six objective/guide assertions), `scripts/v009_browser_audit.py` four landscape + portrait PASS for dual-stick controls, separate HUD, first-run guide and zero overlap; `scripts/guide_browser_audit.py` four landscape iPhone-sized profiles PASS including always-visible Start, stopped physics, replay, key-cancel and guide preference; `scripts/v009_full_run_audit.py` PASS eight-chamber/boss/restart transition using **test-only** hostile damage/teleport injection. Not a natural/unaided or physical iPhone completion.
+- **Public Pages deployment independently VERIFIED:** Fresh retrieval from `https://hdog960.github.io/Runegrave/index.html` shows the actual new How to Play and Pause Help, `js/core/version.js` reports `v0.09 / 0.09.1`, `js/platform/firstRunGuide.js` shows the objective logic, and `sw.js` reports `runegrave-shell-v0.09.1`. GitHub CI and Pages build #20 on `d21ca70`, plus Pages deployment #29, all report **completed successfully**.
+- **Still not verified:** physical iPhone Safari/installed standalone PWA, real thumb comfort, HTTP offline lifecycle, player comprehension after actually trying the new guide, overall artistic satisfaction and unaided full run. **The user must inspect and explicitly approve Gate A before v0.10**, or request further revisions within v0.09.
+
+
 ## Latest verified release — v0.09 First Soul / Gate A (2026-11-09 US Central)
 
 **State: v0.09 IMPLEMENTED, LOCALLY TESTED, PUBLICLY DEPLOYED; AWAITING EXPLICIT PLAYER GATE A VISUAL AND CONTROL APPROVAL. Do not begin v0.10.**
