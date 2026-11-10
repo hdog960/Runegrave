@@ -124,6 +124,7 @@ export function placeRoomExit(world) {
 function enemyOf(id, kind, p) { return { id, kind, ...p, radius: ENEMY_RADII[kind], hp: ENEMY_HP[kind], maxHp: ENEMY_HP[kind], alive: true, flash: 0, cooldown: 1.1, windup: 0, state: 'idle', dx: 0, dy: 1, time: 0, phase: 1, attackCount: 0 }; }
 export class HostileEncounter {
     world;
+    plan;
     enemies = [];
     projectiles = [];
     exit;
@@ -135,8 +136,11 @@ export class HostileEncounter {
     lastId = 0;
     bossDefeated = false;
     spawn;
-    constructor(world, room, hero) {
+    constructor(world, room, hero, plan) {
         this.world = world;
+        this.plan = plan;
+        if (plan && (room !== 'crypt' || !plan.id || plan.waves.length < 1 || plan.waves.length > 3 || plan.waves.some(w => w.length < 1 || w.length > 3) || !Number.isSafeInteger(plan.strength) || plan.strength < 1 || plan.strength > 4))
+            throw new RangeError('Invalid authored encounter plan');
         this.room = room;
         this.spawn = hero ? { ...hero } : safeSpawn(world, { x: world.width * .27, y: world.minY + 24 });
         this.exit = placeRoomExit(world);
@@ -169,12 +173,18 @@ export class HostileEncounter {
     get snapshot() { return { room: this.room, phase: this.state, wave: this.wave, kills: this.kills, bossDefeated: this.bossDefeated, bossPhase: this.enemies.find(e => e.kind === 'warden')?.phase || 0, enemies: this.enemies, projectiles: this.projectiles, shots: this.shots }; }
     spawnWave(wave) {
         this.wave = wave;
-        const kinds = wave === 1 ? ['draugr', 'wisp', 'archer'] : ['charger', 'sentinel', 'shade'];
+        const kinds = this.plan?.waves[wave - 1] ?? (wave === 1 ? ['draugr', 'wisp', 'archer'] : ['charger', 'sentinel', 'shade']);
         const fractions = [.36, .61, .79];
         for (const [i, kind] of kinds.entries()) {
             const preferred = { x: this.world.width * fractions[i], y: this.world.minY + (this.world.maxY - this.world.minY) * (i === 1 ? .71 : .32) };
             const p = findEnemySpawn(this.world, preferred, ENEMY_RADII[kind], this.spawn, this.enemies);
-            this.enemies.push(enemyOf(`${kind}-${wave}`, kind, p));
+            const enemy = enemyOf(`${this.plan?.id || 'crypt'}-${kind}-${wave}-${i}`, kind, p);
+            if (this.plan) {
+                enemy.hp += this.plan.strength - 1;
+                enemy.maxHp = enemy.hp;
+                enemy.cooldown = Math.max(.5, 1.1 - (this.plan.strength - 1) * .13);
+            }
+            this.enemies.push(enemy);
         }
     }
     /** A path is calculated from the current player, not from an ungrounded room marker. */
@@ -427,9 +437,9 @@ export class HostileEncounter {
         if (health.state.dead)
             return;
         if (this.room === 'crypt' && this.enemies.every(e => !e.alive)) {
-            if (this.wave === 1) {
+            if (this.wave < (this.plan?.waves.length || 2)) {
                 this.projectiles.length = 0;
-                this.spawnWave(2);
+                this.spawnWave(this.wave + 1);
             }
             else {
                 this.state = 'gate';

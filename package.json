@@ -1,9 +1,9 @@
 {
   "name": "runegrave-the-ninefold-descent",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": true,
   "type": "module",
-  "description": "RUNEGRAVE v0.08 six enemy behaviors, locked rooms, and Rootbound Warden boss",
+  "description": "RUNEGRAVE v0.09 first playable Gate A: 25 room configurations, eight working relics and connected boss route",
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",

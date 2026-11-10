@@ -6,6 +6,7 @@
 import { isPositionFree, moveCircle, overlapsSolid, type CollisionWorld, type Vec2, type Solid } from '../physics/world.js';
 
 export const SOULBOLT_STATS=Object.freeze({ damage:2, cooldown:0.20, speed:258, range:274, radius:3, knockback:10 });
+export type CombatProfile=Readonly<{damage:number;cooldown:number;speed:number;range:number;knockback:number}>;
 export const MAX_BOLTS=48;
 const COMBAT_EPS=1e-8;
 
@@ -50,6 +51,7 @@ export class SoulboltCombat {
   readonly bolts:Soulbolt[]=Array.from({length:MAX_BOLTS},()=>({id:0,active:false,x:0,y:0,dx:0,dy:0,travel:0,damage:0}));
   readonly targets:TrainingTarget[];
   private nextBulletId=1;
+  private profile:CombatProfile={...SOULBOLT_STATS};
   private cooldown=0;
   private shots=0;
   private hits=0;
@@ -58,6 +60,11 @@ export class SoulboltCombat {
   private emitting=false;
   private hostileHit:((p:Vec2,radius:number,damage:number,direction:Vec2)=>string|null)|null=null;
   constructor(private world:CollisionWorld,hero:Vec2,trainingTargets=true){this.targets=trainingTargets?makeTrainingTargets(world,hero):[];}
+  setProfile(profile:CombatProfile):void {
+    for(const value of Object.values(profile))if(!Number.isFinite(value)||value<=0||value>1000)throw new RangeError('Invalid Soulbolt relic modifier');
+    this.profile={...profile};
+  }
+  get combatProfile():CombatProfile {return {...this.profile};}
   /** External hostile hit adapter. Damage still originates in this pooled Soulbolt pipeline. */
   setHostileHitHandler(handler:((p:Vec2,radius:number,damage:number,direction:Vec2)=>string|null)|null):void {this.hostileHit=handler;}
   on<T extends CombatEventType>(type:T,listener:(event:EventOf<T>)=>void):()=>void {
@@ -85,14 +92,14 @@ export class SoulboltCombat {
     const slot=this.bolts.find(b=>!b.active);if(!slot)return false;
     const p={x:origin.x+dx*13,y:origin.y+dy*13};
     if(!isPositionFree(this.world,p,SOULBOLT_STATS.radius))return false;
-    slot.active=true;slot.id=this.nextBulletId++;slot.x=p.x;slot.y=p.y;slot.dx=dx;slot.dy=dy;slot.travel=0;slot.damage=SOULBOLT_STATS.damage;
-    this.cooldown=SOULBOLT_STATS.cooldown;this.shots++;
+    slot.active=true;slot.id=this.nextBulletId++;slot.x=p.x;slot.y=p.y;slot.dx=dx;slot.dy=dy;slot.travel=0;slot.damage=this.profile.damage;
+    this.cooldown=this.profile.cooldown;this.shots++;
     this.emit({type:'shot',bulletId:slot.id,x:p.x,y:p.y});
     return true;
   }
   /** Small deterministic movement slices prevent high-velocity tunneling through thin obstacles. */
   private stepBullet(b:Soulbolt,dt:number){
-    let remaining=Math.min(SOULBOLT_STATS.speed*dt,Math.max(0,SOULBOLT_STATS.range-b.travel));
+    let remaining=Math.min(this.profile.speed*dt,Math.max(0,this.profile.range-b.travel));
     while(remaining>COMBAT_EPS&&b.active){
       const advance=Math.min(2.5,remaining);
       const x=b.x+b.dx*advance,y=b.y+b.dy*advance;
@@ -105,13 +112,13 @@ export class SoulboltCombat {
         b.active=false;this.emit({type:'impact',bulletId:b.id,x,y,targetId:null,damage:0});
         this.emit({type:'expire',bulletId:b.id,reason:'wall'});break;
       }
-      const hostileId=this.hostileHit?.(p,SOULBOLT_STATS.radius,b.damage,{x:b.dx,y:b.dy});
+      const hostileId=this.hostileHit?.(p,SOULBOLT_STATS.radius,b.damage,{x:b.dx*this.profile.knockback/SOULBOLT_STATS.knockback,y:b.dy*this.profile.knockback/SOULBOLT_STATS.knockback});
       if(hostileId){b.active=false;this.hits++;this.emit({type:'impact',bulletId:b.id,x,y,targetId:hostileId,damage:b.damage});break;}
       const victim=this.targets.find(t=>t.alive&&Math.hypot(x-t.x,y-t.y)<=t.radius+SOULBOLT_STATS.radius);
       if(victim){
         b.active=false;victim.hp=Math.max(0,victim.hp-b.damage);victim.flash=.18;this.hits++;
         this.emit({type:'impact',bulletId:b.id,x,y,targetId:victim.id,damage:b.damage});
-        const knockX=b.dx*SOULBOLT_STATS.knockback,knockY=b.dy*SOULBOLT_STATS.knockback;
+        const knockX=b.dx*this.profile.knockback,knockY=b.dy*this.profile.knockback;
         // The target slides only where world geometry and other live objects permit.
         const moved=moveCircle(this.world,{x:victim.x,y:victim.y},{x:knockX/dt,y:knockY/dt},dt,victim.radius);
         if(isPositionFree(this.world,moved,victim.radius)){victim.x=moved.x;victim.y=moved.y;}
@@ -120,7 +127,7 @@ export class SoulboltCombat {
       }
       b.x=x;b.y=y;
     }
-    if(b.active&&b.travel>=SOULBOLT_STATS.range-COMBAT_EPS){b.active=false;this.emit({type:'expire',bulletId:b.id,reason:'range'});}
+    if(b.active&&b.travel>=this.profile.range-COMBAT_EPS){b.active=false;this.emit({type:'expire',bulletId:b.id,reason:'range'});}
   }
   update(dt:number,origin:Vec2,aim:Vec2,firing:boolean):void {
     if(!Number.isFinite(dt)||dt<=0||dt>1/30)throw new RangeError('Combat must be stepped with a bounded fixed tick');

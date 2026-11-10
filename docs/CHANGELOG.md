@@ -1,3 +1,12 @@
+## v0.09 — First Soul: the Fatebound Eight (local implementation, 2026-11-09)
+
+- Added 25 original curated authored encounter configurations across Ash, Iron, Root, Spirit and Fate floor families. Every configuration has a unique tested enemy/wave lineup, sensible camera-safe spawning, a collision-connected eastern exit and world-space rune-floor identity.
+- An eight-chamber seeded curated route (unique rooms per run) connects the preserved antechamber to the two-phase Rootbound Warden, with a mandatory relic pedestal after each cleared chamber, optional silver and healing pickups, death/restart, and a first-prototype completion panel. **This is not v0.10 procedural floor graph generation.**
+- Eight genuine, uniquely named and functional collectible relics: Wyrd Fang (damage), Skald Drum (cadence), Storm Feather (projectile speed), Hugin Lens (range), Ash Anchor (knockback), Shieldroot Bark (+1 heart container), Eir’s Thread (healing), Raven Hoard (silver pickup bonus). The pooled Soulbolt engine uses a validated live combat modifier profile; Mortal Heart capacity resets on a new run.
+- Added an in-grip silver counter and bound-relic status, and a pause-only relic ledger listing live effects. Added original in-world golden relic and resource pickup artwork with a gate that cannot advance until the mandatory relic is physically collected.
+- Preserved existing v0.08 enemy AI/boss, v0.07 damage and death/restart, v0.06 Soulbolts, v0.05 fixed physics, v0.04 art, v0.03 separate thumb grips, saved `runegrave:input:v1` preferences, PWA, and schema version 1.
+- Gate A status is **AWAITING PLAYER APPROVAL**. Do not begin v0.10 or make a final art-quality claim from desktop browser tests.
+
 # Verified Change Log
 
 ## v0.08 — The Sixfold Crypt and Rootbound Warden (2026-11-09)

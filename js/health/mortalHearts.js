@@ -13,6 +13,7 @@ export function validateHalfHearts(value) {
 }
 export class MortalHearts {
     maxUnits;
+    initialMaxUnits;
     units;
     grace = 0;
     dead = false;
@@ -24,6 +25,7 @@ export class MortalHearts {
         if (!Number.isSafeInteger(containers) || containers < 1 || containers > 12)
             throw new RangeError('Invalid mortal-heart capacity');
         this.maxUnits = containers * HALF_HEARTS_PER_CONTAINER;
+        this.initialMaxUnits = this.maxUnits;
         this.units = this.maxUnits;
     }
     get state() {
@@ -70,7 +72,16 @@ export class MortalHearts {
         this.healed += this.units - before;
         return this.units - before;
     }
+    /** Genuinely increases both maximum and current health; capped to twelve Mortal containers. */
+    addContainer() {
+        if (this.dead || this.maxUnits >= 24)
+            return false;
+        this.maxUnits += 2;
+        this.units = Math.min(this.maxUnits, this.units + 2);
+        return true;
+    }
     reset() {
+        this.maxUnits = this.initialMaxUnits;
         this.units = this.maxUnits;
         this.grace = 0;
         this.dead = false;

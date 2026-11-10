@@ -21,9 +21,9 @@ An original Norse-mythology, iPhone-first action roguelike, planned for GitHub P
 
 ## Development baseline
 
-- **Current development milestone:** v0.08 — two-wave Sixfold Crypt, six hostile behaviors, first Rootbound Warden boss, reachable gated exits; locally implemented and tested. Public deployment is separately verified in the release ledger.
+- **Current development milestone:** v0.09 — first connected mini-run, 25 authored valid encounter configurations, eight genuinely functional relics, silver/healing pickups, existing six hostile types and Rootbound Warden boss. Implementation tested locally; deployment and approval status are recorded separately in the release ledger.
 - [Verified release status](docs/RELEASE_STATUS.md) · [Change log](docs/CHANGELOG.md) · [Content ledger](docs/CONTENT_LEDGER.md)
 - Local build: `npm ci && npm test`; static site output: `dist/`.
-- **Next:** v0.09 — first 25-room and eight-relic prototype, additional combat polish, and **mandatory Gate A player visual approval**.
+- **STOP:** v0.09 **Gate A awaits explicit player visual and control approval**. Do not start v0.10 before approval. [Gate A review instructions](docs/GATE_A_REVIEW.md).
 
 Implementation and deployment claims must match evidence in the release ledger; the full original roadmap remains locked.

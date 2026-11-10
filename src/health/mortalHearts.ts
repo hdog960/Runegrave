@@ -16,7 +16,8 @@ export function validateHalfHearts(value:number):void {
   if (!Number.isSafeInteger(value)||value<1||value>100) throw new RangeError('Health changes must be 1–100 positive half-hearts');
 }
 export class MortalHearts {
-  readonly maxUnits:number;
+  maxUnits:number;
+  private readonly initialMaxUnits:number;
   private units:number;
   private grace=0;
   private dead=false;
@@ -27,6 +28,7 @@ export class MortalHearts {
   constructor(containers=STARTING_MORTAL_CONTAINERS){
     if(!Number.isSafeInteger(containers)||containers<1||containers>12)throw new RangeError('Invalid mortal-heart capacity');
     this.maxUnits=containers*HALF_HEARTS_PER_CONTAINER;
+    this.initialMaxUnits=this.maxUnits;
     this.units=this.maxUnits;
   }
   get state():HeartState {return {
@@ -57,7 +59,13 @@ export class MortalHearts {
     this.healed+=this.units-before;
     return this.units-before;
   }
+  /** Genuinely increases both maximum and current health; capped to twelve Mortal containers. */
+  addContainer():boolean {
+    if(this.dead||this.maxUnits>=24)return false;
+    this.maxUnits+=2;this.units=Math.min(this.maxUnits,this.units+2);return true;
+  }
   reset():void {
+    this.maxUnits=this.initialMaxUnits;
     this.units=this.maxUnits;this.grace=0;this.dead=false;
     this.hits=0;this.blocked=0;this.healed=0;this.source=null;
   }

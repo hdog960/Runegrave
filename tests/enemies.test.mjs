@@ -103,9 +103,9 @@ test('the enemy art, sixfold crypt status and finish menu ship inside the separa
  const f=name=>new URL('../dist/'+name,import.meta.url);
  const html=readFileSync(f('index.html'),'utf8');
  assert.match(html,/id="trial-clear-overlay"/);assert.match(html,/id="trial-new-run-btn"/);
- assert.match(html,/THE SIXFOLD CRYPT/);
+ assert.match(html,/THE FIRST SOUL/);
  assert.ok(!html.includes('onmousemove='));
  for(const name of ['js/enemies/encounters.js','js/enemies/enemyArt.js'])assert.ok(existsSync(f(name)));
- const sw=readFileSync(f('sw.js'),'utf8');assert.ok(sw.includes('runegrave-shell-v0.08.0'));
+ const sw=readFileSync(f('sw.js'),'utf8');assert.ok(sw.includes('runegrave-shell-v0.09.0'));
  assert.ok(sw.includes('js/enemies/encounters.js')&&sw.includes('js/enemies/enemyArt.js'));
 });

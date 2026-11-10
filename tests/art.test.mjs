@@ -31,10 +31,10 @@ test('v0.07 training stage and PWA retain independent scene and controller modul
   assert.match(stage,/drawWayfarer/);
   assert.match(stage,/stageMetrics/);assert.match(stage,/moveCircle/);
   const sw=readFileSync(dist('sw.js'),'utf8');
-  assert.match(sw,/runegrave-shell-v0\.08\.0/);
+  assert.match(sw,/runegrave-shell-v0\.09\.0/);
   assert.match(sw,/js\/scene\/sanctuaryArt\.js/);
   assert.ok(!sw.split("self.addEventListener('install'")[1].split("self.addEventListener('activate'")[0].includes('skipWaiting'));
   const html=readFileSync(dist('index.html'),'utf8');
-  assert.match(html,/THE SIXFOLD CRYPT/);
+  assert.match(html,/THE FIRST SOUL/);
   assert.match(html,/id="gameplay-canvas"/);
 });

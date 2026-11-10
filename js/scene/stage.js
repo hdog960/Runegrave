@@ -11,8 +11,10 @@ import { drawPracticeTargets, drawSoulbolts, drawCombatSparks } from '../combat/
 import { MortalHearts, heartSlots } from '../health/mortalHearts.js';
 import { EmberTrial } from '../health/emberTrial.js';
 import { drawEmberTrial } from '../health/healthArt.js';
-import { HostileEncounter, placeRoomExit, walkableRoute } from '../enemies/encounters.js';
+import { HostileEncounter, placeRoomExit, reachableFloor, walkableRoute } from '../enemies/encounters.js';
 import { drawEncounter } from '../enemies/enemyArt.js';
+import { FIRST_SOUL_CHAMBERS, FIRST_SOUL_RELICS, createFirstSoulRoute, encounterPlan, FirstSoulInventory } from '../run/firstSoul.js';
+import { drawRoomDrops, paintRoomSigil, nearDrop } from '../run/lootArt.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -34,6 +36,16 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     const health = new MortalHearts();
     let dead = false, complete = false, restarts = 0;
     let mode = 'practice';
+    const inventory = new FirstSoulInventory();
+    let route = createFirstSoulRoute('first-soul-0001'), roomIndex = -1, currentRoom;
+    let drops = [], roomRewardPlaced = false;
+    const silverCounter = document.querySelector('[data-silver]');
+    const relicReadout = document.querySelector('[data-relic-readout]');
+    const relicLine = document.querySelector('[data-relic-line]');
+    const ledger = document.querySelector('#run-ledger');
+    const ledgerList = document.querySelector('#ledger-relics');
+    const ledgerCurrency = document.querySelector('[data-ledger-currency]');
+    let displayedRelicLedger = '';
     let encounter;
     let practiceExit;
     const completeOverlay = document.querySelector('#trial-clear-overlay');
@@ -48,6 +60,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     const score = document.querySelector('[data-combat-score]');
     function attachCombat(nextWorld) {
         combat = new SoulboltCombat(nextWorld, actor, mode === 'practice');
+        combat.setProfile(inventory.profile());
         if (encounter)
             combat.setHostileHitHandler((p, radius, damage, dir) => encounter?.hitAt(p, radius, damage, dir) || null);
         sparks.length = 0;
@@ -92,6 +105,14 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         canvas.dataset.exitX = activeExit ? activeExit.x.toFixed(2) : '';
         canvas.dataset.exitY = activeExit ? activeExit.y.toFixed(2) : '';
         canvas.dataset.room = mode;
+        canvas.dataset.roomId = currentRoom?.id || '';
+        canvas.dataset.roomIndex = String(roomIndex + 1);
+        canvas.dataset.roomTotal = String(FIRST_SOUL_CHAMBERS);
+        canvas.dataset.catalogCount = String(25);
+        canvas.dataset.relicCount = String(inventory.state.relics.length);
+        canvas.dataset.silver = String(inventory.state.silver);
+        canvas.dataset.remainingDrops = String(drops.filter(d => !d.collected).length);
+        canvas.dataset.relicGateReady = String(!drops.some(d => d.kind === 'relic' && !d.collected));
         canvas.dataset.roomPhase = encounter?.snapshot.phase || (complete ? 'finished' : 'gate');
         canvas.dataset.roomWave = String(encounter?.snapshot.wave || 0);
         canvas.dataset.hostilesAlive = String(encounter?.snapshot.enemies.filter(e => e.alive).length || 0);
@@ -101,11 +122,46 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         canvas.dataset.enemyProjectiles = String(encounter?.snapshot.projectiles.length || 0);
         document.documentElement.dataset.roomName = complete ? 'COMPLETE' : mode.toUpperCase();
         document.documentElement.dataset.roomPhase = mode === 'practice' ? 'ANTEROOM · EAST GATE OPEN' : mode === 'complete' ? 'TRIAL COMPLETE' : encounter?.snapshot.phase === 'gate' ? `${mode === 'crypt' ? 'CRYPT CLEARED' : 'WARDEN FELLED'} · EXIT OPEN` : mode === 'crypt' ? `CRYPT · WAVE ${encounter?.snapshot.wave || 1}/2 · LOCKED` : `WARDEN · PHASE ${encounter?.snapshot.bossPhase || 1}/2`;
+        if (mode === 'crypt') {
+            document.documentElement.dataset.roomPhase = `CHAMBER ${roomIndex + 1}/${FIRST_SOUL_CHAMBERS} · ${encounter?.snapshot.phase === 'gate' ? (drops.some(d => d.kind === 'relic' && !d.collected) ? 'CLAIM RELIC' : 'GATE OPEN') : 'BATTLE LOCKED'}`;
+        }
         const footer = document.querySelector('[data-run-status]');
         if (footer)
             footer.textContent = document.documentElement.dataset.roomPhase;
+        if (silverCounter)
+            silverCounter.textContent = `SILVER ${inventory.state.silver}`;
+        if (ledgerCurrency)
+            ledgerCurrency.textContent = `ᚠ ${inventory.state.silver} SILVER · ${roomIndex + 1}/${FIRST_SOUL_CHAMBERS} CHAMBERS`;
+        const ids = inventory.state.relics;
+        if (displayedRelicLedger !== ids.join(',')) {
+            displayedRelicLedger = ids.join(',');
+            if (ledger)
+                ledger.querySelector('summary').textContent = `ᛟ BOUND RELICS · ${ids.length}/8`;
+            if (ledgerList) {
+                ledgerList.replaceChildren();
+                if (!ids.length) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Fate has not yet bound a relic.';
+                    ledgerList.append(li);
+                }
+                for (const id of ids) {
+                    const item = FIRST_SOUL_RELICS.find(x => x.id === id);
+                    const li = document.createElement('li'), name = document.createElement('strong');
+                    name.textContent = `${item.rune} ${item.name} — `;
+                    li.append(name, item.description);
+                    ledgerList.append(li);
+                }
+            }
+        }
+        if (relicReadout) {
+            const last = inventory.state.relics.at(-1);
+            const item = FIRST_SOUL_RELICS.find(x => x.id === last);
+            relicReadout.textContent = item ? item.name.toUpperCase() : 'UNBOUND';
+        }
+        if (relicLine)
+            relicLine.textContent = `${inventory.state.relics.length}/8 RELICS`;
         if (floorLabel)
-            floorLabel.textContent = mode === 'practice' ? 'MIDGARD · ROOTVAULT ANTECHAMBER' : mode === 'crypt' ? 'MIDGARD · THE SIXFOLD CRYPT' : mode === 'warden' ? 'MIDGARD · ROOTBOUND WARDEN' : 'MIDGARD · ROOTVAULT CLEARED';
+            floorLabel.textContent = mode === 'practice' ? 'MIDGARD · ROOTVAULT ANTECHAMBER' : mode === 'crypt' ? `MIDGARD · ${currentRoom?.title || 'FIRST SOUL CHAMBER'}` : mode === 'warden' ? 'MIDGARD · ROOTBOUND WARDEN' : 'MIDGARD · ROOTVAULT CLEARED';
         if (heartLine) {
             heartLine.replaceChildren();
             for (const [i, slot] of heartSlots(hs.units, hs.maxUnits).entries()) {
@@ -166,8 +222,11 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         paintSanctuary(g, W, H, time);
         if (trial)
             drawEmberTrial(g, trial, time);
+        if (currentRoom && mode === 'crypt')
+            paintRoomSigil(g, W, H, time, currentRoom);
         if (encounter)
             drawEncounter(g, encounter, time);
+        drawRoomDrops(g, drops, time);
         if (mode === 'practice' && practiceExit) {
             const d = practiceExit;
             g.save();
@@ -194,12 +253,24 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     function enterRoom(room) {
         if (!world)
             return;
+        if (room === 'crypt') {
+            roomIndex++;
+            if (roomIndex >= FIRST_SOUL_CHAMBERS) {
+                enterRoom('warden');
+                return;
+            }
+            currentRoom = route[roomIndex];
+        }
+        else
+            currentRoom = undefined;
         mode = room;
         trial = undefined;
         sparks.length = 0;
         clock.reset();
+        drops = [];
+        roomRewardPlaced = false;
         actor = safeSpawn(world, { x: world.width * .26, y: world.minY + 24 });
-        encounter = new HostileEncounter(world, room, actor);
+        encounter = new HostileEncounter(world, room, actor, room === 'crypt' && currentRoom ? encounterPlan(currentRoom) : undefined);
         attachCombat(world);
         walking = ZERO;
         firing = false;
@@ -215,6 +286,53 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             completeOverlay.hidden = false;
         emitState();
         onDeath();
+    }
+    /** Drops are placed on the same connected floor component as the player.
+     * Relic pickup is mandatory; silver and healing are optional resources. */
+    function placeDrops() {
+        if (!world || !encounter || roomRewardPlaced)
+            return;
+        roomRewardPlaced = true;
+        inventory.roomCleared(health);
+        const floor = reachableFloor(world, actor);
+        const taken = [];
+        function near(target) {
+            const candidates = floor.filter(p => Math.hypot(p.x - actor.x, p.y - actor.y) > 28 && Math.hypot(p.x - encounter.exit.x, p.y - encounter.exit.y) > 25 && taken.every(q => Math.hypot(p.x - q.x, p.y - q.y) > 29));
+            if (!candidates.length)
+                throw new Error('No connected collectible position in chamber');
+            candidates.sort((a, b) => Math.hypot(a.x - target.x, a.y - target.y) - Math.hypot(b.x - target.x, b.y - target.y));
+            const point = candidates[0];
+            taken.push(point);
+            return point;
+        }
+        if (mode === 'crypt') {
+            const relic = FIRST_SOUL_RELICS[roomIndex];
+            if (!relic)
+                throw new Error('Missing mandatory Gate A relic reward');
+            const pos = near({ x: world.width * .5, y: world.minY + (world.maxY - world.minY) * .45 });
+            drops.push({ id: `relic-${roomIndex}`, kind: 'relic', ...pos, relic, amount: 1, collected: false });
+        }
+        const silver = near({ x: world.width * .62, y: world.minY + (world.maxY - world.minY) * .55 });
+        drops.push({ id: `silver-${roomIndex}`, kind: 'silver', ...silver, amount: mode === 'warden' ? 12 : 2 + roomIndex % 3, collected: false });
+        if (mode === 'crypt' && roomIndex % 3 === 1) {
+            const heart = near({ x: world.width * .39, y: world.minY + (world.maxY - world.minY) * .70 });
+            drops.push({ id: `heart-${roomIndex}`, kind: 'heart', ...heart, amount: 2, collected: false });
+        }
+    }
+    function collectDrops() {
+        for (const drop of drops) {
+            if (!nearDrop(actor, drop))
+                continue;
+            drop.collected = true;
+            if (drop.kind === 'relic' && drop.relic) {
+                inventory.acquire(drop.relic.id, health);
+                combat?.setProfile(inventory.profile());
+            }
+            else if (drop.kind === 'silver')
+                inventory.collectSilver(drop.amount);
+            else if (drop.kind === 'heart')
+                health.heal(drop.amount);
+        }
     }
     function update(dt) {
         if (paused || dead || complete || !world || !metrics)
@@ -232,6 +350,9 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         health.step(dt);
         const outcome = trial?.step(dt, actor, health);
         encounter?.step(dt, actor, health);
+        if (encounter?.snapshot.phase === 'gate' && !roomRewardPlaced)
+            placeDrops();
+        collectDrops();
         if (health.state.dead) {
             dead = true;
             walking = ZERO;
@@ -253,9 +374,9 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             enterRoom('crypt');
             return;
         }
-        if (encounter?.canLeave(actor)) {
+        if (encounter?.canLeave(actor) && !drops.some(d => d.kind === 'relic' && !d.collected)) {
             if (mode === 'crypt') {
-                enterRoom('warden');
+                enterRoom('crypt');
                 return;
             }
             if (mode === 'warden') {
@@ -308,6 +429,9 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     document.addEventListener('visibilitychange', onVisibility);
     return {
         resize, getMetrics: () => metrics,
+        getRoute: () => [...route],
+        getInventory: () => inventory.state,
+        getDrops: () => drops.map(d => ({ ...d })),
         getActor: () => ({ ...actor, boltCount: combat?.state.activeBolts || 0, physicsTick: clock.ticks, shattered: combat?.state.shattered || 0 }),
         getEncounter: () => encounter,
         getHealth: () => health.state,
@@ -317,6 +441,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             if (!world || (!dead && !complete))
                 return false;
             health.reset();
+            inventory.reset();
             dead = false;
             complete = false;
             mode = 'practice';
@@ -325,6 +450,11 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             restarts++;
             clock.reset();
             lastFrameMs = -Infinity;
+            roomIndex = -1;
+            currentRoom = undefined;
+            route = createFirstSoulRoute(`first-soul-${String(restarts + 1).padStart(4, '0')}`);
+            drops = [];
+            roomRewardPlaced = false;
             actor = safeSpawn(world);
             lastAim = { x: 0, y: 1 };
             walking = ZERO;

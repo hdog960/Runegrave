@@ -40,6 +40,7 @@ export class SoulboltCombat {
     bolts = Array.from({ length: MAX_BOLTS }, () => ({ id: 0, active: false, x: 0, y: 0, dx: 0, dy: 0, travel: 0, damage: 0 }));
     targets;
     nextBulletId = 1;
+    profile = { ...SOULBOLT_STATS };
     cooldown = 0;
     shots = 0;
     hits = 0;
@@ -51,6 +52,13 @@ export class SoulboltCombat {
         this.world = world;
         this.targets = trainingTargets ? makeTrainingTargets(world, hero) : [];
     }
+    setProfile(profile) {
+        for (const value of Object.values(profile))
+            if (!Number.isFinite(value) || value <= 0 || value > 1000)
+                throw new RangeError('Invalid Soulbolt relic modifier');
+        this.profile = { ...profile };
+    }
+    get combatProfile() { return { ...this.profile }; }
     /** External hostile hit adapter. Damage still originates in this pooled Soulbolt pipeline. */
     setHostileHitHandler(handler) { this.hostileHit = handler; }
     on(type, listener) {
@@ -101,15 +109,15 @@ export class SoulboltCombat {
         slot.dx = dx;
         slot.dy = dy;
         slot.travel = 0;
-        slot.damage = SOULBOLT_STATS.damage;
-        this.cooldown = SOULBOLT_STATS.cooldown;
+        slot.damage = this.profile.damage;
+        this.cooldown = this.profile.cooldown;
         this.shots++;
         this.emit({ type: 'shot', bulletId: slot.id, x: p.x, y: p.y });
         return true;
     }
     /** Small deterministic movement slices prevent high-velocity tunneling through thin obstacles. */
     stepBullet(b, dt) {
-        let remaining = Math.min(SOULBOLT_STATS.speed * dt, Math.max(0, SOULBOLT_STATS.range - b.travel));
+        let remaining = Math.min(this.profile.speed * dt, Math.max(0, this.profile.range - b.travel));
         while (remaining > COMBAT_EPS && b.active) {
             const advance = Math.min(2.5, remaining);
             const x = b.x + b.dx * advance, y = b.y + b.dy * advance;
@@ -127,7 +135,7 @@ export class SoulboltCombat {
                 this.emit({ type: 'expire', bulletId: b.id, reason: 'wall' });
                 break;
             }
-            const hostileId = this.hostileHit?.(p, SOULBOLT_STATS.radius, b.damage, { x: b.dx, y: b.dy });
+            const hostileId = this.hostileHit?.(p, SOULBOLT_STATS.radius, b.damage, { x: b.dx * this.profile.knockback / SOULBOLT_STATS.knockback, y: b.dy * this.profile.knockback / SOULBOLT_STATS.knockback });
             if (hostileId) {
                 b.active = false;
                 this.hits++;
@@ -141,7 +149,7 @@ export class SoulboltCombat {
                 victim.flash = .18;
                 this.hits++;
                 this.emit({ type: 'impact', bulletId: b.id, x, y, targetId: victim.id, damage: b.damage });
-                const knockX = b.dx * SOULBOLT_STATS.knockback, knockY = b.dy * SOULBOLT_STATS.knockback;
+                const knockX = b.dx * this.profile.knockback, knockY = b.dy * this.profile.knockback;
                 // The target slides only where world geometry and other live objects permit.
                 const moved = moveCircle(this.world, { x: victim.x, y: victim.y }, { x: knockX / dt, y: knockY / dt }, dt, victim.radius);
                 if (isPositionFree(this.world, moved, victim.radius)) {
@@ -159,7 +167,7 @@ export class SoulboltCombat {
             b.x = x;
             b.y = y;
         }
-        if (b.active && b.travel >= SOULBOLT_STATS.range - COMBAT_EPS) {
+        if (b.active && b.travel >= this.profile.range - COMBAT_EPS) {
             b.active = false;
             this.emit({ type: 'expire', bulletId: b.id, reason: 'range' });
         }

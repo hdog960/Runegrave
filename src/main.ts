@@ -4,9 +4,9 @@ import { TwinStickControls } from './input/twinStick.js';
 import { preparePwa } from './platform/pwa.js';
 import { PLANNED_REALMS } from './content/realmCatalog.js';
 
-// v0.08: deterministic two-wave hostile crypt and Rootbound Warden chamber.
+// v0.09: 25 verified room configurations, eight functioning relic pickups and a connected first-soul mini-run.
 const version=document.querySelector<HTMLElement>('[data-release]');
-if(version)version.textContent=`${ROADMAP_VERSION} · SIXFOLD CRYPT`;
+if(version)version.textContent=`${ROADMAP_VERSION} · GATE A PROTOTYPE`;
 const canvas=document.querySelector<HTMLCanvasElement>('#gameplay-canvas');
 if(!canvas)throw new Error('Missing center-only game canvas');
 let stage:ReturnType<typeof mountStage>|undefined;

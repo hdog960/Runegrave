@@ -11,4 +11,4 @@ copyFileSync(resolve(root,'styles.css'), resolve(dist,'styles.css'));
 if (existsSync(resolve(root,'public'))) cpSync(resolve(root,'public'), dist, { recursive:true });
 const html = readFileSync(resolve(dist,'index.html'),'utf8');
 if (!html.includes('./js/main.js') || !existsSync(resolve(dist,'sw.js')) || !existsSync(resolve(dist,'manifest.webmanifest'))) throw new Error('Missing Pages shell or PWA files');
-console.log('RUNEGRAVE v0.08 built to dist/ (six hostile behaviors, room locks, boss and exit loop).' );
+console.log('RUNEGRAVE v0.09 built to dist/ (25 room configurations, eight functional relics, connected first-soul mini-run, boss and Gate A).' );

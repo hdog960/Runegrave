@@ -44,3 +44,18 @@ Physics exists, but neither a walkable scenery trial nor a decorative moving tra
 | Relics / talismans / transformations / endings / challenge completions | **0** | No fake registry entries or completion rewards |
 
 The practice antechamber remains outside the enemy count. The **six enemy** and **one boss** counts are supported by real instantiated attack and damage rules, but their final mobile balance and artistic acceptance are still pending. This combat trial does **not** satisfy v0.09's 8 relics, 25 rooms, and player Gate A approval. Nothing in the 750-relic / 34-variant / 250-enemy / 100-boss / 5,000-room v1.0 target has been reduced.
+
+## v0.09 Gate A provisional playable content (pending player visual/control approval)
+
+| Content | Functional v0.09 count | Evidence and limitation |
+|---|---:|---|
+| 25 authored room *configurations* | **25** | `src/run/firstSoul.ts`, `tests/firstSoul.test.mjs`; unique enemy/wave plans, safe spawn and reachable exits at six camera heights; **not** 25 physical rooms in one run and **not** procedural floor graphs |
+| Rooms on an individual first-soul mini-run | **8 + 1 boss** | Seeded choice without replacement, each room connected by a gate, culminating in Rootbound Warden; start antechamber is separate |
+| Functional prototype relics | **8** | Damage, cadence, speed, range, knockback, heart capacity, on-clear healing, extra silver; tests verify actual state/attack changes; not merely names/icons |
+| Collectible resources | **Silver, healing** | Tangible pickup + in-grip silver counter; no shop or spending yet |
+| Distinct hostile enemy kinds | **6** | Preserved six mechanical enemy patterns from v0.08 |
+| Bosses | **1** | Preserved two-phase Rootbound Warden |
+| Playable Wayfarer | **1 provisional archetype** | Full movement, aim, combat, health and run restart; visual identity not yet approved |
+| Mature procedural floor graphs, talismans, transformations, endings, authored special synergies | **0** | Remain assigned to subsequent canonical roadmap milestones |
+
+**Gate A is AWAITING PLAYER APPROVAL.** Neither a simulated browser walkthrough nor a deployed Pages URL establishes real iPhone ergonomics or artistic acceptance. v1.0 targets of 750 functional relics, 150 talismans, 34 variants, 250 enemies, 100 bosses, 5,000 room configurations and all other bible requirements remain unchanged.

@@ -8,6 +8,7 @@ import { MortalHearts } from '../health/mortalHearts.js';
 export const ENEMY_KINDS=['draugr','wisp','archer','charger','sentinel','shade'] as const;
 export type EnemyKind=typeof ENEMY_KINDS[number] | 'warden';
 export type EncounterRoom='crypt'|'warden';
+export type EncounterPlan=Readonly<{id:string;waves:readonly (readonly Exclude<EnemyKind,'warden'>[])[];strength:number}>;
 export type RoomPhase='locked'|'gate'|'finished';
 export type Enemy={id:string;kind:EnemyKind;x:number;y:number;radius:number;hp:number;maxHp:number;alive:boolean;flash:number;cooldown:number;windup:number;state:'idle'|'warning'|'charge'|'hidden'|'recover';dx:number;dy:number;time:number;phase:number;attackCount:number};
 export type HostileBolt={id:number;x:number;y:number;dx:number;dy:number;speed:number;radius:number;damage:number;life:number};
@@ -111,7 +112,8 @@ export class HostileEncounter {
   private lastId=0;
   private bossDefeated=false;
   spawn:Vec2;
-  constructor(private world:CollisionWorld,room:EncounterRoom,hero?:Vec2){
+  constructor(private world:CollisionWorld,room:EncounterRoom,hero?:Vec2,private readonly plan?:EncounterPlan){
+    if(plan&&(room!=='crypt'||!plan.id||plan.waves.length<1||plan.waves.length>3||plan.waves.some(w=>w.length<1||w.length>3)||!Number.isSafeInteger(plan.strength)||plan.strength<1||plan.strength>4))throw new RangeError('Invalid authored encounter plan');
     this.room=room;
     this.spawn=hero?{...hero}:safeSpawn(world,{x:world.width*.27,y:world.minY+24});
     this.exit=placeRoomExit(world);
@@ -137,12 +139,14 @@ export class HostileEncounter {
   get snapshot():EncounterSnapshot {return {room:this.room,phase:this.state,wave:this.wave,kills:this.kills,bossDefeated:this.bossDefeated,bossPhase:this.enemies.find(e=>e.kind==='warden')?.phase||0,enemies:this.enemies,projectiles:this.projectiles,shots:this.shots};}
   private spawnWave(wave:number):void {
     this.wave=wave;
-    const kinds=wave===1?(['draugr','wisp','archer'] as const):(['charger','sentinel','shade'] as const);
+    const kinds=this.plan?.waves[wave-1] ?? (wave===1?(['draugr','wisp','archer'] as const):(['charger','sentinel','shade'] as const));
     const fractions=[.36,.61,.79];
     for(const [i,kind] of kinds.entries()){
       const preferred={x:this.world.width*fractions[i]!,y:this.world.minY+(this.world.maxY-this.world.minY)*(i===1?.71:.32)};
       const p=findEnemySpawn(this.world,preferred,ENEMY_RADII[kind],this.spawn,this.enemies);
-      this.enemies.push(enemyOf(`${kind}-${wave}`,kind,p));
+      const enemy=enemyOf(`${this.plan?.id||'crypt'}-${kind}-${wave}-${i}`,kind,p);
+      if(this.plan){enemy.hp+=this.plan.strength-1;enemy.maxHp=enemy.hp;enemy.cooldown=Math.max(.5,1.1-(this.plan.strength-1)*.13);}
+      this.enemies.push(enemy);
     }
   }
   /** A path is calculated from the current player, not from an ungrounded room marker. */
@@ -239,7 +243,7 @@ export class HostileEncounter {
     }
     if(health.state.dead)return;
     if(this.room==='crypt'&&this.enemies.every(e=>!e.alive)){
-      if(this.wave===1){this.projectiles.length=0;this.spawnWave(2);}else{this.state='gate';this.projectiles.length=0;}
+      if(this.wave<(this.plan?.waves.length||2)){this.projectiles.length=0;this.spawnWave(this.wave+1);}else{this.state='gate';this.projectiles.length=0;}
     }
   }
   /** Doorway accepts movement only when every required enemy is defeated. */
