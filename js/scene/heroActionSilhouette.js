@@ -7,8 +7,8 @@ export function heroSilhouette(pose,time,reducedMotion=false) {
  if(!Number.isFinite(time)||!Object.hasOwn(HERO_SILHOUETTE_VARIANTS,pose.facing))throw new RangeError('Invalid hero silhouette frame');
  const facing=HERO_SILHOUETTE_VARIANTS[pose.facing];
  const frame=reducedMotion||!pose.moving?0:Math.floor(Math.max(0,time)*8)%4;
- const stride=pose.moving&&!reducedMotion?[0,2,0,-2][frame]!:0;
- const flow=pose.moving&&!reducedMotion?[0,1,0,-1][frame]!:0;
+ const stride=pose.moving&&!reducedMotion?[0,2,0,-2][frame]:0;
+ const flow=pose.moving&&!reducedMotion?[0,1,0,-1][frame]:0;
  return {frame,flow,front:facing.y>=0,left:facing.x<0?-1:facing.x>0?1:0,right:facing.y,stride};
 }
 export function paintHeroActionSilhouette(g,pose,time,reducedMotion=false) {

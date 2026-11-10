@@ -8,7 +8,7 @@ export function strikePose(e,time,reducedMotion=false) {
  if(!Object.hasOwn(ATTACK_STANCES,e.kind)||![e.windup,time].every(Number.isFinite)||e.windup<0)throw new RangeError('Invalid enemy strike pose');
  const active=e.state==='warning'||e.state==='charge';
  const ready=e.state==='warning'?warningBeat(e.windup):e.state==='charge'?3:0;
- const shift=reducedMotion?0:active?[0,1,2,3][ready]!:Math.round(Math.sin(time*3)*.5);
+ const shift=reducedMotion?0:active?[0,1,2,3][ready]:Math.round(Math.sin(time*3)*.5);
  return {kind:e.kind,ready,shift,active};
 }
 export function paintStrikeSilhouette(g,e,time,reducedMotion=false) {
