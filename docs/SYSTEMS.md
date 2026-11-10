@@ -1,3 +1,7 @@
+## v0.09.10 — Real combat threat projection and room relief composition
+
+`src/scene/threatReadout.ts` is a deterministic, side-effect-free `EncounterSnapshot` projection. The existing `mountStage.emitState()` updates outside-canvas labels and a narrow state bar only when their displayed values change. Real `warning` enemy states reveal named imminent threats; the Warden exposes current HP/max HP/phase; no new AI/damage mechanics or persistence have been introduced. `src/scene/roomReliefs.ts` reads the canonical room ID/family and renders a single bounded room-specific stone inset; its painters have balanced canvas state, stable performance, no RNG and no hitbox/collision effects.
+
 ## v0.09.9 — Fixed-step animation events and interruption-safe iPhone play
 
 `src/scene/motionTrails.ts` owns a 14-footstep/8-hostile-dissolve bounded world-space visual queue. Only live physics ticks move its clock; the renderer never advances timestamps. Footsteps arise from actual nonzero movement, disappear on idle/fade, and adapt the neutral palettes of the five existing chamber families. Kill blooms require observed `alive: true` → `false` transitions, not mere spawns; they distinguish a boss from common enemies. Render output is suppressed with `prefers-reduced-motion`. Room entry, resize, death/restart clean the queue. No AI, hitbox, damage, RNG or persisted schema changes.

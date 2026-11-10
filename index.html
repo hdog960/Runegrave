@@ -20,6 +20,11 @@
   <main id="handheld" class="handheld" aria-label="Runegrave Norse handheld: 25 authored rooms, eight relics, six enemy patterns, and Rootbound Warden boss">
     <aside class="grip grip-left" aria-label="Left rune grip">
       <div class="grip-head"><span class="grip-seal">ᚠ</span><span class="grip-title">WAYFARER</span><span class="grip-number">I</span></div>
+      <div class="threat-strip" data-hud data-tone="calm" aria-label="Current combat threat, outside gameplay">
+        <span class="threat-heading" data-threat-label>PRACTICE HALL</span>
+        <span class="threat-detail" data-threat-detail>GO TO THE DOOR</span>
+        <span class="threat-meter" aria-hidden="true"><span data-threat-gauge style="width:0%"></span></span>
+      </div>
       <div id="move-rune-disc" class="rune-socket socket-left" role="button" tabindex="0" aria-label="Movement rune thumb disc">
         <div class="socket-engraving"></div><div class="rune-disc"><span class="disc-knot">ᛟ</span><span class="disc-cross horizontal"></span><span class="disc-cross vertical"></span></div>
         <span class="disc-label">MOVE</span>
@@ -33,7 +38,7 @@
       <header class="screen-status" data-hud aria-label="Run HUD outside gameplay canvas">
         <span class="status-crest">ᛟ</span><span class="status-name">RUNEGRAVE</span>
         <span class="status-middle">MIDGARD <i>·</i> THE FIRST SOUL</span>
-        <span class="status-version" data-release>v0.09.6</span>
+        <span class="status-version" data-release>v0.09.9</span>
       </header>
       <div id="world-frame" class="world-frame" aria-label="Unobstructed center-only combat world: connected first-soul rooms, runic relic pickups and original Norse enemies">
         <canvas id="gameplay-canvas" width="420" height="240" aria-label="Midgard Rootvault: Soulbolt combat, hostile enemies, Rootbound Warden, Mortal Hearts and safe exits">Your browser does not support canvas.</canvas>

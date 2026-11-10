@@ -1,3 +1,9 @@
+## v0.09.10 — Authored room reliefs / outside-canvas threat status
+
+The five first-soul families now have additional hand-drawn family-specific incised emblems, with the chisel-notch count + recess offset creating 25 distinct canonical silhouettes across 25 room IDs. Unlike hostile warnings, they are dull engraved stone and sit toward the room's side; they do not imply pickups or collisions. This replaces an older, higher-cost decorative floor-relief layer to preserve headless Chromium and unit painter budgets. Existing upper-landmark silhouettes and original Runegrave handheld stay unchanged.
+
+Combat danger receives a secondary text-readable clue above the movement thumb socket but **only within the left forged side grip**. It reports enemy wave, imminent named attack, or Warden phase/HP based on actual simulation state. The readout is noninteractive and never covers a stage pixel or thumb touch area. It is intended as supplemental text; the real in-world attack telegraphs remain authoritative. No Gate A artistic approval is inferred.
+
 ## v0.09.9 — Historical heraldry and responsive world animation
 
 Carved upper-wall heraldry now gives each of 25 authored room configurations a distinct five-family crest with numbered cuts; each is shaped and muted like stone, not an item, door, or telegraph. The Wayfarer leaves small family-colored footprints while moving and real hostile deaths dissolve with short-lived stone/soul-ash rings; the existing Warden has a larger boss-specific pulse. These are lightweight world-space marks, never extra HUD, hitboxes, or virtual controls. Reduced-motion preferences suppress the transient effects entirely. A 34px right-grip Pause target and explicit return-from-background Pause reinforce iPhone comfort without ever obscuring the playable viewport. Art still requires the player's explicit Gate A approval.

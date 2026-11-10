@@ -1,3 +1,11 @@
+## v0.09.10 — Independent Gate A regression (2026-11-10)
+
+**Local PASS:** `tsc -p tsconfig.json --noEmit`; `npm test` **110/110**; `npm run export:pages` checked compiled root files and new SW imports. All 25 room-specific reliefs remain inside the established mobile painter draw-operation cap (the new mural layer replaces older decorative floor work, it is not an added overlap). New tests cover `roomReliefs` 25 IDs, 5 family motifs, bounded drawing/save-restore; `threatReadout` urgent real windup, Warden HP/phase and clear states; left grip placement and SW precache.
+
+**Headless Chromium PASS:** `scripts/v009_browser_audit.py` (four landscape + portrait), `scripts/guide_browser_audit.py` (four landscape), `scripts/v0099_mobile_browser_audit.py` (three interrupted foreground/background profile checks), `scripts/v0100_threat_browser_audit.py` (four landscape real-live warning updates and no thumb-grip/canvas intersection). `scripts/v009_full_run_audit.py` PASS for connected practice → eight chambers → eight reward dialogs → Warden → completion/restart; **this deliberately accelerates combat with test-only damage and legal position injection** and does not count as unaided victory.
+
+**Not tested:** physical iPhone Safari or real multi-finger ergonomics, installed/offline Home Screen lifecycle, real prolonged mobile thermals/FPS, independent playthrough by a person, player artistic approval. `v0.10` is explicitly locked pending player Gate A approval.
+
 ## v0.09.9 — Local Gate A QA (2026-11-10)
 
 **Automated:** `npm run typecheck` PASS; `npm test` **105/105 PASS** (99 previous + six new tests). New tests verify real-event-only limited enemy defeats, fixed-step footprint aging and capacity, reduced-motion draws no extra visuals, 25 nonrepeating canonical room heraldry plates, mobile draw-operation budget, and the new PWA/cache/controls integrity.

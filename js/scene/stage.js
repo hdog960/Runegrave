@@ -23,6 +23,7 @@ import { carvedWaystones, paintWaystones } from './routeArt.js';
 import { describeRelicImpact } from '../run/relicImpact.js';
 import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
 import { MotionTrails } from './motionTrails.js';
+import { threatStatus } from './threatReadout.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
 export function stageMetrics(cssWidth, cssHeight, devicePixelRatio = 1) {
@@ -65,6 +66,10 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
     let lastObjective = "";
     let lastScore = "";
     const statusFooter = document.querySelector('[data-run-status]');
+    const threatLabel = document.querySelector('[data-threat-label]');
+    const threatDetail = document.querySelector('[data-threat-detail]');
+    const threatGauge = document.querySelector('[data-threat-gauge]');
+    const threatStrip = document.querySelector('.threat-strip');
     const updateText = (el, value) => { if (el && el.textContent !== value)
         el.textContent = value; };
     // Avoid thousands of redundant DOM attribute writes every second on iPhone.
@@ -125,6 +130,16 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         if (lastScore !== scoreText) {
             lastScore = scoreText;
             updateText(score, scoreText);
+        }
+        const th = threatStatus(mode, encounter?.snapshot);
+        updateText(threatLabel, th.label);
+        updateText(threatDetail, th.detail);
+        if (threatStrip && threatStrip.dataset.tone !== th.tone)
+            threatStrip.dataset.tone = th.tone;
+        if (threatGauge) {
+            const percent = `${Math.round(th.fraction * 100)}%`;
+            if (threatGauge.style.width !== percent)
+                threatGauge.style.width = percent;
         }
         const hs = health.state;
         setCanvasData('heartUnits', String(hs.units));

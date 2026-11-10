@@ -1,6 +1,6 @@
 import { paintFamilyLandmarks } from './landmarkArt.js';
-import { paintFamilyRelief } from './familyRelief.js';
 import { paintRoomHeraldry } from './roomHeraldry.js';
+import { paintRoomReliefs } from './roomReliefs.js';
 export const ROOM_MATERIALS = Object.freeze({
     ASH: { name: 'Vitrified ash and burning iron', floor: '#925b3d', light: '#e6aa65', shadow: '#1e1819' },
     IRON: { name: 'Cold riveted iron and silver', floor: '#687e85', light: '#b9c8c5', shadow: '#17262e' },
@@ -125,7 +125,7 @@ export function paintRoomFamily(g, W, H, t, room) {
     }
     g.globalAlpha = 1;
     paintFamilyLandmarks(g, W, H, t, room);
-    paintFamilyRelief(g, W, H, room);
     paintRoomHeraldry(g, W, H, room);
+    paintRoomReliefs(g, W, H, room);
     g.restore();
 }

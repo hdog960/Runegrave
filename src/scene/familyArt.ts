@@ -4,8 +4,8 @@
  */
 import type { FirstRoom } from '../run/firstSoul.js';
 import { paintFamilyLandmarks } from './landmarkArt.js';
-import { paintFamilyRelief } from './familyRelief.js';
 import { paintRoomHeraldry } from './roomHeraldry.js';
+import { paintRoomReliefs } from './roomReliefs.js';
 
 type G=CanvasRenderingContext2D;
 type Family='ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE';
@@ -104,7 +104,7 @@ export function paintRoomFamily(g:G,W:number,H:number,t:number,room:FirstRoom):v
  }
  g.globalAlpha=1;
  paintFamilyLandmarks(g,W,H,t,room);
- paintFamilyRelief(g,W,H,room);
  paintRoomHeraldry(g,W,H,room);
+ paintRoomReliefs(g,W,H,room);
  g.restore();
 }

@@ -196,3 +196,18 @@ html[data-door-ready="false"] .screen-footer .run-state{color:#ffcb9b}
  .pause-key{min-height:34px;min-width:56px;touch-action:manipulation}
  .grip-foot{min-height:34px}
 }
+
+/* v0.09.10 Gate A: dedicated left-grip threat readout. No live gameplay overlays.
+ * It sits above, not on, the thumb disc even at supported 667x375 landscape. */
+.threat-strip{position:absolute;top:clamp(37px,10.7vh,49px);left:13px;right:13px;z-index:1;
+ pointer-events:none;min-height:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ gap:1px;color:#b2cfc2;background:linear-gradient(90deg,transparent,#0b1d20b0,transparent)}
+.threat-heading{font:900 clamp(6px,.68vw,9px)/1.1 system-ui;letter-spacing:.05em;white-space:nowrap;color:#d4c59d;text-align:center}
+.threat-detail{font:750 clamp(6px,.66vw,8px)/1.1 system-ui;white-space:nowrap;color:#a9b7ab;text-align:center}
+.threat-meter{display:block;overflow:hidden;width:80%;height:2px;background:#294139}
+.threat-meter>span{display:block;height:100%;background:#a4bb94;transition:width .11s linear}
+.threat-strip[data-tone="urgent"] .threat-heading{color:#ffc2a8}
+.threat-strip[data-tone="urgent"] .threat-meter>span{background:#f3a070}
+.threat-strip[data-tone="cleared"] .threat-heading{color:#b3e9ad}
+@media (orientation:landscape) and (max-height:335px){.threat-strip{display:none}}
+@media(prefers-reduced-motion:reduce){.threat-meter>span{transition:none}}

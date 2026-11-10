@@ -1,3 +1,7 @@
+## Gate A v0.09.10 — distinct carved chambers and a live combat threat grip
+
+This playable first-soul prototype has 25 authored configurations and eight real relics in a connected mini-run, six hostile archetypes and one Rootbound Warden boss. The new `.threat-strip` sits **outside** the center canvas, above the left movement disc, and shows only real encounter-state/urgent-warning/boss-HP information; it cannot intercept touches. The world masonry has new room-specific incised reliefs, replacing previous higher-cost trim. All preexisting combat, health, entrances, saved input preferences and safe-update PWA continue to function. `npm test`: 110/110 PASS. Detailed test qualifications and unapproved visual gate: `docs/TESTING.md`, `docs/GATE_A_REVIEW.md`, `docs/RELEASE_STATUS.md`.
+
 # Runegrave: The Ninefold Descent
 
 An original Norse-mythology, iPhone-first action roguelike, planned for GitHub Pages.

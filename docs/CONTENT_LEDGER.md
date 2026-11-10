@@ -1,3 +1,7 @@
+## v0.09.10 — Count remains unchanged
+
+The 25 deterministic authored encounter configurations gain visually unique, family-validated floor reliefs; **these are not 25 additional rooms**. Six real hostile behavior kinds, one Warden boss, eight functioning relics, initial pickups, and one curated eight-chamber/boss route remain exactly as before. The new left-grip threat status and masonry art do not add weapons, enemies, bosses, game routes, shops, transformations, talismans, paid content, or final art approval. Future v0.10 seeded floor graphs remain locked pending explicit Gate A approval.
+
 ## v0.09.9 — Counts unchanged (art/UX-only release)
 
 25 authored mechanically valid room configurations, five family materials and **25 new heraldry variants** (cosmetic decoration, NOT 25 extra playable rooms); eight functional relics; one provisional Wayfarer; six true hostile enemy kinds; one Warden boss; one curated eight-room-plus-boss mini-run; silver/heal pickups. Cosmetic footfalls and defeat blooms are NOT additional enemies, rooms, drops or collectibles. Zero full procedural branching graphs, talismans, complete alternate routes or player-approved final art. Gate A remains unapproved; v0.10 locked.

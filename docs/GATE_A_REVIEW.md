@@ -1,3 +1,9 @@
+## v0.09.10 — Interim status (not yet ready for formal reinspection)
+
+A named warning appears above the **left movement disc**, but entirely within the separate Norse grip. It changes from WAVE/ENEMIES REMAIN to DODGE/ENEMY/STRIKE IN when an actual hostile enters its existing warning state, and switches to Warden HP/phase in the boss chamber. This is extra help, not a replacement for in-world telegraphs. The 25 encounter configurations also receive distinct family-matched engraved masonry reliefs while remaining a **curated, linear** eight-chamber mini-run (not the v0.10 branching floor system). Verify whether the additional detail helps at native iPhone screen size without cluttering gameplay or the thumb disc.
+
+**Gate A remains NOT APPROVED / AWAITING PLAYER INSPECTION.** Do not call this ready based solely on automated browser checks. Physical Safari controls, installed PWA updates, sustained performance and player visual satisfaction remain outstanding. No v0.10 work may begin without the player's explicit acceptance.
+
 ## v0.09.9 — Next Gate A inspection checklist (no automatic approval)
 
 - Do the five family interiors and the new 25 canonical cut-crest plaques read as distinctive Norse chambers rather than identical wallpaper? Look for subdued heraldry near the wall; it must not resemble a collectible.

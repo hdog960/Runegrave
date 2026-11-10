@@ -24,6 +24,7 @@ import { carvedWaystones, paintWaystones } from './routeArt.js';
 import { describeRelicImpact } from '../run/relicImpact.js';
 import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
 import { MotionTrails } from './motionTrails.js';
+import { threatStatus } from './threatReadout.js';
 
 const WIDTH=420;
 export type StageMetrics={cssWidth:number;cssHeight:number;pixelWidth:number;pixelHeight:number;cameraWidth:number;cameraHeight:number};
@@ -66,6 +67,10 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
   let lastObjective="";
   let lastScore="";
   const statusFooter=document.querySelector<HTMLElement>('[data-run-status]');
+  const threatLabel=document.querySelector<HTMLElement>('[data-threat-label]');
+  const threatDetail=document.querySelector<HTMLElement>('[data-threat-detail]');
+  const threatGauge=document.querySelector<HTMLElement>('[data-threat-gauge]');
+  const threatStrip=document.querySelector<HTMLElement>('.threat-strip');
   const updateText=(el:HTMLElement|null,value:string)=>{if(el&&el.textContent!==value)el.textContent=value;};
   // Avoid thousands of redundant DOM attribute writes every second on iPhone.
   // Debug/test dataset values remain up to date when the underlying state changes.
@@ -115,6 +120,10 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     setCanvasData('liveTargets',String(state?.liveTargets||0));
     const scoreText=`ᛉ ${state?.shattered||0} SHATTERED`;
     if(lastScore!==scoreText){lastScore=scoreText;updateText(score,scoreText);}
+    const th=threatStatus(mode,encounter?.snapshot);
+    updateText(threatLabel,th.label);updateText(threatDetail,th.detail);
+    if(threatStrip&&threatStrip.dataset.tone!==th.tone)threatStrip.dataset.tone=th.tone;
+    if(threatGauge){const percent=`${Math.round(th.fraction*100)}%`;if(threatGauge.style.width!==percent)threatGauge.style.width=percent;}
     const hs=health.state;
     setCanvasData('heartUnits',String(hs.units));setCanvasData('heartMax',String(hs.maxUnits));
     setCanvasData('invulnerability',hs.grace.toFixed(4));setCanvasData('dead',String(hs.dead));
