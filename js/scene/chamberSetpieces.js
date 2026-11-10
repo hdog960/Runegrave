@@ -2,6 +2,11 @@ export const SETPIECE_MOTIFS = Object.freeze({
     ASH: 'ember-forge', IRON: 'iron-astrolabe', ROOT: 'living-roots',
     SPIRIT: 'ghostglass-lantern', FATE: 'norn-thread-loom'
 });
+/** Deterministic authored room variation across the fixed 25 configurations. */
+export function chamberFrameVariant(roomIndex) {
+ if(!Number.isSafeInteger(roomIndex)||roomIndex<0||roomIndex>24)throw new RangeError('Invalid room index');
+ return roomIndex%5;
+}
 const px = (g, x, y, w, h, color) => { g.fillStyle = color; g.fillRect(Math.round(x), Math.round(y), w, h); };
 const stroke = (g, x1, y1, x2, y2, c, width = 1.5) => {
     g.strokeStyle = c;
@@ -101,6 +106,18 @@ export function paintChamberSetpieces(g, W, H, t, family, variant = 0) {
             px(g, -15, 12, 30, 4, '#b19a6b');
             px(g, -20, 10, 3, 6, '#e1be7e');
         }
+        // Five restrained room-variant finials inside the architectural prop.
+        const tones=family==='ASH'?['#b88564','#ce9a66']:family==='IRON'?['#829c9c','#bdc4b2']:
+          family==='SPIRIT'?['#8786ae','#c1bdd5']:['#b89d65','#e1c78b'];
+        const v=((variant%5)+5)%5;
+        for(let k=0;k<3;k++){const xx=-13+k*13,yy=-33-((v+k)%3)*3;
+          px(g,xx,yy,4,4,tones[(k+v)%2]);px(g,xx+1,yy-3,2,3,'#1a2326');
+        }
+        if(v===0)stroke(g,-14,-32,14,-32,tones[1],2);
+        if(v===1)stroke(g,-14,-36,0,-42,tones[1],2);
+        if(v===2)stroke(g,-14,-33,14,-41,tones[1],2);
+        if(v===3)stroke(g,-14,-41,14,-33,tones[1],2);
+        if(v===4)stroke(g,-14,-36,14,-36,tones[1],2);
         g.restore();
     }
 }

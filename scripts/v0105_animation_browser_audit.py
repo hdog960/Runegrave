@@ -1,4 +1,4 @@
-"""Gate A v0.09.15: actual in-memory Chromium hero/enemy art with test-only attack state.
+"""Gate A v0.09.16: actual in-memory Chromium hero/enemy art with test-only attack state.
 This is NOT physical iPhone testing or an unaided victory.
 """
 from pathlib import Path
@@ -27,5 +27,5 @@ with sync_playwright() as p:
  for selector,i in [('#move-rune-disc',41),('#aim-rune-disc',42)]:
   page.evaluate("""([selector,i])=>document.querySelector(selector).dispatchEvent(new PointerEvent('pointercancel',{bubbles:true,pointerId:i,pointerType:'touch'}))""",[selector,i])
  assert not errors,errors
- print('v0.09.15 actual Chromium warning and dual-thumb art PASS; test-only enemy state; zero JS exceptions')
+ print('v0.09.16 actual Chromium warning and dual-thumb art PASS; test-only enemy state; zero JS exceptions')
  b.close()

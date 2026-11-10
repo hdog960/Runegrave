@@ -1,3 +1,7 @@
+## v0.09.16 additional verified local checks
+
+New tests for four real compass thresholds, eight accurate relic inscriptions, bounded five-variant chamber art and the unchanged Gate A/save contract. Local reconstruction 134/134 tests, TypeScript, Chromium four landscape and portrait layouts, and test-controlled complete route; final GitHub CI and live Pages must be separately verified.
+
 ## v0.09.15 — Actor silhouette and enemy strike Gate A checks
 
 - Local `npm run typecheck`, `npm run export:pages` and `npm test`: PASS, **135/135 tests**. Five new tests cover eight facings/four frames, bounded hero art, seven independent enemy poses, remaining-windup stages, reduced-motion freeze, 25 authored rooms/eight functional relics, PWA preload and locked Gate A.

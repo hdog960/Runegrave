@@ -1,3 +1,10 @@
+## v0.09.16 — Physical Norse door markers and earned relic tablets
+
+- Added world-space threshold stone beacons and distinct open/locked chain geometry for every compass exit.
+- All eight functional relic pedestals now show concise mechanic-accurate bonus engravings beneath the pickup, clear of the door plaque.
+- Authored five carved finial variants for chamber-family edge structures within the existing mobile draw budget.
+- Presentation-only; combat, collisions, controls, room configs and save schema unchanged. Gate A remains UNAPPROVED; v0.10 locked.
+
 ## v0.09.15 — Eight-facing hero and seven attack-pose silhouettes (Gate A PENDING, 2026-11-10)
 
 - Added `heroActionSilhouette.ts`: four-frame motion and eight-direction armor/cloak edges, asymmetric buckler, grounded greaves and motion-reduction stability. Painted inside the world-space hero renderer, beneath the existing firing hand.

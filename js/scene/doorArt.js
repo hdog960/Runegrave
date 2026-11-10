@@ -25,6 +25,23 @@ export function doorEntryArrow(direction, distance) {
         { x: step.x - heading.x * 5 - sideways.x * 5, y: step.y - heading.y * 5 - sideways.y * 5 }
     ];
 }
+/** Readable threshold stone beacons; no collision or route changes. */
+export function paintRuneThreshold(g,direction,open,t){
+ if(!Number.isFinite(t))throw new RangeError('Invalid threshold clock');
+ const inward=inwardApproach(direction,1),side={x:-inward.y,y:inward.x},ember=open?'#b5edb6':'#d8a27c';
+ g.save();
+ for(let n=0;n<3;n++){const dist=29+n*9,span=18+n*4,alpha=open?(.52+.12*Math.sin(t*2.7-n*.7)):.55;
+  for(const sideSign of [-1,1]){const x=Math.round(inward.x*dist+side.x*span*sideSign),y=Math.round(inward.y*dist+side.y*span*sideSign);
+   g.fillStyle='#121d1f';g.fillRect(x-3,y-3,6,6);g.fillStyle='#a99675';g.fillRect(x-2,y-3,4,2);
+   g.globalAlpha=alpha;g.fillStyle=ember;g.fillRect(x-1,y-1,2,3);g.globalAlpha=1;
+  }
+ }
+ g.strokeStyle=ember;g.lineWidth=1.5;g.beginPath();
+ if(open){g.moveTo(-7,9);g.lineTo(-1,12);g.moveTo(2,12);g.lineTo(7,9);}
+ else{g.moveTo(-7,11);g.lineTo(7,11);g.moveTo(-5,8);g.lineTo(5,14);}
+ g.stroke();g.restore();
+}
+
 export function drawRuneDoor(g, pos, direction, open, time) {
     const meta = EXIT_LABELS[direction];
     const c = open ? '#9be8aa' : '#e49d7d';
@@ -46,6 +63,7 @@ export function drawRuneDoor(g, pos, direction, open, time) {
         px(step.x - w / 2, step.y - h / 2, w, h, '#263033');
         px(step.x - w / 2 + 1, step.y - h / 2, w - 2, 1, tone);
     }
+    paintRuneThreshold(g, direction, open, time);
     // Three shallow chiselled arrows mark the ENTIRE approach as traversable.
     // The arrows remain visible when the gate turns green but never move its hitbox.
     for (const distance of [31, 45]) {

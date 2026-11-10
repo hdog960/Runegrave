@@ -1,3 +1,7 @@
+## v0.09.16 additional review points (NOT APPROVED)
+
+Inspect accessible compass door approaches (beacons plus locked/open chains), relic bonus tablets beneath the real pickups, and five authored chamber-finial silhouettes. Physical iPhone testing, sustained performance, installed PWA refresh and unaided play remain unverified. Approval must be explicit.
+
 ## v0.09.15 — New player review focus (Gate A NOT APPROVED)
 
 On a real iPhone in landscape, inspect all eight hero walking/aiming directions and whether the split cloak, moving greaves, buckler and firing hand read clearly. Watch each of the six enemies and the Rootbound Warden before attacking: claw reach, glass shot, drawn arrow, charging horns, radial cast, blinking veil and root mauls. See whether non-color-only warning shapes are readable at phone scale. Check green/red doorway recognition, relic explanations, two-thumb reach, pause, frame rate and safe areas. These remain an **owner judgment**, not an automated art approval. This update must not authorize v0.10 by itself.

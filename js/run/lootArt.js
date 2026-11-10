@@ -1,4 +1,12 @@
 import { drawRelicCrest, RELIC_CRESTS } from './relicCrests.js';
+/** Mechanics-accurate runic pedestal engraving for all eight real relics. */
+export const RELIC_PEDESTAL_BONUS=Object.freeze({
+ 'wyrd-fang':'DMG +1','skald-drum':'FIRE +20%',
+ 'storm-feather':'BOLT +25%','hugin-lens':'REACH +30%',
+ 'ash-anchor':'PUSH +70%','shieldroot':'HEART +1',
+ 'eir-thread':'ROOM HEAL','raven-hoard':'SILVER +3'
+});
+
 export function paintRoomSigil(g, W, H, t, room) {
     const x = W * .5, y = Math.min(H - 33, H * .39), col = room.accent;
     g.save();
@@ -78,6 +86,13 @@ export function drawRoomDrops(g, drops, t) {
             g.fillStyle = crest.color;
             g.font = 'bold 7px system-ui,sans-serif';
             g.fillText(`RELIC · ${crest.label}`, 0, -33);
+            const bonus = RELIC_PEDESTAL_BONUS[drop.relic.id];
+            g.fillStyle = '#0b1b1dcc'; g.fillRect(-26, 23, 52, 12);
+            g.fillStyle = '#cfe8ce'; g.font = 'bold 8px system-ui,sans-serif'; g.fillText(bonus, 0, 32);
+            for (const side of [-1, 1]) {
+                g.fillStyle = crest.color; g.fillRect(side * 22 - 1, 24, 3, 9);
+                g.fillStyle = '#efd9a3'; g.fillRect(side * 22, 26, 1, 4);
+            }
             g.strokeStyle = '#eacb89';
             g.lineWidth = 1.4;
             g.beginPath();
