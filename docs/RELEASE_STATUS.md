@@ -48,3 +48,11 @@
 - v0.04 source locally typechecked; 16 Node tests and four landscape + one portrait browser viewport simulations passed.
 - Real iPhone Safari, installed Home Screen, offline SW lifecycle and user visual approval were NOT verified.
 - Historical release state: v0.04 implemented, locally tested, and publicly served; visual Gate A remains v0.09.
+## v0.05 post-commit publication verification — 2026-11-09
+
+- **v0.05 physics implementation:** [`0f903f78c320b4dc489e26748743f36d94f0078e`](https://github.com/hdog960/Runegrave/commit/0f903f78c320b4dc489e26748743f36d94f0078e); verified compiled `js/physics/world.js`, `js/physics/fixedStep.js`, source TS, and version metadata on GitHub `main`.
+- **Release ledger restoration:** `2d36290843e6d9ab03fe43eff58f6d0c8169d100`; the full comparison from v0.04 to the v0.05 HTML fix has **no removed files** and preserves all seven canonical documents.
+- **v0.05 public GitHub Pages static deployment VERIFIED:** successful fresh external retrieval from `https://hdog960.github.io/Runegrave/index.html` (physics-training text confirmed after `e673b7b13b329a694f19ff2b6d9e6722d2f6cbfc`), `js/main.js` (v0.05 physics trial code), `js/core/version.js` (v0.05 / 0.05.0), `js/physics/world.js`, `js/physics/fixedStep.js`, and `sw.js` (cache `runegrave-shell-v0.05.0` with both new physics modules). Public retrieval is proof of static publication, not a physical iPhone runtime test.
+- **Local verification:** strict TypeScript check PASSED; `npm test` 26/26 PASSED; in-memory Chromium passed four landscape and one portrait viewport, real dual-pointer simulation, pause, handedness, resizing, world-wall collision and zero layout overlap.
+- **GitHub Actions logs and real iPhone Safari/standalone Home Screen/offline update lifecycle:** NOT separately verified. Control and art player approval is still reserved for v0.09 Gate A.
+- **Release state:** v0.05 IMPLEMENTED, LOCALLY TESTED, and PUBLIC STATIC ASSETS DEPLOYED. No enemies, true damaging Soulbolt system, health, complete room loop or procedural content have been credited before their roadmap versions. Next is **v0.06**.
