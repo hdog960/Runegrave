@@ -1,9 +1,9 @@
-/* RUNEGRAVE offline shell v0.02. New builds wait for player-approved refresh. */
-const CACHE_NAME = 'runegrave-shell-v0.02.0';
+/* RUNEGRAVE offline shell v0.03. New builds wait for player-approved refresh. */
+const CACHE_NAME = 'runegrave-shell-v0.03.0';
 const ASSETS = [
   './', './index.html', './styles.css', './js/main.js',
   './js/core/version.js', './js/core/rng.js', './js/core/ids.js', './js/content/realmCatalog.js',
-  './js/scene/stage.js', './js/platform/pwa.js',
+  './js/scene/stage.js', './js/platform/pwa.js', './js/input/vector.js', './js/input/twinStick.js',
   './art/world-tree.svg', './manifest.webmanifest',
   './icons/runegrave-180.png', './icons/runegrave-192.png', './icons/runegrave-512.png'
 ];

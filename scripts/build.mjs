@@ -11,4 +11,4 @@ copyFileSync(resolve(root,'styles.css'), resolve(dist,'styles.css'));
 if (existsSync(resolve(root,'public'))) cpSync(resolve(root,'public'), dist, { recursive:true });
 const html = readFileSync(resolve(dist,'index.html'),'utf8');
 if (!html.includes('./js/main.js') || !existsSync(resolve(dist,'sw.js')) || !existsSync(resolve(dist,'manifest.webmanifest'))) throw new Error('Missing Pages shell or PWA files');
-console.log('RUNEGRAVE v0.02 built to dist/ (shell preview only; combat not yet implemented).');
+console.log('RUNEGRAVE v0.03 built to dist/ (input training only; enemy combat not implemented).' );

@@ -1,34 +1,26 @@
 # RUNEGRAVE — Verified Release Status
 
 **Date:** 2026-11-09
+**Starting verified main:** `5bd5fa488e0be66aef032472ea821ddf8c408df2` (v0.02 source + status).
+**Active roadmap release:** **v0.03 — Twin-stick iPhone input**.
 
-**Verified repository baseline before this release:** `61d6098296718ed9fe61c46a43f24af4835b730e` on `main` (v0.01, documentation and technical foundation).
+## Implemented and locally tested
 
-**Active roadmap milestone:** **v0.02 — Pages/PWA and segmented screen shell**.
+- Dedicated left movement and right aim/continuous-fire rune discs, independent captured pointer IDs, multi-touch, radial dead zones, safe cancellation, left-handed swap, adjustable size/height within grips, keyboard fallback, pause/resume and background input clearing.
+- Responsive training avatar moves and emits **cosmetic training bolts** inside the true central-only stage canvas. No real collision, enemies, combat damage, boss, health, or run loop is implemented; all combat content totals remain zero.
+- On-screen paused-only controller preferences panel, validated local settings; waiting service worker update moved inside the paused panel to preserve zero-obscuration during live input. Utility actions not yet implemented stay disabled.
+- PWA cache upgraded to `runegrave-shell-v0.03.0`, compiled `js/` and mirrored branch-root runtime updated.
+- `npm run typecheck`: **PASS**. `npm test`: **13/13 PASS**. Headless local Chromium in-memory tests: **4 landscape profiles + portrait PASS** with simulated simultaneous touch pointers, cancellation, keyboard and paused-state checks, left-hand swapping, zero HUD/control overlap and no page errors.
 
-## Implemented and locally checked
+## Deployment evidence
 
-- Real three-region landscape layout: original dark ash-and-iron **left and right Norse rune grips**, a physically separate central renderer, and HUD entirely in non-canvas strips/insets.
-- Responsive measured canvas renderer and original **decorative, noninteractive** Midgard burial-hall scene; preview only, *no enemies, combat, movement, or runs*.
-- A user-friendly portrait rotate screen, safe-area responsive sizing, scroll/selection suppression, and explicit compact-device warning.
-- Real static PWA manifest with relative project paths, Apple Home Screen metadata, original 180/192/512 PNG icons, and a versioned service worker. Service worker precaches runtime modules, serves cached assets offline and does **not** force an in-progress game to update; a waiting update needs an explicit press.
-- Both GitHub Actions Pages artifact deployment workflow and compiled static asset files mirrored to repository root (for repositories configured to publish from `main/(root)`). A Pages source setting is still necessary and cannot be inferred from source files.
-- Local `npm test`: **9/9 tests PASS**; `npm run typecheck`: **PASS**. Local in-memory Chromium DOM/canvas test: 4 landscape viewports (667×375, 760×360, 844×390, 932×430) and portrait (390×844); **no script errors, zero DOM-control/HUD intersections, and stage equals center frame**. Browser network navigation is blocked in the tool environment, so service-worker live offline test was **NOT performed**.
+- **v0.02 public site verified reachable** before beginning: fetched `https://hdog960.github.io/Runegrave/`, `manifest.webmanifest`, and `js/main.js` successfully; fetched root displayed `v0.02` and appropriate title/manifest. Prior Pages blocker resolved.
+- **v0.03 GitHub source status:** commit evidence to be added after push. Repository update alone does not prove live Pages publication.
+- **v0.03 public site:** PENDING POST-PUSH VERIFICATION, not yet claimed as deployed.
+- **Real iPhone Safari, installed standalone PWA, offline update and physical two-thumb ergonomics:** NOT TESTED, remain open verification requirements.
 
-## Not verified; do not promote this milestone to fully approved or deployed
+## Content and approvals
 
-- **Public Pages endpoint:** `https://hdog960.github.io/Runegrave/` — inaccessible to the current verification tools. **NOT VERIFIED**; repository Pages settings and Actions publication result cannot be inspected from these tools.
-- **iPhone Safari / installed Home Screen:** NOT TESTED on a physical iPhone; App Store installation is not applicable.
-- **Playability:** NOT YET PLAYABLE; no playable content registered (relics 0, characters 0, enemies 0, bosses 0, rooms 0). Nine realm IDs are planning metadata, not playable locations.
-- **Player art approval:** NOT REQUESTED until the locked v0.09 Gate A; no approval gates altered.
-
-**Release status:** v0.02 code IMPLEMENTED; automated TESTED and local browser geometry TESTED. GitHub `main` commit must be verified after push; **DEPLOYMENT/PWA DEVICE APPROVAL OPEN**.
-
-**Next:** Confirm Pages publishing source and endpoint if possible, then v0.03 dedicated-rail simultaneous touch/aim and cancellation controls. Do not compromise zero-overlap rule or mark controls usable prematurely.
-
-## Post-commit GitHub verification
-
-- **v0.02 implementation commit:** [`983e005a2572727f1a5ec6be2e2b4e6b18cd442d`](https://github.com/hdog960/Runegrave/commit/983e005a2572727f1a5ec6be2e2b4e6b18cd442d), confirmed as the head of `main` on 2026-11-09.
-- GitHub repository reads confirmed compiled `js/main.js`, source renderer, service worker, manifest, and `.nojekyll` on `main`.
-- GitHub's commit status endpoint reported no status entries; the available workflow-runs method reports only PR-triggered runs, so it cannot determine the Pages deployment result.
-- Publication still requires the repository's Pages source to be configured (GitHub Actions workflow, or `main/(root)` for the mirrored static output). Actual live deployment and iPhone install remain **UNVERIFIED**.
+- **Playable content:** relics 0; playable variants 0; enemies 0; bosses 0; procedurally valid rooms 0; transformations 0; endings 0. Nine realm identifiers are planned metadata. Moving preview character and decorative training bolts are not a completed gameplay encounter.
+- **Visual gate:** v0.09 Gate A remains locked; no player approval asserted. Future checkpoints v0.39, v0.79, v0.99 unchanged.
+- **Next roadmap release:** v0.04 — polish authentic Norse shell art, camera framing, central scene and HUD. Do not skip simulation/combat releases v0.05–v0.09 or any approval gate.

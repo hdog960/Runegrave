@@ -22,3 +22,12 @@
 - PWA `scope`/`start_url` are relative `./` and static cache entries are resolved from worker registration scope, allowing GitHub Pages `/Runegrave/` deployment.
 - Waiting service workers never activate over open runs without user consent; `ACTIVATE_UPDATE` is triggered from explicit external update banner. Future save handling must be added at v0.18.
 - GitHub Pages supports Actions artifact output and optional root-branch mirrored runtime. The mirror is updated with `npm run export:pages` before commits; repository settings must select publishing source.
+
+## v0.03 input architecture
+
+- `src/input/vector.ts` provides bounded unit vectors, radial dead-zone scaling and keyboard diagonal normalization.
+- `src/input/twinStick.ts` owns distinct pointer IDs independently on each rune-disc, pointer capture and per-role cancellation; the central world canvas has **no controls or click-target handlers**. Every `pointerup`/`pointercancel`/`lostpointercapture`, browser `blur`/`pagehide`/`visibilitychange`, pause, or configuration switch clears active input to prevent sticky firing.
+- Input bindings: left grip MOVE, right AIM/FIRE (auto fires continuously while outside dead zone); optional left-hand mode exchanges these roles and labels. Keyboard WASD/arrow movement, IJKL aim, Space fire, Escape/P pause. The two physical discs never leave the appropriate rail; size 85–110% and vertical position ±9px remain within rail layout and undergo geometry tests.
+- `TwinStickControls.snapshot` returns normalized movement, aim, firing and paused state. Its `onPauseChange` callback stops the stage update loop while a center overlay is shown; overlay is **only visible when paused**. Settings storage uses a validated, independent `runegrave:input:v1` key; this is not a run save or substitute for the v0.18 save system.
+- `src/scene/stage.ts` demonstrates moving the Vargr preview with a bounded avatar position and visible short-lived directional training bolts. **No physics/collision pipeline or damage is implemented**, so these input tracers do not count as real Soulbolts or combat content. Real simulation and collision arrive v0.05 and v0.06.
+- PWA update offers are now inside paused-only UI rather than a bottom-center fixed banner over active playfield. Service worker assets/cache include the new input modules in v0.03.

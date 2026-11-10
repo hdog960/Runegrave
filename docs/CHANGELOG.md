@@ -1,5 +1,18 @@
 # Verified Change Log
 
+## v0.03 — The Two Runes Answer (local implementation, 2026-11-09)
+
+- Independently controlled, pointer-captured left/right rune-disc input with two-pointer ownership, cancellation, 15% radial dead zone, directional scaling and simultaneous movement/continuous-fire aim. The right disc fires while held; left-handed mode swaps movement and aim between physical grips.
+- Real training-avatar movement and original visible Soulbolt **training tracers** in the isolated central world canvas; these are input demonstrations only, not damage, collisions, enemies, boss encounters, or a playable run.
+- Keyboard fallback (WASD/arrows, IJKL, Space and Escape/P), reliable reset on background/blur/pagehide, and a pause state which halts the renderer update. Button actions not yet implemented are visibly disabled, not fake.
+- Paused-only Norse settings panel (handedness, size, vertical alignment, dead zone) stored locally with validation. Waiting PWA-update action moved into paused UI, never overlays active gameplay.
+- Offline/PWA runtime cache upgraded to v0.03 including new modules; static branch-root mirrored outputs updated.
+- `npm test`: 13/13 PASS; `npm run typecheck`: PASS. Local headless Chromium input tests pass at four landscape sizes, plus the portrait rotate gate, with zero HUD/control intersections and no page errors. Real Safari hardware verification remains open.
+- Before this work, v0.02 Pages URL, manifest and compiled JS were successfully fetched live via an external website fetch; this does not assert v0.03 publication.
+
+**Next:** v0.04 game camera/art/HUD refinement; retain the locked v0.09 visual approval gate.
+
+
 ## v0.02 — Rune-Forged Screen (source implementation, 2026-11-09)
 
 - Built the required original Norse handcrafted console silhouette with split dark-ash-wood and wrought-metal left/right rune grips, an isolated middle game screen, and external resource HUD. No decorative or interactive UI intersects the canvas in local geometry tests.

@@ -1,5 +1,8 @@
-/** Scenic render for v0.02 canvas geometry validation. This is NOT combat/gameplay. */
+/** v0.03 movement / aiming input trial inside an entirely separate world canvas.
+ * No enemies, damage, room clearing or saved runs yet: those are later milestones. */
 import { rngStream } from '../core/rng.js';
+import { ZERO, type Vector2 } from '../input/vector.js';
+import type { InputSnapshot } from '../input/twinStick.js';
 
 const WIDTH = 420;
 type Rng = ReturnType<typeof rngStream>;
@@ -71,7 +74,7 @@ function torch(g:CanvasRenderingContext2D,x:number,y:number,t:number){
   polygon(g,[[x,y-3],[x-3,y-8],[x-2,y-14-flame],[x+2,y-9],[x+4,y-15-flame],[x+4,y-4]],'#eeb464');
   polygon(g,[[x,y-5],[x-1,y-9],[x+1,y-13-flame/2],[x+2,y-6]],'#fff0ac');
 }
-function hero(g:CanvasRenderingContext2D,cx:number,cy:number,t:number){
+function hero(g:CanvasRenderingContext2D,cx:number,cy:number,t:number,aim:Vector2){
   g.save();g.translate(cx,cy+Math.sin(t*1.2)*1.3);
   g.fillStyle='#0009';g.beginPath();g.ellipse(0,18,19,7,0,0,Math.PI*2);g.fill();
   polygon(g,[[-8,1],[-16,15],[-10,23],[9,23],[15,15],[8,1]],'#142c32');
@@ -83,24 +86,37 @@ function hero(g:CanvasRenderingContext2D,cx:number,cy:number,t:number){
   rect(g,-12,2,4,8,'#8d856e');rect(g,8,2,4,8,'#8d856e');
   rect(g,-7,22,6,3,'#755d47');rect(g,3,22,6,3,'#755d47');
   line(g,0,-21,0,-30,'#d2b87b',2);
+  // Facing rune is diegetic player feedback, not a screen-space HUD.
+  if(Math.hypot(aim.x,aim.y)>.05){
+    const dx=aim.x*22,dy=aim.y*22;
+    line(g,0,-4,dx,dy-4,'#cae9be',3);
+    rect(g,dx-3,dy-7,6,6,'#e2cf89');
+  }
   g.restore();
 }
 
-/** Holds an entirely decorative precombat dungeon scene; no damage or fake gameplay. */
-export function mountStage(canvas: HTMLCanvasElement) {
+/** Input-driven training view only; collisions and damage are v0.05–v0.08 roadmap work. */
+export function mountStage(canvas: HTMLCanvasElement, readInput:()=>InputSnapshot=()=>({move:ZERO,aim:ZERO,firing:false,paused:false})) {
   const parent = canvas.parentElement;
   const g = canvas.getContext('2d', { alpha:false });
   if (!parent || !g) throw new Error('Runegrave requires a dedicated stage canvas');
-  const random = rngStream('runegrave-v0.02','visual-floor');
+  const random = rngStream('runegrave-v0.03','visual-floor');
   const worldFloor = Array.from({length:500},()=>random.int(100));
   const embers = Array.from({length:30},()=>({x:random.next()*WIDTH,y:random.next()*320,s:1+random.next()*2,pace:.6+random.next()*.8}));
   let raf = 0; let lastTime = 0; let lastFrameMs = -Infinity;
+  let paused=false;let initialized=false;let shotCooldown=0;
+  const actor={x:WIDTH/2,y:120};let lastAim:Vector2={x:0,y:1};
+  type Bolt={x:number;y:number;vx:number;vy:number;age:number};
+  const bolts:Bolt[]=[];
   let metrics: StageMetrics;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   function resize(){
     const bounds = parent!.getBoundingClientRect();
     if(bounds.width<1||bounds.height<1)return;
     metrics=stageMetrics(bounds.width,bounds.height,window.devicePixelRatio||1);
+    if(!initialized){actor.y=metrics.cameraHeight*.55;initialized=true;}
+    actor.x=Math.max(22,Math.min(metrics.cameraWidth-22,actor.x));
+    actor.y=Math.max(48,Math.min(metrics.cameraHeight-25,actor.y));
     canvas.width=metrics.pixelWidth;canvas.height=metrics.pixelHeight;
     render(lastTime);
   }
@@ -139,7 +155,12 @@ export function mountStage(canvas: HTMLCanvasElement) {
     // A small rune circle grounds the *character preview* in the dungeon, not a HUD.
     g!.strokeStyle='#618e8866';g!.lineWidth=2;g!.beginPath();g!.ellipse(cx,cy+18,38,13,0,0,Math.PI*2);g!.stroke();
     for(let i=0;i<8;i++){const a=i*Math.PI/4;rect(g!,cx+32*Math.cos(a)-1,cy+18+11*Math.sin(a)-1,3,3,'#80b9a1');}
-    hero(g!,cx,cy,time);
+    for(const bolt of bolts){
+      const a=Math.max(.2,1-bolt.age/1.3);g!.globalAlpha=a;
+      g!.fillStyle='#b4d2c3';g!.beginPath();g!.arc(bolt.x,bolt.y,4,0,Math.PI*2);g!.fill();
+      rect(g!,bolt.x-1,bolt.y-1,3,3,'#f0e4ac');g!.globalAlpha=1;
+    }
+    hero(g!,actor.x,actor.y,time,lastAim);
     for(let i=0;i<embers.length;i++){
       const e=embers[i]!;const y=(e.y-time*6*e.pace%340+340)%340;
       if(y<H) rect(g!,e.x,y,e.s,e.s,i%3===0?'#e9c582':'#6d9e94');
@@ -147,15 +168,49 @@ export function mountStage(canvas: HTMLCanvasElement) {
     const vignette=g!.createRadialGradient(cx,H/2,Math.min(W,H)*.15,cx,H/2,Math.max(W,H)*.75);
     vignette.addColorStop(0,'#0000');vignette.addColorStop(1,'#000b');g!.fillStyle=vignette;g!.fillRect(0,0,W,H);
   }
+  function update(dt:number){
+    if(paused||!metrics)return;
+    const input=readInput();if(input.paused)return;
+    const speed=95; // Scene-only movement sensitivity, not production combat physics.
+    actor.x=Math.max(22,Math.min(metrics.cameraWidth-22,actor.x+input.move.x*speed*dt));
+    actor.y=Math.max(48,Math.min(metrics.cameraHeight-25,actor.y+input.move.y*speed*dt));
+    if(Math.hypot(input.aim.x,input.aim.y)>.04)lastAim=input.aim;
+    shotCooldown=Math.max(0,shotCooldown-dt);
+    if(input.firing&&shotCooldown<=0&&bolts.length<24){
+      const len=Math.hypot(lastAim.x,lastAim.y)||1;
+      const vx=lastAim.x/len,vy=lastAim.y/len;
+      bolts.push({x:actor.x+vx*19,y:actor.y+vy*19,vx:vx*185,vy:vy*185,age:0});
+      shotCooldown=.18;
+    }
+    for(let i=bolts.length-1;i>=0;i--){
+      const shot=bolts[i]!;shot.x+=shot.vx*dt;shot.y+=shot.vy*dt;shot.age+=dt;
+      if(shot.age>1.3||shot.x<0||shot.y<0||shot.x>metrics.cameraWidth||shot.y>metrics.cameraHeight)bolts.splice(i,1);
+    }
+    canvas.dataset.actorX=actor.x.toFixed(2);canvas.dataset.actorY=actor.y.toFixed(2);
+    canvas.dataset.boltCount=String(bolts.length);
+  }
   function tick(ms:number){
-    if(document.hidden){raf=0;return;}
-    if(ms-lastFrameMs>=33){lastFrameMs=ms;lastTime=ms/1000;render(lastTime);}
+    if(document.hidden){raf=0;lastFrameMs=-Infinity;return;}
+    const delta=lastFrameMs===-Infinity?0:Math.min(.05,Math.max(0,(ms-lastFrameMs)/1000));
+    lastFrameMs=ms;
+    if(!paused){
+      update(delta);
+      if(ms-lastTime>=1000/45){lastTime=ms;render(reduced.matches?0:ms/1000);}
+    }
     raf=requestAnimationFrame(tick);
   }
   const observer=new ResizeObserver(resize);observer.observe(parent);
   resize();
-  if(!reduced.matches)raf=requestAnimationFrame(tick);
-  window.addEventListener('orientationchange',resize,{passive:true});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(raf)cancelAnimationFrame(raf);raf=0;}else if(!raf&&!reduced.matches){raf=requestAnimationFrame(tick);}else resize();});
-  return { resize, getMetrics:()=>metrics, stop:()=>{observer.disconnect();if(raf)cancelAnimationFrame(raf);} };
+  raf=requestAnimationFrame(tick);
+  const onOrientation=()=>resize();
+  const onVisibility=()=>{if(document.hidden){if(raf)cancelAnimationFrame(raf);raf=0;lastFrameMs=-Infinity;}else{resize();if(!raf)raf=requestAnimationFrame(tick);}};
+  window.addEventListener('orientationchange',onOrientation,{passive:true});
+  document.addEventListener('visibilitychange',onVisibility);
+  return {
+    resize,
+    getMetrics:()=>metrics,
+    getActor:()=>({...actor,boltCount:bolts.length}),
+    setPaused:(value:boolean)=>{paused=value;lastFrameMs=-Infinity;if(!value&&raf===0&&!document.hidden)raf=requestAnimationFrame(tick);},
+    stop:()=>{observer.disconnect();window.removeEventListener('orientationchange',onOrientation);document.removeEventListener('visibilitychange',onVisibility);if(raf)cancelAnimationFrame(raf);}
+  };
 }

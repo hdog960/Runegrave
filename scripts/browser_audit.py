@@ -7,7 +7,7 @@ html=(DIST/'index.html').read_text()
 html=re.sub(r'<script[^>]+src="./js/main.js"[^>]*></script>','',html)
 html=re.sub(r'<link[^>]+(?:stylesheet|manifest|icon)[^>]*>','',html)
 css=(DIST/'styles.css').read_text()
-modules=['core/version.js','core/rng.js','core/ids.js','content/realmCatalog.js','scene/stage.js','platform/pwa.js','main.js']
+modules=['core/version.js','core/rng.js','core/ids.js','content/realmCatalog.js','input/vector.js','input/twinStick.js','scene/stage.js','platform/pwa.js','main.js']
 js='\n'.join((DIST/'js'/m).read_text() for m in modules)
 js=re.sub(r'^import .*?;\s*$', '',js,flags=re.MULTILINE)
 js=re.sub(r'^export (?=(?:const|class|function|async)\b)', '',js,flags=re.MULTILINE)
@@ -36,7 +36,7 @@ with sync_playwright() as p:
    assert metrics['canvas']==metrics['frame']
    assert metrics['canvasBitmap'][0]>600
   else:assert not metrics['mainVisible']
-  assert metrics['version']=='0.02.0'
+  assert metrics['version']=='0.03.0'
   context.close()
  browser.close()
 print('BROWSER CANVAS AND ZERO-OVERLAP CHECKS PASS (not a real iPhone or live Pages check)')
