@@ -30,6 +30,215 @@ export const ENEMY_WEAPON_SHEETS=Object.freeze({
  'ooo.......ooo.','o##oo.....oo#o','o###oo...oo##o','o##++oo.oo+##o','.o###o#o#o###.','..o##++#++##o.','...o###o###o..','....o##o##o...','.....o###o....','......ooo.....'
  ]
 });
+/** Gate A v0.09.26: twenty-one original silhouette extensions across the seven
+ * authentic species. Frames advance only with actual attack windup/charge,
+ * never from the animation clock. All pixels use one cohesive weapon painter.
+ */
+export const ENEMY_WEAPON_ANTICIPATION=Object.freeze({
+ "draugr": [
+  [
+   ".........o....",
+   "........o#o...",
+   ".......o#+#o..",
+   "......o#+#o...",
+   "......o##o....",
+   ".......o#o....",
+   "........o....."
+  ],
+  [
+   "..........o...",
+   ".........o#o..",
+   "........o#+#o.",
+   "......oo##+o..",
+   "......o#+##o..",
+   ".....o##o.....",
+   "......o......."
+  ],
+  [
+   "..........o...",
+   ".........o+o..",
+   ".......oo#+#o.",
+   ".....oo###+#o.",
+   "....o##+##o...",
+   ".....o#o......",
+   "......o......."
+  ]
+ ],
+ "wisp": [
+  [
+   "......o.......",
+   ".....o+o......",
+   "....o#+#o.....",
+   "...o#o.o#o....",
+   "..o#o...o#o...",
+   "...o.....o....",
+   ".............."
+  ],
+  [
+   "......o.......",
+   "....oo+oo.....",
+   "...o#+##o.....",
+   "..o+o..o+o....",
+   ".o+o....o+o...",
+   "o#o......o#o..",
+   ".............."
+  ],
+  [
+   "......o.......",
+   "...ooo+ooo....",
+   "..o#+#o#+#o...",
+   ".o#+o...o+#o..",
+   "o+o.......o+o.",
+   "o#o.......o#o.",
+   ".............."
+  ]
+ ],
+ "archer": [
+  [
+   "...o+o........",
+   "..o#+#o.......",
+   ".o#o.o#o......",
+   "o#o...o#o.....",
+   ".o#o.o#o......",
+   "..o#+#o.......",
+   "...o+o........"
+  ],
+  [
+   "..o...o.......",
+   ".o#o.o#o......",
+   "o#o...o#o.....",
+   "o#o...o#o.....",
+   ".o#o.o#o......",
+   "..o#o#o.......",
+   "...o+o........"
+  ],
+  [
+   ".o.....o......",
+   "o#o...o#o.....",
+   "o#o...o#o.....",
+   "o#o...o#o.....",
+   "o#o...o#o.....",
+   ".o#ooo#o......",
+   "..o+++#o......"
+  ]
+ ],
+ "charger": [
+  [
+   "o..........o..",
+   "o#o........o#o",
+   "o#+o......o+#o",
+   ".o#o......o#o.",
+   "..o#o....o#o..",
+   "...o#o..o#o...",
+   "....oooooo...."
+  ],
+  [
+   "oo........oo..",
+   "o#o......o#o..",
+   ".o#+o....o+#o.",
+   "..o#+o..o+#o..",
+   "...o#+oo+#o...",
+   "....o####o....",
+   ".....oooo....."
+  ],
+  [
+   "o+o........o+o",
+   "o##o......o##o",
+   ".o#+o....o+#o.",
+   "..o#+o..o+#o..",
+   "...o##++##o...",
+   "....o####o....",
+   ".....oooo....."
+  ]
+ ],
+ "sentinel": [
+  [
+   "......o.......",
+   "..o...o...o...",
+   "..o#..#..#o...",
+   "o##+#o.o#+##o.",
+   "..o#..#..#o...",
+   "..o...o...o...",
+   "......o......."
+  ],
+  [
+   "......o.......",
+   ".o....o....o..",
+   "o##o..#..o##o.",
+   "o#+##o#o##+#o.",
+   "o##o..#..o##o.",
+   ".o....o....o..",
+   "......o......."
+  ],
+  [
+   "..o...o...o...",
+   "..o#..#..#o...",
+   "o##+o###o+##o.",
+   "o#+###+###+#o.",
+   "o##+o###o+##o.",
+   "..o#..#..#o...",
+   "..o...o...o..."
+  ]
+ ],
+ "shade": [
+  [
+   "..o........o..",
+   ".o#o......o#o.",
+   "o#+#o....o#+#o",
+   "..o#o....o#o..",
+   "...o#o..o#o...",
+   "....o#oo#o....",
+   ".....oooo....."
+  ],
+  [
+   ".o..........o.",
+   "o#o........o#o",
+   "o#+o......o+#o",
+   ".o#o......o#o.",
+   "..o#o....o#o..",
+   "...o#o..o#o...",
+   "....oooooo...."
+  ],
+  [
+   "o............o",
+   "o#o........o#o",
+   "o#+o......o+#o",
+   "o#+#o....o#+#o",
+   ".o###o..o###o.",
+   "..o#o.oo.o#o..",
+   "...oo....oo..."
+  ]
+ ],
+ "warden": [
+  [
+   "o..........o..",
+   "o#o........o#o",
+   "o#+o......o+#o",
+   ".o##o....o##o.",
+   "..o#o....o#o..",
+   "...o##oo##o...",
+   "....o####o...."
+  ],
+  [
+   "o+o........o+o",
+   "o##o......o##o",
+   "o#+#o....o#+#o",
+   ".o##+o..o+##o.",
+   "..o##+oo+##o..",
+   "...o##++##o...",
+   "....o####o...."
+  ],
+  [
+   "o+o........o+o",
+   "o##oo....oo##o",
+   "o#+##o..o##+#o",
+   "o##++#oo#++##o",
+   ".o###++++###o.",
+   "..o###++###o..",
+   "...oo####oo..."
+  ]
+ ]
+});
 export const WEAPON_SAGA_PALETTES=Object.freeze({
  draugr:{o:'#1a302d','#':'#6b9385','+':'#ecd4ac'},
  wisp:{o:'#1c4659','#':'#85cbd3','+':'#e6ffff'},
@@ -80,6 +289,9 @@ export function paintEnemySagaWeapon(g,e,time,reducedMotion=false){
  const top=(boss?-35:-24)-(frame>=2?2:0);
  g.save();
  strokeSheet(g,weapon,left,top,ink);
+ // Seven deliberately different material silhouettes physically change posture
+ // during real countdown states, inside the ONE existing weapon layer.
+ if(frame>0)strokeSheet(g,ENEMY_WEAPON_ANTICIPATION[e.kind][frame-1],left,top-2,ink);
  // A physical band, split rivet, and last-frame fang change geometry at each
  // phase. No fake glow ring or impact target appears under the player.
  g.fillStyle=ink['#'];
