@@ -162,6 +162,12 @@ export function paintHeroAtlas(g,pose,time,reducedMotion=false){
  const fx=pose.facing==='E'||pose.facing==='NE'||pose.facing==='SE'?8:
    pose.facing==='W'||pose.facing==='NW'||pose.facing==='SW'?-8:0;
  g.fillRect(fx-1,-27,2,3);
+ // Rear diagonals present a raised cloak collar and exposed side vambrace.
+ // This is geometry, not just a palette flip: NE/NW cannot look like SE/SW.
+ if(pose.facing==='NE'||pose.facing==='NW'){
+  g.fillStyle=HERO_INK.B;g.fillRect(-7,-8,4,10);
+  g.fillStyle=HERO_INK.w;g.fillRect(8,-13,2,7);
+ }
  if(pose.recoil>.24&&!reducedMotion){
   g.fillStyle=HERO_INK.G;g.fillRect(pose.side<0?-18:14,-7,4,4);
   g.fillStyle=HERO_INK.w;g.fillRect(pose.side<0?-16:16,-9,2,2);
