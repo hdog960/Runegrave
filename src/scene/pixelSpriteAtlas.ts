@@ -11,6 +11,7 @@ import type {Enemy,EnemyKind} from '../enemies/encounters.js';
 type G=CanvasRenderingContext2D;
 type HeroFacing='N'|'NE'|'E'|'SE'|'S'|'SW'|'W'|'NW';
 import { inkedWindupBody } from './sagaBodyLanguage.js';
+import { inkedImpactBody } from './sagaImpactFractures.js';
 import { paintWayfarerMovingHem } from './kineticInk.js';
 import { paintEnemySagaWeapon } from './sagaWeaponAtlas.js';
 import { paintWayfarerSagaVisor, paintHostileSagaFace } from './sagaExpression.js';
@@ -325,6 +326,83 @@ export const WAYFARER_OATH_STANCES=Object.freeze({
   ".....oo......"
  ]
 });
+/** Eight original shield/bracer emblems carried on the actual arm.
+ * The four physical binding-rivet positions follow genuine walking frames.
+ */
+export const WAYFARER_OATH_SHIELDS=Object.freeze({
+ "N": [
+  "..ooo..",
+  ".oHHHo.",
+  "oHGwGHo",
+  "oHGeGHo",
+  "oHGwGHo",
+  ".oHHHo.",
+  "..ooo.."
+ ],
+ "NE": [
+  ".oooo..",
+  "oHHHGo.",
+  "oHGwGGo",
+  ".oHGeGo",
+  "..oGGo.",
+  "..oHo..",
+  "...o..."
+ ],
+ "E": [
+  "ooo....",
+  "oHHGo..",
+  "oHGwGo.",
+  "oHGeGGo",
+  "oHGwGo.",
+  "oHHGo..",
+  "ooo...."
+ ],
+ "SE": [
+  "..oooo.",
+  "..oGHHo",
+  ".oGwGHo",
+  "oGGeGHo",
+  ".oGGHo.",
+  "..oHo..",
+  "...o..."
+ ],
+ "S": [
+  "..ooo..",
+  ".oGHGo.",
+  "oGGwGGo",
+  "oGGeGGo",
+  "oGGwGGo",
+  ".oGHGo.",
+  "..ooo.."
+ ],
+ "SW": [
+  ".oooo..",
+  "oHHGo..",
+  "oHGwGo.",
+  ".oGeGHo",
+  "..oGGo.",
+  "..oHo..",
+  "...o..."
+ ],
+ "W": [
+  "....ooo",
+  "..oGHHo",
+  ".oGwGHo",
+  "oGGeGHo",
+  ".oGwGHo",
+  "..oGHHo",
+  "....ooo"
+ ],
+ "NW": [
+  "..oooo.",
+  "..oGHo.",
+  ".oGGwGo",
+  "oGGeGHo",
+  ".oGGHo.",
+  "..oHo..",
+  "...o..."
+ ]
+});
 export function paintWayfarerOathStance(g:G,pose:WayfarerPose,time:number,reducedMotion=false):void{
  if(!Number.isFinite(time)||!Object.hasOwn(WAYFARER_OATH_STANCES,pose.facing))
   throw new RangeError('Invalid original Wayfarer combat stance');
@@ -343,6 +421,11 @@ export function paintWayfarerOathStance(g:G,pose:WayfarerPose,time:number,reduce
  }else{
   g.fillStyle=HERO_INK.g;g.fillRect(-3,-5,6,3);
  }
+ // The shield is attached to the same already-drawn arm, never a free
+ // entity or aim pointer; its notch follows the real gait frame.
+ const shieldSwing=pose.moving&&!reducedMotion?[0,1,2,-1][gait]??0:0;
+ drawSheet(g,WAYFARER_OATH_SHIELDS[pose.facing],armX-1,-14+shieldSwing,2,HERO_INK);
+ g.fillStyle=HERO_INK.G;g.fillRect(armX+1,-9+gait*2,2,2);
  // Actual fire recoil raises the handguard; idle never sparkles on a clock.
  if(pose.recoil>.24){
   g.fillStyle=HERO_INK.G;g.fillRect(armX+1,-13,4,6);
@@ -445,7 +528,8 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  g.save();g.translate(0,bob);
  // One original body sheet gets real in-place shoulder/arm contour changes.
  // There is still exactly one body draw and no extra phantom attack sprite.
- const visibleBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
+ const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
+ const visibleBody=inkedImpactBody(windupBody,e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
