@@ -83,10 +83,10 @@ test('one original 25-chamber adventure, 8 real relics, user-approved PWA upgrad
  const versions=read('../dist/js/core/version.js'),sw=read('../dist/sw.js'),enemyArt=read('../dist/js/enemies/enemyArt.js');
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
- assert.match(versions,/APP_VERSION = '0\.09\.33'/);
+ assert.match(versions,/APP_VERSION = '0\.09\.34'/);
  assert.match(versions,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(versions,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.33/);
+ assert.match(sw,/runegrave-shell-v0\.09\.34/);
  assert.match(enemyArt,/paintHostileProjectiles\(g,\s*state\.projectiles,\s*t\)/);
  assert.ok(sw.includes('./js/enemies/hostileProjectileArt.js'));
 });
