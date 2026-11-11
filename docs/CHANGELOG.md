@@ -1,3 +1,12 @@
+## v0.09.18 — Five pixel-art Norse standards and real state-linked battle poses (Gate A STILL PENDING)
+
+- Created a new original 2px pixel-mosaic mural system with one unique 12-row motif for each of Ash, Iron, Root, Spirit and Fate. Each family has five individual carved hem cuts for 25 authentic chamber identities, paired in stable upper-wall positions.
+- Extended the Wayfarer with eight direction-aware helmet and engraved armor outlines, embroidered cape treatments, and four genuinely distinct alternating greave/balance frames. Added attack-input-only rune-gauntlet highlights.
+- Added seven readable behavior-specific strike shapes for Draugr, Wisp, Archer, Charger, Sentinel, Shade and Rootbound Warden, progressing through four **real** windup urgency bands. Reduced-motion art stays stable without removing real threat-state cues.
+- All geometry is visual-only; no changes to hitboxes, damage, AI, six enemy kinds/Warden, progression, pickups, 8 functional relics, 25 room configurations, existing touch rail positions, save schema or offline update mechanism.
+- New Node and CI Chromium art/combat/viewport assertions: **146/146 tests PASS**, Chromium 4 landscape sizes plus portrait PASS, public Pages v0.09.18 and updated service worker verified. Seven locked authoritative documents unchanged.
+- v0.09 Gate A remains unapproved; further mobile art polish and real iPhone ergonomics are required before requesting inspection. v0.10 remains strictly locked.
+
 ## v0.09.17 — Carved Norse galleries and expressive directional combat art (Gate A UNAPPROVED)
 
 - Added five distinctive carved wall-gallery motifs and five deterministic cut variants for every family: 25 authored visual signatures, retained entirely at the scene perimeter.

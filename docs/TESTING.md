@@ -1,3 +1,12 @@
+## v0.09.18 — Post-merge CI / browser evidence (2026-11-10 US Central)
+
+- Pull request [#2](https://github.com/hdog960/Runegrave/pull/2) merged as `076914e`. Both pull-request and post-merge `Runegrave foundation checks` workflows succeeded.
+- **Node + TypeScript:** `npm test` compiled strict TS and completed **146 of 146 passing tests**. New `tests/gateA0108.test.mjs` verifies all 25 family/hem mosaics, five different pixel shapes, both edge mounts, save/restore symmetry, reduced-motion stillness, painting-call footprint, all eight hero facings, four uniquely drawn walk poses and seven real windup-stage silhouettes. Version, PWA module caching, safe save schema and existing catalog are verified. First CI failure (only three distinct gait poses) was repaired in artwork, not papered over in tests.
+- **Real Chromium automated runtime, not physical Safari:** Ubuntu 24.04 Playwright runner passed the established `scripts/v009_browser_audit.py` across small/regular/plus/compact landscape and portrait, then `scripts/v00918_browser_audit.py` across four landscape viewport sizes plus portrait. It verified center canvas separation from controls, guided launch, entering a real authored room, test-set warning pose, simultaneous left/right pointer input and fired Soulbolts, no uncaught browser JS errors. Screenshots were archived to GitHub Actions artifacts.
+- **Public Pages/PWA:** GitHub build/publish workflow #59 and Pages deployment #68 were successful. Independently fetched public `/js/core/version.js`, `/sw.js` and `/js/scene/sagaArtwork.js`; confirmed application version 0.09.18, service-worker shell cache 0.09.18 and new compiled artwork export.
+- **Immutable design basis:** Seven authoritative document blobs match previous `main`, save schema remains 1, no preexisting files deleted, no modifications to physical controls, enemy collision, damage or relic behavior.
+- **Explicit limits:** Physical iPhone thumb reach, actual installed PWA offline/refresh, sustained iOS performance, unaided full route victory, and player Gate A visual approval remain **UNVERIFIED**. Do not start v0.10 or claim premium art complete.
+
 ## v0.09.17 — verified post-merge GitHub CI and browser tests (2026-11-10)
 
 - GitHub PR #1 merged as `6df87b5`; final `npm test` via CI compiled strict TypeScript and ran **142/142 passing Node tests**, retaining the prior functional gameplay regressions.
