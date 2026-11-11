@@ -1,13 +1,9 @@
 import { drawRuneDoor } from '../scene/doorArt.js';
 import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visualMotion.js';
 import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.js';
-import { drawEnemyGesture } from './gestureArt.js';
-import { paintEnemyAccents } from './armorAccents.js';
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
-import { paintEnemyActionFrame } from './attackPoseFrames.js';
-import { paintStrikeSilhouette } from './strikeSilhouettes.js';
-import { paintSagaEnemyStrike } from '../scene/sagaArtwork.js';
 import { paintOathEnemyStrike } from '../scene/eddicCornice.js';
+import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS = Object.freeze({
@@ -115,120 +111,25 @@ function runeWarning(g, e, t) {
     }
     g.restore();
 }
-function sprite(g, e, t, reducedMotion = false) {
-    const x = Math.round(e.x), y = Math.round(e.y), f = e.flash > 0;
-    const motion = enemyVisualMotion(e, t);
-    g.save();
-    g.translate(x, y + motion.bob);
-    g.scale(motion.facing, 1);
-    if (motion.lean)
-        g.rotate(motion.lean * (motion.facing === 1 ? 1 : -1));
-    g.fillStyle = '#0009';
-    g.beginPath();
-    g.ellipse(0, e.radius * .7, e.radius + 3, 4, 0, 0, Math.PI * 2);
-    g.fill();
-    if (e.kind === 'draugr') {
-        px(g, -7, -13, 14, 18, f ? '#fff2c7' : '#5b7772');
-        px(g, -6, -18, 12, 9, '#7faaa0');
-        px(g, -4, -16, 3, 3, '#e5cb84');
-        px(g, 2, -16, 3, 3, '#e5cb84');
-        px(g, -10, -5, 4, 12, '#3b585b');
-        px(g, 6, -5, 4, 12, '#3b585b');
-        px(g, -8, 5, 16, 3, '#8d7350');
-    }
-    else if (e.kind === 'wisp') {
-        g.fillStyle = f ? '#fff2ce' : '#76b8c5';
-        g.beginPath();
-        g.moveTo(0, -16);
-        g.lineTo(8, -3);
-        g.lineTo(2, 9);
-        g.lineTo(-8, 1);
-        g.closePath();
-        g.fill();
-        px(g, -3, -5, 6, 6, '#e8e3bd');
-        px(g, -1, -3, 2, 2, '#2f5c65');
-    }
-    else if (e.kind === 'archer') {
-        px(g, -8, -13, 16, 17, f ? '#fceec6' : '#453e57');
-        px(g, -6, -17, 12, 8, '#716688');
-        px(g, -4, -12, 3, 3, '#d2c797');
-        px(g, 2, -12, 3, 3, '#d2c797');
-        px(g, 8, -13, 3, 18, '#ac966f');
-        px(g, 10, -8, 3, 10, '#77c0b2');
-    }
-    else if (e.kind === 'charger') {
-        px(g, -12, -10, 24, 18, f ? '#fff2c7' : '#695d49');
-        px(g, -14, -17, 6, 13, '#baa37c');
-        px(g, 8, -17, 6, 13, '#baa37c');
-        px(g, -7, -13, 14, 6, '#9d7b53');
-        px(g, -5, -8, 4, 3, '#ffab67');
-        px(g, 3, -8, 4, 3, '#ffab67');
-        px(g, -10, 6, 6, 7, '#454a40');
-        px(g, 4, 6, 6, 7, '#454a40');
-    }
-    else if (e.kind === 'sentinel') {
-        px(g, -11, -13, 22, 23, f ? '#ffe6a3' : '#344952');
-        px(g, -8, -16, 16, 5, '#8a795c');
-        px(g, -6, -6, 12, 12, '#182b39');
-        px(g, -3, -3, 6, 6, '#b5ded5');
-        px(g, -13, 7, 26, 4, '#ab9065');
-    }
-    else if (e.kind === 'shade') {
-        px(g, -7, -12, 14, 9, f ? '#fff2c7' : '#5f5a78');
-        px(g, -10, -4, 20, 12, '#383046');
-        px(g, -5, -9, 3, 2, '#bdc6ee');
-        px(g, 3, -9, 3, 2, '#bdc6ee');
-        px(g, -7, 8, 4, 5, '#74658b');
-        px(g, 3, 8, 4, 5, '#74658b');
-    }
-    else {
-        // Rootbound Warden: large, bespoke armored silhouette with animated root horns.
-        px(g, -19, -12, 38, 27, '#251f24');
-        px(g, -15, -17, 30, 29, f ? '#f9edc1' : '#49634e');
-        px(g, -12, -22, 24, 10, '#807251');
-        px(g, -19, -27, 8, 18, '#9d7952');
-        px(g, 11, -27, 8, 18, '#9d7952');
-        px(g, -7, -13, 6, 4, '#f0b276');
-        px(g, 3, -13, 6, 4, '#f0b276');
-        px(g, -7, -4, 14, 10, '#183035');
-        px(g, -3, -2, 6, 6, e.phase === 2 ? '#fd7844' : '#8dd2b0');
-        px(g, -19, 12 + (motion.step ? 1 : 0), 13, 11, '#756d50');
-        px(g, 6, 12 + (motion.step ? 0 : 1), 13, 11, '#756d50');
-        px(g, -23, -3, 7, 17, '#6a533f');
-        px(g, 16, -3, 7, 17, '#6a533f');
-        // Living braided crown and phase-two root glow.
-        g.strokeStyle = e.phase === 2 ? '#ff996a' : '#9cb38d';
-        g.lineWidth = 2;
-        g.beginPath();
-        g.moveTo(-16, -24);
-        g.lineTo(-25, -31);
-        g.lineTo(-23, -37);
-        g.moveTo(16, -24);
-        g.lineTo(25, -31);
-        g.lineTo(23, -37);
-        g.stroke();
-        px(g, -12, -8, 4, 2, e.phase === 2 ? '#ff7854' : '#e9c888');
-        px(g, 8, -8, 4, 2, e.phase === 2 ? '#ff7854' : '#e9c888');
-        if (e.phase === 2) {
-            g.strokeStyle = '#ff9060';
-            g.lineWidth = 2;
-            g.beginPath();
-            g.arc(0, -2, 23, 0, Math.PI * 2);
-            g.stroke();
-        }
-    }
-    drawEnemyGesture(g, e.kind, e.state, e.phase, t);
-    paintEnemyAccents(g, e.kind, e.state, e.phase, t);
-    paintEnemyActionFrame(g, e, t, reducedMotion);
-    paintStrikeSilhouette(g, e, t, reducedMotion);
-    paintSagaEnemyStrike(g, e, t, reducedMotion);
-    paintOathEnemyStrike(g, e, t, reducedMotion);
-    g.restore();
-    if (e.hp < e.maxHp || e.kind === 'warden' || e.state === 'warning') {
-        const width = e.kind === 'warden' ? 45 : 19;
-        px(g, x - width / 2, y - e.radius - 17, width, 4, '#171d21');
-        px(g, x - width / 2, y - e.radius - 17, width * e.hp / e.maxHp, 3, e.kind === 'warden' ? '#d3a15c' : '#b5c68a');
-    }
+/** v0.09.21: coherent atlas ink, one authentic windup silhouette.
+ * Historic stacked pose/armor painters remain independently unit-tested, but
+ * no longer pile competing shapes over one enemy or cover the real tell.
+ */
+function sprite(g, e, t, reducedMotion = false){
+ const x=Math.round(e.x),y=Math.round(e.y);
+ const motion=enemyVisualMotion(e,reducedMotion?0:t);
+ g.save();g.translate(x,y+motion.bob);g.scale(motion.facing,1);
+ if(motion.lean&&!reducedMotion)g.rotate(motion.lean*(motion.facing===1?1:-1));
+ g.fillStyle='#0009';g.beginPath();g.ellipse(0,e.radius*.7,e.radius+3,4,0,0,Math.PI*2);g.fill();
+ paintHostileAtlas(g,e,t,reducedMotion);
+ // One deliberate species-specific shape is enough beside authoritative world warnings.
+ paintOathEnemyStrike(g,e,t,reducedMotion);
+ g.restore();
+ if(e.hp<e.maxHp || e.kind==='warden'||e.state==='warning'){
+  const width=e.kind==='warden'?45:19;
+  px(g,x-width/2,y-e.radius-17,width,4,'#171d21');
+  px(g,x-width/2,y-e.radius-17,width*e.hp/e.maxHp,3,e.kind==='warden'?'#d3a15c':'#b5c68a');
+ }
 }
 export function drawEncounter(g, encounter, t, relicCollected = true, reducedMotion = false) {
     const state = encounter.snapshot;

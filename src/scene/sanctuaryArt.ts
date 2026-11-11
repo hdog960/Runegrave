@@ -1,10 +1,5 @@
 import { wayfarerPose } from './wayfarerMotion.js';
-import { paintWayfarerEmblems } from './wayfarerEmblems.js';
-import { paintWayfarerProfile } from './wayfarerProfileArt.js';
-import { paintWayfarerFrames } from './wayfarerFrameArt.js';
-import { paintSagaWayfarer } from './sagaArtwork.js';
-import { paintWayfarerOathGear } from './eddicCornice.js';
-import { paintHeroActionSilhouette } from './heroActionSilhouette.js';
+import { paintHeroAtlas } from './pixelSpriteAtlas.js';
 import { paintChamberSetpieces, type ChamberFamily } from './chamberSetpieces.js';
 type Family=ChamberFamily;
 /** v0.04 original hand-authored procedural 32-bit-inspired Midgard Rootvault art.
@@ -172,70 +167,27 @@ export function paintSanctuary(g:G,W:number,H:number,t:number,family:string='ROO
  */
 /** Full Wayfarer silhouette with distinct eight-direction helmet, active attack
  * recoil, alternating boots and cloak panels. All paint remains WORLD SPACE. */
+/** v0.09.21: one coherent pixel sprite instead of six stacked body overlays.
+ * Legacy individual art painters remain available for regression coverage, but
+ * do not muddy the actual hero's silhouette. The staff uses real aim/recoil.
+ */
 export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,aimX:number,aimY:number,firing:boolean,reducedMotion=false){
- const m=wayfarerPose(t,dx,dy,aimX,aimY,firing);
- const faceX=m.aimX,faceY=m.aimY;
+ const pose=wayfarerPose(t,dx,dy,aimX,aimY,firing);
  g.save();g.translate(Math.round(x),Math.round(y));
- // Matte floor shadow: important for showing feet remain on solid ground.
- ellipse(g,0,23,17,5,'#020b0bb8');
- ellipse(g,0,21,12,3,'#273b393b');
- // Two independent boots alternate in movement, with heel and toe plates.
- box(g,-10,15+m.bootLeft,8,8,'#1c2928');
- box(g,-9,17+m.bootLeft,7,5,'#8b7553');
- box(g,3,15+m.bootRight,8,8,'#1c2928');
- box(g,3,17+m.bootRight,7,5,'#927958');
- box(g,-8,20+m.bootLeft,7,2,'#d0b37b');
- box(g,4,20+m.bootRight,7,2,'#d0b37b');
- // Inverted triangular split cloak with moving border, never a square blob.
- shape(g,[[-11,-3],[-15,10],[-13+m.cape,20],[-3,17],[0,18],[4,17],[13-m.cape,20],[15,9],[11,-3]],'#0e2329');
- shape(g,[[-9,-1],[-12,12],[-9+m.cape,17],[0,14],[9-m.cape,17],[12,12],[9,-1]],m.back?'#30545a':'#2b5961');
- stroke(g,[[-10,3],[-9,14],[-8,17]],'#76a6a1',1.4);
- stroke(g,[[10,3],[9,14],[8,17]],'#789a8d',1.4);
- // Layered chest mail and four sharply readable gold armor corners.
- box(g,-11,-4,22,17,'#172b2f');
- box(g,-8,-3,16,13,'#56736c');
- box(g,-5,0,10,8,m.back?'#364b4e':'#25474e');
- box(g,-8,10,16,3,'#c3a36b');
- for(const sx of [-1,1]){
-  box(g,sx*9-3,-5+m.shoulder,7,7,'#7f8c79');
-  box(g,sx*9-3,-6+m.shoulder,7,2,'#e4bf7b');
-  box(g,sx*11-2,3,5,10,'#41545a');
-  box(g,sx*11-2,8,5,2,'#aeb8a3');
- }
- // Forged helmet with embossed brow, crested ridge and orientation-specific visor.
- shape(g,[[-10,-6],[-12,-17],[-6,-25],[4,-25],[11,-19],[12,-7],[7,1],[-7,1]],'#102129');
- shape(g,[[-8,-17],[-3,-23],[5,-22],[9,-17],[8,-7],[-7,-7]],'#81938a');
- box(g,-8,-21,16,3,'#c1b18a');box(g,-1,-27,3,9,'#deb778');
- box(g,-6,-18,12,2,m.back?'#394f51':'#e9c58d');
- if(m.back){
-  box(g,-6,-12,12,6,'#38585b');
-  box(g,-3,-8,6,3,'#6b8a83');
- }else if(m.side!==0){
-  // Side and diagonal profiles reveal a single glowing eye under a sloping cheek.
-  box(g,m.side>0?1:-5,-12,5,3,'#e5f3d7');
-  box(g,m.side>0?4:-6,-10,4,5,'#2e4c4a');
-  box(g,m.side>0?-7:5,-10,3,6,'#6b8177');
- }else{
-  box(g,-6,-12,4,3,'#e5f4da');box(g,3,-12,4,3,'#e5f4da');
-  box(g,-3,-7,7,3,'#263e41');
- }
- paintWayfarerEmblems(g,m,t);
- paintWayfarerProfile(g,m,t);
- paintWayfarerFrames(g,m,t,reducedMotion);
-    paintHeroActionSilhouette(g, m, t, reducedMotion);
- paintSagaWayfarer(g,m,t,reducedMotion);
- paintWayfarerOathGear(g,m,t,reducedMotion);
- // An active runebound weapon reads as the same arm that launches Soulbolts.
- const handX=faceX*18,handY=faceY*15-3;
- const recoil=m.recoil*3;
- stroke(g,[[m.side<0?-5:5,-3],[handX-faceX*recoil,handY-faceY*recoil]],'#c1a984',3.5);
- ellipse(g,handX-faceX*recoil,handY-faceY*recoil,5,5,'#16383b');
- ellipse(g,handX-faceX*recoil,handY-faceY*recoil,3.2,3.2,firing?'#e6ffd1':'#a3ded1');
- // A three-rune firing crown remains tiny enough not to obscure enemy warnings.
+ // Anchored ground shadow, never an airborne floating-body effect.
+ ellipse(g,0,23,16,4,'#020b0bd0');
+ ellipse(g,0,21,11,2,'#3d575044');
+ paintHeroAtlas(g,pose,t,reducedMotion);
+ // The equipped rune weapon remains physically attached to the real aimed hand.
+ const fx=pose.aimX,fy=pose.aimY;
+ const hx=fx*18,hy=fy*15-3,recoil=pose.recoil*3;
+ stroke(g,[[pose.side<0?-5:5,-3],[hx-fx*recoil,hy-fy*recoil]],'#c1a984',3);
+ ellipse(g,hx-fx*recoil,hy-fy*recoil,4.5,4.5,'#14353b');
+ ellipse(g,hx-fx*recoil,hy-fy*recoil,2.8,2.8,firing?'#e7ffdf':'#9ddfcf');
  if(firing){
-  const ux=handX-faceX*recoil,uy=handY-faceY*recoil;
-  stroke(g,[[ux-4,uy-5],[ux,uy-8],[ux+4,uy-5]],'#ffdf95',1.1);
-  box(g,ux-1,uy-1,2,2,'#fff4ca');
+  const ux=hx-fx*recoil,uy=hy-fy*recoil;
+  stroke(g,[[ux-4,uy-5],[ux,uy-8],[ux+4,uy-5]],'#f8e4a7',1.1);
+  box(g,ux-1,uy-1,2,2,'#fff4d3');
  }
  g.restore();
 }
