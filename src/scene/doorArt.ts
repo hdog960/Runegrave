@@ -4,6 +4,7 @@
  */
 import type { Vec2 } from '../physics/world.js';
 import { EXIT_LABELS, type ExitDirection } from '../run/wayfinding.js';
+import { paintRuneGateMechanism } from './ageStoneArt.js';
 
 /** Stone approach travels FROM the doorway into the traversable room, so a
  * clearly chiseled threshold visually connects to the actual gate position. */
@@ -121,6 +122,7 @@ export function drawRuneDoor(g:CanvasRenderingContext2D,pos:Vec2,direction:ExitD
  }
  px(-18,-30,36,3,'#9a8768');
  for(let i=-2;i<=2;i++)px(i*6-1,-28,2,2,i%2?'#d0b779':'#819a8c');
+ paintRuneGateMechanism(g,open);
  // Plaque is part of the door, not a floating HUD panel.
  px(-28,-47,56,17,'#091719');
  g.strokeStyle=open?'#d0edab':'#ebc2a0';g.lineWidth=1.5;g.strokeRect(-28,-47,56,17);

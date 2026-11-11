@@ -26,6 +26,7 @@ import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience } from './chamberAmbience.js';
 import { paintVaultDepth } from './vaultDepthArt.js';
+import { paintChamberSagaStones } from './ageStoneArt.js';
 import { paintSagaStandards } from './sagaArtwork.js';
 import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
 const WIDTH = 420;
@@ -295,9 +296,11 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         g.setTransform(metrics.pixelWidth / W, 0, 0, metrics.pixelHeight / H, 0, 0);
         paintSanctuary(g, W, H, time, currentRoom?.family || 'ROOT', roomIndex);
         if (currentRoom && mode === 'crypt')
-            paintVaultDepth(g, W, H, time, currentRoom.family, roomIndex, reduced.matches);
+            paintVaultDepth(g, W, H, time, currentRoom.family, Number(currentRoom.id.slice(-2))-1, reduced.matches);
         if (currentRoom && mode === 'crypt')
-            paintSagaStandards(g, W, H, time, currentRoom.family, roomIndex, reduced.matches);
+            paintSagaStandards(g, W, H, time, currentRoom.family, Number(currentRoom.id.slice(-2))-1, reduced.matches);
+        if (currentRoom && mode === 'crypt')
+            paintChamberSagaStones(g, W, H, time, currentRoom.family, Number(currentRoom.id.slice(-2))-1, reduced.matches);
         if (trial)
             drawEmberTrial(g, trial, time);
         if (currentRoom && mode === 'crypt') {
