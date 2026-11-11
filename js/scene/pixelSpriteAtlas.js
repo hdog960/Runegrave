@@ -326,6 +326,83 @@ export const WAYFARER_OATH_STANCES=Object.freeze({
   ".....oo......"
  ]
 });
+/** Eight original shield/bracer emblems carried on the actual arm.
+ * The four physical binding-rivet positions follow genuine walking frames.
+ */
+export const WAYFARER_OATH_SHIELDS=Object.freeze({
+ "N": [
+  "..ooo..",
+  ".oHHHo.",
+  "oHGwGHo",
+  "oHGeGHo",
+  "oHGwGHo",
+  ".oHHHo.",
+  "..ooo.."
+ ],
+ "NE": [
+  ".oooo..",
+  "oHHHGo.",
+  "oHGwGGo",
+  ".oHGeGo",
+  "..oGGo.",
+  "..oHo..",
+  "...o..."
+ ],
+ "E": [
+  "ooo....",
+  "oHHGo..",
+  "oHGwGo.",
+  "oHGeGGo",
+  "oHGwGo.",
+  "oHHGo..",
+  "ooo...."
+ ],
+ "SE": [
+  "..oooo.",
+  "..oGHHo",
+  ".oGwGHo",
+  "oGGeGHo",
+  ".oGGHo.",
+  "..oHo..",
+  "...o..."
+ ],
+ "S": [
+  "..ooo..",
+  ".oGHGo.",
+  "oGGwGGo",
+  "oGGeGGo",
+  "oGGwGGo",
+  ".oGHGo.",
+  "..ooo.."
+ ],
+ "SW": [
+  ".oooo..",
+  "oHHGo..",
+  "oHGwGo.",
+  ".oGeGHo",
+  "..oGGo.",
+  "..oHo..",
+  "...o..."
+ ],
+ "W": [
+  "....ooo",
+  "..oGHHo",
+  ".oGwGHo",
+  "oGGeGHo",
+  ".oGwGHo",
+  "..oGHHo",
+  "....ooo"
+ ],
+ "NW": [
+  "..oooo.",
+  "..oGHo.",
+  ".oGGwGo",
+  "oGGeGHo",
+  ".oGGHo.",
+  "..oHo..",
+  "...o..."
+ ]
+});
 export function paintWayfarerOathStance(g,pose,time,reducedMotion=false){
  if(!Number.isFinite(time)||!Object.hasOwn(WAYFARER_OATH_STANCES,pose.facing))
   throw new RangeError('Invalid original Wayfarer combat stance');
@@ -344,6 +421,11 @@ export function paintWayfarerOathStance(g,pose,time,reducedMotion=false){
  }else{
   g.fillStyle=HERO_INK.g;g.fillRect(-3,-5,6,3);
  }
+ // The shield is attached to the same already-drawn arm, never a free
+ // entity or aim pointer; its notch follows the real gait frame.
+ const shieldSwing=pose.moving&&!reducedMotion?[0,1,2,-1][gait]??0:0;
+ drawSheet(g,WAYFARER_OATH_SHIELDS[pose.facing],armX-1,-14+shieldSwing,2,HERO_INK);
+ g.fillStyle=HERO_INK.G;g.fillRect(armX+1,-9+gait*2,2,2);
  // Actual fire recoil raises the handguard; idle never sparkles on a clock.
  if(pose.recoil>.24){
   g.fillStyle=HERO_INK.G;g.fillRect(armX+1,-13,4,6);
