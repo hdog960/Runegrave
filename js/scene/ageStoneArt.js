@@ -95,7 +95,7 @@ export function paintChamberSagaStones(g,W,H,time,family,serial,reducedMotion=fa
  * separated hinges and a deep open corridor when unlocked. Only DOOR STATE
  * selects the artwork, so this cannot lie about whether a door can be used.
  */
-export function paintRuneGateMechanism(g,open:boolean){
+export function paintRuneGateMechanism(g,open){
  if(typeof open!=='boolean')throw new TypeError('Invalid threshold status');
  g.save();
  // Two cleaved lintel crenels / riveted jamb weights.
