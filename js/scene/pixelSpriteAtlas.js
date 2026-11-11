@@ -11,6 +11,7 @@
 
 
 import { inkedWindupBody } from './sagaBodyLanguage.js';
+import { inkedRecoveryBody } from './sagaRecoveryInk.js';
 import { inkedImpactBody } from './sagaImpactFractures.js';
 import { inkedWayfarerHurtBody } from './wayfarerHurtInk.js';
 import { inkedWardenPhaseBody } from './wardenUnboundInk.js';
@@ -541,7 +542,8 @@ export function paintHostileAtlas(g,e,time,reducedMotion=false){
  // One original body sheet gets real in-place shoulder/arm contour changes.
  // There is still exactly one body draw and no extra phantom attack sprite.
  const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
- const visibleBody=inkedImpactBody(inkedWardenPhaseBody(windupBody,e.kind,e.phase),e.kind,e.flash);
+ const recoveringBody=inkedRecoveryBody(windupBody,e);
+  const visibleBody=inkedImpactBody(inkedWardenPhaseBody(recoveringBody,e.kind,e.phase),e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
