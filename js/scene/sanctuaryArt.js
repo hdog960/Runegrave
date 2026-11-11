@@ -254,13 +254,13 @@ export function paintSanctuary(g, W, H, t, family = 'ROOT', variant = 0) {
  * Legacy individual art painters remain available for regression coverage, but
  * do not muddy the actual hero's silhouette. The staff uses real aim/recoil.
  */
-export function drawWayfarer(g, x, y, t, dx, dy, aimX, aimY, firing, reducedMotion = false){
+export function drawWayfarer(g, x, y, t, dx, dy, aimX, aimY, firing, reducedMotion = false, damageGrace = 0){
  const pose=wayfarerPose(t,dx,dy,aimX,aimY,firing);
  g.save();g.translate(Math.round(x),Math.round(y));
  // Anchored ground shadow, never an airborne floating-body effect.
  ellipse(g,0,23,16,4,'#020b0bd0');
  ellipse(g,0,21,11,2,'#3d575044');
- paintHeroAtlas(g,pose,t,reducedMotion);
+ paintHeroAtlas(g,pose,t,reducedMotion,damageGrace);
  // The equipped rune weapon remains physically attached to the real aimed hand.
  const fx=pose.aimX,fy=pose.aimY;
  const hx=fx*18,hy=fy*15-3,recoil=pose.recoil*3;

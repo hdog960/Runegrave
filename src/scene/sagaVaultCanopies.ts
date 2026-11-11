@@ -150,6 +150,9 @@ export const VAULT_CANOPY_SEALS=Object.freeze([
   "#.#..#.#"
  ]
 ]);
+/** Five actual negative-space stone arch cuts replace flat upper-masonry
+ * texture: non-interactive scene geometry strictly behind combat. */
+export const VAULT_DEPTH_CUTS=Object.freeze({"ASH":["###.....###..",".##.....##...","..##...##....","...##.##.....","....###......"],"IRON":["#############","##++####++###","##++####++###","###++++++####","#############"],"ROOT":["#...........#","##.........##",".##.......##.","..##.....##..","...###.###..."],"SPIRIT":[".....###.....","....##+##....","...##+++##...","..##+++++##..",".##.......##."],"FATE":["##.........##",".##.......##.","..##.....##..","...###.###...","....#####...."]});
 export const VAULT_CANOPY_PALETTES=Object.freeze({
  "ASH": [
   "#0d191b",
@@ -214,6 +217,8 @@ export function paintVaultCanopies(g:G,W:number,H:number,family:Family,serial:nu
   rect(g,x-2,y+2,38,64,stone);
   rect(g,x,y,34,24,voidInk);
   relief(g,VAULT_CANOPY_ARCHES[family],x,y,2,stone,rim);
+  // Genuine family-specific stone negative space replaces flat roof ink.
+  relief(g,VAULT_DEPTH_CUTS[family],x+4,y+12,2,voidInk,stone);
   rect(g,x+6,y+27,22,25,voidInk);
   relief(g,VAULT_CANOPY_MYTHS[story]!,x+8,y+29,2,rim,gold);
   rect(g,x-3,y+55,40,4,stone);

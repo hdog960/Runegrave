@@ -254,8 +254,8 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     paintSoulboltHeading(g!,actor,lastAim,firing,time,reduced.matches);
     feedback.paint(g!,W,H);
     // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
-    if(health.state.grace===0||Math.floor(health.state.grace*12)%2===0)
-      drawWayfarer(g!,actor.x,actor.y,time,walking.x,walking.y,lastAim.x,lastAim.y,firing,reduced.matches);
+    // Keep the real invulnerable actor visible with an authentic scar pose.
+      drawWayfarer(g!,actor.x,actor.y,time,walking.x,walking.y,lastAim.x,lastAim.y,firing,reduced.matches,health.state.grace);
     paintBoundRuneHalo(g!,actor,inventory.state.relics,time,reduced.matches);
     for(let i=0;i<embers.length;i++){
       const e=embers[i]!,y=(e.y-time*6*e.pace%340+340)%340;
