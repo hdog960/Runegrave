@@ -12,6 +12,8 @@
 
 import { inkedWindupBody } from './sagaBodyLanguage.js';
 import { inkedImpactBody } from './sagaImpactFractures.js';
+import { inkedWayfarerHurtBody } from './wayfarerHurtInk.js';
+import { inkedWardenPhaseBody } from './wardenUnboundInk.js';
 import { paintWayfarerMovingHem } from './kineticInk.js';
 import { paintEnemySagaWeapon } from './sagaWeaponAtlas.js';
 import { paintWayfarerSagaVisor, paintHostileSagaFace } from './sagaExpression.js';
@@ -445,7 +447,7 @@ function heroClass(facing){
  return 'diagonal';
 }
 /** Rendered inside existing world-space actor translation, no CSS/DOM. */
-export function paintHeroAtlas(g,pose,time,reducedMotion=false){
+export function paintHeroAtlas(g,pose,time,reducedMotion=false,damageGrace=0){
  if(!Object.hasOwn(WAYFARER_ATLAS,heroClass(pose.facing))||!Number.isFinite(time))
  throw new RangeError('Invalid hero atlas pose');
  const frame=heroAtlasFrame(pose,time,reducedMotion);
@@ -454,7 +456,7 @@ export function paintHeroAtlas(g,pose,time,reducedMotion=false){
  g.save();
  if(flip)g.scale(-1,1);
  const top=-33,unit=ATLAS_CELL;
- drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,HERO_INK);
+ drawSheet(g,inkedWayfarerHurtBody(sheet,pose.facing,damageGrace),-sheetWidth(sheet)*unit/2,top,unit,HERO_INK);
  drawSheet(g,stride,-sheetWidth(stride)*unit/2,top+sheet.length*unit,unit,HERO_INK);
  paintWayfarerMovingHem(g,pose,time,reducedMotion);
  paintWayfarerOathStance(g,pose,time,reducedMotion);
@@ -476,6 +478,16 @@ export function paintHeroAtlas(g,pose,time,reducedMotion=false){
  if(pose.recoil>.24&&!reducedMotion){
   g.fillStyle=HERO_INK.G;g.fillRect(pose.side<0?-18:14,-7,4,4);
   g.fillStyle=HERO_INK.w;g.fillRect(pose.side<0?-16:16,-9,2,2);
+ }
+ // The real damage-grace state engraves a short fracture directly on the
+ // visible pauldron after the original armour painter has finished. This is
+ // physically part of the same sprite, never a glow ring or extra actor.
+ if(damageGrace>0){
+  const woundX=pose.side<0?-11:pose.side>0?7:-2;
+  g.fillStyle=damageGrace>.55?HERO_INK.e:HERO_INK.w;
+  g.fillRect(woundX,-25,4,2);
+  g.fillRect(woundX+1,-23,2,5);
+  g.fillRect(woundX+3,-19,2,2);
  }
  g.restore();
 }
@@ -529,7 +541,7 @@ export function paintHostileAtlas(g,e,time,reducedMotion=false){
  // One original body sheet gets real in-place shoulder/arm contour changes.
  // There is still exactly one body draw and no extra phantom attack sprite.
  const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
- const visibleBody=inkedImpactBody(windupBody,e.kind,e.flash);
+ const visibleBody=inkedImpactBody(inkedWardenPhaseBody(windupBody,e.kind,e.phase),e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);

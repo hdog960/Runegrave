@@ -90,7 +90,7 @@ test('real renderers now use one inked atlas per actor without old layered-body 
  const hero=read('../dist/js/scene/sanctuaryArt.js');
  const enemy=read('../dist/js/enemies/enemyArt.js');
  const cache=read('../dist/sw.js'),version=read('../dist/js/core/version.js');
- assert.match(hero,/paintHeroAtlas\(g,\s*pose,\s*t,\s*reducedMotion\)/);
+ assert.match(hero,/paintHeroAtlas\(g,\s*pose,\s*t,\s*reducedMotion,\s*damageGrace\)/);
  assert.match(enemy,/paintHostileAtlas\(g,\s*e,\s*t,\s*reducedMotion\)/);
  assert.ok(!hero.includes('paintSagaWayfarer('),'hero is no longer overdrawn six times');
  assert.ok(!enemy.includes('paintEnemyActionFrame('),'enemy has one visible strike layer');
@@ -98,8 +98,8 @@ test('real renderers now use one inked atlas per actor without old layered-body 
  assert.match(read('../dist/js/scene/pixelSpriteAtlas.js'),/paintEnemySagaWeapon\(/);
  assert.ok(enemy.includes('runeWarning(g, e, t)'),'world warning rays remain intact');
  assert.ok(cache.includes('scene/pixelSpriteAtlas.js'),'offline PWA contains newly compiled sprite');
- assert.match(cache,/runegrave-shell-v0\.09\.28/);
- assert.match(version,/APP_VERSION = '0\.09\.28'/);
+ assert.match(cache,/runegrave-shell-v0\.09\.29/);
+ assert.match(version,/APP_VERSION = '0\.09\.29'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
 });
