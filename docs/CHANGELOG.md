@@ -1,3 +1,11 @@
+## v0.09.19 — Mythic pixel-sculpted side stones and deeper truthful gates (Gate A STILL PENDING)
+
+- Original `ageStoneArt` authored five different 16-column Norse stone silhouette bodies and five distinct seven-row inset rune scenes. Each of the 25 authored chambers has its own paired edge-wall monuments with depth bevels, carved chapter-specific plinth profile and restrained family highlights.
+- Fixed underlying room-art identity: the previous gallery and saga standard variations used a shuffled eight-run index; now each pulls its design from the real canonical `fs-XX` room ID.
+- Mechanical state-coded arch upgrade: a LOCKED stone portal has visually solid portcullis / chains and the actual OPEN gate displays differentiated depth ribs, distinct throat and separated side leaves. All physical exit targets and lock state are unchanged.
+- Real release quality loop: first test run uncovered regressions in door open/locked silhouette difference and drawing density; improved the artwork itself, not test thresholds. **149/149 Node tests passed**, both candidate and post-merge Chromium browser suites passed, and public GitHub Pages + PWA sources independently matched the deployed version.
+- Seven canonical documents, enemy AI, damage, combat, 8 functional relics, physics, save schema, all 25 rooms, HUD and two external controller grips unchanged. Art remains subject to Gate A approval; v0.10 is still locked.
+
 ## v0.09.18 — Five pixel-art Norse standards and real state-linked battle poses (Gate A STILL PENDING)
 
 - Created a new original 2px pixel-mosaic mural system with one unique 12-row motif for each of Ash, Iron, Root, Spirit and Fate. Each family has five individual carved hem cuts for 25 authentic chamber identities, paired in stable upper-wall positions.

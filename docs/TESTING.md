@@ -1,3 +1,13 @@
+## v0.09.19 — Verified release QA (2026-11-10 US Central)
+
+- Source branch `gate-a-v00919-stone-sagas`, merged PR [#3](https://github.com/hdog960/Runegrave/pull/3) to commit `fe2f0096d85e1a1c16ef9b4c1e288ecb7eb0fc5a`. Candidate test run `42941255797` and post-merge main test run `42941422327` both completed **SUCCESS**.
+- TypeScript strict build and **149/149 Node tests PASS**, including new `tests/gateA0109.test.mjs`: five original family stone bodies, five mythic inlay scene geometries (25 distinct combined pieces), 25 canonical family/serial invariant, fixed side-wall translation `x=38` and `x=W-38`, geometry footprint, painter call bounds, deterministic reduced motion, distinct OPEN/LOCKED threshold designs, real compiled renderer insertion, service-worker coverage and unchanged save schema 1.
+- The first candidate failed exactly two genuine doorway art tests, including the long-standing OPEN > LOCKED silhouette detail hierarchy. Corrected open-arch six paired perspective ribs in source + compiled browser mirror, preserved prior assertions, reran all 149 tests successfully. Existing tests were **not** weakened.
+- Browser CI uses actual headless Chromium on GitHub Actions Linux: baseline `v009_browser_audit.py` and v0.09.19 `v00919_browser_audit.py` passed landscape widths 667, 844, 932 and 1024, portrait rotate instruction, guided start, crypt room entry, two independent PointerEvents for move/aim with emitted Soulbolts, and zero page JS errors. Browser screenshots uploaded to CI artifacts. It does **not** substitute for real hardware.
+- Two Pages deployment workflows completed successfully; independent direct HTTP reads of public compiled version, service worker, art painter, stage and door confirmed exact 0.09.19 source and active `runegrave-shell-v0.09.19`.
+- Seven governing documents and key controls/combat/physics/health/run sources were independently confirmed identical Git blob SHAs; zero existing files removed.
+- Outstanding before Gate A signoff: real iPhone Safari/PWA storage and refresh, sustained performance, full unaided route victory, user's premium Norse artwork assessment, and comfort without gameplay obstruction. No v0.10 authorization.
+
 ## v0.09.18 — Post-merge CI / browser evidence (2026-11-10 US Central)
 
 - Pull request [#2](https://github.com/hdog960/Runegrave/pull/2) merged as `076914e`. Both pull-request and post-merge `Runegrave foundation checks` workflows succeeded.
