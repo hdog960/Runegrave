@@ -8,6 +8,8 @@ import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.j
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
 import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
 import { paintThreatLane } from './attackLaneInk.js';
+import { paintRitualWarning } from './ritualWarningInk.js';
+import type {Vec2} from '../physics/world.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS=Object.freeze({
@@ -26,7 +28,7 @@ function lineHead(g:CanvasRenderingContext2D,x:number,y:number,dx:number,dy:numb
  g.lineTo(x-dx*11+nx*5,y-dy*11+ny*5);
  g.lineTo(x-dx*11-nx*5,y-dy*11-ny*5);g.closePath();g.fill();
 }
-function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
+function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number,hero?:Vec2){
  if(e.state!=='warning')return;
  const tell=ENEMY_ATTACK_TELLS[e.kind];
  const imminent=warningBeat(e.windup)===3;
@@ -46,10 +48,8 @@ function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number){
  }
  if(e.kind==='charger'||e.kind==='archer'||e.kind==='warden'){
   paintThreatLane(g,e,worldWidth,worldHeight);
- }else if(e.kind==='sentinel'||e.kind==='wisp'){
-   // Distinguish an expanding volley from a single spirit shot.
-   g.strokeStyle=tell.color;g.lineWidth=1.4;g.beginPath();
-   g.arc(e.x,e.y,e.radius+(e.kind==='sentinel'?18:14),0,Math.PI*2);g.stroke();
+ }else if(e.kind==='sentinel'||e.kind==='wisp'||e.kind==='shade'){
+   paintRitualWarning(g,e,hero,worldWidth,worldHeight);
  }
 
  // Short, specific attack labels appear ONLY during windup, not as permanent text clutter.
@@ -85,7 +85,7 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number,reducedMotion=false)
   px(g,x-width/2,y-e.radius-17,width*e.hp/e.maxHp,3,e.kind==='warden'?'#d3a15c':'#b5c68a');
  }
 }
-export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncounter,t:number,relicCollected=true,reducedMotion=false){
+export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncounter,t:number,relicCollected=true,reducedMotion=false,hero?:Vec2){
  const state=encounter.snapshot;
     // Architectural exit behind actual warning ink, enemies and projectiles.
     drawRuneDoor(g,encounter.exit,encounter.exitDirection,state.phase==='gate'&&relicCollected,t);
@@ -93,7 +93,7 @@ export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncoun
    if(e.state==='hidden'){
      g.strokeStyle='#a697c1';g.setLineDash([2,3]);g.beginPath();g.arc(e.x,e.y,e.radius+6,0,Math.PI*2);g.stroke();g.setLineDash([]);continue;
    }
-   runeWarning(g,e,t);sprite(g,e,t,reducedMotion);
+   runeWarning(g,e,t,hero);sprite(g,e,t,reducedMotion);
  }
  paintHostileProjectiles(g,state.projectiles,t);
  // Large recognizable carved doorway with LOCKED / EXIT sign and compass arrow.

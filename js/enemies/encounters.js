@@ -4,6 +4,14 @@
  */
 import { HERO_RADIUS, isPositionFree, moveCircle, safeSpawn } from '../physics/world.js';
 export const ENEMY_KINDS = ['draugr', 'wisp', 'archer', 'charger', 'sentinel', 'shade'];
+/** Exact original six-shot casting direction. The existing enemy attack
+ * counter advances only after a real shot is spawned; do not change its
+ * timing, angle, damage, radius or cooldown for artwork. */
+export function sentinelShotVector(slot,attackCount {
+ if(!Number.isInteger(slot)||slot<0||slot>=6||!Number.isSafeInteger(attackCount)||attackCount<0)throw new RangeError('Invalid original sentinel volley frame');
+ const theta=(slot+attackCount*.10)*Math.PI/3;
+ return {x:Math.cos(theta),y:Math.sin(theta)};
+}
 const EPS = 1e-8;
 export const CHARGER_DASH_SPEED = 160, CHARGER_DASH_DURATION = .38;
 const DT_LIMIT = 1 / 30;
@@ -359,8 +367,7 @@ export class HostileEncounter {
                     e.windup -= dt;
                     if (e.windup <= 0) {
                         for (let a = 0; a < 6; a++) {
-                            const theta = (a + e.attackCount * .10) * Math.PI / 3;
-                            this.shoot(e, { x: Math.cos(theta), y: Math.sin(theta) }, 90);
+                            this.shoot(e, sentinelShotVector(a, e.attackCount), 90);
                         }
                         e.state = 'idle';
                         e.cooldown = 2.7;

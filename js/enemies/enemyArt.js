@@ -4,6 +4,7 @@ import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.j
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
 import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
 import { paintThreatLane } from './attackLaneInk.js';
+import { paintRitualWarning } from './ritualWarningInk.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS = Object.freeze({
@@ -25,7 +26,7 @@ function lineHead(g, x, y, dx, dy, color) {
     g.closePath();
     g.fill();
 }
-function runeWarning(g, e, t) {
+function runeWarning(g, e, t, hero) {
     if (e.state !== 'warning')
         return;
     const tell = ENEMY_ATTACK_TELLS[e.kind];
@@ -50,13 +51,8 @@ function runeWarning(g, e, t) {
     if (e.kind === 'charger' || e.kind === 'archer' || e.kind === 'warden') {
         paintThreatLane(g, e, worldWidth, worldHeight);
     }
-    else if (e.kind === 'sentinel' || e.kind === 'wisp') {
-        // Distinguish an expanding volley from a single spirit shot.
-        g.strokeStyle = tell.color;
-        g.lineWidth = 1.4;
-        g.beginPath();
-        g.arc(e.x, e.y, e.radius + (e.kind === 'sentinel' ? 18 : 14), 0, Math.PI * 2);
-        g.stroke();
+    else if (e.kind === 'sentinel' || e.kind === 'wisp' || e.kind === 'shade') {
+        paintRitualWarning(g, e, hero, worldWidth, worldHeight);
     }
     // Short, specific attack labels appear ONLY during windup, not as permanent text clutter.
     const text = tell.label, wide = Math.max(33, Math.ceil(text.length * 4.65) + 10);
@@ -101,7 +97,7 @@ function sprite(g, e, t, reducedMotion = false){
   px(g,x-width/2,y-e.radius-17,width*e.hp/e.maxHp,3,e.kind==='warden'?'#d3a15c':'#b5c68a');
  }
 }
-export function drawEncounter(g, encounter, t, relicCollected = true, reducedMotion = false) {
+export function drawEncounter(g, encounter, t, relicCollected = true, reducedMotion = false, hero) {
     const state = encounter.snapshot;
     // Architectural exit behind actual warning ink, enemies and projectiles.
     drawRuneDoor(g, encounter.exit, encounter.exitDirection, state.phase === 'gate' && relicCollected, t);
@@ -117,7 +113,7 @@ export function drawEncounter(g, encounter, t, relicCollected = true, reducedMot
             g.setLineDash([]);
             continue;
         }
-        runeWarning(g, e, t);
+        runeWarning(g, e, t, hero);
         sprite(g, e, t, reducedMotion);
     }
     paintHostileProjectiles(g, state.projectiles, t);
