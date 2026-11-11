@@ -1,5 +1,16 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.19 — Five family saga monuments, 25 carved stories and true door ironwork (candidate)
+
+**CANDIDATE ONLY.** Source and tests committed to isolated branch; do not represent this as published until GitHub CI, Chromium, merge, Pages and independent live check succeed. **GATE A UNAPPROVED; v0.10 LOCKED.**
+
+- Five original deeply carved 16-pixel family silhouettes, five different 7-row mythic inlays per family, plus individually cut plinths; 25 canonical room identities drawn as matched pairs of 40px side-wall monuments.
+- Corrected a previously missed artistic-identity bug: previous upper galleries and Norse standards used `roomIndex` (position in curated run) for artistic variants; new painters derive canonical serial from the real `fs-XX` ID, so individual room artwork stays coherent regardless of run order.
+- Added open/locked state-driven gate mechanism with portcullis, forge weights, separated hinged leaves and deep tunnel; never changes player hit zones, collision or actual door state.
+- Added pure rendering source + compiled runtime mirror, PWA cache inclusion and new deterministic Node suite. Code remains rendering-only; existing Warden, enemies, 25 authored rooms, eight **functional** relics, HUD and isolated touch grips, save schema 1 and original offline update design preserved.
+- Pending QA: GitHub Actions Node and Chromium, public deployment, ledger final audit, owner visual judgement and physical iPhone test.
+
+
 ## v0.09.18 — Original saga pixel standards, directional Wayfarer and real strike choreography (2026-11-10 US Central)
 
 **VERIFIED: IMPLEMENTED, 146/146 NODE TESTS PASS, CHROMIUM MOBILE QA PASS, GITHUB CI PASS, PUBLIC GITHUB PAGES LIVE. GATE A NOT APPROVED; v0.10 LOCKED.**

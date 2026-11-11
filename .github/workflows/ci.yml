@@ -30,10 +30,10 @@ jobs:
       - run: npm ci && npm run build
       - run: python -m pip install playwright==1.56.0
       - run: python -m playwright install --with-deps chromium
-      - run: python scripts/v00918_browser_audit.py
+      - run: python scripts/v00919_browser_audit.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: gate-a-v00918-saga
-          path: gate-a-v00918-*.png
+          name: gate-a-v00919-stone
+          path: gate-a-v00919-*.png
           if-no-files-found: ignore
