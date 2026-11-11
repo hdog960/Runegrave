@@ -361,7 +361,8 @@ with sync_playwright() as p:
      const facing=['N','NE','E','SE','S','SW','W','NW'];
      const make=(id,w,h)=>{
        const c=document.createElement('canvas');c.id=id;c.width=w;c.height=h;
-       c.style.cssText='position:absolute;left:0;top:1250px;image-rendering:pixelated';
+       const tops={'gate-a-v00927-vault-gallery':1250,'gate-a-v00927-cloak-gallery':2080,'gate-a-v00927-body-gallery':2810};
+       c.style.cssText='position:absolute;left:0;top:'+tops[id]+'px;image-rendering:pixelated';
        const g=c.getContext('2d');g.fillStyle='#101d20';g.fillRect(0,0,w,h);
        g.fillStyle='#e5cea7';g.font='12px monospace';g.textAlign='center';document.body.appendChild(c);return g;
      };
