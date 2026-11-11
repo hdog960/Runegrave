@@ -67,7 +67,7 @@ export function paintVaultDepth(g:G,W:number,H:number,time:number,family:VaultFa
  // loot, attack telegraphs, collision props, or touch targets.
  const cut=((Math.floor(variant)%5)+5)%5;
  for(const side of [-1,1]){
-  const cx=Math.round(side<0?W*.235:W*.765),cy=56;
+  const cx=Math.round(side<0?47:W-47),cy=56;
   px(cx-25,cy-31,50,39,shadow);px(cx-23,cy-29,46,35,stone);
   px(cx-20,cy-26,40,29,shadow);
   px(cx-18,cy-25,36,2,glow);

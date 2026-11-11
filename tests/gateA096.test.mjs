@@ -45,11 +45,11 @@ test('crests and warning frames are compiled, precached, and controller changes 
   assert.ok(existsSync(new URL(src,prefix)),src);
   assert.ok(sw.includes(src),`not precached: ${src}`);
  }
- assert.match(sw,/runegrave-shell-v0\.09\.16/);
+ assert.match(sw,/runegrave-shell-v0\.09\.17/);
  const css=readFileSync(new URL('styles.css',prefix),'utf8');
  assert.match(css,/@media \(hover:none\) and \(pointer:coarse\)/);
  assert.match(css,/\.rune-socket \{?/);
  const version=readFileSync(new URL('js/core/version.js',prefix),'utf8');
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(version,/APP_VERSION = '0\.09\.16'/);
+ assert.match(version,/APP_VERSION = '0\.09\.17'/);
 });

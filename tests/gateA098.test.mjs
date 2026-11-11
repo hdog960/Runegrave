@@ -79,9 +79,9 @@ test('open original Norse doorway includes visible split leaves and stays world-
 test('Gate A remains unapproved with eight relics and correct offline precache',()=>{
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
  const version=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
- assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.16'/);
+ assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.17'/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
- assert.match(sw,/runegrave-shell-v0\.09\.16/);
+ assert.match(sw,/runegrave-shell-v0\.09\.17/);
  for(const mod of ['js/scene/combatFeedback.js','js/scene/familyRelief.js']){
   assert.ok(sw.includes(mod));assert.ok(existsSync(new URL('../dist/'+mod,import.meta.url)));
  }
