@@ -18,6 +18,10 @@ export const PIER_SAGAS=Object.freeze([
  ['.#####.','##+++##','#+#.#++','##+++##','.##+##.','..#+#..','...#...'],
  ['#.#.#.#','.#.#.#.','..###..','.##+##.','..###..','.#.#.#.','#.#.#.#']
 ]);
+/** Five genuinely different material crowns, plus five numbered saga
+ * keystones. The chamfered sill is non-interactive upper-wall stonework. */
+export const PIER_CROWN_ARCH=Object.freeze({"ASH":["...###...","..##+##..",".##+++##.","##++#++##","##+#.#++#","...#.#..."],"IRON":["#########","#++###++#","##+###+##","###++####","#++###++#","#########"],"ROOT":["#.......#","##.....##",".##...##.","..##+##..","..#+#++..",".##...##."],"SPIRIT":["....#....","...#+#...","..#+++#..",".#++#++#.","..#+++#..","...###..."],"FATE":["##.....##",".##...##.","..##.##..","...###...","..##+##..",".##...##."]});
+export const PIER_CHAPTER_HINGES=Object.freeze([[".#.....#.","##.....##",".##.+.##.","..#####.."],["##.....##","#+#...#+#",".###+###.","..#####.."],["...#.#...","..##.##..",".###+###.","##..#..##"],["#..#.#..#",".##...##.","..##+##..","...###..."],["#.#.#.#.#",".#.#.#.#.","..##+##..","##.....##"]]);
 export const PIER_INK=Object.freeze({
  ASH:['#101b1d','#594038','#ab7250','#e7bd8b'],
  IRON:['#101b20','#3b545e','#91aaa7','#e1dac1'],
@@ -58,6 +62,9 @@ export function paintSagaPillars(g:G,W:number,H:number,family:PierFamily,serial:
   px(g,cx-18+notch,y+1,4,3,glint);
   px(g,cx+13-notch,y+43,4,3,edge);
   px(g,cx-21,y+47,42,4,stone);px(g,cx-17,y+50,34,3,edge);
+  // Crown stones and lower catches have different MATERIAL silhouettes, not colors alone.
+  stamp(g,PIER_CROWN_ARCH[family],cx-9,y-5,2,stone,glint);
+  stamp(g,PIER_CHAPTER_HINGES[chapter]!,cx-9,y+43,2,edge,glint);
  }
  g.restore();
 }

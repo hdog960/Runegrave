@@ -77,10 +77,10 @@ test('north/south/east/west entrance arrows point toward real collision gate',()
 test('v0.09.7 remains an unapproved Gate A polish patch, with all relics and PWA modules intact',()=>{
  assert.equal(FIRST_SOUL_RELICS.length,8);
  const v=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
- assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);assert.match(v,/APP_VERSION = '0\.09\.25'/);
+ assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);assert.match(v,/APP_VERSION = '0\.09\.26'/);
  assert.match(v,/\['v0\.09', 'v0\.39', 'v0\.79', 'v0\.99'\]/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
- assert.match(sw,/runegrave-shell-v0\.09\.25/);
+ assert.match(sw,/runegrave-shell-v0\.09\.26/);
  for(const mod of ['js/scene/wayfarerMotion.js','js/enemies/gestureArt.js','js/scene/familyTrim.js']){
   assert.ok(sw.includes(mod),`missing offline asset ${mod}`);
   assert.ok(existsSync(new URL(`../dist/${mod}`,import.meta.url)));
