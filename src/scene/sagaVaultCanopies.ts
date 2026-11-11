@@ -175,7 +175,7 @@ export function paintVaultCanopies(g:G,W:number,H:number,family:Family,serial:nu
   rect(g,x,y,34,24,voidInk);
   relief(g,VAULT_CANOPY_ARCHES[family],x,y,2,stone,rim);
   rect(g,x+6,y+27,22,25,voidInk);
-  relief(g,VAULT_CANOPY_MYTHS[story],x+8,y+29,2,rim,gold);
+  relief(g,VAULT_CANOPY_MYTHS[story]!,x+8,y+29,2,rim,gold);
   rect(g,x-3,y+55,40,4,stone);
   rect(g,x-1,y+59,36,5,rim);
   rect(g,x+2,y+66,30,4,stone);
