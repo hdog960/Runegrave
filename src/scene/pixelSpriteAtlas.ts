@@ -479,6 +479,16 @@ export function paintHeroAtlas(g:G,pose:WayfarerPose,time:number,reducedMotion=f
   g.fillStyle=HERO_INK.G;g.fillRect(pose.side<0?-18:14,-7,4,4);
   g.fillStyle=HERO_INK.w;g.fillRect(pose.side<0?-16:16,-9,2,2);
  }
+ // The real damage-grace state engraves a short fracture directly on the
+ // visible pauldron after the original armour painter has finished. This is
+ // physically part of the same sprite, never a glow ring or extra actor.
+ if(damageGrace>0){
+  const woundX=pose.side<0?-11:pose.side>0?7:-2;
+  g.fillStyle=damageGrace>.55?HERO_INK.e:HERO_INK.w;
+  g.fillRect(woundX,-25,4,2);
+  g.fillRect(woundX+1,-23,2,5);
+  g.fillRect(woundX+3,-19,2,2);
+ }
  g.restore();
 }
 export function enemyAtlasBand(e:Pick<Enemy,'state'|'windup'>):0|1|2|3{
