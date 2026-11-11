@@ -40,7 +40,7 @@ export const WEAPON_SAGA_PALETTES=Object.freeze({
  warden:{o:'#1d322c','#':'#77977a','+':'#f2c792'}
 });
 
-export function enemyWeaponStage(e):0|1|2|3 {
+export function enemyWeaponStage(e) {
  if(!Number.isFinite(e.windup))throw new RangeError('Invalid weapon countdown');
  if(e.state==='charge')return 3;
  if(e.state!=='warning')return 0;

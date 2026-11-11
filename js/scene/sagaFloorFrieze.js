@@ -59,7 +59,7 @@ export function paintSagaFloorFrieze(g,W,H,family,canonicalSerial) {
  Math.floor(canonicalSerial/5)!==fi)throw new RangeError('Invalid saga frieze room');
  const chapter=canonicalSerial%5;
  const [shadow,stone,cut,gold]=FRIEZE_PALETTES[family];
- const base=FRIEZE_STONE[family],episode=FRIEZE_EPISODES[chapter]!;
+ const base=FRIEZE_STONE[family],episode=FRIEZE_EPISODES[chapter];
  const cx=Math.round(W/2),top=Math.round(H)-35;
  g.save();g.globalAlpha=.73;
  // A single low carved shelf, not a fake door, enemy or interactable item.
