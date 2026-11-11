@@ -120,9 +120,9 @@ test('live renderers, 8 functional relics, 25 actual rooms, true world warnings,
  assert.match(atlas,/WAYFARER_CLOAK_WEAVE\[/);
  assert.match(enemiesSrc,/runeWarning\(g, e, t\)/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(version,/APP_VERSION = '0\.09\.28'/);
+ assert.match(version,/APP_VERSION = '0\.09\.29'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.28/);
+ assert.match(sw,/runegrave-shell-v0\.09\.29/);
  for(const fileName of ['sagaBodyLanguage.js','sagaVaultCanopies.js','sagaPillarRelief.js','sagaWeaponAtlas.js'])
   assert.ok(sw.includes(fileName),'offline requires actual authored module '+fileName);
  assert.equal(FIRST_SOUL_ROOMS.length,25);
