@@ -70,6 +70,17 @@ export const HOSTILE_RECOVERY_INK=Object.freeze({
   ]
  }
 });
+/** Gate A v0.09.32: broad BODY contour recovery, not cosmetic twinkles.
+ * Eleven consecutive original sprite rows per actual recovering enemy are
+ * deliberately sculpted into a strong hunched > braced > upright silhouette.
+ * A physical two-pixel rising stride is coordinated with its real countdown.
+ * These insets are engraved directly into the existing one-body pixel atlas.
+ */
+export const HOSTILE_RECOVERY_SILHOUETTES=Object.freeze({"charger":{"at":5,"frames":[[1,2,3,3,4,4,3,3,2,1,1],[0,1,2,3,3,3,2,2,1,1,0],[0,0,1,1,2,2,1,1,0,0,0]]},"shade":{"at":4,"frames":[[1,2,2,3,3,4,3,3,2,1,1],[0,1,2,2,3,3,2,2,1,1,0],[0,0,0,1,2,2,1,1,0,0,0]]},"warden":{"at":6,"frames":[[2,2,3,4,4,5,5,4,4,3,3],[1,1,2,3,3,4,4,3,2,2,1],[0,0,1,1,2,2,2,1,1,0,0]]}});
+export function recoveryGroundShift(e:Pick<Enemy,'kind'|'state'|'windup'|'phase'>):number{
+ const frame=enemyRecoveryFrame(e);
+ return frame<0?0:frame===0?4:frame===1?2:0;
+}
 export function enemyRecoveryFrame(e:Pick<Enemy,'kind'|'state'|'windup'|'phase'>):number{
  if(!Number.isFinite(e.windup))throw new RangeError('Nonfinite real recovery countdown');
  if(e.state!=='recover')return -1;
@@ -84,12 +95,20 @@ export function inkedRecoveryBody(base:readonly string[],e:Pick<Enemy,'kind'|'st
  const kind=e.kind as 'charger'|'shade'|'warden';
  const school=HOSTILE_RECOVERY_INK[kind],pattern=school.frames[frame];
  const width=Math.max(...base.map(r=>r.length));
- if(width<9||school.at+2>=base.length)throw new RangeError('Broken recovery body sheet');
+ if(width<9||school.at+2>=base.length||HOSTILE_RECOVERY_SILHOUETTES[kind].at+11>base.length)throw new RangeError('Broken recovery body sheet');
  const out=[...base];
  for(let i=0;i<3;i++){
   const [left,right]=pattern![i]!.split('|');
   const old=(base[school.at+i]??'').replace(/ /g,'.').padEnd(width,'.');
   out[school.at+i]=left!+old.slice(4,width-4)+right!;
+ }
+ // Unlike the older 3-row twitch, eleven AUTHORED torso/limb
+ // contour rows now visibly hunch and recover at the original 2px pixel scale.
+ const contour=HOSTILE_RECOVERY_SILHOUETTES[kind];
+ for(let i=0;i<11;i++){
+  const source=(out[contour.at+i]??'').replace(/ /g,'.').padEnd(width,'.');
+  const inset=contour.frames[frame]![i]!;
+  out[contour.at+i]=source.split('').map((ch,j)=>j<inset||j>=width-inset?'.':ch).join('');
  }
  return out;
 }

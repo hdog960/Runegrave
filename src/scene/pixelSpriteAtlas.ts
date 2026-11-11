@@ -11,7 +11,7 @@ import type {Enemy,EnemyKind} from '../enemies/encounters.js';
 type G=CanvasRenderingContext2D;
 type HeroFacing='N'|'NE'|'E'|'SE'|'S'|'SW'|'W'|'NW';
 import { inkedWindupBody } from './sagaBodyLanguage.js';
-import { inkedRecoveryBody } from './sagaRecoveryInk.js';
+import { inkedRecoveryBody, recoveryGroundShift } from './sagaRecoveryInk.js';
 import { inkedImpactBody } from './sagaImpactFractures.js';
 import { inkedWayfarerHurtBody } from './wayfarerHurtInk.js';
 import { inkedWardenPhaseBody } from './wardenUnboundInk.js';
@@ -538,7 +538,7 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  const unit=ATLAS_CELL,top=isBoss?-40:-24;
  const band=enemyAtlasBand(e);
  const bob=reducedMotion?0:e.state==='idle'?Math.round(Math.sin(time*2)*.5):0;
- g.save();g.translate(0,bob);
+ g.save();g.translate(0,bob+recoveryGroundShift(e));
  // One original body sheet gets real in-place shoulder/arm contour changes.
  // There is still exactly one body draw and no extra phantom attack sprite.
  const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
