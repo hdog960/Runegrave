@@ -76,7 +76,7 @@ test('real health source always renders hero, save/relic/PWA/controls stay intac
  assert.match(stage,/drawWayfarer\(g, actor\.x, actor\.y/);
  assert.match(stage,/reduced\.matches, health\.state\.grace\)/);
  assert.doesNotMatch(stage,/if \(health\.state\.grace === 0 \|\| Math\.floor/,'real invulnerable actor never disappears');
- assert.match(sanctuary,/paintHeroAtlas\(g,pose,t,reducedMotion,damageGrace\)/);
+ assert.match(sanctuary,/paintHeroAtlas\(g,\s*pose,\s*t,\s*reducedMotion,\s*damageGrace\)/);
  assert.equal(FIRST_SOUL_RELICS.length,8);
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
