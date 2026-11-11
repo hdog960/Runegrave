@@ -1,3 +1,10 @@
+## v0.09.30 — Real-life Norse hostile projectile pixel silhouettes; no vector blur (Gate A still unapproved)
+
+- Replaced old smooth Canvas hostile projectile polygons with **six hand-authored original 1px missile sprites** in two real combat-source families: three violet spectral-dart flights and three crimson-gold Rootbound Warden ember flight silhouettes. Existing projectile lifetime chooses actual frame, heading comes from its real velocity. No free-running fake attack clock.
+- Preserved hostile projectile API, all simulation damage/radius/velocity/collision, true warning geometry, authentic character/boss animation, independent external two-thumb controls, all original game rooms and eight functional relics, player-consented PWA update.
+- Added `gateA0120.test.mjs` rigorous bounded real glyph, unique life/stage/velocity/clock tests; preserved older 194 tests and updated the retired vector call-budget to a new strict original pixel-run bound, without weakening important coverage. First CI 43093562139 failed one historic art-budget expectation (197/198); corrected branch CI [43093812274](https://github.com/hdog960/Runegrave/actions/runs/43093812274) and main [43094044510](https://github.com/hdog960/Runegrave/actions/runs/43094044510) both **198/198 tests and real Chromium success**. Screenshots captured and visually inspected (19 PNGs). Pages source 43094044551 and built-in publisher 43094043147 success.
+- `APP_VERSION=0.09.30`, offline shell `runegrave-shell-v0.09.30`, save schema 1 and roadmap v0.09 unchanged; physical iPhone and Gate A owner review remain outstanding. **v0.10 locked.**
+
 ## v0.09.29 — Real damage-grace visibility, eight Wayfarer hurt masks, physical unbound Warden, five carved vault-depth profiles
 
 - **Never vanish during invulnerability:** Replace alternating invisible hero render frames with always-visible actual Wayfarer actor. Pass real `MortalHearts.state.grace` to ONE hero renderer; eight original in-body compass-specific hurt masks and two fading real-grace materials, plus a physically attached post-armour shoulder fracture, distinguish healthy/hurt/recovery even after complete layered raster.

@@ -1,3 +1,7 @@
+## v0.09.30 — Six hostile projectile DRAWINGS only; no functional content added
+
+**Actual playable content unchanged:** 25 deterministic authored room encounter configurations (eight used per first-soul mini-run), eight functional relic effects, one Wayfarer, six ordinary hostile kinds and one Rootbound Warden boss. Three new spectral dart and three Warden ember visuals represent alternate pixel frames for the SAME two existing projectile tiers; they do not create six new attacks, enemies, bosses, items, or gameplay systems. Physics, projectile count, lifetime, damage, collision and real warning states unchanged. No v0.10 procedural floor, additional relics, content route, talisman or ending. **Gate A NOT APPROVED; v0.10 LOCKED.**
+
 ## v0.09.29 — Verified visual readability pass, no new playable content
 
 **Playable counts identical to v0.09.28:** 25 existing authored room configurations (eight sampled in a current mini-run), eight genuine functional relic effects, one playable Wayfarer, six standard enemy species and one Rootbound Warden boss. Eight hurt masks and two authentic grace materials are states of the SAME hero, not characters, items or new effects. The Warden unbound crown is an altered visual appearance of its EXISTING phase 2, not a new attack or boss. Five new vault shadow profiles modify existing 25 scenes, not their number, navigation, geometry or drops. **No v0.10 system, full dungeon graph, more bosses, routes, items or ending was added. Gate A NOT APPROVED and v0.10 LOCKED.**
