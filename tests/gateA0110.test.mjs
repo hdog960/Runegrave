@@ -91,10 +91,10 @@ test('actual compiled render paths, offline cache, controlled gates and schema s
  assert.match(stage,/Number\(currentRoom\.id\.slice\(-2\)\)/);
  assert.match(hero,/paintWayfarerOathGear/);
  assert.match(enemies,/paintOathEnemyStrike/);
- assert.match(version,/APP_VERSION = '0\.09\.20'/);
+ assert.match(version,/APP_VERSION = '0\.09\.21'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.ok(sw.includes('scene/eddicCornice.js'));
- assert.match(sw,/runegrave-shell-v0\.09\.20/);
+ assert.match(sw,/runegrave-shell-v0\.09\.21/);
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
 });
