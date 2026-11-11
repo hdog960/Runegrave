@@ -36,7 +36,7 @@ export function inkedTravelBody(base:readonly string[],e:Traveller,reducedMotion
   for(let x=0;x<width;x++){
    const ink=line[x];
    if(!ink||ink==='.')continue;
-   const left=x<split,shift=left?strokes[0]:strokes[1];
+   const left=x<split,shift=(left?strokes[0]:strokes[1])??0;
    const nearFeet=i>=n-3;
    const raise=nearFeet&&((left&&strokes[2]===1)||(!left&&strokes[2]===2))?1:0;
    const y=Math.max(0,i-raise);
