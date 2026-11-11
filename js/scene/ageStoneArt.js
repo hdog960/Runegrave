@@ -112,6 +112,11 @@ export function paintRuneGateMechanism(g,open:boolean){
   }
  }
  if(open){
+  // Six paired perspective ribs lead the eye through the genuinely OPEN arch.
+  // They add a recognizable stone tunnel silhouette without filling the gap.
+  for(let y=-19;y<=6;y+=5){
+   pixel(g,-8,y,2,3,'#b3bd9d');pixel(g,6,y,2,3,'#678b74');
+  }
   // Open center recedes, not a bright collectible dot.
   pixel(g,-5,-19,10,25,'#132d2a');pixel(g,-3,-15,6,22,'#3e6851');
   pixel(g,-1,-12,2,18,'#b0cb96');pixel(g,-8,6,16,3,'#293e34');
