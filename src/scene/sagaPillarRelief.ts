@@ -24,7 +24,7 @@ export const PIER_INK=Object.freeze({
  ROOT:['#13211c','#375840','#88ae80','#d3e3ac'],
  SPIRIT:['#161b2e','#414a71','#9cadd2','#e4eff0'],
  FATE:['#1b211e','#705b3f','#bba06c','#f3dba3']
-});
+} as const);
 function px(g:G,x:number,y:number,w:number,h:number,ink:string):void{g.fillStyle=ink;g.fillRect(Math.round(x),Math.round(y),w,h);}
 function stamp(g:G,rows:readonly string[],x:number,y:number,unit:number,dark:string,light:string):void{
  for(let r=0;r<rows.length;r++){
@@ -53,7 +53,7 @@ export function paintSagaPillars(g:G,W:number,H:number,family:PierFamily,serial:
   px(g,cx-15,y-3,30,4,stone);px(g,cx-11,y-5,22,3,edge);
   stamp(g,PIER_STONE[family],cx-12,y+5,2,stone,edge);
   px(g,cx-11,y+13,22,24,voidInk);
-  stamp(g,PIER_SAGAS[chapter],cx-7,y+17,2,edge,glint);
+  stamp(g,PIER_SAGAS[chapter]!,cx-7,y+17,2,edge,glint);
   const notch=chapter*3;
   px(g,cx-18+notch,y+1,4,3,glint);
   px(g,cx+13-notch,y+43,4,3,edge);
