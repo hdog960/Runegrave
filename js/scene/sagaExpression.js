@@ -56,9 +56,9 @@ export const SAGA_VISORS=Object.freeze({
 });
 function mask(g,rows,x,y,palette){
  for(let j=0;j<rows.length;j++){
-  const row=rows[j]!;
+  const row=rows[j];
   for(let i=0;i<row.length;i++){
-   const ch=row[i]!;
+   const ch=row[i];
    if(ch==='.')continue;
    const ink=palette[ch];
    if(!ink)throw new Error('Invalid saga pixel '+ch);
@@ -117,7 +117,7 @@ export function paintHostileSagaFace(g,e,time,reducedMotion=false){
  if(!Object.hasOwn(HOSTILE_FACEPLATES,e.kind)||!Number.isFinite(time)||!Number.isFinite(e.windup))
  throw new RangeError('Invalid hostile saga face');
  const rows=HOSTILE_FACEPLATES[e.kind],ink=FOE_PAL[e.kind];
- const boss=e.kind==='warden',left=-rows[0]!.length,top=boss?-28:-19;
+ const boss=e.kind==='warden',left=-rows[0].length,top=boss?-28:-19;
  g.save();
  // The actor is already grounded in the actual world renderer. This face
  // shifts by at most 1 pixel when charging; reduced-motion stays completely still.

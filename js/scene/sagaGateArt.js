@@ -20,8 +20,8 @@ function px(g,x,y,w,h,ink){
  g.fillStyle=ink;g.fillRect(Math.round(x),Math.round(y),w,h);
 }
 function sigil(g,x,y,rows,color){
- for(let r=0;r<rows.length;r++)for(let c=0;c<rows[r]!.length;c++){
-  const p=rows[r]![c];if(p==='.')continue;
+ for(let r=0;r<rows.length;r++)for(let c=0;c<rows[r].length;c++){
+  const p=rows[r][c];if(p==='.')continue;
   px(g,x+c*2,y+r*2,2,2,p==='+'?INK.ivory:color);
  }
 }

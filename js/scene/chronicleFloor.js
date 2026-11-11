@@ -97,7 +97,7 @@ export const CHRONICLE_STONE_INKS=Object.freeze({
 
 function carve(g,pattern,x,y,unit,low,hi){
  for(let row=0;row<pattern.length;row++)for(let col=0;col<(pattern[row]?.length??0);col++){
-  const c=pattern[row]![col];if(c==='.'||c===' ')continue;
+  const c=pattern[row][col];if(c==='.'||c===' ')continue;
   g.fillStyle=c==='#'?low:hi;
   g.fillRect(x+col*unit,y+row*unit,unit,unit);
  }
@@ -119,7 +119,7 @@ export function paintChronicleFloor(g,W,H,family,serial,reducedMotion=false){
  g.fillStyle=shadow;g.fillRect(cx-23,cy-19,46,38);
  carve(g,CHRONICLE_FAMILY_STONES[family],cx-17,cy-16,2,cut,light);
  g.fillStyle=shadow;g.fillRect(cx-10,cy-10,20,20);
- carve(g,CHRONICLE_EPISODES[chapter]!,cx-9,cy-9,2,cut,light);
+ carve(g,CHRONICLE_EPISODES[chapter],cx-9,cy-9,2,cut,light);
  // Five different notch constellations cut into the same physical plinth.
  // The progressive scars use shape *and position*, not color coding.
  for(let n=0;n<5;n++){
@@ -135,7 +135,7 @@ export function paintChronicleFloor(g,W,H,family,serial,reducedMotion=false){
  }
  // Individual material chips make all 25 story plinths visibly weathered,
  // without adding a false door, glowing pickup or telegraph circle.
- for(const piece of SAGA_WEAR_MARKS[family][chapter]!){
+ for(const piece of SAGA_WEAR_MARKS[family][chapter]){
   const [x=0,y=0,w=0,h=0]=piece;
   g.fillStyle=shadow;
   g.fillRect(cx+x,cy+y,w,h);

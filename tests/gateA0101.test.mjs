@@ -73,7 +73,7 @@ test('the new art modules are offline-preloaded; Gate A version and saved schema
  assert.match(source,/SAVE_SCHEMA_VERSION = 1/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  for(const file of ['scene/chamberSetpieces','scene/wayfarerEmblems','enemies/armorAccents'])assert.ok(sw.includes(`js/${file}.js`));
- assert.match(sw,/runegrave-shell-v0\.09\.23/);
+ assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
  assert.match(html,/grip grip-left/);assert.match(html,/grip grip-right/);assert.match(html,/id="world-frame"/);
 });

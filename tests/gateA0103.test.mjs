@@ -67,6 +67,6 @@ test('25 authored rooms and eight functional relics remain; no unauthorized road
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/APP_VERSION = '0\.09\.23'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.23/);
+ assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
  for(const file of ['js/scene/vaultDepthArt.js','js/scene/wayfarerFrameArt.js','js/enemies/attackPoseFrames.js']) assert.ok(sw.includes(file),file);
 });

@@ -80,7 +80,7 @@ test('new rendering module is cached; Gate A controls, saves and catalog remain 
  assert.match(version,/APP_VERSION = '0\.09\.23'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.23/);
+ assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
  assert.ok(sw.includes('scene/sagaArtwork.js'));
  assert.ok(stage.includes('paintSagaStandards'));
  assert.ok(controls.includes('localStorage'));

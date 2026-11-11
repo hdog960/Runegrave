@@ -20,12 +20,12 @@ export const WAYFARER_CLOAK_HEMS=Object.freeze([
 export function paintWayfarerMovingHem(g,pose,time,reducedMotion=false){
  if(!Number.isFinite(time))throw new RangeError('Invalid hem time');
  const beat=pose.moving&&!reducedMotion?Math.floor(Math.max(0,time)*9)%4:0;
- const frames=WAYFARER_CLOAK_HEMS[beat]!;
+ const frames=WAYFARER_CLOAK_HEMS[beat];
  g.save();
  const flip=pose.facing==='W'||pose.facing==='NW'||pose.facing==='SW';
  if(flip)g.scale(-1,1);
  for(let i=0;i<frames.length;i++){
-  const [x=0,y=0,w=0,h=0]=frames[i]!;
+  const [x=0,y=0,w=0,h=0]=frames[i];
   // Inside cloak's bottom outline; does not cover boots or aim projectile.
   g.fillStyle=i%2?'#3d7770':'#192f35';
   g.fillRect(x,y,Math.min(w,3),h);
@@ -37,7 +37,7 @@ export function paintWayfarerMovingHem(g,pose,time,reducedMotion=false){
 }
 
 /** Countdowns are signed in real enemy simulation after the last strike tick. */
-export function kineticStrikeBand(e):0|1|2|3{
+export function kineticStrikeBand(e){
  if(!Number.isFinite(e.windup))throw new RangeError('Invalid kinematic windup');
  if(e.state==='charge')return 3;
  if(e.state!=='warning')return 0;

@@ -80,7 +80,7 @@ test('v0.09.7 remains an unapproved Gate A polish patch, with all relics and PWA
  assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);assert.match(v,/APP_VERSION = '0\.09\.23'/);
  assert.match(v,/\['v0\.09', 'v0\.39', 'v0\.79', 'v0\.99'\]/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
- assert.match(sw,/runegrave-shell-v0\.09\.23/);
+ assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
  for(const mod of ['js/scene/wayfarerMotion.js','js/enemies/gestureArt.js','js/scene/familyTrim.js']){
   assert.ok(sw.includes(mod),`missing offline asset ${mod}`);
   assert.ok(existsSync(new URL(`../dist/${mod}`,import.meta.url)));

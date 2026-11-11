@@ -81,7 +81,7 @@ test('Gate A source preserves seven authorities, saved controller preferences an
  const version=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.23'/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
- assert.match(sw,/runegrave-shell-v0\.09\.23/);
+ assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
  for(const file of ['js/scene/motionTrails.js','js/scene/roomHeraldry.js']){
   assert.ok(sw.includes(file),file);assert.ok(existsSync(new URL('../dist/'+file,import.meta.url)));
  }
