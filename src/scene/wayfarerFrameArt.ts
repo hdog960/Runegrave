@@ -58,5 +58,31 @@ export function paintWayfarerFrames(g:G,pose:WayfarerPose,t:number,reducedMotion
   px(arm,-5,4,5,'#fff1ba');
   px(arm+1,-3,2,2,'#d6f4e4');
  }
- g.restore();
+ 
+ // Gate A v0.09.17: silhouette-carved helm, woven tabard and articulated
+ // plated elbows. Facing and 4-step cadence, not idle wall-clock glitter.
+ const edge=side<0?-1:side>0?1:0;
+ const swing=pose.moving&&!reducedMotion?[0,1,0,-1][frame]:0;
+ for(const s of [-1,1]){
+  px(s<0?-13:9,-4+swing*s,4,8,'#172f34');
+  px(s<0?-12:10,-5+swing*s,3,4,'#83998b');
+  px(s<0?-11:10,2+swing*s,3,2,'#dfbd7d');
+ }
+ // Distinct front facial guard / back flowing mantle / side helmet profile.
+ if(back){
+  px(-7,-17,14,2,'#29494a');px(-5,-15,10,2,'#6a9b8f');
+  px(-3,5,6,2,'#d2b785');
+  px(-2,8+swing,4,7,'#47645c');
+ }else if(edge!==0){
+  px(edge>0?2:-8,-19,6,3,'#d6c89f');
+  px(edge>0?6:-10,-15,4,9,'#243b3e');
+  px(edge>0?6:-8,-13,2,2,'#dff1d1');
+  px(edge>0?-3:-2,8,5,6,'#c5a571');
+ }else{
+  px(-7,-19,14,2,'#e2c58e');
+  px(-4,-14,3,2,'#d8e9d7');px(2,-14,3,2,'#d8e9d7');
+  px(-3,9,6,6,'#d6b275');
+  px(-1,11,2,3,'#365c58');
+ }
+g.restore();
 }

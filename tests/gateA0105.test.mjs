@@ -42,7 +42,7 @@ test('attack poses follow real remaining windup, not decorative time',()=>{
  const a=mock(),b=mock();paintStrikeSilhouette(a.g,{...e,windup:.12},0,true);paintStrikeSilhouette(b.g,{...e,windup:.12},50,true);assert.deepEqual(a.calls,b.calls);
  assert.throws(()=>strikePose({...e,windup:-1},1),RangeError);
 });
-test('v0.09.16 PWA caches animation modules; eight relics, 25 rooms and gates stay locked',()=>{
+test('v0.09.17 PWA caches animation modules; eight relics, 25 rooms and gates stay locked',()=>{
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  const ver=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
  assert.match(sw,/runegrave-shell-v0\.09\.16/);

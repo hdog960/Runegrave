@@ -61,5 +61,71 @@ export function paintVaultDepth(g:G,W:number,H:number,time:number,family:VaultFa
   px(x-12,H-19,24,2,stone);
   px(x-2,H-19,4,2,glow);
  }
- g.restore();
+ 
+ // Gate A v0.09.17: a pair of unique carved wall galleries. Their 25 family/cut
+ // combinations are painted in world space BEHIND actors; none act as exits,
+ // loot, attack telegraphs, collision props, or touch targets.
+ const cut=((Math.floor(variant)%5)+5)%5;
+ for(const side of [-1,1]){
+  const cx=Math.round(side<0?W*.235:W*.765),cy=56;
+  px(cx-25,cy-31,50,39,shadow);px(cx-23,cy-29,46,35,stone);
+  px(cx-20,cy-26,40,29,shadow);
+  px(cx-18,cy-25,36,2,glow);
+  px(cx-18,cy+1,36,2,stone);
+  // Five family-specific monumental frescoes. The outline must be readable
+  // without hue, so these have separate silhouettes and structure.
+  if(family==='ASH'){
+   // Blackened anvil, rising triangular forge flame, paired smoke stacks.
+   px(cx-13,cy-6,26,5,stone);px(cx-9,cy-1,18,4,glow);
+   line(cx-12,cy-7,cx-5,cy-17,glow,2);
+   line(cx-5,cy-17,cx+1,cy-11,glow,2);
+   line(cx+1,cy-11,cx+8,cy-22,stone,2.5);
+   line(cx+8,cy-22,cx+13,cy-8,glow,2);
+   px(cx-14,cy-18,3,9,stone);px(cx+14,cy-19,3,10,stone);
+  }else if(family==='IRON'){
+   // Forged compass wheel, hard vertical axles and heavy machine teeth.
+   px(cx-16,cy-17,5,20,stone);px(cx+11,cy-17,5,20,stone);
+   g.strokeStyle=glow;g.lineWidth=2;g.beginPath();g.arc(cx,cy-10,10,0,Math.PI*2);g.stroke();
+   line(cx,cy-21,cx,cy+1,stone,2.4);
+   line(cx-12,cy-10,cx+12,cy-10,stone,2.4);
+   px(cx-3,cy-13,6,6,glow);
+  }else if(family==='ROOT'){
+   // Living split-tree canopy with descending knotted roots.
+   line(cx,cy+1,cx,cy-21,stone,5);
+   line(cx,cy-13,cx-14,cy-23,glow,2.4);
+   line(cx,cy-14,cx+14,cy-25,glow,2.4);
+   line(cx-14,cy-23,cx-18,cy-15,stone,2);
+   line(cx+14,cy-25,cx+17,cy-16,stone,2);
+   line(cx,cy, cx-9,cy+3,glow,1.5);
+   line(cx,cy, cx+9,cy+3,glow,1.5);
+  }else if(family==='SPIRIT'){
+   // Three jagged panes frame an empty, ghostly negative-space figure.
+   for(const s of [-1,1]){
+    line(cx+s*15,cy-22,cx+s*10,cy-4,stone,2);
+    line(cx+s*10,cy-4,cx+s*3,cy-16,glow,1.5);
+   }
+   px(cx-3,cy-23,6,6,glow);
+   px(cx-5,cy-13,10,2,stone);
+   px(cx-2,cy-10,4,11,glow);
+  }else{
+   // Fate-loom: counterweighted shuttle, diamond and crossed warp strands.
+   for(let k=-2;k<=2;k++)line(cx+k*6,cy-22,cx-k*5,cy+1,k===0?glow:stone,1.1);
+   line(cx-10,cy-12,cx,cy-19,glow,2);
+   line(cx,cy-19,cx+10,cy-12,glow,2);
+   line(cx+10,cy-12,cx,cy-5,stone,2);
+   line(cx,cy-5,cx-10,cy-12,stone,2);
+   px(cx-3,cy-13,6,3,glow);
+  }
+  // Every room in a family has a separate cut-count AND outer crown contour.
+  // This is a permanent authored identity, not a random effect or new room.
+  for(let n=0;n<=cut;n++){
+   px(cx-17+n*7,cy-30-(n%2===cut%2?2:0),4,3,n===cut?glow:stone);
+  }
+  if(cut===0)line(cx-17,cy+5,cx-5,cy+5,glow,1.2);
+  if(cut===1)line(cx-11,cy+5,cx+10,cy+5,glow,1.2);
+  if(cut===2)line(cx-17,cy+5,cx+17,cy+5,glow,1.2);
+  if(cut===3){px(cx-17,cy+4,7,3,glow);px(cx+10,cy+4,7,3,glow);}
+  if(cut===4){px(cx-17,cy+4,34,3,glow);}
+ }
+g.restore();
 }

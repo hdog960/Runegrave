@@ -1,5 +1,16 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.17 — Gate A carved family galleries, eight-facing armor and hostile anticipation (candidate; 2026-11-10 US Central)
+
+**CANDIDATE ONLY: awaiting GitHub CI, Chromium browser checks, Pages publication and independent public version verification. Gate A NOT APPROVED; v0.10 LOCKED.**
+
+- Baseline was main `328b4e3` (verified v0.09.16). The interrupted previous v0.09.17 session did not publish a later main commit.
+- Planned/committed source changes in this candidate: 25 deterministic family-and-cut wall galleries using five original carvings, directional Wayfarer armor/helmet framing with four-step walking motion, and seven threat-state-driven enemy anticipation accents.
+- Six enemy kinds, Rootbound Warden, 25 encounter configurations, eight functional relics, damage/physics, save schema 1, twin independent external grips, and PWA update UX must remain unchanged. No new v0.10 progression.
+- Candidate tests include the existing Node suite, new 25-gallery/hero/seven-hostile assertions, and an Actions Chromium mobile-layout+two-pointer smoke job. Results must be recorded only after observed.
+- Physical iPhone Safari, real installed PWA offline refresh, long-session performance, unaided victory and player art/control approval remain **unverified**. Do not announce READY FOR GATE A REEVALUATION.
+
+
 ## v0.09.16 — Real doorway threshold markers, accurate relic inscriptions and carved room variants (2026-11-10 US Central)
 
 **VERIFIED STATE: IMPLEMENTED, TESTED, GITHUB CI PASS, PUBLIC GITHUB PAGES LIVE. GATE A UNAPPROVED; v0.10 LOCKED.**
