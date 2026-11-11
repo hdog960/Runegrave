@@ -143,6 +143,11 @@ export function paintWayfarerOathGear(g:G,pose:WayfarerPose,time:number,reducedM
   // Distinct non-contact stride shield strap; no new hitbox.
   px(g,shieldX+3,6,4,3,'#d2b388');
  }
+ // The passing positions must also read differently on a 2px phone grid:
+ // hem thread opens on first recovery, shield strap tucks on second recovery.
+ // These are actual separate four-beat poses, not duplicate neutral frames.
+ if(pose.moving&&!reducedMotion&&frame===1)px(g,shieldX+5,8,2,2,'#ead7a0');
+ if(pose.moving&&!reducedMotion&&frame===3)px(g,shieldX+1,8,2,2,'#bec69f');
  g.restore();
 }
 /** Seven species-specific high-contrast strike props, keyed to genuine

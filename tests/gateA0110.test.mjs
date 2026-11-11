@@ -55,8 +55,8 @@ test('eight grounded directional gear profiles and state-backed step/recoil mark
  const step=wayfarerPose(.0,1,0,1,0,false);
  const frames=[0,.12,.24,.37].map(t=>{const a=mock();paintWayfarerOathGear(a.ctx,step,t);return JSON.stringify(a.calls)});
  assert.ok(new Set(frames).size>=3,'gait is real and bounded');
- const firing=wayfarerPose(.3,0,0,1,0,true);
- const idle=wayfarerPose(.3,0,0,1,0,false),a=mock(),b=mock();
+ const firing=wayfarerPose(.1,0,0,1,0,true);
+ const idle=wayfarerPose(.1,0,0,1,0,false),a=mock(),b=mock();
  paintWayfarerOathGear(a.ctx,firing,0);paintWayfarerOathGear(b.ctx,idle,0);
  assert.notDeepEqual(a.calls,b.calls,'only actual recoil engraves brighter gauntlet');
 });
