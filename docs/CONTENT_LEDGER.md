@@ -1,3 +1,7 @@
+## v0.09.25 — Purely visual Gate A artwork, zero fabricated content additions
+
+**Actual playable counts unchanged:** 25 authored room configurations (eight sampled by the existing curated first-soul mini-run), eight functioning relic effects, one provisional Wayfarer, six normal enemy kinds and one Rootbound Warden boss. Twenty-five new paired wall-pier designs and four cloth gait frames are presentation within these existing rooms and character, not 25 new gameplay rooms or four characters; seven enemy armour motifs and their attack-state rivets are not additional foes, attacks or relics. No v0.10 floor graphs, new item systems, talismans, story routes or other later-roadmap feature has been implemented. **Gate A NOT APPROVED; v0.10 LOCKED.**
+
 ## v0.09.15 — Visual refinement, zero new playable content
 
 Still exactly **25** authored room configurations, **eight** functional relics, **six** hostile enemy types, **one** Rootbound Warden boss and the existing curated eight-chamber/boss mini-run. Seven enemy art variants are NOT seven additional enemies; eight-direction Wayfarer poses are NOT separate playable characters. No procedural floor graphs, additional relics, talismans, new endings or content-milestone advancement. v0.10 locked; Gate A unapproved.

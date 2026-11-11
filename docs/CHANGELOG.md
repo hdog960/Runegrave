@@ -1,3 +1,11 @@
+## v0.09.25 — Carved saga side-piers, four-beat walking mantle, true-state foe rune guards (Gate A pending)
+
+- Inked original pairs of Norse architectural piers in all 25 existing authored chambers: five unique masonry material cuts × five story sigils, placed in outer upper-wall bands behind combat and away from the center sightline.
+- Added four individually hand-drawn Wayfarer mantle swing/footfall sheets, driven by real moving gait, facing/recoil and reduced-motion. Added seven physically different enemy torso inlays, with extra rivets keyed only to existing real windup warning stages and Warden phase two, never a false idle tell.
+- Preserved all world warnings, enemy AI/health/damage, eight functional relics, curated mini-run, 25 rooms, two-thumb side rails, save schema 1 and user-consented PWA update. New root JavaScript mirrors + v0.09.25 cache deliver visual-only work.
+- New art-specific Node tests and actual real Chromium galleries for all 25 pier scenes and eight × four mantle frames. Initial CI failures in root mirror syntax, obsolete canvas-layer count expectations, changed browser script filename and stale legacy browser helper version assertion were corrected without suppressing tests. [PR #12 candidate CI 43060370441](https://github.com/hdog960/Runegrave/actions/runs/43060370441) passed **178/178 Node tests plus real Chromium**; nine screenshot proof images reviewed. Merged `a7a2f9532ad39f8b40a14c3f65923a6ca7de61be`. [Pages publish 43060995721](https://github.com/hdog960/Runegrave/actions/runs/43060995721) and [source validation 43060996763](https://github.com/hdog960/Runegrave/actions/runs/43060996763) succeeded; direct public asset HTTP verification was unavailable.
+- Real iPhone Safari, Home Screen offline/update, unaided Warden victory, sustained mobile performance and user artwork approval NOT verified. **Gate A still unapproved; v0.10 locked.**
+
 ## v0.09.24 — Five family story friezes, seven singular attack silhouettes, release-pipeline repair (Gate A still pending)
 
 - Original 25-room lower-edge saga mural friezes: five distinct Norse masonry schools × five engraved story scenes, one *physically different* narrative focus in each canonical `fs-XX` room. Low-contrast, world-only, and behind actual combat/controls; original upper wall, central chronicles and all 25 encounter configurations preserved.
