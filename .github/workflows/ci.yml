@@ -17,7 +17,8 @@ jobs:
       - run: npm test
 
   gate-a-browser:
-    runs-on: ubuntu-24.04
+    # Standard GitHub-hosted Linux image; actual Playwright Chromium is still mandatory.
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
