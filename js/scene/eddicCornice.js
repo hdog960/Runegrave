@@ -64,7 +64,7 @@ export function paintEddicCornice(g,W,H,time,family,serial,reducedMotion=false){
     !Number.isSafeInteger(serial)||serial<0||serial>=25||Math.floor(serial/5)!==familyIndex)
   throw new RangeError('Invalid canonical Eddic room');
  const [shade,stone,edge,lumen]=EDDIC_PALETTES[family];
- const facade=EDDIC_FACADES[family],episode=EDDIC_CHAPTERS[cut]!;
+ const facade=EDDIC_FACADES[family],episode=EDDIC_CHAPTERS[cut];
  const x=Math.round(W/2);
  g.save();g.translate(x,0);
  // Truly weighty, deliberately asymmetric stonework framing a central story.

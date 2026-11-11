@@ -44,7 +44,7 @@ export function paintChamberSagaStones(g,W,H,time,family,serial,reducedMotion=fa
  if(!Object.hasOwn(familyStones,family)||![W,H,time].every(Number.isFinite)||W<240||H<148||
  !Number.isInteger(serial)||serial<0||serial>24||CHAMBER_FAMILY_SILHOUETTES.indexOf(family)!==Math.floor(serial/5))
  throw new RangeError('Invalid canonical chamber saga stone');
- const p=familyStones[family],inlay=CHAMBER_FATES[serial%5]!,cut=serial%5;
+ const p=familyStones[family],inlay=CHAMBER_FATES[serial%5],cut=serial%5;
  g.save();
  for(const side of [-1,1]){
   const ax=Math.round(side<0?38:W-38),ay=Math.round(H-42);
@@ -54,7 +54,7 @@ export function paintChamberSagaStones(g,W,H,time,family,serial,reducedMotion=fa
   pixel(g,-20,-36,40,44,'#0b1619');
   pixel(g,-18,-34,36,39,p.shade);pixel(g,-16,-33,32,31,p.stone);
   for(let row=0;row<p.body.length;row++){
-   const cells=p.body[row]!;
+   const cells=p.body[row];
    for(let col=0;col<cells.length;col++){
     const c=cells[col];
     if(c==='.')continue;
@@ -63,7 +63,7 @@ export function paintChamberSagaStones(g,W,H,time,family,serial,reducedMotion=fa
   }
   // A meaningful separate seven-row carved scene, not merely five painted dots.
   for(let row=0;row<inlay.length;row++)for(let col=0;col<7;col++){
-   const c=inlay[row]![col];if(c==='.')continue;
+   const c=inlay[row][col];if(c==='.')continue;
    pixel(g,-7+col*2,-24+row*2,2,2,c==='#'?p.gold:p.edge);
   }
   pixel(g,-18,-5,36,3,p.shade);pixel(g,-17,-4,34,2,p.edge);

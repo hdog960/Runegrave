@@ -119,7 +119,7 @@ function sheetWidth(sheet){
 function drawSheet(g,sheet,left,top,unit,palette){
  const W=sheetWidth(sheet);
  for(let row=0;row<sheet.length;row++){
-  const text=sheet[row]!.replace(/ /g,'.'),pad=Math.floor((W-text.length)/2);
+  const text=sheet[row].replace(/ /g,'.'),pad=Math.floor((W-text.length)/2);
   let run='',start=0;
   const flush=(end)=>{
    if(run){
@@ -129,7 +129,7 @@ function drawSheet(g,sheet,left,top,unit,palette){
    }
   };
   for(let i=0;i<=text.length;i++){
-   const next=i<text.length?text[i]!:'.';
+   const next=i<text.length?text[i]:'.';
    if(next===run)continue;
    flush(i);run=next==='.'?'':next;start=i;
   }
@@ -150,7 +150,7 @@ export function paintHeroAtlas(g,pose,time,reducedMotion=false){
  if(!Object.hasOwn(WAYFARER_ATLAS,heroClass(pose.facing))||!Number.isFinite(time))
  throw new RangeError('Invalid hero atlas pose');
  const frame=heroAtlasFrame(pose,time,reducedMotion);
- const sheet=WAYFARER_ATLAS[heroClass(pose.facing)],stride=WAYFARER_GAITS[frame]!;
+ const sheet=WAYFARER_ATLAS[heroClass(pose.facing)],stride=WAYFARER_GAITS[frame];
  const flip=pose.facing==='W'||pose.facing==='NW'||pose.facing==='SW';
  g.save();
  if(flip)g.scale(-1,1);
