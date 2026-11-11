@@ -79,9 +79,9 @@ test('World heraldry art is bounded, noninteractive and respects mobile draw bud
 test('Gate A source preserves seven authorities, saved controller preferences and offline FX modules',()=>{
  assert.equal(FIRST_SOUL_RELICS.length,8);
  const version=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
- assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.29'/);
+ assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.30'/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
- assert.match(sw,/runegrave-shell-v0\.09\.29/);
+ assert.match(sw,/runegrave-shell-v0\.09\.30/);
  for(const file of ['js/scene/motionTrails.js','js/scene/roomHeraldry.js']){
   assert.ok(sw.includes(file),file);assert.ok(existsSync(new URL('../dist/'+file,import.meta.url)));
  }
