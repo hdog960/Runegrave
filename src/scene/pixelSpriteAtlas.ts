@@ -10,6 +10,7 @@ import type {WayfarerPose} from './wayfarerMotion.js';
 import type {Enemy,EnemyKind} from '../enemies/encounters.js';
 type G=CanvasRenderingContext2D;
 type HeroFacing='N'|'NE'|'E'|'SE'|'S'|'SW'|'W'|'NW';
+import { inkedWindupBody } from './sagaBodyLanguage.js';
 import { paintWayfarerMovingHem } from './kineticInk.js';
 import { paintEnemySagaWeapon } from './sagaWeaponAtlas.js';
 import { paintWayfarerSagaVisor, paintHostileSagaFace } from './sagaExpression.js';
@@ -137,6 +138,75 @@ function drawSheet(g:G,sheet:readonly string[],left:number,top:number,unit:numbe
  }
 }
 /** Four authored coat panels reflect true footfalls (never a free-running clock). */
+/** Eight hand-inked lower-oath cloak weave contours, physically shifted
+ * by the existing four true gait frames. This is the SAME mantle painter,
+ * not an extra visual actor or timer; reduced-motion stays still. */
+export const WAYFARER_CLOAK_WEAVE=Object.freeze({
+ "N": [
+  "..o...o..",
+  ".ob...bo.",
+  "obg...gbo",
+  "obbg.gbo.",
+  "..og.go..",
+  "...o.o..."
+ ],
+ "NE": [
+  "o.......o",
+  "ob......o",
+  ".obg..gbo",
+  "..ob.gbo.",
+  "...ogbo..",
+  "....oo..."
+ ],
+ "E": [
+  "o........",
+  "ob.......",
+  "obg......",
+  ".obgbo...",
+  "..obgbo..",
+  "...ooo..."
+ ],
+ "SE": [
+  "o........",
+  "ob.......",
+  ".obg.....",
+  "..obgbo..",
+  "...ogbo..",
+  "....ooo.."
+ ],
+ "S": [
+  "o.......o",
+  "ob.....bo",
+  "obg...gbo",
+  ".obg.gbo.",
+  "..obgbo..",
+  "...ooo..."
+ ],
+ "SW": [
+  "........o",
+  ".......bo",
+  ".....gbo.",
+  "..obgbo..",
+  "..obgo...",
+  "..ooo...."
+ ],
+ "W": [
+  "........o",
+  ".......bo",
+  "......gbo",
+  "...obgbo.",
+  "..obgbo..",
+  "...ooo..."
+ ],
+ "NW": [
+  "o.......o",
+  "o......bo",
+  "obg..gbo.",
+  "obg.bo...",
+  "..obgo...",
+  "...oo...."
+ ]
+} as const);
 export const WAYFARER_MANTLE_STEPS=Object.freeze([
  ['o.........o','ob.......bo','obb..g..bbo','obbbgggbbbo','obbbbgbbbbo','.obbbgbbbo.','..obbgbbo..','..ogb.bgo..','..oo...oo..'],
  ['o.........o','ob.......bo','obb..g...bo','obbbggg..bo','obbbbgb.bb.','..obbg.bb..','...obgbo...','..ogbbgo...','...oo..oo..'],
@@ -150,6 +220,10 @@ export function paintHeroSagaMantle(g:G,pose:WayfarerPose,time:number,reducedMot
  const sheet=WAYFARER_MANTLE_STEPS[frame]!;
  g.save();
  drawSheet(g,sheet,-11,-4,2,HERO_INK);
+ // Facing silhouette is a physical lower-tunic fold; the 4-step sway comes
+ // only from the real walking animation, not a decorative clock.
+ const sway=pose.moving&&!reducedMotion?[0,2,0,-2][frame]??0:0;
+ drawSheet(g,WAYFARER_CLOAK_WEAVE[pose.facing],-9+sway,3,2,HERO_INK);
  if(pose.back){
   g.fillStyle=HERO_INK.w;g.fillRect(-1,-2,2,12);
   g.fillStyle=HERO_INK.G;g.fillRect(-3,9,6,2);
@@ -369,7 +443,10 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  const band=enemyAtlasBand(e);
  const bob=reducedMotion?0:e.state==='idle'?Math.round(Math.sin(time*2)*.5):0;
  g.save();g.translate(0,bob);
- drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,palette);
+ // One original body sheet gets real in-place shoulder/arm contour changes.
+ // There is still exactly one body draw and no extra phantom attack sprite.
+ const visibleBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
+ drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
  paintHostileSagaFace(g,e,time,reducedMotion);

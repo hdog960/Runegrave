@@ -29,6 +29,7 @@ import { paintChamberAmbience, type ChamberAmbientFamily } from './chamberAmbien
 import { paintVaultDepth, type VaultFamily } from './vaultDepthArt.js';
 import { paintEddicCornice, type EddicFamily } from './eddicCornice.js';
 import { paintChronicleFloor, type ChronicleFamily } from './chronicleFloor.js';
+import { paintVaultCanopies } from './sagaVaultCanopies.js';
 import { paintSagaPillars } from './sagaPillarRelief.js';
 import { paintSagaFloorFrieze, type FriezeFamily } from './sagaFloorFrieze.js';
 import { paintChamberSagaStones, type StoneSagaFamily } from './ageStoneArt.js';
@@ -238,6 +239,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     if(currentRoom&&mode==='crypt')paintChamberSagaStones(g!,W,H,time,currentRoom.family as StoneSagaFamily,Number(currentRoom.id.slice(-2))-1,reduced.matches);
     if(trial)drawEmberTrial(g!,trial,time);
     if(currentRoom&&mode==='crypt'){paintRoomFamily(g!,W,H,time,currentRoom);paintRoomSigil(g!,W,H,time,currentRoom);}
+    if(currentRoom&&mode==='crypt')paintVaultCanopies(g!,W,H,currentRoom.family as 'ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE',Number(currentRoom.id.slice(-2))-1);
     if(currentRoom&&mode==='crypt')paintSagaPillars(g!,W,H,currentRoom.family as 'ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE',Number(currentRoom.id.slice(-2))-1);
     if(currentRoom&&mode==='crypt')paintSagaFloorFrieze(g!,W,H,currentRoom.family as FriezeFamily,Number(currentRoom.id.slice(-2))-1);
     if(currentRoom&&mode==='crypt')paintChamberAmbience(g!,W,H,time,currentRoom.family as ChamberAmbientFamily,roomIndex);
