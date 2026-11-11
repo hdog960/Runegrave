@@ -40,7 +40,7 @@ test('eight hero facings and four distinctly planted foot positions are drawn, g
    assert.deepEqual(a.calls,b.calls,'reduced-motion hero is still');
    assert.equal(a.calls.filter(x=>x[0]==='save').length,5,'body, moving hem, eight-way shoulder silhouette, visor and four-beat mantle each isolate canvas state');
    assert.equal(a.calls.filter(x=>x[0]==='restore').length,5);
-   assert.ok(a.calls.length>55&&a.calls.length<350);
+   assert.ok(a.calls.length>65&&a.calls.length<460);
    for(const c of a.calls.filter(x=>x[0]==='fillRect')){
      assert.ok(c.slice(1,5).every(Number.isFinite));
      assert.ok(Math.abs(c[1])<33&&c[2]>=-34&&c[2]<=26,'hero + moving hem remain inside actor outline');
