@@ -1,3 +1,11 @@
+## v0.09.22 — Floor saga chronicles and four-beat articulated combat ink (Gate A still pending)
+
+- Original Norse floor-engraving atelier: 25 distinct in-world mosaics drawn from five bespoke material silhouettes and five episode pictograms, plus five different notch arrangements. Uses canonical `fs-XX` room identity regardless of the run's shuffled chamber order. Carvings stay subdued and low in the floor, underneath real combat/aim indicators.
+- Added four individually shaped Wayfarer cloak-hem footfall frames and seven enemy species' distinct physical readying animations linked to actual `warning`/`charge` and four remaining-windup stages. Warden phase two has different thorn limbs; negative cooldown residuals remain harmless in inactive states.
+- Preserved single atlas body rendering, existing meaningful enemy attack warnings, external iPhone two-thumb rails, no HUD/playfield overlap, eight functional relic effects, 25 authored encounters and full deterministic mechanics/save/PWA.
+- Four new deterministic Node tests and a real Chromium gallery for all 25 chamber engravings; retained earlier 8-facing Wayfarer, seven-hostile and two-thumb browser validations. **162/162 strict Node tests and Chromium checks passed** after fixing strict TypeScript typing and adapting a genuine art-composition regression to the new balanced cloak renderer.
+- Merged PR #7 and independently verified public GitHub Pages v0.09.22, cache and authored JS modules. Physical iPhone device, full unaided run and aesthetic approval remain future Gate A work; v0.10 locked.
+
 ## v0.09.21-r1 — Post-strike sprite crash correction
 
 - After v0.09.21 published, a repeat Chromium CI run uncovered an intermittent fatal `Invalid hostile atlas windup` error when recovering enemies retained a slightly negative final countdown; this was an actual renderer defect, not just a flaky test.
