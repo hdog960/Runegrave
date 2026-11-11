@@ -27,6 +27,7 @@ import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience, type ChamberAmbientFamily } from './chamberAmbience.js';
 import { paintVaultDepth, type VaultFamily } from './vaultDepthArt.js';
+import { paintSagaStandards, type SagaFamily } from './sagaArtwork.js';
 import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
 
 const WIDTH=420;
@@ -226,6 +227,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     g!.setTransform(metrics.pixelWidth/W,0,0,metrics.pixelHeight/H,0,0);
     paintSanctuary(g!,W,H,time,currentRoom?.family||'ROOT',roomIndex);
     if(currentRoom&&mode==='crypt')paintVaultDepth(g!,W,H,time,currentRoom.family as VaultFamily,roomIndex,reduced.matches);
+    if(currentRoom&&mode==='crypt')paintSagaStandards(g!,W,H,time,currentRoom.family as SagaFamily,roomIndex,reduced.matches);
     if(trial)drawEmberTrial(g!,trial,time);
     if(currentRoom&&mode==='crypt'){paintRoomFamily(g!,W,H,time,currentRoom);paintRoomSigil(g!,W,H,time,currentRoom);}
     if(currentRoom&&mode==='crypt')paintChamberAmbience(g!,W,H,time,currentRoom.family as ChamberAmbientFamily,roomIndex);

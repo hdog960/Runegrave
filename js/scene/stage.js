@@ -26,6 +26,7 @@ import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience } from './chamberAmbience.js';
 import { paintVaultDepth } from './vaultDepthArt.js';
+import { paintSagaStandards } from './sagaArtwork.js';
 import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
 const WIDTH = 420;
 /** The camera never renders behind either controller rail or any persistent HUD. */
@@ -295,6 +296,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         paintSanctuary(g, W, H, time, currentRoom?.family || 'ROOT', roomIndex);
         if (currentRoom && mode === 'crypt')
             paintVaultDepth(g, W, H, time, currentRoom.family, roomIndex, reduced.matches);
+        if (currentRoom && mode === 'crypt')
+            paintSagaStandards(g, W, H, time, currentRoom.family, roomIndex, reduced.matches);
         if (trial)
             drawEmberTrial(g, trial, time);
         if (currentRoom && mode === 'crypt') {
