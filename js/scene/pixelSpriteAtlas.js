@@ -136,6 +136,36 @@ function drawSheet(g,sheet,left,top,unit,palette){
   }
  }
 }
+/** Four authored coat panels reflect true footfalls (never a free-running clock). */
+export const WAYFARER_MANTLE_STEPS=Object.freeze([
+ ['o.........o','ob.......bo','obb..g..bbo','obbbgggbbbo','obbbbgbbbbo','.obbbgbbbo.','..obbgbbo..','..ogb.bgo..','..oo...oo..'],
+ ['o.........o','ob.......bo','obb..g...bo','obbbggg..bo','obbbbgb.bb.','..obbg.bb..','...obgbo...','..ogbbgo...','...oo..oo..'],
+ ['..o.....o..','.ob.....bo.','..ob.g.bo..','...obgbo...','..obbgbbo..','.obbgggbbo.','obbbbgbbbbo','..oggbggo..','...oo.oo...'],
+ ['o.........o','ob.......bo','ob...g..bbo','ob..gggbbbo','obb.gbgbbbo','..obbgbbbo.','...obgbbo..','..ogbbggo..','..oo..oo...']
+]);
+/** Mantle is a physical 22×18px ink stamp on the existing actor,
+ * aligned to 8 real facings and 4 actual gait poses. Recoil is true shooting. */
+export function paintHeroSagaMantle(g,pose,time,reducedMotion=false){
+ const frame=heroAtlasFrame(pose,time,reducedMotion);
+ const sheet=WAYFARER_MANTLE_STEPS[frame];
+ g.save();
+ drawSheet(g,sheet,-11,-4,2,HERO_INK);
+ if(pose.back){
+  g.fillStyle=HERO_INK.w;g.fillRect(-1,-2,2,12);
+  g.fillStyle=HERO_INK.G;g.fillRect(-3,9,6,2);
+ }else{
+  g.fillStyle=HERO_INK.G;g.fillRect(-4,1,8,3);
+  g.fillStyle=HERO_INK.e;g.fillRect(-1,3,2,3);
+ }
+ if(pose.side!==0){
+  g.fillStyle=HERO_INK.H;g.fillRect(pose.side>0?9:-12,-1,3,12);
+ }
+ if(pose.recoil>.24){
+  g.fillStyle=HERO_INK.w;g.fillRect(pose.side<0?-17:13,-5,4,4);
+ }
+ g.restore();
+}
+
 export function heroAtlasFrame(pose,time,reducedMotion=false) {
  if(!Number.isFinite(time))throw new RangeError('Invalid hero atlas time');
  return (pose.moving&&!reducedMotion?Math.floor(Math.max(0,time)*9)%4:0);
@@ -160,6 +190,7 @@ export function paintHeroAtlas(g,pose,time,reducedMotion=false){
  drawSheet(g,stride,-sheetWidth(stride)*unit/2,top+sheet.length*unit,unit,HERO_INK);
  paintWayfarerMovingHem(g,pose,time,reducedMotion);
  paintWayfarerSagaVisor(g,pose,time,reducedMotion);
+ paintHeroSagaMantle(g,pose,time,reducedMotion);
  // Direction-dependent crest: actual facing sets the color/shape, not fake idle
  // flashing. The physical weapon remains handled by drawWayfarer.
  const p=pose.back?HERO_INK.w:HERO_INK.G;
@@ -186,6 +217,37 @@ export function enemyAtlasBand(e){
  const remaining=Math.max(0,e.windup); // encounter clock may cross zero before switching to idle
  return remaining>.65?0:remaining>.40?1:remaining>=.20?2:3;
 }
+/** Seven different Norse armour knots, attached to actual enemy bodies.
+ * Body rivets grow through real warning stages; idle never draws an attack. */
+export const HOSTILE_GUARD_STITCHES=Object.freeze({
+ draugr:['...o...','..ogo..','.oggo..','ogrrgo.','..ggo..','..ogo..','...o...'],
+ wisp:['..o.o..','.ogogo.','ogrrrgo','..oro..','.ogogo.','..o.o..','...o...'],
+ archer:['o.....o','oo...oo','.ogogo.','..rgr..','.ogogo.','oo...oo','o.....o'],
+ charger:['o.....o','oo...oo','ogooogo','ogrrrgo','ogooogo','oo...oo','o.....o'],
+ sentinel:['..ooo..','.ogggo.','ogrrrgo','ogrrrgo','ogrrrgo','.ogggo.','..ooo..'],
+ shade:['o.o.o.o','.ogogo.','..rgr..','.ogogo.','o.o.o.o','.ogogo.','..o.o..'],
+ warden:['oo...oo','og...go','ogrrrgo','ogrrrgo','ogrrrgo','og...go','oo...oo']
+});
+export function paintHostileSagaGuard(g,e){
+ if(!Object.hasOwn(HOSTILE_GUARD_STITCHES,e.kind)||!Number.isFinite(e.windup))
+  throw new RangeError('Invalid original hostile guard');
+ const sheet=HOSTILE_GUARD_STITCHES[e.kind],ink=ENEMY_INK[e.kind];
+ const boss=e.kind==='warden',warning=e.state==='warning'||e.state==='charge';
+ const band=warning?enemyAtlasBand(e):0,y=boss?-14:-5;
+ g.save();
+ drawSheet(g,sheet,-7,y,2,ink);
+ if(warning){
+  for(let i=0;i<band;i++){
+   g.fillStyle=ink.e;g.fillRect(-12+i*8,y+14,4,3+i);
+  }
+ }
+ if(boss&&e.phase===2){
+  g.fillStyle=ink.r;g.fillRect(-14,y-4,5,4);g.fillRect(9,y-4,5,4);
+ }
+ if(e.flash>0){g.fillStyle=ink.e;g.fillRect(-1,y+6,3,4);}
+ g.restore();
+}
+
 export function paintHostileAtlas(g,e,time,reducedMotion=false){
  if(!Object.hasOwn(HOSTILE_ATLAS,e.kind)||!Number.isFinite(time))throw new RangeError('Unknown hostile pixel sheet');
  const sheet=HOSTILE_ATLAS[e.kind];
@@ -196,6 +258,7 @@ export function paintHostileAtlas(g,e,time,reducedMotion=false){
  const bob=reducedMotion?0:e.state==='idle'?Math.round(Math.sin(time*2)*.5):0;
  g.save();g.translate(0,bob);
  drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,palette);
+ paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
  paintHostileSagaFace(g,e,time,reducedMotion);
  // Strong readable cast: three grounded steel/rune bars appear step-by-step,

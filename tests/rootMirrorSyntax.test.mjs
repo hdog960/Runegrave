@@ -24,7 +24,7 @@ test('every checked-in JS mirror is parseable as real JavaScript, never TypeScri
 test('both optional root Pages and Actions Pages caches advertise a safe corrective offline revision',()=>{
  const a=readFileSync(join(root,'sw.js'),'utf8');
  const b=readFileSync(join(root,'public','sw.js'),'utf8');
- assert.match(a,/runegrave-shell-v0\.09\.24/);
+ assert.match(a,/runegrave-shell-v0\.09\.25/);
  assert.equal(a,b,'the optional root Pages runtime must not diverge in service-worker cache');
  assert.ok(a.includes('scene/sagaExpression.js')&&a.includes('scene/sagaGateArt.js'));
  assert.ok(a.includes('scene/sagaFloorFrieze.js')&&a.includes('scene/sagaWeaponAtlas.js'));
