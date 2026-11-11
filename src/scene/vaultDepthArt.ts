@@ -109,11 +109,10 @@ export function paintVaultDepth(g:G,W:number,H:number,time:number,family:VaultFa
    px(cx-2,cy-10,4,11,glow);
   }else{
    // Fate-loom: counterweighted shuttle, diamond and crossed warp strands.
-   for(let k=-1;k<=1;k++)line(cx+k*9,cy-22,cx-k*8,cy+1,k===0?glow:stone,1.1);
-   line(cx-10,cy-12,cx,cy-19,glow,2);
-   line(cx,cy-19,cx+10,cy-12,glow,2);
-   line(cx+10,cy-12,cx,cy-5,stone,2);
-   line(cx,cy-5,cx-10,cy-12,stone,2);
+   for(let k=-1;k<=1;k++)px(cx+k*9-1,cy-22,2,23,k===0?glow:stone);
+   px(cx-10,cy-12,20,2,glow);
+   px(cx-4,cy-19,8,2,glow);
+   px(cx-6,cy-5,12,2,stone);
    px(cx-3,cy-13,6,3,glow);
   }
   // Every room in a family has a separate cut-count AND outer crown contour.
