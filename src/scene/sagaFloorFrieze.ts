@@ -80,7 +80,7 @@ export function paintSagaFloorFrieze(g:G,W:number,H:number,family:FriezeFamily,c
    inlay(g,episode,x-9,top+6,2,cut,gold);
    px(g,x-9,top-2,18,5,stone);
    px(g,x-6,top-5,12,4,cut);
-   px(g,x-1,top-7,2,3,gold);
+   px(g,x-1,top-4,2,3,gold);
    px(g,x-15,top+9,3,9,cut);
    px(g,x+12,top+9,3,9,cut);
   } else {

@@ -53,7 +53,7 @@ test('seven species have unique authored contiguous-pixel weapon sheets',()=>{
  assert.equal(new Set(Object.values(ENEMY_WEAPON_SHEETS).map(x=>x.join('|'))).size,7);
  for(const [kind,rows] of Object.entries(ENEMY_WEAPON_SHEETS)){
   assert.equal(rows.length,10,kind);
-  for(const row of rows){assert.equal(row.length,13,kind+' native 13px weapon strip');assert.match(row,/^[.o#+]+$/);}
+  for(const row of rows){assert.equal(row.length,14,kind+' consistently sized 14px original weapon art');assert.match(row,/^[.o#+]+$/);}
  }
 });
 test('all seven weapons have four physically distinct real warning phases, safe negative idle and strong boss phase two',()=>{
