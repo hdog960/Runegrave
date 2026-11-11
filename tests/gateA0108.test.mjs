@@ -77,10 +77,10 @@ test('new rendering module is cached; Gate A controls, saves and catalog remain 
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  const stage=readFileSync(new URL('../dist/js/scene/stage.js',import.meta.url),'utf8');
  const controls=readFileSync(new URL('../dist/js/input/twinStick.js',import.meta.url),'utf8');
- assert.match(version,/APP_VERSION = '0\.09\.21'/);
+ assert.match(version,/APP_VERSION = '0\.09\.22'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.21/);
+ assert.match(sw,/runegrave-shell-v0\.09\.22/);
  assert.ok(sw.includes('scene/sagaArtwork.js'));
  assert.ok(stage.includes('paintSagaStandards'));
  assert.ok(controls.includes('localStorage'));
