@@ -152,6 +152,57 @@ export const VAULT_CANOPY_SEALS=Object.freeze([
 ]);
 /** Five actual negative-space stone arch cuts replace flat upper-masonry
  * texture: non-interactive scene geometry strictly behind combat. */
+/** Five original paired burial effigies, shaped to five true room
+ * material families. Carved into upper *outer* wall plinths only, never
+ * status, collision, door, interactable or dangerous telegraph content.
+ */
+export const SAGA_BURIAL_CARYATIDS=Object.freeze({
+ "ASH": [
+  "....#....",
+  "...###...",
+  "..#+#+#..",
+  ".###+###.",
+  ".##+++##.",
+  "..#...#..",
+  ".##...##."
+ ],
+ "IRON": [
+  "###...###",
+  "##+#.#+##",
+  ".##+++##.",
+  "..#####..",
+  "..##+##..",
+  "..#...#..",
+  "###...###"
+ ],
+ "ROOT": [
+  "#.......#",
+  ".##...##.",
+  "..##.##..",
+  "...###...",
+  "...#+#...",
+  "..##.##..",
+  ".##...##."
+ ],
+ "SPIRIT": [
+  "....#....",
+  "...#+#...",
+  "..#+++#..",
+  "...###...",
+  ".##+#+##.",
+  "#...#...#",
+  "..#...#.."
+ ],
+ "FATE": [
+  "..#...#..",
+  ".###.###.",
+  "##++#++##",
+  "..#+++#..",
+  "...###...",
+  "..#.#.#..",
+  ".#.....#."
+ ]
+});
 export const VAULT_DEPTH_CUTS=Object.freeze({"ASH":["###.....###..",".##.....##...","..##...##....","...##.##.....","....###......"],"IRON":["#############","##++####++###","##++####++###","###++++++####","#############"],"ROOT":["#...........#","##.........##",".##.......##.","..##.....##..","...###.###..."],"SPIRIT":[".....###.....","....##+##....","...##+++##...","..##+++++##..",".##.......##."],"FATE":["##.........##",".##.......##.","..##.....##..","...###.###...","....#####...."]});
 export const VAULT_CANOPY_PALETTES=Object.freeze({
  "ASH": [
@@ -229,6 +280,9 @@ export function paintVaultCanopies(g:G,W:number,H:number,family:Family,serial:nu
   // Carved, shaded lower keystone ties the arch to its existing side pier.
   relief(g,VAULT_CANOPY_SEALS[story]!,x+9,y+58,2,rim,gold);
   rect(g,x+1,y+70,32,2,stone);
+  // A carved supporting figure per family at world y=74..88.
+  // Placed inside the existing 20..92 outer wall silhouette.
+  relief(g,SAGA_BURIAL_CARYATIDS[family],x+8,y+54,2,stone,gold);
  }
  g.restore();
 }
