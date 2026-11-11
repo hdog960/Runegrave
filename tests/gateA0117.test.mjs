@@ -118,7 +118,7 @@ test('live renderers, 8 functional relics, 25 actual rooms, true world warnings,
  assert.match(stage,/paintSagaPillars\(/);
  assert.match(atlas,/inkedWindupBody\(/);
  assert.match(atlas,/WAYFARER_CLOAK_WEAVE\[/);
- assert.match(enemiesSrc,/runeWarning\(g, e, t\)/);
+ assert.match(enemiesSrc,/runeWarning\(g, e, t, hero\)/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/APP_VERSION = '0\.09\.35'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);

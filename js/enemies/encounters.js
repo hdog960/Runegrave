@@ -7,7 +7,7 @@ export const ENEMY_KINDS = ['draugr', 'wisp', 'archer', 'charger', 'sentinel', '
 /** Exact original six-shot casting direction. The existing enemy attack
  * counter advances only after a real shot is spawned; do not change its
  * timing, angle, damage, radius or cooldown for artwork. */
-export function sentinelShotVector(slot,attackCount {
+export function sentinelShotVector(slot,attackCount) {
  if(!Number.isInteger(slot)||slot<0||slot>=6||!Number.isSafeInteger(attackCount)||attackCount<0)throw new RangeError('Invalid original sentinel volley frame');
  const theta=(slot+attackCount*.10)*Math.PI/3;
  return {x:Math.cos(theta),y:Math.sin(theta)};

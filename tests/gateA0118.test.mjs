@@ -98,7 +98,7 @@ test('real scene/warnings, eight functional relics, original save/PWA and locked
  assert.match(art,/inkedImpactBody\(/);
  assert.match(art,/WAYFARER_OATH_SHIELDS\[/);
  assert.match(stage,/paintVaultCanopies\(/);
- assert.match(enemies,/runeWarning\(g, e, t\)/);
+ assert.match(enemies,/runeWarning\(g, e, t, hero\)/);
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);

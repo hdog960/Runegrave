@@ -111,6 +111,6 @@ test('art is wired into actual game, all 25 chambers, eight functional relics an
  assert.ok(sw.includes('scene/sagaPillarRelief.js'));
  assert.equal(FIRST_SOUL_RELICS.length,8);assert.equal(FIRST_SOUL_ROOMS.length,25);
  const src=file('../dist/js/enemies/enemyArt.js');
- assert.match(src,/runeWarning\(g, e, t\)/,'original world-space attack warnings retained');
+ assert.match(src,/runeWarning\(g, e, t, hero\)/,'original world-space attack warnings retained');
  assert.match(src,/paintHostileAtlas\(/);
 });

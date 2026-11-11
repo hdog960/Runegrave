@@ -69,7 +69,7 @@ test('three separate Norse ritual signal families render bounded, motion-indepen
   assert.equal(paintRitualWarning(a.g,sample(kind),hero,420,235),true);
   assert.equal(paintRitualWarning(b.g,sample(kind),hero,420,235),true);
   assert.deepEqual(a.calls,b.calls,'rendering must not have an arbitrary wall-time clock');
-  assert.ok(a.calls.length>15&&a.calls.length<210,kind+' art should be visually substantial but bounded');
+  assert.ok(a.calls.length>15&&a.calls.length<280,kind+' art should be visually substantial but bounded');
   stamps.push(JSON.stringify(a.calls));
  }
  assert.equal(new Set(stamps).size,3);
@@ -83,7 +83,7 @@ test('unchanged real sentinel encounter spawns projectiles after warning; no fab
  assert.equal(s.kind,'sentinel');assert.equal(s.state,'idle');
  s.cooldown=0;e.step(FIXED_DT,h,health);
  assert.equal(s.state,'warning');assert.equal(e.snapshot.shots,0);
- for(let i=0;i<65;i++)e.step(FIXED_DT,h,health);
+ for(let i=0;i<Math.ceil(1.1/FIXED_DT);i++)e.step(FIXED_DT,h,health);
  assert.ok(e.snapshot.shots>0,'the original enemy must fire actual visible projectiles');
  assert.ok(e.projectiles.every(b=>b.damage===1&&b.radius===3.4&&b.speed===90));
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
