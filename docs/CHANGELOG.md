@@ -1,3 +1,11 @@
+## v0.09.28 — Seven true-damage Norse body fractures, eight gait-linked oath shields, five carved story vault seals
+
+- Ink seven original enemy-specific 9×5 fracture silhouettes directly into the single real enemy body when `Enemy.flash > 0`; stronger actual hits change fracture material, but idle/recovery with no impact remain visually quiet. No new attack or hitbox.
+- Forge eight original 7×7 compass-specific Wayfarer shieldwork patterns, painted into the existing arm-brace with four real walking rivet positions and authentic recoil. Movement, attacks, controls and reduced-motion user setting unchanged.
+- Enrich existing 25 canonical chambers with five original carved story seals on upper masonry vault canopies, never an interactive door/hazard/pickup or an onscreen control.
+- Advance version/cache to 0.09.28, save schema 1 and locked v0.09 unchanged. Add strict visual/event/25-room assertions in `gateA0118` for 190 Node tests total and real Chromium 16-screenshot audit. Earlier 188/190 failure in real art budget and mandatory browser filename assertions was corrected, with no tests deleted. Green [PR](https://github.com/hdog960/Runegrave/pull/16), [main CI](https://github.com/hdog960/Runegrave/actions/runs/43085227168), [Pages validator](https://github.com/hdog960/Runegrave/actions/runs/43085227071) and [Pages publisher](https://github.com/hdog960/Runegrave/actions/runs/43085226293).
+- Real iPhone Safari and Home Screen/offline/performance, natural Warden finish and user art approval remain outstanding. **Gate A unapproved; v0.10 locked.**
+
 ## v0.09.27-r1 — Seven true-windup enemy body languages, living Wayfarer cape and 25 vaulted Norse shrine cuts (Gate A ongoing)
 
 - New `sagaBodyLanguage`: 21 physically different species-specific forelimb/body edge shapes replace three rows of the EXISTING enemy sprite at real attack windup stages. Four true body postures per foe (rest/early, three later bends), without extra floating attack effects, new AI or changed hitboxes.
