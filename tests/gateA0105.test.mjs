@@ -45,7 +45,7 @@ test('attack poses follow real remaining windup, not decorative time',()=>{
 test('v0.09.33 PWA caches animation modules; eight relics, 25 rooms and gates stay locked',()=>{
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  const ver=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
- assert.match(sw,/runegrave-shell-v0\.09\.32/);
+ assert.match(sw,/runegrave-shell-v0\.09\.33/);
  assert.ok(sw.includes('scene/heroActionSilhouette.js'));assert.ok(sw.includes('enemies/strikeSilhouettes.js'));
  assert.match(ver,/ROADMAP_VERSION = 'v0\.09'/);assert.match(ver,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(ver,/v0\.09.*v0\.39.*v0\.79.*v0\.99/);
