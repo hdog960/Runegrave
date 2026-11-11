@@ -142,8 +142,18 @@ with sync_playwright() as p:
        const direction=cardinal[c],open=r===1;
        const ox=c*220+110,oy=r*220+95;
        const iso=document.createElement('canvas');iso.width=142;iso.height=170;
-       const ig=iso.getContext('2d');ig.translate(71,95);
+       const ig=iso.getContext('2d');ig.translate(0,95);
        drawRuneDoor(ig,{x:71,y:0},direction,open,.35);
+       // The audit must prove both left and right buttresses are actually
+       // visible; an earlier contact sheet accidentally clipped half the door.
+       const pixels=ig.getImageData(0,0,142,170).data;
+       let leftPaint=0,rightPaint=0;
+       for(let py=40;py<133;py++)for(let px=16;px<126;px++){
+         const alpha=pixels[(py*142+px)*4+3];
+         if(alpha>0){if(px<56)leftPaint++;if(px>86)rightPaint++;}
+       }
+       if(leftPaint<80||rightPaint<80)
+          throw new Error('Clipped door art in screenshot: '+leftPaint+'/'+rightPaint);
        fingerprints.add(iso.toDataURL());
        g.drawImage(iso,ox-71,oy-87);
        g.fillStyle='#e8d4a7';
