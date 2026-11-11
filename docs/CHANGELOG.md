@@ -1,3 +1,11 @@
+## v0.09.34 — Real combat warning geometry and subdued diegetic doorway labels (Gate A)
+
+- Authored dedicated original Norse combat **threat lane** sprites keyed exclusively to actual hostile warning states: charger shows real maximum dash travel **60.8px** plus the actual player/enemy collision width instead of fictional 104px ray, archer shows one directed shot, and the Warden exposes its real five-shot angled fan and existing phase-two perpendicular shots.
+- Restored actual visibility priority: a heavy stone portal renders **behind** enemies, warning shapes and hostile projectiles. Replaced intrusive floating double-line “NORTH DOOR / LOCKED” caption with one compact integrated LOCKED/EXIT engraved iron plaque; compass orientation still visible from original four different carved gate silhouettes and external objective HUD.
+- Preserved actual damage/speed/timing, room navigation, game inputs, physics, 8 functioning relics, 25 encounter configurations, save schema 1, user-approved-on-refresh PWA behavior, original twin independent side rails. Updated app and offline cache to 0.09.34 and included the new source/built/root rendering module.
+- Added four new strict Node tests (now **214/214**) and full Playwright Chromium 24-screenshot visual audit. First 213/214 failure due to obsolete literal old double-caption expectation was corrected to stricter gate sculpture/no floating text assertion. Green [PR #22](https://github.com/hdog960/Runegrave/pull/22), [PR CI](https://github.com/hdog960/Runegrave/actions/runs/43117530604), [main CI](https://github.com/hdog960/Runegrave/actions/runs/43117880682) and [Pages source](https://github.com/hdog960/Runegrave/actions/runs/43117880544).
+- No v0.10 progression, no actual iPhone test or player artwork approval claimed. Exact latest Pages publisher/direct hosted-byte confirmation remains pending. **Gate A NOT APPROVED.**
+
 ## v0.09.32 — Large authored masonry and real 11-row grounded recovery silhouettes
 
 ### v0.09.33 deployment-verification follow-up
