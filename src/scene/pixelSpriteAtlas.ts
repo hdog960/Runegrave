@@ -12,6 +12,8 @@ type G=CanvasRenderingContext2D;
 type HeroFacing='N'|'NE'|'E'|'SE'|'S'|'SW'|'W'|'NW';
 import { inkedWindupBody } from './sagaBodyLanguage.js';
 import { inkedImpactBody } from './sagaImpactFractures.js';
+import { inkedWayfarerHurtBody } from './wayfarerHurtInk.js';
+import { inkedWardenPhaseBody } from './wardenUnboundInk.js';
 import { paintWayfarerMovingHem } from './kineticInk.js';
 import { paintEnemySagaWeapon } from './sagaWeaponAtlas.js';
 import { paintWayfarerSagaVisor, paintHostileSagaFace } from './sagaExpression.js';
@@ -445,7 +447,7 @@ function heroClass(facing:HeroFacing):keyof typeof WAYFARER_ATLAS{
  return 'diagonal';
 }
 /** Rendered inside existing world-space actor translation, no CSS/DOM. */
-export function paintHeroAtlas(g:G,pose:WayfarerPose,time:number,reducedMotion=false):void{
+export function paintHeroAtlas(g:G,pose:WayfarerPose,time:number,reducedMotion=false,damageGrace=0):void{
  if(!Object.hasOwn(WAYFARER_ATLAS,heroClass(pose.facing))||!Number.isFinite(time))
  throw new RangeError('Invalid hero atlas pose');
  const frame=heroAtlasFrame(pose,time,reducedMotion);
@@ -454,7 +456,7 @@ export function paintHeroAtlas(g:G,pose:WayfarerPose,time:number,reducedMotion=f
  g.save();
  if(flip)g.scale(-1,1);
  const top=-33,unit=ATLAS_CELL;
- drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,HERO_INK);
+ drawSheet(g,inkedWayfarerHurtBody(sheet,pose.facing,damageGrace),-sheetWidth(sheet)*unit/2,top,unit,HERO_INK);
  drawSheet(g,stride,-sheetWidth(stride)*unit/2,top+sheet.length*unit,unit,HERO_INK);
  paintWayfarerMovingHem(g,pose,time,reducedMotion);
  paintWayfarerOathStance(g,pose,time,reducedMotion);
@@ -529,7 +531,7 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  // One original body sheet gets real in-place shoulder/arm contour changes.
  // There is still exactly one body draw and no extra phantom attack sprite.
  const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
- const visibleBody=inkedImpactBody(windupBody,e.kind,e.flash);
+ const visibleBody=inkedImpactBody(inkedWardenPhaseBody(windupBody,e.kind,e.phase),e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
