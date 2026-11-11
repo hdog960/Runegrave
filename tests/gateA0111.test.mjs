@@ -38,8 +38,8 @@ test('eight hero facings and four distinctly planted foot positions are drawn, g
    const a=mock(),b=mock();
    paintHeroAtlas(a.g,p,.23,true);paintHeroAtlas(b.g,p,99.5,true);
    assert.deepEqual(a.calls,b.calls,'reduced-motion hero is still');
-   assert.equal(a.calls.filter(x=>x[0]==='save').length,2,'main sprite plus new hand-inked cloak must each preserve canvas state');
-   assert.equal(a.calls.filter(x=>x[0]==='restore').length,2);
+   assert.equal(a.calls.filter(x=>x[0]==='save').length,3,'main sprite, hand-inked cloak and directional crest each isolate canvas state');
+   assert.equal(a.calls.filter(x=>x[0]==='restore').length,3);
    assert.ok(a.calls.length>55&&a.calls.length<350);
    for(const c of a.calls.filter(x=>x[0]==='fillRect')){
      assert.ok(c.slice(1,5).every(Number.isFinite));
@@ -67,8 +67,8 @@ test('six enemy kinds and Warden possess bounded original pixel geometry, readab
   paintHostileAtlas(a.g,e,0,true);paintHostileAtlas(b.g,e,90,true);
   assert.deepEqual(a.calls,b.calls,'reduced-motion idle is stable');
   assert.ok(a.calls.length>24&&a.calls.length<370,kind+' draw call budget');
-  assert.equal(a.calls.filter(x=>x[0]==='save').length,1);
-  assert.equal(a.calls.filter(x=>x[0]==='restore').length,1);
+  assert.equal(a.calls.filter(x=>x[0]==='save').length,2,'hostile atlas and authentic reactive faceplate isolate canvas state');
+  assert.equal(a.calls.filter(x=>x[0]==='restore').length,2);
   for(const c of a.calls.filter(x=>x[0]==='fillRect'))assert.ok(c.slice(1,5).every(Number.isFinite));
   stamps.add(JSON.stringify(a.calls));
   const warnings=[.95,.5,.3,.1].map(w=>{
