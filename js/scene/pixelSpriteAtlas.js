@@ -251,7 +251,7 @@ export const WAYFARER_OATH_STANCES=Object.freeze({
   ".....oo......"
  ]
 });
-export function paintWayfarerOathStance(g,pose,time,reducedMotion=false{
+export function paintWayfarerOathStance(g,pose,time,reducedMotion=false){
  if(!Number.isFinite(time)||!Object.hasOwn(WAYFARER_OATH_STANCES,pose.facing))
   throw new RangeError('Invalid original Wayfarer combat stance');
  const gait=heroAtlasFrame(pose,time,reducedMotion),rows=WAYFARER_OATH_STANCES[pose.facing];
