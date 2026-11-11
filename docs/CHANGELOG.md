@@ -1,3 +1,10 @@
+## v0.09.21-r1 — Post-strike sprite crash correction
+
+- After v0.09.21 published, a repeat Chromium CI run uncovered an intermittent fatal `Invalid hostile atlas windup` error when recovering enemies retained a slightly negative final countdown; this was an actual renderer defect, not just a flaky test.
+- Both new pixel-atlas and Oath warning artists now safely handle finite negative recovery state and clamp real active attack overshoot to the most urgent pose; combat, timing, AI and attack warnings unchanged. Added regression for all seven species and an actual Chromium in-game negative-windup simulation.
+- Fresh PWA cache `runegrave-shell-v0.09.21-r1` allows a proper player-approved offline-shell refresh with the corrected JS.
+- GitHub candidate and post-merge strict `npm test` **158/158 pass** and Chromium four-landscape plus portrait and contact-sheet audit pass. Live public JS and service worker were independently fetched. No Gate A reapproval or v0.10 permission implied.
+
 ## v0.09.21 — Original hand-inked hero and hostile sprites (Gate A ongoing)
 
 - Replaced accumulated body painting layers with an original 2px material-coded pixel atlas: four distinct Wayfarer body sheets mirrored into eight facing directions, four separate footfall shapes, real aim/recoil-linked rune weapon. Six normal enemies and Rootbound Warden now use seven bespoke bodies with genuine phase/tell distinctions rather than overlapping translucent rectangles.
