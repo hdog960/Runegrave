@@ -40,7 +40,8 @@ export function paintHostileProjectiles(g:G,bolts:readonly HostileBolt[],time:nu
   g.save();g.translate(Math.round(b.x),Math.round(b.y));
   g.rotate(Math.atan2(b.dy,b.dx));
   g.globalAlpha=Math.max(.3,Math.min(1,b.life*2));
-  inkHostileBolt(g,HOSTILE_BOLT_PIXEL_SHEETS[s.kind][frame]!,HOSTILE_BOLT_INK[s.kind]);
+  const kind=s.kind==='warden-ember'?'warden-ember':'spectral-dart';
+  inkHostileBolt(g,HOSTILE_BOLT_PIXEL_SHEETS[kind][frame]!,HOSTILE_BOLT_INK[kind]);
   g.restore();
  }
 }
