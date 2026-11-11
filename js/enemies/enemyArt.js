@@ -2,7 +2,6 @@ import { drawRuneDoor } from '../scene/doorArt.js';
 import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visualMotion.js';
 import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.js';
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
-import { paintOathEnemyStrike } from '../scene/eddicCornice.js';
 import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
@@ -123,7 +122,8 @@ function sprite(g, e, t, reducedMotion = false){
  g.fillStyle='#0009';g.beginPath();g.ellipse(0,e.radius*.7,e.radius+3,4,0,0,Math.PI*2);g.fill();
  paintHostileAtlas(g,e,t,reducedMotion);
  // One deliberate species-specific shape is enough beside authoritative world warnings.
- paintOathEnemyStrike(g,e,t,reducedMotion);
+ // New authored single weapon silhouette lives inside the atlas. The world
+ // warning ring and directional lance remain the only separate attack tell.
  g.restore();
  if(e.hp<e.maxHp || e.kind==='warden'||e.state==='warning'){
   const width=e.kind==='warden'?45:19;

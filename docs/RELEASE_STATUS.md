@@ -1,5 +1,14 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.24 — Five Norse floor-frieze schools × five distinct sagas, seven singular weapon silhouettes (CANDIDATE)
+
+**Candidate on isolated branch, not approved/merged/deployed. Gate A remains active; v0.10 locked.**
+
+- Added original `sagaFloorFrieze` module: five independently inked masonry schools and five separate mythic episodes carve **25 visually distinct 214×35 world-pixel lower floor friezes** at y=H-39..H-5. Each canonical `fs-XX` room selects a different *physical* inset story and lintel notch, not merely tint. Low .73 opacity and entirely behind characters/projectiles/hazard warnings, no new pickup, hitbox, HUD or touch overlay.
+- Added original `sagaWeaponAtlas` module: seven individually hand-inked 13×10 enemy weapon/fang/antler sprites. Four geometrically distinct physical pre-strike poses keyed solely to real warning/charge countdown, distinct Rootbound Warden phase-two forks and genuine damage-reaction splinters. Replaced two competing overpainted enemy weapon layers in actual compiled renderer with ONE coherent authored weapon sprite, while preserving the original authoritative world-space rings, charger lanes, arrows, label/timer, combat AI, duration, damage and physics.
+- Official version and new PWA shell planned v0.09.24. New Node and actual Chromium art-contact sheets will verify 25 room scenes and 7×4 weapon poses alongside existing iPhone-sized landscape + portrait/two-thumb simulation. All old direct unit tests of retired art remain; integration regressions must demand only one visible weapon art layer. Preserve all seven governing docs, eight real relics, saves schema 1, preferences, input and PWA refresh policy.
+
+
 ## v0.09.23-r1 — Verified hero expressions, real portal silhouettes and JavaScript fallback hardening (2026-11-11 US Central)
 
 **RELEASED and verified.** Official application version **0.09.23**; corrective offline cache **`runegrave-shell-v0.09.23-r1`**. Full **169/169 Node tests**, strict TypeScript compile, Chromium four landscape sizes/portrait/two-thumb gameplay and art galleries, both Pages workflows and independent public HTTP evidence passed. **Gate A still NOT approved; v0.10 LOCKED.**

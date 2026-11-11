@@ -10,7 +10,8 @@
 
 
 
-import { paintWayfarerMovingHem, paintHostileKineticInk } from './kineticInk.js';
+import { paintWayfarerMovingHem } from './kineticInk.js';
+import { paintEnemySagaWeapon } from './sagaWeaponAtlas.js';
 import { paintWayfarerSagaVisor, paintHostileSagaFace } from './sagaExpression.js';
 export const ATLAS_CELL=2;
 const HERO_INK=Object.freeze({
@@ -195,7 +196,7 @@ export function paintHostileAtlas(g,e,time,reducedMotion=false){
  const bob=reducedMotion?0:e.state==='idle'?Math.round(Math.sin(time*2)*.5):0;
  g.save();g.translate(0,bob);
  drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,palette);
- paintHostileKineticInk(g,e,time,reducedMotion);
+ paintEnemySagaWeapon(g,e,time,reducedMotion);
  paintHostileSagaFace(g,e,time,reducedMotion);
  // Strong readable cast: three grounded steel/rune bars appear step-by-step,
  // physically linked to real attack windup, never to a decorative clock.
