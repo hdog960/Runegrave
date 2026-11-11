@@ -1,20 +1,16 @@
-name: Build and publish Runegrave to GitHub Pages
+# GitHub Pages is already configured to publish main/(root) automatically.
+# A SECOND actions/deploy-pages workflow created parallel deployments for the
+# same SHA, causing stale environment locks (HTTP 400) and duplicate artifacts.
+# Keep rigorous per-push built-site validation, but have only ONE publisher.
+name: Validate Runegrave Pages source
 on:
   push:
     branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  validate-pages-source:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,10 +19,13 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      # Strict TS, all Node regressions, root JS syntax, PWA cache and saved state.
+      # Real 4-size Chromium + two-thumb QA also runs in independent ci.yml.
       - run: npm test
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Confirm public branch-root shell has every required entrypoint
+        run: |
+          test -f index.html
+          test -f styles.css
+          test -f js/main.js
+          test -f sw.js
+          test -f manifest.webmanifest
