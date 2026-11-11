@@ -91,8 +91,8 @@ test('actual compiled render paths, offline cache, controlled gates and schema s
  assert.match(stage,/Number\(currentRoom\.id\.slice\(-2\)\)/);
  assert.match(hero,/paintHeroAtlas/,'the new stronger atlas supersedes its former overlay');
  assert.doesNotMatch(hero,/paintWayfarerOathGear\(/,'old body overlays must not obscure the authored sprite');
- assert.doesNotMatch(enemies,/paintOathEnemyStrike\\(/,'no extra Oath weapon must compete with the new singular weapon atlas');
- assert.match(c('../dist/js/scene/pixelSpriteAtlas.js'),/paintEnemySagaWeapon\\(/);
+ assert.doesNotMatch(enemies,/paintOathEnemyStrike\(/,'no extra Oath weapon must compete with the new singular weapon atlas');
+ assert.match(c('../dist/js/scene/pixelSpriteAtlas.js'),/paintEnemySagaWeapon\(/);
  assert.match(version,/APP_VERSION = '0\.09\.24'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
