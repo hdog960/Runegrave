@@ -1,5 +1,10 @@
 ## v0.09.32 — Large authored masonry and real 11-row grounded recovery silhouettes
 
+### v0.09.33 deployment-verification follow-up
+
+GitHub's original single Pages publisher [43116244831](https://github.com/hdog960/Runegrave/actions/runs/43116244831) **successfully deployed** code commit `53f0fb0d`. Release-documentation commit `ae5a1705` passed strict Node, real Chromium, and Pages-source validation. Independent hosted HTML/JS fetch and physical iPhone Safari remain unverified. No Gate A owner approval or v0.10 work.
+
+
 ## v0.09.33 — Collision-real hostile travel poses (2026-11-11)
 
 - Added 20 original four-stage lower-body stride/hover poses for the five mobile foes (draugr, wisp, archer, charger and Rootbound Warden). The real existing fixed-step simulation supplies `stride` only after legal world movement; stationary sentinel/teleport shade remain unanimated instead of fake walking. Stop, blocked state, recovery and reduced-motion freeze lower-body animation correctly; no speed, hitbox, damage, threat-timing or content modifications.
