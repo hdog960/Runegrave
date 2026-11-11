@@ -121,7 +121,7 @@ export function paintVaultDepth(g, W, H, time, family, variant = 0, reducedMotio
    px(cx-2,cy-10,4,11,glow);
   }else{
    // Fate-loom: counterweighted shuttle, diamond and crossed warp strands.
-   for(let k=-2;k<=2;k++)line(cx+k*6,cy-22,cx-k*5,cy+1,k===0?glow:stone,1.1);
+   for(let k=-1;k<=1;k++)line(cx+k*9,cy-22,cx-k*8,cy+1,k===0?glow:stone,1.1);
    line(cx-10,cy-12,cx,cy-19,glow,2);
    line(cx,cy-19,cx+10,cy-12,glow,2);
    line(cx+10,cy-12,cx,cy-5,stone,2);

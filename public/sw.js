@@ -1,5 +1,5 @@
 /* RUNEGRAVE offline shell v0.09. New builds wait for player-approved refresh. */
-const CACHE_NAME = 'runegrave-shell-v0.09.16';
+const CACHE_NAME = 'runegrave-shell-v0.09.17';
 const ASSETS = [
   './', './index.html', './styles.css', './js/main.js',
   './js/core/version.js', './js/core/rng.js', './js/core/ids.js', './js/content/realmCatalog.js',
