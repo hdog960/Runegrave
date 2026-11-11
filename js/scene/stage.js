@@ -28,6 +28,7 @@ import { paintChamberAmbience } from './chamberAmbience.js';
 import { paintVaultDepth } from './vaultDepthArt.js';
 import { paintEddicCornice } from './eddicCornice.js';
 import { paintChronicleFloor } from './chronicleFloor.js';
+import { paintSagaFloorFrieze } from './sagaFloorFrieze.js';
 import { paintChamberSagaStones } from './ageStoneArt.js';
 import { paintSagaStandards } from './sagaArtwork.js';
 import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
@@ -314,6 +315,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             paintRoomSigil(g, W, H, time, currentRoom);
         }
         if (currentRoom && mode === 'crypt')
+            paintSagaFloorFrieze(g, W, H, currentRoom.family, Number(currentRoom.id.slice(-2)) - 1);
             paintChamberAmbience(g, W, H, time, currentRoom.family, roomIndex);
         motionTrails.paintGround(g, W, H, currentRoom?.family || 'ROOT', reduced.matches);
         if (exitTrail.length)
