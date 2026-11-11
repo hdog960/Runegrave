@@ -1,3 +1,11 @@
+## v0.09.20 — Eddic architecture and oath-combat ink (Gate A still locked)
+
+- Crafted five unmistakably different Norse architectural upper-wall pixel silhouettes and five authored inset myth episodes. Their 25 combinations sit high above the dodge lane and use the canonical scripted room ID; no false doors, extra pickups or on-screen buttons.
+- Added shield, engraved bracer and facing-sensitive mantle details to the Wayfarer, with actual distinct alternating recovery frames and firing-recoil highlights. Added seven body-shape-specific attack details linked to real hostile warning stages, including Warden phase-two thorns.
+- Fixed a duplicate recovery-pose issue caught by the new regression suite. A failing firing-pose fixture was corrected to sample an actual positive recoil window, without touching the existing weapon timing or weakening tests.
+- Verified 153/153 strict TS/Node tests and both candidate and post-merge Chromium mobile landscape + portrait suites. Public Pages v0.09.20 and PWA shell version independently fetched after successful deployment.
+- Preserved the seven authoritative documents, eight functional relics, controls, scripted run, enemy behaviors, collision, health, saves, preferences, PWA offline update policy and original world/camera separation. No Gate A aesthetic approval or v0.10 authorization.
+
 ## v0.09.19 — Mythic pixel-sculpted side stones and deeper truthful gates (Gate A STILL PENDING)
 
 - Original `ageStoneArt` authored five different 16-column Norse stone silhouette bodies and five distinct seven-row inset rune scenes. Each of the 25 authored chambers has its own paired edge-wall monuments with depth bevels, carved chapter-specific plinth profile and restrained family highlights.

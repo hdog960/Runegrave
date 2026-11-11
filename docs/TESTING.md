@@ -1,3 +1,13 @@
+## v0.09.20 — Actual QA and release evidence (2026-11-10 US Central)
+
+- Branch `gate-a-v00920-architectural-ink`, PR [#4](https://github.com/hdog960/Runegrave/pull/4), merged source SHA `81d598b6133e2fbd7677bfcaa8d6808e318904dc`. Candidate GitHub workflow `42943646322` and main workflow `42943879531` both **SUCCESS** with strict npm test + browser jobs.
+- **153/153 automated Node tests PASS**, including four new real `tests/gateA0110.test.mjs` cases that verify five distinct masonry silhouettes, five narrative inlays, all 25 authentic canonical room designs, upper-world draw bounds y≤54 and call limits, reduced-motion stillness, eight-direction gear with real four-step recovery and firing recoil, seven distinctive enemy-kind warning shapes and all four real windup bands, real compiled imports, save schema 1 and PWA cache coverage.
+- Initial PR build failed one new pose test (152/153 passed) because two recovery frames shared the same visual pose. Improved the actual art in source and JS mirror and adjusted only an incorrect test stimulus that sampled firing at zero recoil; **all 153 tests then passed** without removing existing assertions or weakening bounds.
+- GitHub Actions headless Chromium `v009_browser_audit.py` plus `v00920_browser_audit.py`: four simulated iPhone landscape viewports and portrait, guided launch and real chamber entry, two physically separate grip hit regions outside the central playfield, simultaneous movement/aim/firing, no uncaught JS runtime errors. CI archived two browser screenshots. **This is not physical iPhone Safari or end-to-end manual full run.**
+- Production Pages publish #63 and default Pages #72 completed successfully. Independent live HTTP fetched `js/core/version.js` with version `0.09.20`, `sw.js` with `runegrave-shell-v0.09.20`, `js/scene/eddicCornice.js` with three new artists and three compiled actual gameplay renderers importing/invoking them.
+- Seven governing document Git blobs, eight crucial gameplay/control code blobs and all prior files retained. Save schema remains 1; two-thumb center exclusion remains intact in simulated layouts.
+- **Still unverified:** physical iPhone Safari performance/comfort, PWA Home Screen refresh/offline on device, unaided boss victory/full-run progression and the player’s premium art standard. Continue Gate A; v0.10 remains locked.
+
 ## v0.09.19 — Verified release QA (2026-11-10 US Central)
 
 - Source branch `gate-a-v00919-stone-sagas`, merged PR [#3](https://github.com/hdog960/Runegrave/pull/3) to commit `fe2f0096d85e1a1c16ef9b4c1e288ecb7eb0fc5a`. Candidate test run `42941255797` and post-merge main test run `42941422327` both completed **SUCCESS**.
