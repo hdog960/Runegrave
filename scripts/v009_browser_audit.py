@@ -35,6 +35,9 @@ with sync_playwright() as p:
   page.add_script_tag(type='module',content=f'import "{data_module("main.js")}";')
   page.wait_for_timeout(350)
   if name != 'portrait':
+   # Data-URL ESM graphs can initialize after the old fixed 350 ms on busy CI;
+   # wait for the ACTUAL visible onboarding state, never merely for a timeout.
+   page.locator('#guide-overlay').wait_for(state='visible',timeout=15000)
    assert page.locator('#guide-overlay').is_visible(), 'First launch must show HOW TO PLAY'
    assert page.evaluate('document.documentElement.dataset.paused')=='true', 'Tutorial must pause combat'
    # The guide is a paused screen, never floating over the live action.
