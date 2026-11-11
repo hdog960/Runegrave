@@ -146,7 +146,7 @@ export const HOSTILE_BODY_GESTURES=Object.freeze({
   ]
  }
 });
-export function inkedWindupBody(base,kind,band{
+export function inkedWindupBody(base,kind,band){
  if(!Object.hasOwn(HOSTILE_BODY_GESTURES,kind)||!Number.isInteger(band)||band<0||band>3)
   throw new RangeError('Unknown authored battle-body posture');
  if(band===0)return base; // idle and earliest warning preserve original outline
