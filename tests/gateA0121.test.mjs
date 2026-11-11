@@ -25,7 +25,7 @@ test('nine original enemy recovery silhouettes follow ONLY three actual recovery
    assert.ok(art.every(r=>/^[. oabcegrs]+$/.test(r)),kind+' no invalid material');
    assert.notDeepEqual(art,base,'actual recovery physically changes the same body');
    const edited=art.map((s,i)=>s!==base[i]?i:null).filter(i=>i!==null);
-   assert.ok(edited.length>=2&&edited.length<=3,kind+' replace only three body rows');
+   assert.ok(edited.length>=5&&edited.length<=14,kind+' substantially recut 11 authentic body rows without expanding sprite');
    const signature=art.join('|');frames.push(signature);across.add(signature);
   }
   assert.equal(new Set(frames).size,3,'three truly different original recoveries, not repaints');
