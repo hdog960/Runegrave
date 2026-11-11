@@ -35,5 +35,5 @@ jobs:
         if: always()
         with:
           name: gate-a-v00918-saga
-          path: gate-a-v00918-saga.png
+          path: gate-a-v00918-*.png
           if-no-files-found: ignore
