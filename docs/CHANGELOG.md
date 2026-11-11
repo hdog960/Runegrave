@@ -1,3 +1,11 @@
+## v0.09.29 — Real damage-grace visibility, eight Wayfarer hurt masks, physical unbound Warden, five carved vault-depth profiles
+
+- **Never vanish during invulnerability:** Replace alternating invisible hero render frames with always-visible actual Wayfarer actor. Pass real `MortalHearts.state.grace` to ONE hero renderer; eight original in-body compass-specific hurt masks and two fading real-grace materials, plus a physically attached post-armour shoulder fracture, distinguish healthy/hurt/recovery even after complete layered raster.
+- **True second-phase Warden:** Six hand-inked upper-body root/antler rows change the original Warden sprite only when actual encounter phase is 2. No new boss or false threat indicators.
+- **Five unique 13×5 Norse arch shadow profiles** directly carved into the 25 existing canonical vault panels, behind combat, with strict world-space and draw-call bounds.
+- New `gateA0119` regression suite and v00929 Chromium audit preserve all existing tests; final **194/194 Node**, strict TypeScript and actual real-browser screenshot tests succeeded. Failed first tests and browser occlusion were corrected without waiving regressions. Green [PR #17](https://github.com/hdog960/Runegrave/pull/17), [post-merge CI](https://github.com/hdog960/Runegrave/actions/runs/43090874726), [Pages validator](https://github.com/hdog960/Runegrave/actions/runs/43090874799), [Pages publisher](https://github.com/hdog960/Runegrave/actions/runs/43090873060).
+- One Wayfarer, six foes plus Warden, all 25 authored room configs and eight functioning relics unchanged. No physics, damage, AI, input, save schema 1, PWA consent, controller grips or official seven design docs changed. App/cache v0.09.29, roadmap v0.09; **Gate A still unapproved, v0.10 locked**.
+
 ## v0.09.28 — Seven true-damage Norse body fractures, eight gait-linked oath shields, five carved story vault seals
 
 - Ink seven original enemy-specific 9×5 fracture silhouettes directly into the single real enemy body when `Enemy.flash > 0`; stronger actual hits change fracture material, but idle/recovery with no impact remain visually quiet. No new attack or hitbox.

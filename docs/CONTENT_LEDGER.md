@@ -1,3 +1,7 @@
+## v0.09.29 — Verified visual readability pass, no new playable content
+
+**Playable counts identical to v0.09.28:** 25 existing authored room configurations (eight sampled in a current mini-run), eight genuine functional relic effects, one playable Wayfarer, six standard enemy species and one Rootbound Warden boss. Eight hurt masks and two authentic grace materials are states of the SAME hero, not characters, items or new effects. The Warden unbound crown is an altered visual appearance of its EXISTING phase 2, not a new attack or boss. Five new vault shadow profiles modify existing 25 scenes, not their number, navigation, geometry or drops. **No v0.10 system, full dungeon graph, more bosses, routes, items or ending was added. Gate A NOT APPROVED and v0.10 LOCKED.**
+
 ## v0.09.28 — Visual presentation only; no fabricated gameplay content
 
 **Unchanged real playable counts:** 25 authored room configurations (eight existing curated first-soul mini-run choices), exactly eight functioning relic effects, one playable Wayfarer, six ordinary hostile types plus one Rootbound Warden boss. Seven new authentic damage-event body drawings are alternative ART of the SAME seven foes, not new attacks or enemies. Eight engraved shields are directional poses of the SAME character, not equipment drops or characters. Five vault seals create differentiated visual compositions for the same 25 rooms, not additional rooms. No new seeded floor graph, v0.10 dungeon system, item pool, story route, talisman, boss or ending is implemented. **Gate A NOT APPROVED; v0.10 LOCKED.**
