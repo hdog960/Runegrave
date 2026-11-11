@@ -291,7 +291,7 @@ export function paintEnemySagaWeapon(g:G,e:WeaponPose,time:number,reducedMotion=
  strokeSheet(g,weapon,left,top,ink);
  // Seven deliberately different material silhouettes physically change posture
  // during real countdown states, inside the ONE existing weapon layer.
- if(frame>0)strokeSheet(g,ENEMY_WEAPON_ANTICIPATION[e.kind][frame-1],left,top-2,ink);
+ if(frame>0)strokeSheet(g,ENEMY_WEAPON_ANTICIPATION[e.kind][frame-1]!,left,top-2,ink);
  // A physical band, split rivet, and last-frame fang change geometry at each
  // phase. No fake glow ring or impact target appears under the player.
  g.fillStyle=ink['#'];
