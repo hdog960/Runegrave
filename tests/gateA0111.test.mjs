@@ -90,7 +90,7 @@ test('real renderers now use one inked atlas per actor without old layered-body 
  const hero=read('../dist/js/scene/sanctuaryArt.js');
  const enemy=read('../dist/js/enemies/enemyArt.js');
  const cache=read('../dist/sw.js'),version=read('../dist/js/core/version.js');
- assert.match(hero,/paintHeroAtlas\(g,\s*pose,\s*t,\s*reducedMotion\)/);
+ assert.match(hero,/paintHeroAtlas\(g,\s*pose,\s*t,\s*reducedMotion,\s*damageGrace\)/);
  assert.match(enemy,/paintHostileAtlas\(g,\s*e,\s*t,\s*reducedMotion\)/);
  assert.ok(!hero.includes('paintSagaWayfarer('),'hero is no longer overdrawn six times');
  assert.ok(!enemy.includes('paintEnemyActionFrame('),'enemy has one visible strike layer');
