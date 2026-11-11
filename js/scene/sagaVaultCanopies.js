@@ -108,6 +108,46 @@ export const VAULT_CANOPY_MYTHS=Object.freeze([
   "##.....##"
  ]
 ]);
+/** Five original carved vault-keystone seals, keyed to the real
+ * canonical story episode. They are masonry, not door/item/status markings.
+ */
+export const VAULT_CANOPY_SEALS=Object.freeze([
+ [
+  "..####..",
+  ".##++##.",
+  "##+##+##",
+  ".##++##.",
+  "..####.."
+ ],
+ [
+  "#......#",
+  "##....##",
+  ".##++##.",
+  "..####..",
+  "...##..."
+ ],
+ [
+  "...##...",
+  "..####..",
+  ".##++##.",
+  "##+##+##",
+  "#......#"
+ ],
+ [
+  "..#..#..",
+  ".##++##.",
+  "##++++##",
+  ".##++##.",
+  "..#..#.."
+ ],
+ [
+  "#.#..#.#",
+  ".#.#.#.#",
+  "..####..",
+  ".#.#.#.#",
+  "#.#..#.#"
+ ]
+]);
 export const VAULT_CANOPY_PALETTES=Object.freeze({
  "ASH": [
   "#0d191b",
@@ -179,6 +219,9 @@ export function paintVaultCanopies(g,W,H,family,serial){
   rect(g,x+2,y+66,30,4,stone);
   // The authored cut-count changes a small physical lintel, never UI text.
   rect(g,x+3+story*5,y+59,4,4,gold);
+  // Carved, shaded lower keystone ties the arch to its existing side pier.
+  relief(g,VAULT_CANOPY_SEALS[story],x+9,y+58,2,rim,gold);
+  rect(g,x+1,y+70,32,2,stone);
  }
  g.restore();
 }
