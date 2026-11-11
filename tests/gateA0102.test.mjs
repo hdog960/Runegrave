@@ -37,7 +37,11 @@ test('hostile projectiles use distinct visible silhouettes for heavy and normal 
  const {g,calls}=painter();paintHostileProjectiles(g,[light,heavy],.41);
  assert.equal(calls.filter(c=>c[0]==='save').length,2);
  assert.equal(calls.filter(c=>c[0]==='save').length,calls.filter(c=>c[0]==='restore').length);
- assert.ok(calls.length<70);
+ // Pixel-art originals batch the real physical ink rows. Preserve strict
+ // performance limits for both projectiles instead of the old vector budget.
+ const pixels=calls.filter(c=>c[0]==='fillRect');
+ assert.ok(pixels.length>40&&pixels.length<170,'two hostile sprites must be bounded original pixel art');
+ assert.ok(calls.length>90&&calls.length<380,'no runaway projectile drawing on phone');
  const noBolts=painter();paintHostileProjectiles(noBolts.g,[],0);assert.equal(noBolts.calls.length,0);
  assert.throws(()=>hostileProjectileStyle({...light,damage:NaN}),/Invalid/);
 });
