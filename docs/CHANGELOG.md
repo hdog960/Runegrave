@@ -1,3 +1,12 @@
+## v0.09.23-r1 — Eight directional hero visors, reactive enemy faces and real-state door architecture (Gate A ongoing)
+
+- Hand-authored **eight** Wayfarer compass-facing Norse armor crest/visor pixel masks, with authentic gait shifts and genuine firing recoil. **Seven** original hostile facial inlays react to actual warning/charge and hit damage; Warden phase two has changed crown geometry.
+- **Four** carved directional door rune signatures; physically barred solid portcullis and unmistakably open recessed corridor with separated heavy doors and eight paired perspective ribs, driven solely by existing true gate-open state. No change to world warning geometry, controls or navigation.
+- Added 25 original authored chips and scars to the existing inert canonical room floor mosaics. No new props, collision, hazards or HUD clutter.
+- Candidate CI initially caught an under-detailed open corridor; improved actual stone artwork rather than weakening earlier doorway tests. Final art PR #8 passed **167/167 Node tests and Chromium** and shipped to Pages.
+- Corrective PR #9 repaired seven checked-in root JavaScript mirrors containing TypeScript-only assertions/annotations, without changing authoritative gameplay or compiled Actions-built site. Added regression parsing **all 61 root runtime JS files**. Initial new test failures were real and fixed; final **169/169 Node tests**, Chromium, Pages and independently checked public assets all passed. PWA cache advanced to `runegrave-shell-v0.09.23-r1` with official game version `0.09.23`.
+- Seven governing documents, eight working relics, 25 rooms, physics, enemy simulation, progression, health, saves, settings and nonoverlapping iPhone external thumb rails preserved. Physical iPhone, unaided Warden completion, and subjective visual approval not verified. Gate A remains open; v0.10 locked.
+
 ## v0.09.22 — Floor saga chronicles and four-beat articulated combat ink (Gate A still pending)
 
 - Original Norse floor-engraving atelier: 25 distinct in-world mosaics drawn from five bespoke material silhouettes and five episode pictograms, plus five different notch arrangements. Uses canonical `fs-XX` room identity regardless of the run's shuffled chamber order. Carvings stay subdued and low in the floor, underneath real combat/aim indicators.
