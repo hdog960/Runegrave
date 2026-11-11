@@ -11,6 +11,7 @@ import type {Enemy,EnemyKind} from '../enemies/encounters.js';
 type G=CanvasRenderingContext2D;
 type HeroFacing='N'|'NE'|'E'|'SE'|'S'|'SW'|'W'|'NW';
 import { inkedWindupBody } from './sagaBodyLanguage.js';
+import { inkedImpactBody } from './sagaImpactFractures.js';
 import { paintWayfarerMovingHem } from './kineticInk.js';
 import { paintEnemySagaWeapon } from './sagaWeaponAtlas.js';
 import { paintWayfarerSagaVisor, paintHostileSagaFace } from './sagaExpression.js';
@@ -445,7 +446,8 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  g.save();g.translate(0,bob);
  // One original body sheet gets real in-place shoulder/arm contour changes.
  // There is still exactly one body draw and no extra phantom attack sprite.
- const visibleBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
+ const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
+ const visibleBody=inkedImpactBody(windupBody,e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
