@@ -15,7 +15,7 @@ const enemies=['draugr','wisp','archer','charger','sentinel','shade','warden'];
 const dirs=[[0,-1],[1,-1],[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1]];
 test('the ink atlas is seven actually authored enemy sheets + four hero silhouettes, not noisy overlays',()=>{
  assert.equal(ATLAS_CELL,2);
- assert.equal(Object.keys(WAYFARER_ATLAS).length,4);
+ assert.equal(Object.keys(WAYFARER_ATLAS).length,5);
  assert.equal(WAYFARER_GAITS.length,4);
  assert.deepEqual([...PIXEL_ATLAS_KINDS],enemies);
  assert.equal(new Set(Object.values(WAYFARER_ATLAS).map(x=>x.join('|'))).size,4);
@@ -38,7 +38,7 @@ test('eight hero facings and four distinctly planted foot positions are drawn, g
    const a=mock(),b=mock();
    paintHeroAtlas(a.g,p,.23,true);paintHeroAtlas(b.g,p,99.5,true);
    assert.deepEqual(a.calls,b.calls,'reduced-motion hero is still');
-   assert.equal(a.calls.filter(x=>x[0]==='save').length,4,'main sprite, existing cloak and visor plus new four-beat mantle each isolate canvas state');
+   assert.equal(a.calls.filter(x=>x[0]==='save').length,5,'body, moving hem, eight-way shoulder silhouette, visor and four-beat mantle each isolate canvas state');
    assert.equal(a.calls.filter(x=>x[0]==='restore').length,4);
    assert.ok(a.calls.length>55&&a.calls.length<350);
    for(const c of a.calls.filter(x=>x[0]==='fillRect')){
