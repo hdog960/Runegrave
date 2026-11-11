@@ -15,6 +15,8 @@ export type Enemy={id:string;kind:EnemyKind;x:number;y:number;radius:number;hp:n
 export type HostileBolt={id:number;x:number;y:number;dx:number;dy:number;speed:number;radius:number;damage:number;life:number};
 export type EncounterSnapshot={room:EncounterRoom;phase:RoomPhase;wave:number;kills:number;bossDefeated:boolean;bossPhase:number;enemies:readonly Enemy[];projectiles:readonly HostileBolt[];shots:number};
 const EPS=1e-8;
+/** Actual charger dash constants, also used by the readable danger footprint. */
+export const CHARGER_DASH_SPEED=160,CHARGER_DASH_DURATION=.38;
 const DT_LIMIT=1/30;
 const MAG=(a:Vec2,b:Vec2)=>Math.hypot(a.x-b.x,a.y-b.y);
 const norm=(dx:number,dy:number):Vec2=>{const m=Math.hypot(dx,dy);return m<EPS?{x:0,y:1}:{x:dx/m,y:dy/m};};
@@ -223,8 +225,8 @@ export class HostileEncounter {
         else if(distance<86)this.move(e,{x:-toward.x,y:-toward.y},ENEMY_SPEED.archer,dt);
       }else if(e.kind==='charger'){
         if(e.state==='idle'){if(e.cooldown===0){e.state='warning';e.windup=.8;e.dx=toward.x;e.dy=toward.y;}else this.move(e,toward,22,dt);}
-        else if(e.state==='warning'){e.windup-=dt;if(e.windup<=0){e.state='charge';e.windup=.38;}}
-        else if(e.state==='charge'){this.move(e,{x:e.dx,y:e.dy},160,dt);e.windup-=dt;if(e.windup<=0){e.state='recover';e.windup=.65;}}
+        else if(e.state==='warning'){e.windup-=dt;if(e.windup<=0){e.state='charge';e.windup=CHARGER_DASH_DURATION;}}
+        else if(e.state==='charge'){this.move(e,{x:e.dx,y:e.dy},CHARGER_DASH_SPEED,dt);e.windup-=dt;if(e.windup<=0){e.state='recover';e.windup=.65;}}
         else if(e.state==='recover'){e.windup-=dt;if(e.windup<=0){e.state='idle';e.cooldown=1.0;}}
       }else if(e.kind==='sentinel'){
         if(e.state==='idle'&&e.cooldown===0){e.state='warning';e.windup=.90;}

@@ -45,7 +45,9 @@ test('Player always sees readable directional objectives, sealed/open labels and
  const art=readFileSync(new URL('../dist/js/scene/doorArt.js',import.meta.url),'utf8');
  const cache=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  for(const fragment of ['id="relic-reveal-overlay"','id="relic-reveal-effect"','data-relic-effect','data-pickup-info','data-door-hint'])assert.ok(html.includes(fragment),fragment);
- for(const label of ['LOCKED','EXIT','DOOR'])assert.ok(art.includes(label));
+ for(const label of ['LOCKED','EXIT'])assert.ok(art.includes(label));
+ assert.match(art,/paintSagaGate\(g,\s*direction,\s*open,\s*time\)/,'all four actual compass gate sculptures remain');
+ assert.doesNotMatch(art,/meta\.label\}\s*DOOR/,'no second floating doorway caption over enemies');
  assert.ok(stage.includes('runegrave:relic-acquired'));
  for(const runtime of ['js/run/wayfinding.js','js/scene/doorArt.js','js/platform/relicDiscovery.js'])assert.ok(cache.includes(runtime),runtime);
 });

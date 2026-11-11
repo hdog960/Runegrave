@@ -3,6 +3,7 @@ import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visua
 import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.js';
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
 import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
+import { paintThreatLane } from './attackLaneInk.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS = Object.freeze({
@@ -47,38 +48,7 @@ function runeWarning(g, e, t) {
         px(g, x - 3, y - 2, 6, 4, imminent ? '#ff855e' : tell.color);
     }
     if (e.kind === 'charger' || e.kind === 'archer' || e.kind === 'warden') {
-        const length = e.kind === 'charger' ? 104 : e.kind === 'warden' ? 117 : 124;
-        const endpoint = visibleWarningEnd(e.x, e.y, e.dx, e.dy, length, worldWidth, worldHeight);
-        const endX = endpoint.x, endY = endpoint.y;
-        g.strokeStyle = imminent ? '#ff6b4b' : '#f7c883';
-        g.lineWidth = imminent ? 2.5 : 1.7;
-        g.setLineDash([7, 4]);
-        g.beginPath();
-        g.moveTo(e.x, e.y);
-        g.lineTo(endX, endY);
-        g.stroke();
-        g.setLineDash([]);
-        // The tip indicates where the windup will travel. Arrowheads and a targeted
-        // endpoint stay visible in both color-vision and reduced-motion modes.
-        const nx = -e.dy, ny = e.dx;
-        lineHead(g, endX, endY, e.dx, e.dy, imminent ? '#ff816a' : tell.color);
-        if (e.kind === 'charger') {
-            g.strokeStyle = imminent ? '#ff816a' : '#aa7658';
-            g.lineWidth = 1;
-            for (const side of [-1, 1]) {
-                g.beginPath();
-                g.moveTo(e.x + nx * 12 * side, e.y + ny * 12 * side);
-                g.lineTo(endX + nx * 12 * side, endY + ny * 12 * side);
-                g.stroke();
-            }
-        }
-        else {
-            g.strokeStyle = imminent ? '#ff9b7c' : '#dfc18e';
-            g.lineWidth = 1;
-            g.beginPath();
-            g.arc(endX, endY, 6, 0, Math.PI * 2);
-            g.stroke();
-        }
+        paintThreatLane(g, e, worldWidth, worldHeight);
     }
     else if (e.kind === 'sentinel' || e.kind === 'wisp') {
         // Distinguish an expanding volley from a single spirit shot.
@@ -133,6 +103,8 @@ function sprite(g, e, t, reducedMotion = false){
 }
 export function drawEncounter(g, encounter, t, relicCollected = true, reducedMotion = false) {
     const state = encounter.snapshot;
+    // Architectural exit behind actual warning ink, enemies and projectiles.
+    drawRuneDoor(g, encounter.exit, encounter.exitDirection, state.phase === 'gate' && relicCollected, t);
     for (const e of state.enemies) {
         if (!e.alive)
             continue;
@@ -150,5 +122,5 @@ export function drawEncounter(g, encounter, t, relicCollected = true, reducedMot
     }
     paintHostileProjectiles(g, state.projectiles, t);
     // Large recognizable carved doorway with LOCKED / EXIT sign and compass arrow.
-    drawRuneDoor(g, encounter.exit, encounter.exitDirection, state.phase === 'gate' && relicCollected, t);
+    
 }
