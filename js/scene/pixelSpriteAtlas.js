@@ -145,7 +145,7 @@ export const WAYFARER_MANTLE_STEPS=Object.freeze([
 ]);
 /** Mantle is a physical 22×18px ink stamp on the existing actor,
  * aligned to 8 real facings and 4 actual gait poses. Recoil is true shooting. */
-export function paintHeroSagaMantle(g,pose,time,reducedMotion=false{
+export function paintHeroSagaMantle(g,pose,time,reducedMotion=false){
  const frame=heroAtlasFrame(pose,time,reducedMotion);
  const sheet=WAYFARER_MANTLE_STEPS[frame];
  g.save();
@@ -228,7 +228,7 @@ export const HOSTILE_GUARD_STITCHES=Object.freeze({
  shade:['o.o.o.o','.ogogo.','..rgr..','.ogogo.','o.o.o.o','.ogogo.','..o.o..'],
  warden:['oo...oo','og...go','ogrrrgo','ogrrrgo','ogrrrgo','og...go','oo...oo']
 });
-export function paintHostileSagaGuard(g,e{
+export function paintHostileSagaGuard(g,e){
  if(!Object.hasOwn(HOSTILE_GUARD_STITCHES,e.kind)||!Number.isFinite(e.windup))
   throw new RangeError('Invalid original hostile guard');
  const sheet=HOSTILE_GUARD_STITCHES[e.kind],ink=ENEMY_INK[e.kind];
