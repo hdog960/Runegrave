@@ -14,6 +14,14 @@ export type RoomPhase='locked'|'gate'|'finished';
 export type Enemy={id:string;kind:EnemyKind;x:number;y:number;radius:number;hp:number;maxHp:number;alive:boolean;flash:number;cooldown:number;windup:number;state:'idle'|'warning'|'charge'|'hidden'|'recover';dx:number;dy:number;time:number;phase:number;attackCount:number;stride?:number;stepping?:boolean};
 export type HostileBolt={id:number;x:number;y:number;dx:number;dy:number;speed:number;radius:number;damage:number;life:number};
 export type EncounterSnapshot={room:EncounterRoom;phase:RoomPhase;wave:number;kills:number;bossDefeated:boolean;bossPhase:number;enemies:readonly Enemy[];projectiles:readonly HostileBolt[];shots:number};
+/** Exact original six-shot casting direction. The existing enemy attack
+ * counter advances only after a real shot is spawned; do not change its
+ * timing, angle, damage, radius or cooldown for artwork. */
+export function sentinelShotVector(slot:number,attackCount:number):Vec2 {
+ if(!Number.isInteger(slot)||slot<0||slot>=6||!Number.isSafeInteger(attackCount)||attackCount<0)throw new RangeError('Invalid original sentinel volley frame');
+ const theta=(slot+attackCount*.10)*Math.PI/3;
+ return {x:Math.cos(theta),y:Math.sin(theta)};
+}
 const EPS=1e-8;
 /** Actual charger dash constants, also used by the readable danger footprint. */
 export const CHARGER_DASH_SPEED=160,CHARGER_DASH_DURATION=.38;
@@ -230,7 +238,7 @@ export class HostileEncounter {
         else if(e.state==='recover'){e.windup-=dt;if(e.windup<=0){e.state='idle';e.cooldown=1.0;}}
       }else if(e.kind==='sentinel'){
         if(e.state==='idle'&&e.cooldown===0){e.state='warning';e.windup=.90;}
-        else if(e.state==='warning'){e.windup-=dt;if(e.windup<=0){for(let a=0;a<6;a++){const theta=(a+e.attackCount*.10)*Math.PI/3;this.shoot(e,{x:Math.cos(theta),y:Math.sin(theta)},90);}e.state='idle';e.cooldown=2.7;}}
+        else if(e.state==='warning'){e.windup-=dt;if(e.windup<=0){for(let a=0;a<6;a++)this.shoot(e,sentinelShotVector(a,e.attackCount),90);e.state='idle';e.cooldown=2.7;}}
       }else if(e.kind==='shade'){
         if(e.state==='idle'&&e.cooldown===0){e.state='warning';e.windup=.65;}
         else if(e.state==='warning'){e.windup-=dt;if(e.windup<=0){e.state='hidden';e.windup=.40;}}

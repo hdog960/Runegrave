@@ -96,10 +96,10 @@ test('real renderers now use one inked atlas per actor without old layered-body 
  assert.ok(!enemy.includes('paintEnemyActionFrame('),'enemy has one visible strike layer');
  assert.ok(!enemy.includes('paintOathEnemyStrike('),'legacy weapon outlines no longer obscure the new articulated weapon');
  assert.match(read('../dist/js/scene/pixelSpriteAtlas.js'),/paintEnemySagaWeapon\(/);
- assert.ok(enemy.includes('runeWarning(g, e, t)'),'world warning rays remain intact');
+ assert.ok(enemy.includes('runeWarning(g, e, t, hero)'),'world warning rays remain intact');
  assert.ok(cache.includes('scene/pixelSpriteAtlas.js'),'offline PWA contains newly compiled sprite');
- assert.match(cache,/runegrave-shell-v0\.09\.34/);
- assert.match(version,/APP_VERSION = '0\.09\.34'/);
+ assert.match(cache,/runegrave-shell-v0\.09\.35/);
+ assert.match(version,/APP_VERSION = '0\.09\.35'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
 });

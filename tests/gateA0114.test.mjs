@@ -105,12 +105,12 @@ test('real runtime uses exactly one authored near-body weapon and retains author
  assert.match(atlas,/paintEnemySagaWeapon\(/);
  assert.doesNotMatch(atlas,/paintHostileKineticInk\(/,'old body-weapon overlay no longer muddies clear sprite');
  assert.doesNotMatch(enemy,/paintOathEnemyStrike\(/,'old extra weapon outline removed');
- assert.match(enemy,/runeWarning\(g, e, t\)/,'real dash, arrowhead, label, circular warning are all preserved');
+ assert.match(enemy,/runeWarning\(g, e, t, hero\)/,'real dash, arrowhead, label, circular warning are all preserved');
  assert.match(enemy,/paintHostileAtlas\(/);
- assert.match(version,/APP_VERSION = '0\.09\.34'/);
+ assert.match(version,/APP_VERSION = '0\.09\.35'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(sw,/runegrave-shell-v0\.09\.34/);
+ assert.match(sw,/runegrave-shell-v0\.09\.35/);
  assert.ok(sw.includes('scene/sagaWeaponAtlas.js')&&sw.includes('scene/sagaFloorFrieze.js'));
  assert.equal(FIRST_SOUL_RELICS.length,8);assert.equal(FIRST_SOUL_ROOMS.length,25);
 });

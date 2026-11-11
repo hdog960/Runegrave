@@ -109,11 +109,11 @@ test('the original combat warning, all eight functional relics, save/PWA and v0.
  assert.match(stage,/paintSagaPillars\(/);
  assert.match(atlas,/paintWayfarerOathStance\(/);
  assert.match(atlas,/paintEnemySagaWeapon\(/);
- assert.match(enemies,/runeWarning\(g, e, t\)/);
- assert.match(version,/APP_VERSION = '0\.09\.34'/);
+ assert.match(enemies,/runeWarning\(g, e, t, hero\)/);
+ assert.match(version,/APP_VERSION = '0\.09\.35'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.34/);
+ assert.match(sw,/runegrave-shell-v0\.09\.35/);
  for(const art of ['sagaWeaponAtlas.js','sagaPillarRelief.js','pixelSpriteAtlas.js'])
   assert.ok(sw.includes(art),'PWA needs original artwork '+art);
  assert.equal(FIRST_SOUL_RELICS.length,8);

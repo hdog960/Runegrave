@@ -327,7 +327,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         if (exitTrail.length)
             paintWaystones(g, exitTrail, time);
         if (encounter)
-            drawEncounter(g, encounter, time, !drops.some(d => d.kind === 'relic' && !d.collected), reduced.matches);
+            drawEncounter(g, encounter, time, !drops.some(d => d.kind === 'relic' && !d.collected), reduced.matches, actor);
         drawRoomDrops(g, drops, time);
         if (mode === 'practice' && practiceExit)
             drawRuneDoor(g, practiceExit, 'east', true, time);

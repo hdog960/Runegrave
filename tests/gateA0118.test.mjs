@@ -98,12 +98,12 @@ test('real scene/warnings, eight functional relics, original save/PWA and locked
  assert.match(art,/inkedImpactBody\(/);
  assert.match(art,/WAYFARER_OATH_SHIELDS\[/);
  assert.match(stage,/paintVaultCanopies\(/);
- assert.match(enemies,/runeWarning\(g, e, t\)/);
+ assert.match(enemies,/runeWarning\(g, e, t, hero\)/);
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(version,/APP_VERSION = '0\.09\.34'/);
+ assert.match(version,/APP_VERSION = '0\.09\.35'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.34/);
+ assert.match(sw,/runegrave-shell-v0\.09\.35/);
  assert.ok(sw.includes('scene/sagaImpactFractures.js'));
 });

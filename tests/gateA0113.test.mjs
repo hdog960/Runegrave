@@ -122,12 +122,12 @@ test('live compiled renderer preserves stateful door, hero/enemy ink and version
  assert.match(door,/paintSagaGate\(g,\s*direction,\s*open,\s*time\)/,'only actual open flag selects artwork');
  assert.match(hero,/paintWayfarerSagaVisor\(/);
  assert.match(hero,/paintHostileSagaFace\(/);
- assert.match(enemy,/runeWarning\(g, e, t\)/,'genuine threat geometry remains used');
+ assert.match(enemy,/runeWarning\(g, e, t, hero\)/,'genuine threat geometry remains used');
  assert.match(stage,/paintChronicleFloor\(/);
- assert.match(version,/APP_VERSION = '0\.09\.34'/);
+ assert.match(version,/APP_VERSION = '0\.09\.35'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(sw,/runegrave-shell-v0\.09\.34/);
+ assert.match(sw,/runegrave-shell-v0\.09\.35/);
  assert.ok(sw.includes('scene/sagaGateArt.js'));
  assert.ok(sw.includes('scene/sagaExpression.js'));
  assert.equal(FIRST_SOUL_RELICS.length,8);
