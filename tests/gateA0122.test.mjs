@@ -14,7 +14,7 @@ function ctx(){
  Object.defineProperty(g,'fillStyle',{set:v=>calls.push(['ink',v])});
  return {g,calls};
 }
-test('v0.09.32 physically recuts eleven rows across nine true enemy recovery bodies rather than old three-pixel twitch',()=>{
+test('v0.09.33 physically recuts eleven rows across nine true enemy recovery bodies rather than old three-pixel twitch',()=>{
  assert.deepEqual(Object.keys(HOSTILE_RECOVERY_SILHOUETTES),species);
  let distinct=0;
  for(const kind of species){
