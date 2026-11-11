@@ -1,3 +1,11 @@
+## v0.09.21 — Original hand-inked hero and hostile sprites (Gate A ongoing)
+
+- Replaced accumulated body painting layers with an original 2px material-coded pixel atlas: four distinct Wayfarer body sheets mirrored into eight facing directions, four separate footfall shapes, real aim/recoil-linked rune weapon. Six normal enemies and Rootbound Warden now use seven bespoke bodies with genuine phase/tell distinctions rather than overlapping translucent rectangles.
+- Maintained the seven species' actual combat windup warning lanes, arrow directions, label text and a single state-dependent costume cue. World collisions, AI and damage unchanged.
+- Added `tests/gateA0111.test.mjs` verifying original sheets and valid inks, eight distinct avatar silhouettes, four walking frames, seven hostile identities with four real warning bands, Warden phase-two shape, render bounds and correct actual runtime wiring. Refined rear-diagonal cloak ink when first CI found two identical drawing shapes; adjusted one obsolete test to validate the replacement renderer rather than the retired overlay.
+- Added Chromium screenshot gallery of all 8 faces + 7 foes and corrected an art-audit scroll bug so the captured two-thumb screenshot truly depicts gameplay. Both PR and main runs pass **157/157** tests and headless mobile Chromium; live Pages and v0.09.21 service-worker cache verified independently.
+- Seven governing docs, eight functional relics, 25 authored rooms, iPhone controls separate from the center viewport, save schema, PWA update behavior, preferences and progression preserved. Gate A still awaiting future visual approval; v0.10 locked.
+
 ## v0.09.20 — Eddic architecture and oath-combat ink (Gate A still locked)
 
 - Crafted five unmistakably different Norse architectural upper-wall pixel silhouettes and five authored inset myth episodes. Their 25 combinations sit high above the dodge lane and use the canonical scripted room ID; no false doors, extra pickups or on-screen buttons.
