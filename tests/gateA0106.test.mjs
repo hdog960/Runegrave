@@ -30,5 +30,5 @@ test('all 25 authored rooms retain deterministic five-variant bounded stone fini
  assert.equal(new Set(variants).size,5);}
 });
 test('Gate A and save schema remain locked despite new artwork',async()=>{
- const v=await import('../dist/js/core/version.js');assert.equal(v.ROADMAP_VERSION,'v0.09');assert.equal(v.SAVE_SCHEMA_VERSION,1);assert.equal(v.APP_VERSION,'0.09.25');
+ const v=await import('../dist/js/core/version.js');assert.equal(v.ROADMAP_VERSION,'v0.09');assert.equal(v.SAVE_SCHEMA_VERSION,1);assert.equal(v.APP_VERSION,'0.09.26');
 });
