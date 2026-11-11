@@ -27,6 +27,7 @@ import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience } from './chamberAmbience.js';
 import { paintVaultDepth } from './vaultDepthArt.js';
 import { paintEddicCornice } from './eddicCornice.js';
+import { paintChronicleFloor } from './chronicleFloor.js';
 import { paintChamberSagaStones } from './ageStoneArt.js';
 import { paintSagaStandards } from './sagaArtwork.js';
 import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
@@ -296,6 +297,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
         const W = metrics.cameraWidth, H = metrics.cameraHeight;
         g.setTransform(metrics.pixelWidth / W, 0, 0, metrics.pixelHeight / H, 0, 0);
         paintSanctuary(g, W, H, time, currentRoom?.family || 'ROOT', roomIndex);
+        if (currentRoom && mode === 'crypt')
+            paintChronicleFloor(g, W, H, currentRoom.family, Number(currentRoom.id.slice(-2)) - 1, reduced.matches);
         if (currentRoom && mode === 'crypt')
             paintEddicCornice(g, W, H, time, currentRoom.family, Number(currentRoom.id.slice(-2)) - 1, reduced.matches);
         if (currentRoom && mode === 'crypt')
