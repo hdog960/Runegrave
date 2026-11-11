@@ -28,6 +28,7 @@ import { paintChamberAmbience } from './chamberAmbience.js';
 import { paintVaultDepth } from './vaultDepthArt.js';
 import { paintEddicCornice } from './eddicCornice.js';
 import { paintChronicleFloor } from './chronicleFloor.js';
+import { paintVaultCanopies } from './sagaVaultCanopies.js';
 import { paintSagaPillars } from './sagaPillarRelief.js';
 import { paintSagaFloorFrieze } from './sagaFloorFrieze.js';
 import { paintChamberSagaStones } from './ageStoneArt.js';
@@ -315,6 +316,8 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             paintRoomFamily(g, W, H, time, currentRoom);
             paintRoomSigil(g, W, H, time, currentRoom);
         }
+        if (currentRoom && mode === 'crypt')
+            paintVaultCanopies(g, W, H, currentRoom.family, Number(currentRoom.id.slice(-2)) - 1);
         if (currentRoom && mode === 'crypt')
             paintSagaPillars(g, W, H, currentRoom.family, Number(currentRoom.id.slice(-2)) - 1);
         if (currentRoom && mode === 'crypt')
