@@ -1,3 +1,11 @@
+## v0.09.17 — Carved Norse galleries and expressive directional combat art (Gate A UNAPPROVED)
+
+- Added five distinctive carved wall-gallery motifs and five deterministic cut variants for every family: 25 authored visual signatures, retained entirely at the scene perimeter.
+- Added four-step directional Wayfarer helmet, armor, back-mantle and shoulder details; added attack-state-triggered accents to all six enemy species and the Rootbound Warden.
+- Preserved original hitboxes, projectiles, damage, progress, eight earned relics, 25 room encounters, save schema and the side-grip-only controls; maintained reduced-motion rendering.
+- Strengthened release validation with three art tests and repeatable GitHub Actions Chromium mobile-view integration. 142/142 automated tests and both CI browser jobs passed; public Pages verified as v0.09.17.
+- Seven authoritative documents unchanged. Further art inspection and real iPhone two-thumb comfort remain unresolved; **do not start v0.10**.
+
 ## v0.09.16 — Physical Norse door markers and earned relic tablets
 
 - Added world-space threshold stone beacons and distinct open/locked chain geometry for every compass exit.

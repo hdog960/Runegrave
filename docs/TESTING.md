@@ -1,3 +1,12 @@
+## v0.09.17 — verified post-merge GitHub CI and browser tests (2026-11-10)
+
+- GitHub PR #1 merged as `6df87b5`; final `npm test` via CI compiled strict TypeScript and ran **142/142 passing Node tests**, retaining the prior functional gameplay regressions.
+- New `tests/gateA0107.test.mjs` covers 25 unique deterministic family/cut gallery render signatures, all eight helmet/armor facings, seven real warning-state gesture identities, stable reduced-motion frames, paint-call budgets and unmodified eight-relic catalog.
+- `scripts/v009_browser_audit.py` ran successfully on small/regular/plus/compact simulated landscape and portrait Chromium, including first-run tutorial, center canvas boundaries, dual-pointer input, pause/resume and zero JavaScript page errors. `scripts/v00917_browser_audit.py` independently exercised compact/regular/plus/large landscape chamber entry, separate rails, thumb-fired shots, portrait rotate message and no JS exceptions. Images/screenshots and runs are not physical Safari testing.
+- Fixed strict TypeScript stride narrowing, outdated version/PWA assertions, production `public/sw.js` cache version, FATE gallery render-call budget, and pinned supported browser runner to Ubuntu 24.04. GitHub CI #64 and Pages workflow #57 completed successfully.
+- Independent Pages fetch confirms `APP_VERSION=0.09.17`, PWA cache name `runegrave-shell-v0.09.17`, and updated public rendering module. Seven canonical documentation Git blobs match v0.09.16 baseline.
+- NOT tested on a real physical iPhone; installed offline refresh, real long-play thermal/performance, unaided full-run win and player aesthetic/controls sign-off remain pending. Gate A still unapproved and v0.10 remains locked.
+
 ## v0.09.16 additional verified local checks
 
 New tests for four real compass thresholds, eight accurate relic inscriptions, bounded five-variant chamber art and the unchanged Gate A/save contract. Local reconstruction 134/134 tests, TypeScript, Chromium four landscape and portrait layouts, and test-controlled complete route; final GitHub CI and live Pages must be separately verified.

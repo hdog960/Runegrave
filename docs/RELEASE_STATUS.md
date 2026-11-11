@@ -1,14 +1,16 @@
 # RUNEGRAVE — Verified Release Status
 
-## v0.09.17 — Gate A carved family galleries, eight-facing armor and hostile anticipation (candidate; 2026-11-10 US Central)
+## v0.09.17 — Gate A carved family galleries, eight-facing armor and hostile anticipation (2026-11-10 US Central)
 
-**CANDIDATE ONLY: awaiting GitHub CI, Chromium browser checks, Pages publication and independent public version verification. Gate A NOT APPROVED; v0.10 LOCKED.**
+**VERIFIED: IMPLEMENTED, 142/142 NODE CHECKS PASS, CHROMIUM QA PASS, GITHUB CI PASS, PUBLIC PAGES LIVE. GATE A UNAPPROVED; v0.10 LOCKED.**
 
-- Baseline was main `328b4e3` (verified v0.09.16). The interrupted previous v0.09.17 session did not publish a later main commit.
-- Planned/committed source changes in this candidate: 25 deterministic family-and-cut wall galleries using five original carvings, directional Wayfarer armor/helmet framing with four-step walking motion, and seven threat-state-driven enemy anticipation accents.
-- Six enemy kinds, Rootbound Warden, 25 encounter configurations, eight functional relics, damage/physics, save schema 1, twin independent external grips, and PWA update UX must remain unchanged. No new v0.10 progression.
-- Candidate tests include the existing Node suite, new 25-gallery/hero/seven-hostile assertions, and an Actions Chromium mobile-layout+two-pointer smoke job. Results must be recorded only after observed.
-- Physical iPhone Safari, real installed PWA offline refresh, long-session performance, unaided victory and player art/control approval remain **unverified**. Do not announce READY FOR GATE A REEVALUATION.
+- **Recovered baseline:** `main` `328b4e3197ee2da075a6b8fc85c2532c95eb25be` / v0.09.16. The interrupted prior v0.09.17 session had not left a newer main release; no unfinished changes were assumed.
+- **Implementation:** Pull request [#1](https://github.com/hdog960/Runegrave/pull/1) merged into `main` as [`6df87b51131652fa441305a9693f7a5db329d559`](https://github.com/hdog960/Runegrave/commit/6df87b51131652fa441305a9693f7a5db329d559). The art adds 25 deterministic carved cut/family upper-wall gallery identities, directional Wayfarer helmet/armor/stride details, and distinct enemy state-linked anticipation accents for six hostiles plus Warden. The Fate gallery was optimized to meet the existing bounded draw budget.
+- **Regression:** Pull-request and post-merge `Runegrave foundation checks` succeeded (post-merge #64). **142/142 Node tests passed**, including 25 authored gallery variants, eight facing/reduced-motion hero frames and seven warning-actuated enemy poses. Strict TypeScript compilation passed. No deleted files or changes to the seven authoritative documentation blobs.
+- **Browser:** Chromium `gate-a-browser` CI job passed on Ubuntu 24.04: the existing in-memory runtime integration verified small, regular, plus, compact landscape and portrait, dual-pointer movement/aim/fire, pause and separate unoccluded controller grips; the new targeted job also verified four landscape sizes, guided chamber entry, two-pointer firing, and portrait. **No JavaScript page exceptions.** The environment was desktop Chromium emulating mobile viewports, not a physical iPhone Safari device. Browser screenshot artifact was uploaded in the CI job.
+- **Deployment:** [Build and publish Runegrave to GitHub Pages #57](https://github.com/hdog960/Runegrave/actions/runs/42933582017) and GitHub Pages build/deployment #66 both completed **successfully** for `6df87b5`. Independent HTTP reads of the actual public Pages `/js/core/version.js` and `/sw.js` returned `APP_VERSION='0.09.17'` and `runegrave-shell-v0.09.17`. Public `/js/scene/vaultDepthArt.js` also fetched successfully.
+- **Preserved:** Eight functional relics, 25 authored room configurations, six enemy families plus Rootbound Warden, combat/health/physics/room sequence, all handedness/dead-zone/pad settings, saved preferences/schema 1, user-initiated PWA update handling, the seven authoritative documents with identical Git blobs, and the no-HUD-over-canvas rule.
+- **Still unverified:** Physical iPhone comfort and Safari rendering, installed Home Screen PWA update/offline mode, prolonged mobile performance, natural unaided boss victory and the owner's subjective visual approval. This iterative hand-drawn code-art pass does **not** warrant the statement READY FOR GATE A REEVALUATION. Continue Gate A premium-art polish; do not begin v0.10.
 
 
 ## v0.09.16 — Real doorway threshold markers, accurate relic inscriptions and carved room variants (2026-11-10 US Central)
