@@ -57,8 +57,8 @@ test('compiled stage uses canonical fs-XX room serial rather than current run po
  assert.ok(stage.includes('paintSagaStandards'));
  assert.match(door,/paintRuneGateMechanism\(g, open\)/);
  assert.ok(sw.includes('scene/ageStoneArt.js'));
- assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
- assert.match(core,/APP_VERSION = '0\.09\.23'/);
+ assert.match(sw,/runegrave-shell-v0\.09\.24/);
+ assert.match(core,/APP_VERSION = '0\.09\.24'/);
  assert.match(core,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(core,/ROADMAP_VERSION = 'v0\.09'/);
 });

@@ -94,11 +94,12 @@ test('real compiled stage, hero, enemies, PWA all use new art without touching l
  assert.match(stage,/paintChronicleFloor\(/);
  assert.match(stage,/Number\(currentRoom\.id\.slice\(-2\)\)\s*-\s*1/);
  assert.match(atlas,/paintWayfarerMovingHem\(/);
- assert.match(atlas,/paintHostileKineticInk\(/);
- assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
+ assert.doesNotMatch(atlas,/paintHostileKineticInk\\(/,'retired duplicate body-weapon art must not reappear');
+ assert.match(atlas,/paintEnemySagaWeapon\\(/);
+ assert.match(sw,/runegrave-shell-v0\.09\.24/);
  assert.ok(sw.includes('scene/chronicleFloor.js'));
  assert.ok(sw.includes('scene/kineticInk.js'));
- assert.match(version,/APP_VERSION = '0\.09\.23'/);
+ assert.match(version,/APP_VERSION = '0\.09\.24'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.equal(FIRST_SOUL_ROOMS.length,25);
