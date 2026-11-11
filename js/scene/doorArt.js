@@ -1,4 +1,3 @@
-import { EXIT_LABELS } from '../run/wayfinding.js';
 import { paintRuneGateMechanism } from './ageStoneArt.js';
 import { paintSagaGate } from './sagaGateArt.js';
 /** Stone approach travels FROM the doorway into the traversable room, so a
@@ -45,7 +44,6 @@ export function paintRuneThreshold(g,direction,open,t){
 }
 
 export function drawRuneDoor(g, pos, direction, open, time) {
-    const meta = EXIT_LABELS[direction];
     const c = open ? '#9be8aa' : '#e49d7d';
     const px = (x, y, w, h, color) => { g.fillStyle = color; g.fillRect(x, y, w, h); };
     // Edge exits are physically near the wall. Inset the *art* slightly so labels and
@@ -151,20 +149,16 @@ export function drawRuneDoor(g, pos, direction, open, time) {
         px(i * 6 - 1, -28, 2, 2, i % 2 ? '#d0b779' : '#819a8c');
     paintRuneGateMechanism(g, open);
     paintSagaGate(g, direction, open, time);
-    // Plaque is part of the door, not a floating HUD panel.
-    px(-28, -47, 56, 17, '#091719');
-    g.strokeStyle = open ? '#d0edab' : '#ebc2a0';
-    g.lineWidth = 1.5;
-    g.strokeRect(-28, -47, 56, 17);
-    g.font = 'bold 10px system-ui,sans-serif';
-    g.textAlign = 'center';
-    g.fillStyle = c;
-    g.fillText(open ? 'EXIT' : 'LOCKED', 0, -34);
-    g.fillStyle = '#e9dbbb';
-    g.font = 'bold 9px system-ui,sans-serif';
-    g.fillText(`${meta.arrow} ${meta.label} DOOR`, 0, -51);
-    g.font = 'bold 12px system-ui,sans-serif';
-    g.fillStyle = open ? '#eaffdb' : '#f2c6ac';
-    g.fillText(open ? meta.arrow : '×', 0, -1);
-    g.restore();
+// v0.09.34: a single carved LOCKED / EXIT plaque, not an oversized
+ // double-line floating compass caption over the live battlefield. The
+ // compass is already engraved into the four unique arch silhouettes, on
+ // the floor approach and in the separate outside-canvas grip status.
+ px(-24,-41,48,13,'#101d1d');
+ g.strokeStyle=open?'#ccebb7':'#dfb18c';g.lineWidth=1;
+ g.strokeRect(-24,-41,48,13);
+ g.font='bold 9px system-ui,sans-serif';g.textAlign='center';
+ g.fillStyle=c;g.fillText(open?'EXIT':'LOCKED',0,-31);
+ g.font='bold 11px system-ui,sans-serif';g.fillStyle=open?'#eaffdb':'#f2c6ac';
+ g.fillText(open?'✓':'×',0,-1);
+ g.restore();
 }

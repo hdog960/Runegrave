@@ -5,6 +5,7 @@
 import { HERO_RADIUS, isPositionFree, moveCircle, safeSpawn } from '../physics/world.js';
 export const ENEMY_KINDS = ['draugr', 'wisp', 'archer', 'charger', 'sentinel', 'shade'];
 const EPS = 1e-8;
+export const CHARGER_DASH_SPEED = 160, CHARGER_DASH_DURATION = .38;
 const DT_LIMIT = 1 / 30;
 const MAG = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 const norm = (dx, dy) => { const m = Math.hypot(dx, dy); return m < EPS ? { x: 0, y: 1 } : { x: dx / m, y: dy / m }; };
@@ -330,11 +331,11 @@ export class HostileEncounter {
                     e.windup -= dt;
                     if (e.windup <= 0) {
                         e.state = 'charge';
-                        e.windup = .38;
+                        e.windup = CHARGER_DASH_DURATION;
                     }
                 }
                 else if (e.state === 'charge') {
-                    this.move(e, { x: e.dx, y: e.dy }, 160, dt);
+                    this.move(e, { x: e.dx, y: e.dy }, CHARGER_DASH_SPEED, dt);
                     e.windup -= dt;
                     if (e.windup <= 0) {
                         e.state = 'recover';
