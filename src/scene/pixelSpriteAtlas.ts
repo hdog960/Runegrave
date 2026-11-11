@@ -11,6 +11,7 @@ import type {Enemy,EnemyKind} from '../enemies/encounters.js';
 type G=CanvasRenderingContext2D;
 type HeroFacing='N'|'NE'|'E'|'SE'|'S'|'SW'|'W'|'NW';
 import { paintWayfarerMovingHem, paintHostileKineticInk } from './kineticInk.js';
+import { paintWayfarerSagaVisor, paintHostileSagaFace } from './sagaExpression.js';
 export const ATLAS_CELL=2;
 const HERO_INK=Object.freeze({
  o:'#0c2026',h:'#30484b',H:'#8ea49a',m:'#476460',M:'#98b6a5',
@@ -157,6 +158,7 @@ export function paintHeroAtlas(g:G,pose:WayfarerPose,time:number,reducedMotion=f
  drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,HERO_INK);
  drawSheet(g,stride,-sheetWidth(stride)*unit/2,top+sheet.length*unit,unit,HERO_INK);
  paintWayfarerMovingHem(g,pose,time,reducedMotion);
+ paintWayfarerSagaVisor(g,pose,time,reducedMotion);
  // Direction-dependent crest: actual facing sets the color/shape, not fake idle
  // flashing. The physical weapon remains handled by drawWayfarer.
  const p=pose.back?HERO_INK.w:HERO_INK.G;
@@ -194,6 +196,7 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  g.save();g.translate(0,bob);
  drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileKineticInk(g,e,time,reducedMotion);
+ paintHostileSagaFace(g,e,time,reducedMotion);
  // Strong readable cast: three grounded steel/rune bars appear step-by-step,
  // physically linked to real attack windup, never to a decorative clock.
  if(e.state==='warning'||e.state==='charge'){
