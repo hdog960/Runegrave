@@ -62,7 +62,7 @@ export function paintWayfarerFrames(g:G,pose:WayfarerPose,t:number,reducedMotion
  // Gate A v0.09.17: silhouette-carved helm, woven tabard and articulated
  // plated elbows. Facing and 4-step cadence, not idle wall-clock glitter.
  const edge=side<0?-1:side>0?1:0;
- const swing=pose.moving&&!reducedMotion?[0,1,0,-1][frame]:0;
+ const swing=pose.moving&&!reducedMotion?(frame===1?1:frame===3?-1:0):0;
  for(const s of [-1,1]){
   px(s<0?-13:9,-4+swing*s,4,8,'#172f34');
   px(s<0?-12:10,-5+swing*s,3,4,'#83998b');
