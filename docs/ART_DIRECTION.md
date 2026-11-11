@@ -1,3 +1,9 @@
+## v0.09.33 Gate A — Movement ink follows actual ground covered, not a decorative clock
+
+Original canvas pixel art now physically displaces the lower torso/boot/tail of five genuinely mobile creature species through four authored travel poses apiece. The animation is driven by collision-resolved `Enemy.stride` and the current per-tick `Enemy.stepping` flag. No fictional movement for stationary sentinel or blink-only shade; no nonzero walking pose on stopped, blocked, recovering or reduced-motion actors. The new single-body in-place composition preserves true warning/recovery/damage/phase-two geometry and all original world hitboxes. Full existing Norse room materials, separate forged side controls and environmental legibility are unchanged.
+
+**Visual inspection of real Chromium gallery:** twenty images are actually distinct, but their feet/legs are still modest against miniature combat sprites. The existing environment remains rich, and small 1x iPhone physical inspection is needed to judge whether enemy locomotion is readable unaided. Gate A artwork has **not** been accepted by the player; no v0.10 work permitted.
+
 ## v0.09.15 — Combat silhouette-first animation
 
 The Wayfarer now carries clear eighth-turn differences in split cloak shape, forged buckler, shoulder plates and walking greaves. Each hostile warning adds a different readable weapon silhouette instead of depending only on a red flash: claw, orbiting glass, arrow shaft, braced ram horns, casting spokes, veil talons and twin root mauls. Urgency is keyed to actual windup progress and stationary reduced-motion art. All shapes remain in the center world canvas; physical side grips and collision geometry are untouched. Gate A remains pending explicit player acceptance.

@@ -1,3 +1,9 @@
+## v0.09.33 — Owner review addition: real enemy gait and stationary clarity (NOT APPROVED)
+
+On the physical iPhone landscape build, watch a draugr approach, a wisp orbit, an archer reposition, a charger wind up and charge, and the Warden walk before an attack. Their lower silhouette should actually alternate as they cover ground, without falsely stepping when blocked or recovering. Also confirm that the sentinel does not appear to walk and that the shade teleports instead of presenting fictional foot travel. Compare reduced-motion preference if available. Check that all hostile tells, doors, real relics and the independent external left/right two-thumb grips remain legible with **zero combat viewport overlap**.
+
+**Automated status:** 210/210 Node and full real Chromium/23 PNG artifact green on the verified PR candidate and post-merge main, with no JavaScript errors. This is *not* a real Safari touch/fps test, naturally completed Warden victory or owner's art/control sign-off. Gate A **AWAITING PLAYER APPROVAL**; no ready-for-Gate-A declaration and v0.10 **LOCKED**.
+
 ## v0.09.16 additional review points (NOT APPROVED)
 
 Inspect accessible compass door approaches (beacons plus locked/open chains), relic bonus tablets beneath the real pickups, and five authored chamber-finial silhouettes. Physical iPhone testing, sustained performance, installed PWA refresh and unaided play remain unverified. Approval must be explicit.
