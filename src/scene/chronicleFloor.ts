@@ -91,7 +91,7 @@ export function paintChronicleFloor(g:G,W:number,H:number,family:ChronicleFamily
  }
  // Four displaced chipped corners create grounded material depth without
  // high contrast circles that could be mistaken for attack danger zones.
- for(const [dx,dy] of [[-25,-21],[22,-21],[-25,19],[22,19]]){
+ for(const [dx,dy] of [[-25,-21] as const,[22,-21] as const,[-25,19] as const,[22,19] as const]){
   g.fillStyle=shadow;g.fillRect(cx+dx,cy+dy,3,3);
  }
  g.restore();

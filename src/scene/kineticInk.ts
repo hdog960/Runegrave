@@ -25,7 +25,7 @@ export function paintWayfarerMovingHem(g:G,pose:WayfarerPose,time:number,reduced
  const flip=pose.facing==='W'||pose.facing==='NW'||pose.facing==='SW';
  if(flip)g.scale(-1,1);
  for(let i=0;i<frames.length;i++){
-  const [x,y,w,h]=frames[i]!;
+  const [x=0,y=0,w=0,h=0]=frames[i]!;
   // Inside cloak's bottom outline; does not cover boots or aim projectile.
   g.fillStyle=i%2?'#3d7770':'#192f35';
   g.fillRect(x,y,Math.min(w,3),h);
@@ -81,7 +81,7 @@ export function paintHostileKineticInk(g:G,e:KineticHostile,time:number,reducedM
   }
   px(g,-10,8+r,20,3,'#53483b');
  }else if(e.kind==='sentinel'){
-  for(const [x,y] of [[-18-r,0],[17+r,0],[-2,-22-r],[-2,13+r]]){
+  for(const [x,y] of [[-18-r,0] as const,[17+r,0] as const,[-2,-22-r] as const,[-2,13+r] as const]){
    px(g,x,y,5,7,'#729b9c');
    px(g,x+1,y+1,3,2,bright?'#e5f8dd':'#c1d9c6');
   }
