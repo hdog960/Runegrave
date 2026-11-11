@@ -11,6 +11,7 @@ import { paintHostileProjectiles } from './hostileProjectileArt.js';
 import { paintEnemyActionFrame } from './attackPoseFrames.js';
 import { paintStrikeSilhouette } from './strikeSilhouettes.js';
 import { paintSagaEnemyStrike } from '../scene/sagaArtwork.js';
+import { paintOathEnemyStrike } from '../scene/eddicCornice.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS=Object.freeze({
@@ -119,6 +120,7 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number,reducedMotion=false)
  paintEnemyActionFrame(g,e,t,reducedMotion);
     paintStrikeSilhouette(g, e, t, reducedMotion);
  paintSagaEnemyStrike(g,e,t,reducedMotion);
+ paintOathEnemyStrike(g,e,t,reducedMotion);
  g.restore();
  if(e.hp<e.maxHp || e.kind==='warden'||e.state==='warning'){
   const width=e.kind==='warden'?45:19;
