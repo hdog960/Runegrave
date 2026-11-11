@@ -70,6 +70,14 @@ with sync_playwright() as p:
    }""",art_url)
    assert figures=={'hero':8,'enemies':7,'cache':2},figures
    page.locator('#gate-a-v00921-sprite-sheet').screenshot(path=str(ROOT/'gate-a-v00921-character-contact-sheet.png'))
+   # Element screenshots scroll into view; restore real viewport before movement.
+   # Otherwise the next full-page PNG silently captures the contact-sheet area.
+   page.evaluate("""() => {
+     document.querySelector('#gate-a-v00921-sprite-sheet').remove();
+     window.scrollTo(0,0);
+   }""")
+   page.wait_for_timeout(55)
+   assert page.evaluate('window.scrollY')==0,'the playable game screenshot must not be scrolled away'
    print('original 8-facing hero + 7 hostile sprite contact sheet PASS',figures)
 
    for selector,pid in [('#move-rune-disc',57),('#aim-rune-disc',58)]:
