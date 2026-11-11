@@ -1,3 +1,11 @@
+## v0.09.26 — Expressive seven-species attack anticipation, eight-way braced Wayfarer and carved saga capitals (Gate A ongoing)
+
+- Added **21 original pixel-drawn weapon extensions**, materially distinct for draugr claw, spirit glass, archer drawn bow, charger horns, sentinel vanes, shade talons and Warden root mauls; advance on actual world-combat countdown only. Original base sheets remain; four real attack stages per species still rendered through ONE coherent near-body weapon painter, without altering projectile/charge telegraphs or damage.
+- Eight distinct Wayfarer 2px-grid shoulder/guard silhouettes provide real 4-beat step bracing, front/back/quarter-turn material and real shooting recoil. No independent action clock or duplicated weapon entity.
+- Sculpted **five material-specific Norse crowns plus five saga keystones** into existing pairs of wall piers in 25 canonical chambers, behind the fight with bounded low-opacity geometry. No new rooms/hazards/loot/collision.
+- New rigorous `gateA0116.test.mjs` checks authored geometry, 28 battle silhouettes, eight hero stances, 25 wall compositions, reduced-motion, no phantom attack markers and unchanged game save/relic contracts. Initial CI exposed three genuine test/mirror defects, all fixed. Final [PR CI 43071350950](https://github.com/hdog960/Runegrave/actions/runs/43071350950) and [post-merge main CI 43071765592](https://github.com/hdog960/Runegrave/actions/runs/43071765592) passed **182/182 Node tests and real Chromium**. 11 Chromium screenshots downloaded; key image galleries and gameplay inspected. Source validator 43071764690 success; built-in Pages deployment 43071762521 separately tracked.
+- All seven governing docs, mechanics, AI, save schema, touch rails and PWA update semantics preserved. No physical iPhone or unaided boss completion verified. **Gate A still unapproved; v0.10 remains locked.**
+
 ## v0.09.25 — Carved saga side-piers, four-beat walking mantle, true-state foe rune guards (Gate A pending)
 
 - Inked original pairs of Norse architectural piers in all 25 existing authored chambers: five unique masonry material cuts × five story sigils, placed in outer upper-wall bands behind combat and away from the center sightline.

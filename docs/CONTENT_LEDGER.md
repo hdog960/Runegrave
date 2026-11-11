@@ -1,3 +1,7 @@
+## v0.09.26 — Art/animation pass, zero new functional content
+
+**Content unchanged:** exactly **25 authored room configurations** (eight sampled for the existing linear mini-run), **eight functioning relic effects**, one provisional Wayfarer playable character, **six ordinary enemy types and one Rootbound Warden boss**. The seven hostile ink sets with 21 new contour extensions represent four attack drawings for EXISTING enemy kinds, not additional enemy behaviors or additional foes. Eight Wayfarer directional guard panels are poses of the SAME character, not eight separate characters. New crown/keystone art modifies 25 EXISTING rooms and does not increase encounter count. No v0.10 procedural floor graphs, extra items, talismans, branches, endings, or unlocks implemented. **Gate A NOT APPROVED; v0.10 LOCKED.**
+
 ## v0.09.25 — Purely visual Gate A artwork, zero fabricated content additions
 
 **Actual playable counts unchanged:** 25 authored room configurations (eight sampled by the existing curated first-soul mini-run), eight functioning relic effects, one provisional Wayfarer, six normal enemy kinds and one Rootbound Warden boss. Twenty-five new paired wall-pier designs and four cloth gait frames are presentation within these existing rooms and character, not 25 new gameplay rooms or four characters; seven enemy armour motifs and their attack-state rivets are not additional foes, attacks or relics. No v0.10 floor graphs, new item systems, talismans, story routes or other later-roadmap feature has been implemented. **Gate A NOT APPROVED; v0.10 LOCKED.**
