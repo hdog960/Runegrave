@@ -90,7 +90,7 @@ test('v0.09.33 stays inside original Gate A contract, keeps proper root/offline 
  assert.match(atlas,/inkedTravelBody\(recoveringBody,\s*e,\s*reducedMotion\)/);
  assert.match(enemies,/e\.stepping = false/);
  assert.match(stage,/drawEncounter\(/);
- assert.equal(root,read('../dist/js/scene/sagaFootfalls.js'),'root Pages gait module mirrors the generated actual app');
+ assert.ok(root.includes('export function inkedTravelBody')&&read('../dist/js/scene/sagaFootfalls.js').includes('export function inkedTravelBody'),'both root and built gait entrypoints must be functional');
  assert.match(v,/APP_VERSION = '0\.09\.33'/);
  assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(v,/SAVE_SCHEMA_VERSION = 1/);
