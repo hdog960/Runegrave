@@ -74,7 +74,32 @@ export function paintEnemyActionFrame(g:G,e:Pick<Enemy,'kind'|'state'|'dx'|'dy'|
    px(-6,-14,12,3,e.phase>1?'#f28a65':'#a8c6ab');break;
   }
  }
- // Geometry, not color alone: braced attack stance adds shoulder chevrons.
+ 
+ // The seven strike silhouettes also receive behavior-linked anticipation
+ // frames; unlike ambient ornaments these only appear during a real attack.
+ if(active){
+  const step=reducedMotion?0:k%2;
+  if(e.kind==='draugr'){
+   for(let n=0;n<3;n++)line(18+n*2,-13+n*4,24+step+n*2,-16+n*4,'#e2c1a2',1.4);
+  }else if(e.kind==='wisp'){
+   line(-11,-10,-16-step,-14,'#c3edf2',1.5);
+   line(10,7,14+step,11,'#c3edf2',1.5);
+  }else if(e.kind==='archer'){
+   line(4-step,-5,21,-5,'#f5deb0',1.6);
+   px(20,-7,4,4,'#f5deb0');
+  }else if(e.kind==='charger'){
+   px(-12,10+step,8,4,'#d8b989');px(4,10-step,8,4,'#d8b989');
+  }else if(e.kind==='sentinel'){
+   for(let n=0;n<3;n++)px(-8+n*7,-22-step,3,5,'#b4d5bf');
+  }else if(e.kind==='shade'){
+   line(-16,10,-20-step,15,'#ac9ccc',1.7);
+   line(16,10,20+step,15,'#ac9ccc',1.7);
+  }else if(e.kind==='warden'){
+   px(-27,-27-step,8,4,'#cfb48c');
+   px(19,-27+step,8,4,'#cfb48c');
+  }
+ }
+// Geometry, not color alone: braced attack stance adds shoulder chevrons.
  if(active&&e.kind!=='wisp'&&e.kind!=='shade'){
   line(-4,-22,-1,-26,'#fff0c6',1.5);line(1,-26,4,-22,'#fff0c6',1.5);
  }
