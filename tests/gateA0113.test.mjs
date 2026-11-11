@@ -127,7 +127,7 @@ test('live compiled renderer preserves stateful door, hero/enemy ink and version
  assert.match(version,/APP_VERSION = '0\.09\.23'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(sw,/runegrave-shell-v0\.09\.23/);
+ assert.match(sw,/runegrave-shell-v0\.09\.23-r1/);
  assert.ok(sw.includes('scene/sagaGateArt.js'));
  assert.ok(sw.includes('scene/sagaExpression.js'));
  assert.equal(FIRST_SOUL_RELICS.length,8);
