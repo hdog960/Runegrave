@@ -87,7 +87,7 @@ test('render integration, 8 real relics, versioned PWA, save schema and Gate A l
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const pixel=read('../dist/js/scene/pixelSpriteAtlas.js'),stage=read('../dist/js/scene/stage.js');
  const version=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
- assert.match(pixel,/inkedRecoveryBody\(windupBody,e\)/,'body recovery must be in production renderer');
+ assert.match(pixel,/inkedRecoveryBody\(windupBody,\s*e\)/,'body recovery must be in production renderer');
  assert.match(stage,/drawEncounter\(/,'authentic existing combat drawn');
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
  assert.match(version,/APP_VERSION = '0\.09\.31'/);
