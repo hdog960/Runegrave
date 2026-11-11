@@ -90,6 +90,16 @@ export function paintSagaGate(g,direction,open,time,reducedMotion=false){
    px(g,-11+inset,y,2,5,INK.pale);
    px(g,9-inset,y,2,5,INK.bronze);
   }
+  // Eight stepped double-edged voussoirs are PERSPECTIVE RIBS beside an
+  // actually empty center corridor, not bars across the playable doorway.
+  // More visible structural depth than the barred slab in both color and form.
+  for(let n=0;n<8;n++){
+   const inset=n%4,y=-20+n*4;
+   px(g,-13+inset,y,2,3,INK.stone);
+   px(g,11-inset,y,2,3,INK.stone);
+   px(g,-12+inset,y+1,1,2,INK.pale);
+   px(g,12-inset,y+1,1,2,INK.bronze);
+  }
   // Heavy left and right stone doors are pulled completely out of the path.
   for(const s of [-1,1]){
    const x=s<0?-25:20;
