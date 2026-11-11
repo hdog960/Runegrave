@@ -52,7 +52,7 @@ test('PWA manifest, icons, service worker are within relative Pages project scop
     const icon=readFileSync(dist(`icons/runegrave-${size}.png`));
     assert.equal(icon.readUInt32BE(16),size);assert.equal(icon.readUInt32BE(20),size);
   }
-  const sw=readFileSync(dist('sw.js'),'utf8');assert.match(sw,/CACHE_NAME = 'runegrave-shell-v0\.09\.32'/);
+  const sw=readFileSync(dist('sw.js'),'utf8');assert.match(sw,/CACHE_NAME = 'runegrave-shell-v0\.09\.33'/);
   assert.match(sw,/ACTIVATE_UPDATE/);assert.match(sw,/registration\.scope/);
   const installBlock=sw.split("self.addEventListener('install'")[1].split("self.addEventListener('activate'")[0];
   assert.ok(!installBlock.includes('skipWaiting('),'installation must not forcibly activate over live gameplay');

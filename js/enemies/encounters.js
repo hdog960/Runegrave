@@ -136,7 +136,7 @@ export function placeDirectedExit(world, entry, direction) {
 export function placeRoomExit(world) {
     return placeDirectedExit(world, safeSpawn(world, { x: world.width * .27, y: world.minY + 24 }), 'east');
 }
-function enemyOf(id, kind, p) { return { id, kind, ...p, radius: ENEMY_RADII[kind], hp: ENEMY_HP[kind], maxHp: ENEMY_HP[kind], alive: true, flash: 0, cooldown: 1.1, windup: 0, state: 'idle', dx: 0, dy: 1, time: 0, phase: 1, attackCount: 0 }; }
+function enemyOf(id, kind, p) { return { id, kind, ...p, radius: ENEMY_RADII[kind], hp: ENEMY_HP[kind], maxHp: ENEMY_HP[kind], alive: true, flash: 0, cooldown: 1.1, windup: 0, state: 'idle', dx: 0, dy: 1, time: 0, phase: 1, attackCount: 0, stride: 0, stepping: false }; }
 export class HostileEncounter {
     world;
     plan;
@@ -242,6 +242,11 @@ export class HostileEncounter {
     move(e, dir, speed, dt) {
         const p = moveCircle(this.world, e, { x: dir.x * speed, y: dir.y * speed }, dt, e.radius);
         if (isPositionFree(this.world, p, e.radius)) {
+            const advance = Math.hypot(p.x - e.x, p.y - e.y);
+            if (advance > 0.001) {
+                e.stride = (e.stride ?? 0) + advance;
+                e.stepping = true;
+            }
             e.x = p.x;
             e.y = p.y;
         }
@@ -267,6 +272,7 @@ export class HostileEncounter {
         for (const e of this.enemies) {
             if (!e.alive)
                 continue;
+            e.stepping = false;
             e.time += dt;
             e.flash = Math.max(0, e.flash - dt);
             e.cooldown = Math.max(0, e.cooldown - dt);
