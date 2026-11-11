@@ -1,5 +1,16 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.20 — Eddic upper-wall architecture and oath-bound fighting silhouettes (CANDIDATE)
+
+**Pending verification.** Isolated branch; do not claim merged, live, CI-green, Chromium-approved or player-approved until evidence exists. Gate A remains active; v0.10 remains locked.
+
+- Five distinct hand-shaped 16×14 upper-masonry silhouettes with material-specific palettes and five separate 9×8 mythic inset illustrations: **25 unique composed friezes**, one for every real authored `fs-XX` room. The scenic proscenium stays entirely above y=54 world pixels, centered within the dedicated gameplay canvas; no DOM/control rail touched.
+- Eight-facing Wayfarer receives a pixel-forged buckler, riveted vambrace, true movement steps, facing-specific mantle stitching and real-recoil-only gauntlet highlights. Six enemies + Warden receive seven different steel, horn, ghostglass, veil and root strike props tied to the genuine warning and actual remaining windup stages. Warden phase two has distinct extra forked thorn geometry.
+- Visual-only implementation through `src/scene/eddicCornice.ts` and compiled runtime module, wired into existing stage, hero and enemy painters. No new simulated threat circles, fake pickups/exits, hitboxes, physics, AI, save schema changes or gameplay state.
+- New unit tests assert 25 authored still-room patterns, bounded frieze canvas draw ops, reduced-motion stillness, eight hero directions, seven strike identities/four timing stages, compiled integration and new PWA cache. Browser landscape/portrait and touch auditing remains mandatory before release.
+- At candidate time all CI/Chromium/Pages/live deployment results UNVERIFIED. Player-facing art assessment and physical iPhone Safari test still pending.
+
+
 ## v0.09.19 — 25 canonical saga-stone scenes, five family sculptures and truthful gate ironwork (2026-11-10 US Central)
 
 **VERIFIED LIVE: v0.09.19 implemented, 149/149 automated Node tests PASS, mobile Chromium QA PASS, GitHub CI PASS, GitHub Pages deployed, public source independently checked. Gate A NOT APPROVED. v0.10 LOCKED.**
