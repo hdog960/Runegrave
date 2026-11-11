@@ -87,6 +87,6 @@ test('one original 25-chamber adventure, 8 real relics, user-approved PWA upgrad
  assert.match(versions,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(versions,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(sw,/runegrave-shell-v0\.09\.30/);
- assert.match(enemyArt,/paintHostileProjectiles\(g,state\.projectiles,t\)/);
+ assert.match(enemyArt,/paintHostileProjectiles\(g,\s*state\.projectiles,\s*t\)/);
  assert.ok(sw.includes('./js/enemies/hostileProjectileArt.js'));
 });
