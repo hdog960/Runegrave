@@ -27,6 +27,19 @@ with sync_playwright() as p:
   page.wait_for_timeout(120)
   assert page.locator('#gameplay-canvas').get_attribute('data-room')=='crypt'
   if label=='regular':
+   # Cross the actual encounter's post-strike zero boundary in live Chromium.
+   # A negative residual windup while idle/recover must render safely.
+   page.evaluate("""() => {
+    const e=window.__runegraveTest.stage.getEncounter().enemies[0];
+    e.state='recover';e.windup=-1/120;
+   }""")
+   page.wait_for_timeout(90)
+   assert not errors,('negative idle/recover windup must not crash browser',errors)
+   page.evaluate("""() => {
+    const e=window.__runegraveTest.stage.getEncounter().enemies[0];
+    e.state='idle';e.windup=0;
+   }""")
+   page.wait_for_timeout(40)
    page.evaluate("""() => {const es=window.__runegraveTest.stage.getEncounter().enemies;
       for(const e of es){e.state='warning';e.windup=.28;} }""")
    page.wait_for_timeout(100)

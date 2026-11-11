@@ -156,10 +156,11 @@ export function paintWayfarerOathGear(g,pose,time,reducedMotion=false){
  */
 export function paintOathEnemyStrike(g,e,time,reducedMotion=false){
  if(!['draugr','wisp','archer','charger','sentinel','shade','warden'].includes(e.kind)||
- ![time,e.windup,e.dx,e.dy].every(Number.isFinite)||e.windup<0)
+ ![time,e.windup,e.dx,e.dy].every(Number.isFinite))
  throw new RangeError('Invalid enemy oath strike');
  if(e.state!=='warning'&&e.state!=='charge')return;
- const band=e.state==='charge'?3:e.windup>.65?0:e.windup>.40?1:e.windup>=.20?2:3;
+ const remaining=Math.max(0,e.windup); // transient post-strike negative values are valid in idle
+ const band=e.state==='charge'?3:remaining>.65?0:remaining>.40?1:remaining>=.20?2:3;
  const reach=band*2,hot=band>=3;
  const ivory=hot?'#fff4d9':'#c4ba97',iron=hot?'#c9ecde':'#8ea9a1';
  const v=e.dy<-.44?-1:e.dy>.44?1:0;

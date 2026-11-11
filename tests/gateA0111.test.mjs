@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {wayfarerPose} from '../dist/js/scene/wayfarerMotion.js';
 import {WAYFARER_ATLAS,WAYFARER_GAITS,HOSTILE_ATLAS,PIXEL_ATLAS_KINDS,ATLAS_CELL,heroAtlasFrame,enemyAtlasBand,paintHeroAtlas,paintHostileAtlas} from '../dist/js/scene/pixelSpriteAtlas.js';
 import {FIRST_SOUL_ROOMS,FIRST_SOUL_RELICS} from '../dist/js/run/firstSoul.js';
+import {paintOathEnemyStrike} from '../dist/js/scene/eddicCornice.js';
 function mock(){
  const calls=[],g={};
  for(const op of ['save','restore','translate','scale','fillRect','beginPath','ellipse','fill'])
@@ -100,4 +101,22 @@ test('real renderers now use one inked atlas per actor without old layered-body 
  assert.match(version,/APP_VERSION = '0\.09\.21'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
+});
+
+test('post-cast negative windup is legitimate idle/recover data and never crashes a live sprite',()=>{
+ for(const kind of enemies){
+  for(const state of ['idle','recover']){
+   const e={kind,state,windup:-1/120,phase:1,flash:0,dx:1,dy:0};
+   assert.equal(enemyAtlasBand(e),0,kind+' negative inactive windup stays neutral');
+   const a=mock(),b=mock();
+   assert.doesNotThrow(()=>paintHostileAtlas(a.g,e,12,true));
+   assert.doesNotThrow(()=>paintOathEnemyStrike(b.g,e,12,true));
+   assert.equal(b.calls.length,0,'no attack ornaments appear during recovery');
+  }
+  assert.equal(enemyAtlasBand({state:'warning',windup:-.001}),3,'near-zero attack remains urgent even if time overshoots');
+  const w=mock();
+  assert.doesNotThrow(()=>paintOathEnemyStrike(w.g,{kind,state:'warning',windup:-.001,phase:1,dx:1,dy:0},1,true));
+  assert.ok(w.calls.length>0);
+ }
+ assert.throws(()=>enemyAtlasBand({state:'idle',windup:NaN}),RangeError);
 });

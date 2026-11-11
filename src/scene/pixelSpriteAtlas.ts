@@ -175,8 +175,11 @@ export function paintHeroAtlas(g:G,pose:WayfarerPose,time:number,reducedMotion=f
  g.restore();
 }
 export function enemyAtlasBand(e:Pick<Enemy,'state'|'windup'>):0|1|2|3{
- if(!Number.isFinite(e.windup)||e.windup<0)throw new RangeError('Invalid hostile atlas windup');
- return e.state==='charge'?3:e.state!=='warning'?0:e.windup>.65?0:e.windup>.40?1:e.windup>=.20?2:3;
+ if(!Number.isFinite(e.windup))throw new RangeError('Invalid hostile atlas windup');
+ if(e.state==='charge')return 3;
+ if(e.state!=='warning')return 0;
+ const remaining=Math.max(0,e.windup); // encounter clock may cross zero before switching to idle
+ return remaining>.65?0:remaining>.40?1:remaining>=.20?2:3;
 }
 export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phase'|'flash'>,time:number,reducedMotion=false):void{
  if(!Object.hasOwn(HOSTILE_ATLAS,e.kind)||!Number.isFinite(time))throw new RangeError('Unknown hostile pixel sheet');
