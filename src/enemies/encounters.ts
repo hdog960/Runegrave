@@ -11,7 +11,7 @@ export type EnemyKind=typeof ENEMY_KINDS[number] | 'warden';
 export type EncounterRoom='crypt'|'warden';
 export type EncounterPlan=Readonly<{id:string;waves:readonly (readonly Exclude<EnemyKind,'warden'>[])[];strength:number}>;
 export type RoomPhase='locked'|'gate'|'finished';
-export type Enemy={id:string;kind:EnemyKind;x:number;y:number;radius:number;hp:number;maxHp:number;alive:boolean;flash:number;cooldown:number;windup:number;state:'idle'|'warning'|'charge'|'hidden'|'recover';dx:number;dy:number;time:number;phase:number;attackCount:number};
+export type Enemy={id:string;kind:EnemyKind;x:number;y:number;radius:number;hp:number;maxHp:number;alive:boolean;flash:number;cooldown:number;windup:number;state:'idle'|'warning'|'charge'|'hidden'|'recover';dx:number;dy:number;time:number;phase:number;attackCount:number;stride?:number;stepping?:boolean};
 export type HostileBolt={id:number;x:number;y:number;dx:number;dy:number;speed:number;radius:number;damage:number;life:number};
 export type EncounterSnapshot={room:EncounterRoom;phase:RoomPhase;wave:number;kills:number;bossDefeated:boolean;bossPhase:number;enemies:readonly Enemy[];projectiles:readonly HostileBolt[];shots:number};
 const EPS=1e-8;
@@ -114,7 +114,7 @@ export function placeRoomExit(world:CollisionWorld):Vec2 {
   return placeDirectedExit(world,safeSpawn(world,{x:world.width*.27,y:world.minY+24}),'east');
 }
 
-function enemyOf(id:string,kind:EnemyKind,p:Vec2):Enemy {return {id,kind,...p,radius:ENEMY_RADII[kind],hp:ENEMY_HP[kind],maxHp:ENEMY_HP[kind],alive:true,flash:0,cooldown:1.1,windup:0,state:'idle',dx:0,dy:1,time:0,phase:1,attackCount:0};}
+function enemyOf(id:string,kind:EnemyKind,p:Vec2):Enemy {return {id,kind,...p,radius:ENEMY_RADII[kind],hp:ENEMY_HP[kind],maxHp:ENEMY_HP[kind],alive:true,flash:0,cooldown:1.1,windup:0,state:'idle',dx:0,dy:1,time:0,phase:1,attackCount:0,stride:0,stepping:false};}
 
 export class HostileEncounter {
   readonly enemies:Enemy[]=[];
@@ -186,7 +186,11 @@ export class HostileEncounter {
   }
   private move(e:Enemy,dir:Vec2,speed:number,dt:number){
     const p=moveCircle(this.world,e,{x:dir.x*speed,y:dir.y*speed},dt,e.radius);
-    if(isPositionFree(this.world,p,e.radius)){e.x=p.x;e.y=p.y;}
+    if(isPositionFree(this.world,p,e.radius)){
+      const advance=Math.hypot(p.x-e.x,p.y-e.y);
+      if(advance>0.001){e.stride=(e.stride??0)+advance;e.stepping=true;}
+      e.x=p.x;e.y=p.y;
+    }
   }
   private shoot(e:Enemy,direction:Vec2,speed=115,damage=1){
     if(this.projectiles.length>=90)return;
@@ -203,7 +207,7 @@ export class HostileEncounter {
     if(health.state.dead||this.state!=='locked')return;
     for(const e of this.enemies){
       if(!e.alive)continue;
-      e.time+=dt;e.flash=Math.max(0,e.flash-dt);e.cooldown=Math.max(0,e.cooldown-dt);
+      e.stepping=false;e.time+=dt;e.flash=Math.max(0,e.flash-dt);e.cooldown=Math.max(0,e.cooldown-dt);
       const distance=MAG(e,hero),toward=this.aim(e,hero);
       if(e.kind==='draugr'){
         this.move(e,toward,ENEMY_SPEED.draugr,dt);

@@ -12,6 +12,7 @@ type G=CanvasRenderingContext2D;
 type HeroFacing='N'|'NE'|'E'|'SE'|'S'|'SW'|'W'|'NW';
 import { inkedWindupBody } from './sagaBodyLanguage.js';
 import { inkedRecoveryBody, recoveryGroundShift } from './sagaRecoveryInk.js';
+import { inkedTravelBody } from './sagaFootfalls.js';
 import { inkedImpactBody } from './sagaImpactFractures.js';
 import { inkedWayfarerHurtBody } from './wayfarerHurtInk.js';
 import { inkedWardenPhaseBody } from './wardenUnboundInk.js';
@@ -543,7 +544,8 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  // There is still exactly one body draw and no extra phantom attack sprite.
  const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
  const recoveringBody=inkedRecoveryBody(windupBody,e);
-  const visibleBody=inkedImpactBody(inkedWardenPhaseBody(recoveringBody,e.kind,e.phase),e.kind,e.flash);
+ const travelingBody=inkedTravelBody(recoveringBody,e,reducedMotion);
+  const visibleBody=inkedImpactBody(inkedWardenPhaseBody(travelingBody,e.kind,e.phase),e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
