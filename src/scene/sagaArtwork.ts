@@ -15,7 +15,7 @@ export const SAGA_PALETTES=Object.freeze({
  ASH:['#241d1b','#75533e','#d5a26d'],IRON:['#1d2e34','#697f84','#c1c8bd'],
  ROOT:['#172e29','#517760','#add5a9'],SPIRIT:['#292a47','#727ba1','#c4d9e1'],
  FATE:['#302b23','#917c54','#e1c68f']
-});
+} as const);
 /** Two hand-authored 2px mosaics on fixed upper-edge tapestry mounts.
  * Each family has a distinct silhouette; five numbered hem cuts per family.
  */
@@ -80,7 +80,7 @@ export function paintSagaWayfarer(g:CanvasRenderingContext2D,pose:WayfarerPose,t
   px(x-1+s*gait*.5,16,2,2,'#acb69d');
  }
  // Facing-specific forged crest profiles, stable in reduced-motion mode.
- const crests=[[0,-26,0],[5,-25,1],[9,-20,2],[6,-16,1],[0,-27,0],[-6,-16,-1],[-9,-20,-2],[-5,-25,-1]];
+ const crests=[[0,-26,0],[5,-25,1],[9,-20,2],[6,-16,1],[0,-27,0],[-6,-16,-1],[-9,-20,-2],[-5,-25,-1]] as const;
  const [cx,cy,slant]=crests[index]??[0,-26,0];
  px(cx-3,cy-2+breath,6,4,'#202e33');px(cx-2,cy-3+breath,4,2,'#e1bd82');
  px(cx+slant,cy-6+breath,2,4,pose.back?'#80b7a5':'#e6c58c');
