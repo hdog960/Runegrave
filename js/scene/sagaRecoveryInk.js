@@ -76,7 +76,7 @@ export const HOSTILE_RECOVERY_INK=Object.freeze({
  * These insets are engraved directly into the existing one-body pixel atlas.
  */
 export const HOSTILE_RECOVERY_SILHOUETTES=Object.freeze({"charger":{"at":5,"frames":[[1,2,3,3,4,4,3,3,2,1,1],[0,1,2,3,3,3,2,2,1,1,0],[0,0,1,1,2,2,1,1,0,0,0]]},"shade":{"at":4,"frames":[[1,2,2,3,3,4,3,3,2,1,1],[0,1,2,2,3,3,2,2,1,1,0],[0,0,0,1,2,2,1,1,0,0,0]]},"warden":{"at":6,"frames":[[2,2,3,4,4,5,5,4,4,3,3],[1,1,2,3,3,4,4,3,2,2,1],[0,0,1,1,2,2,2,1,1,0,0]]}});
-export function recoveryGroundShift(e):number{
+export function recoveryGroundShift(e){
  const frame=enemyRecoveryFrame(e);
  return frame<0?0:frame===0?4:frame===1?2:0;
 }
