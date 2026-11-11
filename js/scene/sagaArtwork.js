@@ -79,6 +79,9 @@ export function paintSagaWayfarer(g,pose,time,reducedMotion=false){
   px(x-2+s*gait*.5,13,3,3,'#132d32');
   px(x-1+s*gait*.5,16,2,2,'#acb69d');
  }
+ // Mid-stance is a distinct planted-foot / split-cloak cross-step, not a
+ // duplicate of the neutral contact frame at ordinary phone pixel scale.
+ if(pose.moving&&!reducedMotion&&frame===2)px(-2,12,4,3,'#a6bdab');
  // Facing-specific forged crest profiles, stable in reduced-motion mode.
  const crests=[[0,-26,0],[5,-25,1],[9,-20,2],[6,-16,1],[0,-27,0],[-6,-16,-1],[-9,-20,-2],[-5,-25,-1]];
  const [cx,cy,slant]=crests[index]??[0,-26,0];
