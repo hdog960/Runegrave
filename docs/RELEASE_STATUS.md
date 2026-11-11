@@ -1,5 +1,14 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.18 — Saga standards, eight-facing Wayfarer and seven enemy strike stories (candidate, 2026-11-10 US Central)
+
+**CANDIDATE ONLY: development on isolated Gate A branch. GitHub CI, browser tests, Pages and independent live verification not yet established. GATE A NOT APPROVED; v0.10 LOCKED.**
+
+- Authored new source `src/scene/sagaArtwork.ts` with five distinct 12-row 2px pixel mosaics, deterministic five-cut border variants across all 25 room identities, independent left and right upper-wall standards, four-cadence Wayfarer helmet/cloth/greaves facing detail and seven different genuine enemy-windup strike silhouettes. Nothing above is a claim of a delivered public build until verified.
+- Wire new drawing into real stage, hero and enemy Canvas renderers. Preserve damage/AI/hitboxes, save schema 1, existing relics, player settings, seven authoritative documents, PWA update mechanism and completely separate handheld grip/controller rails.
+- New Node tests and mobile-size Chromium run added; record pass/fail results truthfully before declaring release. No further roadmap gate authorized.
+
+
 ## v0.09.17 — Gate A carved family galleries, eight-facing armor and hostile anticipation (2026-11-10 US Central)
 
 **VERIFIED: IMPLEMENTED, 142/142 NODE CHECKS PASS, CHROMIUM QA PASS, GITHUB CI PASS, PUBLIC PAGES LIVE. GATE A UNAPPROVED; v0.10 LOCKED.**
