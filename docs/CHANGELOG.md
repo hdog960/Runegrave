@@ -1,3 +1,10 @@
+## v0.09.31 — Three authentic post-strike enemies and five carved burial effigy families
+
+- Added nine hand-drawn physical in-body retreat/recovery shapes in `sagaRecoveryInk`, only for charger, shade and Warden with their existing live countdown (phase-two Warden shorter), integrated into the existing rendered enemy atlas after warnings and before actual damage materials. No new attack/AI/hitbox.
+- Carved five original 9×7 burial memorial statues into the real upper outer paired vault walls of 25 canonical authored encounter configurations, bounded away from the arena, thumb grips, doors and dangerous warning visuals.
+- Added four strict original-art and no-fake-recovery tests, preserved 198 prior tests. First CI 200/202 exposed outdated old recovery == idle expectation and whitespace strictness, both responsibly corrected without skipping. Final 202/202 strict Node/TypeScript and real 4-size simulated mobile Chromium PASS, **21 real screenshots** reviewed. [PR #19](https://github.com/hdog960/Runegrave/pull/19), [main CI](https://github.com/hdog960/Runegrave/actions/runs/43101136865), [Pages source](https://github.com/hdog960/Runegrave/actions/runs/43101136436), [publisher](https://github.com/hdog960/Runegrave/actions/runs/43101136655) green.
+- App and user-consented offline cache `0.09.31`; roadmap remains v0.09, saves schema 1. Real device review and player art approval outstanding. **Gate A NOT APPROVED; v0.10 LOCKED.**
+
 ## v0.09.30 — Real-life Norse hostile projectile pixel silhouettes; no vector blur (Gate A still unapproved)
 
 - Replaced old smooth Canvas hostile projectile polygons with **six hand-authored original 1px missile sprites** in two real combat-source families: three violet spectral-dart flights and three crimson-gold Rootbound Warden ember flight silhouettes. Existing projectile lifetime chooses actual frame, heading comes from its real velocity. No free-running fake attack clock.

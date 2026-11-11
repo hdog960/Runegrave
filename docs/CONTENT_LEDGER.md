@@ -1,3 +1,7 @@
+## v0.09.31 — True recovery artwork and non-interactive funerary carvings ONLY
+
+**Functional content totals unchanged:** 25 authored room configurations (8 sampled in the current First Soul mini-run), exactly eight functional relic effects, one Wayfarer, six normal enemy species + the original Rootbound Warden boss. Nine authentic post-strike recovery frames are alternate *visual forms* of **three existing enemies in an already implemented combat state**, NOT three new enemies, nine new attacks, or additional recoveries for four unimplemented states. Five original carved burial effigies are passive wall artwork used within the **same 25 rooms**, not rooms, items, bosses, obstacles, collision geometry, landmarks or new routes. No extra v0.10 procedural graph, items or endgame. **Gate A NOT APPROVED; v0.10 LOCKED.**
+
 ## v0.09.30 — Six hostile projectile DRAWINGS only; no functional content added
 
 **Actual playable content unchanged:** 25 deterministic authored room encounter configurations (eight used per first-soul mini-run), eight functional relic effects, one Wayfarer, six ordinary hostile kinds and one Rootbound Warden boss. Three new spectral dart and three Warden ember visuals represent alternate pixel frames for the SAME two existing projectile tiers; they do not create six new attacks, enemies, bosses, items, or gameplay systems. Physics, projectile count, lifetime, damage, collision and real warning states unchanged. No v0.10 procedural floor, additional relics, content route, talisman or ending. **Gate A NOT APPROVED; v0.10 LOCKED.**
