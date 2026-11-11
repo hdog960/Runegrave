@@ -37,7 +37,7 @@ export function paintWayfarerMovingHem(g,pose,time,reducedMotion=false){
 }
 
 /** Countdowns are signed in real enemy simulation after the last strike tick. */
-export function kineticStrikeBand(e):0|1|2|3{
+export function kineticStrikeBand(e){
  if(!Number.isFinite(e.windup))throw new RangeError('Invalid kinematic windup');
  if(e.state==='charge')return 3;
  if(e.state!=='warning')return 0;
