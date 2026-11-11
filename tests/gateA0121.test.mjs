@@ -25,7 +25,7 @@ test('nine original enemy recovery silhouettes follow ONLY three actual recovery
    assert.ok(art.every(r=>/^[. oabcegrs]+$/.test(r)),kind+' no invalid material');
    assert.notDeepEqual(art,base,'actual recovery physically changes the same body');
    const edited=art.map((s,i)=>s!==base[i]?i:null).filter(i=>i!==null);
-   assert.ok(edited.length>=2&&edited.length<=3,kind+' replace only three body rows');
+   assert.ok(edited.length>=5&&edited.length<=14,kind+' substantially recut 11 authentic body rows without expanding sprite');
    const signature=art.join('|');frames.push(signature);across.add(signature);
   }
   assert.equal(new Set(frames).size,3,'three truly different original recoveries, not repaints');
@@ -90,9 +90,9 @@ test('render integration, 8 real relics, versioned PWA, save schema and Gate A l
  assert.match(pixel,/inkedRecoveryBody\(windupBody,\s*e\)/,'body recovery must be in production renderer');
  assert.match(stage,/drawEncounter\(/,'authentic existing combat drawn');
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
- assert.match(version,/APP_VERSION = '0\.09\.31'/);
+ assert.match(version,/APP_VERSION = '0\.09\.32'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.31/);
+ assert.match(sw,/runegrave-shell-v0\.09\.32/);
  assert.ok(sw.includes('./js/scene/sagaRecoveryInk.js'));
 });

@@ -5,7 +5,6 @@ export const ART_PALETTE = Object.freeze({
     void: '#071013', mortar: '#0c1b1c', stone: '#233433', stoneLit: '#415650',
     iron: '#101c20', brass: '#ae8b59', jade: '#83c4ae', flame: '#f5bb63'
 });
-const tileSize = 30;
 /** These are actual base masonry palettes, not transparent theme overlays.
  * The ROOT palette exactly preserves the original Rootvault material. */
 export const BASE_MASONRY = Object.freeze({
@@ -92,27 +91,32 @@ function floor(g, W, H, time, family) {
     grad.addColorStop(1, '#0b181c');
     g.fillStyle = grad;
     g.fillRect(0, 0, W, H);
-    // Offset masonry tiles, mortar and authored hand-chiseled notches.
-    for (let row = 0; row < Math.ceil(H / tileSize) + 1; row++) {
-        for (let col = -1; col < Math.ceil(W / tileSize) + 1; col++) {
-            const x = col * tileSize + ((row & 1) ? tileSize * .5 : 0), y = row * tileSize;
-            const n = floorHash(col, row) % 11;
-            box(g, x, y, tileSize - 1, tileSize - 2, n < 2 ? p.slabLit : n < 6 ? p.slab : n < 9 ? p.mortar : p.wall);
-            box(g, x + 3, y + 2, tileSize - 7, 1, p.wallLit);
-            box(g, x + 2, y + tileSize - 4, tileSize - 5, 1, '#0c1c20');
-            if (n === 3 || n === 7)
-                stroke(g, [[x + 7, y + 18], [x + 13, y + 10], [x + 18, y + 13], [x + 21, y + 6]], p.accent, 1);
-            if (n === 6) {
-                box(g, x + 22, y + 9, 2, 2, p.glint);
-                box(g, x + 24, y + 11, 2, 1, '#4b765e');
-            }
-            if (n === 10) {
-                box(g, x + 7, y + 15, 3, 2, p.accent);
-                box(g, x + 19, y + 21, 2, 2, '#56715d');
-            }
-        }
-    }
-    // Soot and floor-side shadows don't enter any separate HUD area.
+    // v0.09.32: larger hand-laid Norse flagstones replace busy 30px grids.
+ // Each room still uses its existing five real material palettes, while
+ // central mortar is intentionally subdued to prioritize moving silhouettes.
+ const stoneW=48,stoneH=36;
+ for(let row=0;row<Math.ceil(H/stoneH)+1;row++){
+  for(let col=-1;col<Math.ceil(W/stoneW)+1;col++){
+   const x=col*stoneW+((row&1)?stoneW/2:0),y=row*stoneH;
+   const n=floorHash(col,row)%17;
+   box(g,x+1,y+1,stoneW-3,stoneH-3,n<3?p.mortar:n<12?p.slab:p.wall);
+   // A broad chisel-shaded edge, not many glittering dots under combat.
+   box(g,x+4,y+3,stoneW-10,1,p.wallLit);
+   box(g,x+4,y+stoneH-5,stoneW-10,1,p.mortar);
+   if(n===3||n===11){
+    stroke(g,[[x+12,y+24],[x+22,y+17],[x+29,y+19],[x+35,y+12]],p.accent,1);
+   }else if(n===8){
+    box(g,x+16,y+11,6,2,p.wallLit);box(g,x+20,y+13,2,6,p.mortar);
+   }
+  }
+ }
+ // Architectural light falls onto the edges, leaving the playable middle
+ // darker and calmer. This is FLOOR PAINT drawn before every real combatant.
+ const focus=g.createRadialGradient(W*.5,H*.54,H*.15,W*.5,H*.54,H*.75);
+ focus.addColorStop(0,'#07191c5b');focus.addColorStop(.6,'#07151a26');
+ focus.addColorStop(1,'#07111600');
+ g.fillStyle=focus;g.fillRect(0,50,W,Math.max(0,H-65));
+ // Soot and floor-side shadows don't enter any separate HUD area.
     const shade = g.createLinearGradient(0, 0, 0, H);
     shade.addColorStop(0, '#050e1199');
     shade.addColorStop(.45, '#111c1a00');
