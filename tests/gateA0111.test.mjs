@@ -38,12 +38,12 @@ test('eight hero facings and four distinctly planted foot positions are drawn, g
    const a=mock(),b=mock();
    paintHeroAtlas(a.g,p,.23,true);paintHeroAtlas(b.g,p,99.5,true);
    assert.deepEqual(a.calls,b.calls,'reduced-motion hero is still');
-   assert.equal(a.calls.filter(x=>x[0]==='save').length,1);
-   assert.equal(a.calls.filter(x=>x[0]==='restore').length,1);
+   assert.equal(a.calls.filter(x=>x[0]==='save').length,2,'main sprite plus new hand-inked cloak must each preserve canvas state');
+   assert.equal(a.calls.filter(x=>x[0]==='restore').length,2);
    assert.ok(a.calls.length>55&&a.calls.length<350);
    for(const c of a.calls.filter(x=>x[0]==='fillRect')){
      assert.ok(c.slice(1,5).every(Number.isFinite));
-     assert.ok(Math.abs(c[1])<33&&c[2]>=-34&&c[2]<=23,'hero local ink bounded');
+     assert.ok(Math.abs(c[1])<33&&c[2]>=-34&&c[2]<=26,'hero + moving hem remain inside actor outline');
    }
    facingImages.push(JSON.stringify(a.calls));
  }
