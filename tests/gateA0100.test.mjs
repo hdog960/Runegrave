@@ -60,7 +60,7 @@ test('new status exists only inside left controller grip, and no new controls ov
  assert.match(style,/pointer-events:none/);
 });
 
-test('v0.09.24 retains all eight functional relics and cached modules, with later gates unapproved',()=>{
+test('v0.09.25 retains all eight functional relics and cached modules, with later gates unapproved',()=>{
  assert.equal(FIRST_SOUL_RELICS.length,8);
  const ver=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
  assert.match(ver,/ROADMAP_VERSION = 'v0\.09'/);assert.match(ver,/APP_VERSION = '0\.09\.24'/);
