@@ -38,12 +38,12 @@ test('eight hero facings and four distinctly planted foot positions are drawn, g
    const a=mock(),b=mock();
    paintHeroAtlas(a.g,p,.23,true);paintHeroAtlas(b.g,p,99.5,true);
    assert.deepEqual(a.calls,b.calls,'reduced-motion hero is still');
-   assert.equal(a.calls.filter(x=>x[0]==='save').length,1);
-   assert.equal(a.calls.filter(x=>x[0]==='restore').length,1);
+   assert.equal(a.calls.filter(x=>x[0]==='save').length,2,'main sprite plus new hand-inked cloak must each preserve canvas state');
+   assert.equal(a.calls.filter(x=>x[0]==='restore').length,2);
    assert.ok(a.calls.length>55&&a.calls.length<350);
    for(const c of a.calls.filter(x=>x[0]==='fillRect')){
      assert.ok(c.slice(1,5).every(Number.isFinite));
-     assert.ok(Math.abs(c[1])<33&&c[2]>=-34&&c[2]<=23,'hero local ink bounded');
+     assert.ok(Math.abs(c[1])<33&&c[2]>=-34&&c[2]<=26,'hero + moving hem remain inside actor outline');
    }
    facingImages.push(JSON.stringify(a.calls));
  }
@@ -97,8 +97,8 @@ test('real renderers now use one inked atlas per actor without old layered-body 
  assert.ok(enemy.includes('paintOathEnemyStrike('),'real warning tells still attached');
  assert.ok(enemy.includes('runeWarning(g, e, t)'),'world warning rays remain intact');
  assert.ok(cache.includes('scene/pixelSpriteAtlas.js'),'offline PWA contains newly compiled sprite');
- assert.match(cache,/runegrave-shell-v0\.09\.21/);
- assert.match(version,/APP_VERSION = '0\.09\.21'/);
+ assert.match(cache,/runegrave-shell-v0\.09\.22/);
+ assert.match(version,/APP_VERSION = '0\.09\.22'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
 });

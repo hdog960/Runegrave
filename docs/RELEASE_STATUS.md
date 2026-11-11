@@ -1,5 +1,15 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.22 — 25 authored floor chronicles and physically articulated hero/enemy ink (CANDIDATE)
+
+**Not yet merged, published or user-approved; Gate A remains active; v0.10 locked.**
+
+- Added five unique low-contrast 17-column family stone contours and five independent engraved 9-column mythic stories. Every one of the 25 canonical authored `fs-XX` chambers gets a distinct carved floor mosaic tied to the actual canonical ID rather than its position in a randomized run. Inset stays within a 56×50px central floor tile at approximately 69% world depth, draws before actors and telegraphs, and has no new collision or interacting entities.
+- Added four separately shaped Wayfarer moving cloak hem weights (matched to the existing four gait frames) and seven distinct true-windup species-specific articulated strike pieces. Attack geometry changes in **four real windup phases** rather than by an arbitrary visual clock, with additional Warden phase-two branches. Inactive recovering hostiles still do not draw attack props, including finite negative post-strike windup values.
+- All UI/HUD and input remain outside center-only gameplay canvas; no mechanics, hitboxes, combat timing, AI, saves or PWA update policy changed.
+- Includes new Node and real mobile Chromium verification, a 25-room pixel art contact sheet and previous two-thumb test. CI, deployment and independent public checks pending at candidate time.
+
+
 ## v0.09.21-r1 — Verified real-combat windup transition hotfix (2026-11-10 US Central)
 
 **VERIFIED: corrected runtime, 158/158 Node tests PASS, Chromium actual negative-windup reproduction PASS, post-merge CI PASS, public Pages + PWA updated and independently fetched. Application remains v0.09.21; PWA shell is `runegrave-shell-v0.09.21-r1`. Gate A NOT APPROVED; v0.10 LOCKED.**
