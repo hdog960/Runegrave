@@ -1,5 +1,15 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.23 — Eight-way warrior armour, seven enemy expressions and sculpted state-true gates (CANDIDATE)
+
+**Unverified candidate on isolated branch. Do not claim released, merged, browser-accepted or physically tested until CI/deployment passes. v0.09 Gate A remains active. v0.10 locked.**
+
+- New original `sagaExpression` art: eight individually inked 15-column directional chest/shoulder rune-braid sprites (front/back/cardinals and diagonals, not color-only mirrors). Four true walking cadences and existing weapon recoil determine subtle shoulder/arm motion. Seven hand-authored distinct enemy faceplates visibly alter their eyes on real `warning`/`charge` and show material cracks on actual `flash` damage events; phase-two Rootbound Warden has a changed brow crown. Finite negative post-strike recovery timers remain legal, with no fake warnings.
+- New `sagaGateArt`: four different cardinal stone rune carvings, high-contrast barred portcullis with solid iron X/weight/chain and a truly different OPEN two-leaf corridor with 4 perspective ribs. Existing collision, true `open` flag, EXIT/LOCKED labels, compass arrows, approach geometry and entrance detection unchanged. Purely world-space visuals within existing thresholds.
+- Enhanced all 25 `fs-XX` floor chronicles with individually authored stone-chip fracture fingerprints inside existing low-contrast 56×50px tiles. No new props, collision or arena obstruction.
+- Added comprehensive Node assertions and real Chromium 8-direction hero, 7 enemy, 25 unique room, and 8 real 4×2 cardinal state door artwork captures. Existing iPhone two-thumb playfield tests mandatory before merge. Official version/PWA cache planned v0.09.23; all seven governing documents and gameplay systems protected.
+
+
 ## v0.09.22 — Twenty-five floor chronicles and true-body Norse attack silhouettes (2026-11-10 US Central)
 
 **VERIFIED RELEASE: v0.09.22 code implemented and committed; strict TypeScript + 162/162 Node tests PASS; candidate and post-merge Chromium browser checks PASS; GitHub Pages deployment successful; public game/module/cache independently checked. v0.09 Gate A STILL UNAPPROVED; v0.10 LOCKED.**
