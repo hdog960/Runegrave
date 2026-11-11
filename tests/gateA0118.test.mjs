@@ -36,7 +36,14 @@ test('seven authored hostile damage fracture contours activate only on real hit 
   paintHostileAtlas(damaged.g,{kind,state:'idle',windup:0,phase:1,flash:.08},0,true);
   paintHostileAtlas(quiet.g,{kind,state:'recover',windup:-1/120,phase:1,flash:0},0,true);
   assert.notDeepEqual(idle.calls,damaged.calls);
-  assert.deepEqual(idle.calls,quiet.calls,'recovering is never represented as an attack');
+  // Only these three actual encounter species enter 'recover'. Their new
+  // body posture must differ from idle WITHOUT masquerading as windup.
+  const realRecovery=['charger','shade','warden'].includes(kind);
+  if(realRecovery)assert.notDeepEqual(idle.calls,quiet.calls,kind+' truly post-strike recovering body');
+  else assert.deepEqual(idle.calls,quiet.calls,'no invented recover state for '+kind);
+  const warning=mock();
+  paintHostileAtlas(warning.g,{kind,state:'warning',windup:.10,phase:1,flash:0},0,true);
+  assert.notDeepEqual(quiet.calls,warning.calls,'post-strike recovery can never fake an incoming attack');
   assert.throws(()=>inkedImpactBody(base,kind,NaN),RangeError);
  }
  assert.equal(patterns.size,7,'all species use different scars');
