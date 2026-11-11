@@ -166,6 +166,117 @@ export function paintHeroSagaMantle(g,pose,time,reducedMotion=false){
  g.restore();
 }
 
+/** v0.09.26: eight separately inked braced-shoulder silhouettes.
+ * Quarter turns are not just recolors, and these remain part of the body,
+ * never an extra weapon, hitbox or floating HUD element. */
+export const WAYFARER_OATH_STANCES=Object.freeze({
+ "N": [
+  "o...........o",
+  "oh.........ho",
+  "oHHg.....gHHo",
+  ".oHHH...HHHo.",
+  "..oHHGwGHHo..",
+  "...oHHHHHo...",
+  "....oHHHo....",
+  ".....ooo....."
+ ],
+ "NE": [
+  "o..........oo",
+  "oh........oHo",
+  ".oHH....oHHo.",
+  "..oHHG.oHHHo.",
+  "...oHHHHHHo..",
+  "....oHGHHo...",
+  ".....oHHo....",
+  "......oo....."
+ ],
+ "E": [
+  "o.........ooo",
+  "oh.......oHHo",
+  "oHH.....oHHHo",
+  ".oHGG..oHHHo.",
+  "..oHHHHHHo...",
+  "...oHGGHHo...",
+  "....oHHHo....",
+  ".....ooo....."
+ ],
+ "SE": [
+  "..o........oo",
+  ".oHH......oHo",
+  "oHHG....oHHHo",
+  ".oHHH..oHHHo.",
+  "..oHHHHHo....",
+  "...oHGHHHo...",
+  "....oHHo.....",
+  ".....ooo....."
+ ],
+ "S": [
+  "o...........o",
+  "oho.......oho",
+  "oHHg.....gHHo",
+  ".oHHH...HHHo.",
+  "..oHHGgGHHo..",
+  "...oHHHHHo...",
+  "....oHHHo....",
+  ".....ooo....."
+ ],
+ "SW": [
+  "oo........o..",
+  "oHo......HHo.",
+  "oHHHo....GHHH",
+  ".oHHHo..HHHo.",
+  "....oHHHHHo..",
+  "...oHHGHHo...",
+  ".....oHHo....",
+  ".....ooo....."
+ ],
+ "W": [
+  "ooo.........o",
+  "oHHo.......ho",
+  "oHHHo.....HHo",
+  "oHHHo..GGHo..",
+  "...oHHHHHHo..",
+  "...oHHGGHo...",
+  "....oHHHo....",
+  ".....ooo....."
+ ],
+ "NW": [
+  "oo..........o",
+  "oHo........ho",
+  ".oHHo....HHo.",
+  "..oHHHo.GHHo.",
+  "..oHHHHHHo...",
+  "...oHHGHo....",
+  "....oHHo.....",
+  ".....oo......"
+ ]
+});
+export function paintWayfarerOathStance(g,pose,time,reducedMotion=false{
+ if(!Number.isFinite(time)||!Object.hasOwn(WAYFARER_OATH_STANCES,pose.facing))
+  throw new RangeError('Invalid original Wayfarer combat stance');
+ const gait=heroAtlasFrame(pose,time,reducedMotion),rows=WAYFARER_OATH_STANCES[pose.facing];
+ g.save();
+ drawSheet(g,rows,-13,-16,2,HERO_INK);
+ // Forged vambraces plant toward aim, while the existing movement frame
+ // articulates only ONE grounded arm. Reduced-motion has no free-running motion.
+ const swing=pose.moving&&!reducedMotion?[0,2,0,-2][gait]??0:0;
+ const armX=pose.side<0?-17:pose.side>0?11:9;
+ g.fillStyle=HERO_INK.o;g.fillRect(armX,-7+swing,6,10);
+ g.fillStyle=HERO_INK.H;g.fillRect(armX+1,-7+swing,4,5);
+ g.fillStyle=HERO_INK.G;g.fillRect(armX+2,-2+swing,2,3);
+ if(pose.back){
+  g.fillStyle=HERO_INK.w;g.fillRect(-2,-7,4,6);
+ }else{
+  g.fillStyle=HERO_INK.g;g.fillRect(-3,-5,6,3);
+ }
+ // Actual fire recoil raises the handguard; idle never sparkles on a clock.
+ if(pose.recoil>.24){
+  g.fillStyle=HERO_INK.G;g.fillRect(armX+1,-13,4,6);
+  g.fillStyle=HERO_INK.e;g.fillRect(armX+2,-15,2,3);
+ }
+ g.restore();
+}
+
 export function heroAtlasFrame(pose,time,reducedMotion=false) {
  if(!Number.isFinite(time))throw new RangeError('Invalid hero atlas time');
  return (pose.moving&&!reducedMotion?Math.floor(Math.max(0,time)*9)%4:0);
@@ -189,6 +300,7 @@ export function paintHeroAtlas(g,pose,time,reducedMotion=false){
  drawSheet(g,sheet,-sheetWidth(sheet)*unit/2,top,unit,HERO_INK);
  drawSheet(g,stride,-sheetWidth(stride)*unit/2,top+sheet.length*unit,unit,HERO_INK);
  paintWayfarerMovingHem(g,pose,time,reducedMotion);
+ paintWayfarerOathStance(g,pose,time,reducedMotion);
  paintWayfarerSagaVisor(g,pose,time,reducedMotion);
  paintHeroSagaMantle(g,pose,time,reducedMotion);
  // Direction-dependent crest: actual facing sets the color/shape, not fake idle
