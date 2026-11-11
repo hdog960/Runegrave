@@ -58,7 +58,7 @@ test('door artwork, paused relic stat preview, world-route floor stones and PWA 
  assert.match(stage,/paintWaystones/);
  assert.match(stage,/carvedWaystones/);
  assert.match(stage,/describeRelicImpact/);
- assert.match(sw,/runegrave-shell-v0\.09\.20/);
+ assert.match(sw,/runegrave-shell-v0\.09\.21/);
  for(const p of ['js/run/relicImpact.js','js/scene/routeArt.js'])assert.ok(sw.includes(p));
  assert.equal((html.match(/id="gameplay-canvas"/g)||[]).length,1);
 });

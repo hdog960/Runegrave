@@ -69,11 +69,11 @@ test('all seven enemy species get bounded, distinctive hand-authored accents',()
 test('the new art modules are offline-preloaded; Gate A version and saved schema remain locked',()=>{
  const source=readFileSync(new URL('../src/core/version.ts',import.meta.url),'utf8');
  assert.match(source,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(source,/APP_VERSION = '0\.09\.20'/);
+ assert.match(source,/APP_VERSION = '0\.09\.21'/);
  assert.match(source,/SAVE_SCHEMA_VERSION = 1/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  for(const file of ['scene/chamberSetpieces','scene/wayfarerEmblems','enemies/armorAccents'])assert.ok(sw.includes(`js/${file}.js`));
- assert.match(sw,/runegrave-shell-v0\.09\.20/);
+ assert.match(sw,/runegrave-shell-v0\.09\.21/);
  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
  assert.match(html,/grip grip-left/);assert.match(html,/grip grip-right/);assert.match(html,/id="world-frame"/);
 });

@@ -1,5 +1,14 @@
 # RUNEGRAVE — Verified Release Status
 
+## v0.09.21 — Authored sprites replace layered hero and enemy blocks (candidate, Gate A)
+
+**Candidate; not yet approved, tested, merged or published.** Seven authoritative docs, eight functional relics, gameplay, saves, settings and PWA must remain intact; v0.10 is locked.
+
+- Replace a tall accumulation of layered body painters with one hand-authored, horizontal-run-batched 2-pixel sprite atlas. Four original Wayfarer compass silhouettes mirror into eight actual facing directions, with four physically distinct boot-stride sheets, a grounded shadow, and the existing real aimed rune weapon. Six enemy species and the Warden receive seven bespoke inked body silhouettes, genuine four-band warning rune marks and a distinct Warden phase-two crown.
+- Retain authoritative `runeWarning` world telegraph geometry and a single species-specific real-windup oath-weapon silhouette; no stacked fake flash clutter. No changes to enemy physics, AI, projectile origin, pickup, damage, or external two-thumb rails.
+- New Node sprite integrity tests plus a Chromium-generated artwork contact sheet showing all eight hero facings and seven enemies, and mobile-sized in-game screenshots. Must pass tests and inspect browser evidence before release.
+
+
 ## v0.09.20 — Original Eddic architecture, eight-facing oath gear, and seven true strike inks (2026-11-10 US Central)
 
 **VERIFIED: implemented; 153/153 Node tests PASS, strict TS build PASS, GitHub PR and post-merge Chromium QA PASS, GitHub Pages production workflows PASS, public version/assets independently checked. Gate A STILL UNAPPROVED; v0.10 LOCKED.**

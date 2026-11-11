@@ -1,0 +1,100 @@
+"""v0.09.21 Gate A real Chromium runtime, test-only warning pose and input.
+Not a physical iPhone Safari check, unaided boss victory or installed PWA test.
+"""
+import sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+import v009_browser_audit as base
+from playwright.sync_api import sync_playwright
+ROOT=Path(__file__).resolve().parent.parent
+with sync_playwright() as p:
+ b=p.chromium.launch(headless=True,args=['--no-sandbox','--disable-web-security'])
+ for label,w,h in [('small',667,375),('regular',844,390),('plus',932,430),('large',1024,440)]:
+  page=b.new_page(viewport={'width':w,'height':h},device_scale_factor=2,is_mobile=True,has_touch=True)
+  errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page.set_content(base.HTML);page.add_style_tag(content=(base.DIST/'styles.css').read_text())
+  page.add_script_tag(type='module',content=f'import "{base.data_module("main.js")}";')
+  page.locator('#guide-start-btn').click();page.wait_for_timeout(140)
+  metrics=page.evaluate("""() => {
+   const b=s=>document.querySelector(s).getBoundingClientRect();
+   const c=b('#gameplay-canvas'),left=b('.grip-left'),right=b('.grip-right');
+   return {c:[c.left,c.right],left:left.right,right:right.left,version:document.documentElement.dataset.version};
+  }""")
+  assert metrics['version']=='0.09.21',metrics
+  assert metrics['c'][0]>=metrics['left']-2 and metrics['c'][1]<=metrics['right']+2,(label,metrics)
+  exit=page.evaluate("""() => {const c=document.querySelector('#gameplay-canvas');return [+c.dataset.exitX,+c.dataset.exitY];}""")
+  page.evaluate("pt=>window.__runegraveTest.stage.testJump({x:pt[0],y:pt[1]})",exit)
+  page.wait_for_timeout(120)
+  assert page.locator('#gameplay-canvas').get_attribute('data-room')=='crypt'
+  if label=='regular':
+   page.evaluate("""() => {const es=window.__runegraveTest.stage.getEncounter().enemies;
+      for(const e of es){e.state='warning';e.windup=.28;} }""")
+   page.wait_for_timeout(100)
+   page.screenshot(path=str(ROOT/'gate-a-v00921-saga-warning.png'))
+   # Independently render the actual ship-ready sprite module in Chromium.
+   # The published art contact sheet makes individual hero/enemy shapes easy to inspect.
+   art_url=base.data_module('scene/pixelSpriteAtlas.js')
+   figures=page.evaluate("""async moduleUrl => {
+    const atlas=await import(moduleUrl);
+    const canvas=document.createElement('canvas');canvas.id='gate-a-v00921-sprite-sheet';
+    canvas.width=1040;canvas.height=365;
+    canvas.style.cssText='position:absolute;left:0;top:1200px;width:1040px;height:365px;image-rendering:pixelated';
+    const g=canvas.getContext('2d');g.fillStyle='#102124';g.fillRect(0,0,1040,365);
+    g.textAlign='center';g.fillStyle='#ead7a5';g.font='12px monospace';
+    const directions=['N','NE','E','SE','S','SW','W','NW'];
+    const icons=[];
+    for(let i=0;i<8;i++){
+      const p={facing:directions[i],side:[0,1,1,1,0,-1,-1,-1][i],
+        back:i===0||i===1||i===7,moving:true,recoil:0,aimX:0,aimY:1};
+      const px=62+i*128;
+      g.save();g.translate(px,80);atlas.paintHeroAtlas(g,p,i*.12,false);g.restore();
+      g.fillText(directions[i],px,125);
+      const sub=document.createElement('canvas');sub.width=64;sub.height=72;
+      const sg=sub.getContext('2d');sg.translate(32,38);atlas.paintHeroAtlas(sg,p,i*.12,false);
+      icons.push(sub.toDataURL());
+    }
+    if(new Set(icons).size!==8)throw Error('Hero atlas facings are visually duplicated');
+    const kind=['draugr','wisp','archer','charger','sentinel','shade','warden'];
+    const bodies=[];
+    for(let i=0;i<7;i++){
+      const px=75+i*145,enemy={kind:kind[i],state:'warning',windup:.22,phase:kind[i]==='warden'?2:1,flash:0};
+      g.save();g.translate(px,258);atlas.paintHostileAtlas(g,enemy,1,true);g.restore();
+      g.fillText(kind[i].toUpperCase(),px,312);
+      const sub=document.createElement('canvas');sub.width=86;sub.height=110;
+      const sg=sub.getContext('2d');sg.translate(43,56);atlas.paintHostileAtlas(sg,enemy,1,true);
+      bodies.push(sub.toDataURL());
+    }
+    if(new Set(bodies).size!==7)throw Error('Enemy atlas bodies are visually duplicated');
+    document.body.appendChild(canvas);
+    return {hero:icons.length,enemies:bodies.length,cache:atlas.ATLAS_CELL};
+   }""",art_url)
+   assert figures=={'hero':8,'enemies':7,'cache':2},figures
+   page.locator('#gate-a-v00921-sprite-sheet').screenshot(path=str(ROOT/'gate-a-v00921-character-contact-sheet.png'))
+   # Element screenshots scroll into view; restore real viewport before movement.
+   # Otherwise the next full-page PNG silently captures the contact-sheet area.
+   page.evaluate("""() => {
+     document.querySelector('#gate-a-v00921-sprite-sheet').remove();
+     window.scrollTo(0,0);
+   }""")
+   page.wait_for_timeout(55)
+   assert page.evaluate('window.scrollY')==0,'the playable game screenshot must not be scrolled away'
+   print('original 8-facing hero + 7 hostile sprite contact sheet PASS',figures)
+
+   for selector,pid in [('#move-rune-disc',57),('#aim-rune-disc',58)]:
+    page.evaluate("""([selector,pid])=>{const el=document.querySelector(selector),r=el.getBoundingClientRect();
+      el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerId:pid,
+        pointerType:'touch',isPrimary:pid===57,clientX:r.left+r.width*.8,clientY:r.top+r.height*.37}));}""",[selector,pid])
+   page.wait_for_timeout(175)
+   assert int(page.locator('#gameplay-canvas').get_attribute('data-shots'))>0
+   page.screenshot(path=str(ROOT/'gate-a-v00921-two-thumb.png'))
+   for selector,pid in [('#move-rune-disc',57),('#aim-rune-disc',58)]:
+    page.evaluate("""([selector,pid])=>document.querySelector(selector).dispatchEvent(
+     new PointerEvent('pointercancel',{bubbles:true,pointerId:pid,pointerType:'touch'}))""",[selector,pid])
+  assert not errors,(label,errors)
+  print(label,'PASS inked Wayfarer/enemy sprites, authentic warnings and separate grips, guided chamber, zero exceptions')
+  page.close()
+ portrait=b.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
+ portrait.set_content(base.HTML);portrait.add_style_tag(content=(base.DIST/'styles.css').read_text())
+ assert portrait.locator('.rotate-message').is_visible()
+ print('portrait PASS rotate instruction')
+ b.close()
