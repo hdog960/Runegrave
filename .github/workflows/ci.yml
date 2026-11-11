@@ -29,7 +29,9 @@ jobs:
           python-version: '3.12'
       - run: npm ci && npm run build
       - run: python -m pip install playwright==1.56.0
-      - run: python -m playwright install --with-deps chromium
+      - name: Install real Chromium on GitHub's Ubuntu browser runner
+        run: python -m playwright install chromium
+        timeout-minutes: 7
       - run: python scripts/v00924_browser_audit.py
       - uses: actions/upload-artifact@v4
         if: always()
