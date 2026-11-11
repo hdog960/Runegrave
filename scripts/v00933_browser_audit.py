@@ -1,4 +1,4 @@
-"""v0.09.32 Gate A real Chromium runtime, test-only warning pose and input.
+"""v0.09.33 Gate A real Chromium runtime, test-only warning pose and input.
 Not a physical iPhone Safari check, unaided boss victory or installed PWA test.
 """
 import sys
@@ -20,7 +20,7 @@ with sync_playwright() as p:
    const c=b('#gameplay-canvas'),left=b('.grip-left'),right=b('.grip-right');
    return {c:[c.left,c.right],left:left.right,right:right.left,version:document.documentElement.dataset.version};
   }""")
-  assert metrics['version']=='0.09.32',metrics
+  assert metrics['version']=='0.09.33',metrics
   assert metrics['c'][0]>=metrics['left']-2 and metrics['c'][1]<=metrics['right']+2,(label,metrics)
   exit=page.evaluate("""() => {const c=document.querySelector('#gameplay-canvas');return [+c.dataset.exitX,+c.dataset.exitY];}""")
   page.evaluate("pt=>window.__runegraveTest.stage.testJump({x:pt[0],y:pt[1]})",exit)
@@ -623,7 +623,7 @@ with sync_playwright() as p:
    assert page.evaluate('window.scrollY')==0
 
 
-   # v0.09.32: proof of five actual entire chamber floors reauthored
+   # v0.09.33: proof of five actual entire chamber floors reauthored
    # with larger flags, not tiny decorative additions on top of old art.
    # Same production function as the real canvas, five authoritative families.
    floor_count=page.evaluate("""async url => {
