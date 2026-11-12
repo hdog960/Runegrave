@@ -100,7 +100,7 @@ test('Gate A protected 25 chambers, 8 functional relics, save schema1 and consen
  assert.equal(sw,read('../sw.js'));
  assert.match(sw,/runegrave-shell-v0\.09\.45/);
  assert.ok(sw.includes('./js/run/sagaEarnedRelicSeals.js'));
- assert.ok(sw.includes('ACTIVATE_UPDATE')&&sw.includes('cache.addAll(ASSETS)'));
+ assert.ok(sw.includes('ACTIVATE_UPDATE')&&sw.includes('cache.addAll(ASSETS.map('),'user-consented update and every asset must still be precached');
  const html=read('../dist/index.html');
  assert.ok(html.includes('grip grip-left')&&html.includes('grip grip-right'));
 });
