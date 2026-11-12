@@ -38,7 +38,7 @@ export function paintThresholdReliefs(g,W,H,family,serial){
   const lines=tile.side==='family'?THRESHOLD_CRESTS[family]:THRESHOLD_EPISODES[id.episode];
   const dx=tile.side==='family'?9:13,dy=tile.side==='family'?13:20;
   for(let row=0;row<lines.length;row++)for(let col=0;col<lines[row].length;){
-   const ch=lines[row][col]!;
+   const ch=lines[row][col];
    if(ch==='.') {col++;continue;}
    let end=col+1;while(end<lines[row].length&&lines[row][end]===ch)end++;
    rect(g,x+dx+col*2,y+dy+row*2,(end-col)*2,2,ch==='+'?ink.glint:ink.rim);

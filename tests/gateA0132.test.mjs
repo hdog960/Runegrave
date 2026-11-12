@@ -47,7 +47,7 @@ test('25 authentic canonical room serials select the correct family and unique e
   signatures.add(THRESHOLD_CRESTS[id.family].join('')+'|'+THRESHOLD_EPISODES[id.episode].join(''));
  }
  assert.equal(signatures.size,25);
- for(const wrong of [['ASH',5],['ROOT',2],['FATE',23],['IRON',25],['ASH',-1],['SPIRIT',1.5],['ASH',NaN],['UNKNOWN',0]])
+ for(const wrong of [['ASH',5],['ROOT',2],['FATE',19],['IRON',25],['ASH',-1],['SPIRIT',1.5],['ASH',NaN],['UNKNOWN',0]])
   assert.throws(()=>thresholdIdentity(...wrong),RangeError);
 });
 test('paired 40x78 physical tablets occupy ONLY extreme world corners and never either exterior handgrip',()=>{
