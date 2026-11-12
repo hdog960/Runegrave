@@ -77,6 +77,11 @@ test('all seven species have physically different actual-world canvas render out
   assert.deepEqual(one.calls,two.calls,'render frames cannot advance death time');
   const rects=one.calls.filter(x=>x[0]==='fillRect');
   assert.ok(rects.length>=25&&rects.length<=170,agent.kind+' mobile draw budget');
+  assert.ok(rects.some(p=>p[4]===3),'real sprite-cell height must be three world pixels, not unreadable subpixels');
+  for(const [,x,y,w,h] of rects){
+   assert.ok(x>=agent.x-42&&x+w<=agent.x+42,agent.kind+' death pixels stay near real corpse, not in UI rail');
+   assert.ok(y>=agent.y-37&&y+h<=agent.y+37,agent.kind+' death sculpture must not become a fake screen-wide hazard');
+  }
   assert.ok(one.calls.some(x=>x[0]==='rect'&&x[1]===0&&x[2]===0&&x[3]===420&&x[4]===235),'explicit central canvas clipping');
   frames.push(JSON.stringify(one.calls));
  }
