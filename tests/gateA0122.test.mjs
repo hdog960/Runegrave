@@ -14,7 +14,7 @@ function ctx(){
  Object.defineProperty(g,'fillStyle',{set:v=>calls.push(['ink',v])});
  return {g,calls};
 }
-test('v0.09.43 physically recuts eleven rows across nine true enemy recovery bodies rather than old three-pixel twitch',()=>{
+test('v0.09.44 physically recuts eleven rows across nine true enemy recovery bodies rather than old three-pixel twitch',()=>{
  assert.deepEqual(Object.keys(HOSTILE_RECOVERY_SILHOUETTES),species);
  let distinct=0;
  for(const kind of species){
@@ -80,10 +80,10 @@ test('re-authored large quiet-masonry ground keeps five real family palettes wit
 test('Gate A v0.09, PWA user consent, schema one, external thumb controls and original first-soul gameplay stay locked',()=>{
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const version=read('../dist/js/core/version.js'),sw=read('../dist/sw.js'),stage=read('../dist/js/scene/stage.js');
- assert.match(version,/APP_VERSION = '0\.09\.43'/);
+ assert.match(version,/APP_VERSION = '0\.09\.44'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.43/);
+ assert.match(sw,/runegrave-shell-v0\.09\.44/);
  assert.ok(sw.includes('./js/scene/sagaRecoveryInk.js'));
  assert.match(stage,/drawEncounter\(/);
  assert.equal(FIRST_SOUL_RELICS.length,8);
