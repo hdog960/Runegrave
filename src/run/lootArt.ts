@@ -27,7 +27,7 @@ export function paintRoomSigil(g:CanvasRenderingContext2D,W:number,H:number,t:nu
 }
 export function drawRoomDrops(g:CanvasRenderingContext2D,drops:readonly RoomDrop[],t:number,hero?:Vec2,reducedMotion=false){
  for(const drop of drops){if(drop.collected)continue;
-  const pulse=.55+.2*Math.sin(t*3+drop.x*.03);
+  const pulse=reducedMotion?.65:.55+.2*Math.sin(t*3+drop.x*.03);
   const col=drop.kind==='relic'?'#dbb576':drop.kind==='silver'?'#bfdcc7':'#e2a6a0';
   g.save();g.translate(drop.x,drop.y);g.globalAlpha=.8;
   g.fillStyle='#061619';g.beginPath();g.ellipse(0,14,16,5,0,0,Math.PI*2);g.fill();
