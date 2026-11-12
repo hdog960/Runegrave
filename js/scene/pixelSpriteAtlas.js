@@ -545,7 +545,7 @@ export function paintHostileAtlas(g,e,time,reducedMotion=false){
  const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
  const recoveringBody=inkedRecoveryBody(windupBody,e);
  const travelingBody=inkedTravelBody(recoveringBody,e,reducedMotion);
-  const visibleBody=inkedImpactBody(inkedWardenPhaseBody(travelingBody,e.kind,e.phase),e.kind,e.flash);
+  const visibleBody=inkedImpactBody(inkedWardenPhaseBody(travelingBody,e.kind,e.phase,e.hp,e.maxHp),e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
