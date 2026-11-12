@@ -106,12 +106,12 @@ test('Gate A protected 25 chambers, 8 functional relics, save schema1 and consen
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
  const version=read('../dist/js/core/version.js');
- assert.match(version,/APP_VERSION = '0\.09\.46'/);
+ assert.match(version,/APP_VERSION = '0\.09\.47'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  const sw=read('../dist/sw.js');
  assert.equal(sw,read('../sw.js'));
- assert.match(sw,/runegrave-shell-v0\.09\.46/);
+ assert.match(sw,/runegrave-shell-v0\.09\.47/);
  assert.ok(sw.includes('./js/run/sagaEarnedRelicSeals.js'));
  assert.ok(sw.includes('ACTIVATE_UPDATE')&&sw.includes('cache.addAll(ASSETS.map('),'user-consented update and every asset must still be precached');
  const html=read('../dist/index.html');
