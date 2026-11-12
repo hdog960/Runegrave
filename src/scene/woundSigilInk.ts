@@ -9,7 +9,7 @@ type G=CanvasRenderingContext2D;
  * Fixed-step expiration, hard cap, and no additional hit/collision logic. */
 export const WOUND_KINDS:readonly WoundKind[]=Object.freeze(['contact','ember','projectile','unknown']);
 export const WOUND_LIFE=.56;
-const SHAPES=Object.freeze({
+const SHAPES:Readonly<Record<WoundKind,readonly (readonly [number,number,number,number])[]>>=Object.freeze({
  // Splintered AXE/BROKEN-SHIELD crest (enemy contact).
  contact:[[-24,-24,10,3],[-24,-24,3,14],[-21,-16,6,3],[-14,-25,3,9],
           [14,-24,10,3],[21,-24,3,14],[15,-16,6,3],[11,-25,3,9],
@@ -57,17 +57,17 @@ export function paintWoundSigil(g:G,mark:WoundMark,reducedMotion=false):boolean{
  for(const [x,y,w,h] of SHAPES[mark.kind]){
   const ox=x<0?-size:x>0?size:0,oy=y<0?-size:y>0?size:0;
   const i=Math.abs(x+y)%3;
-  g.fillStyle=col[i];g.fillRect(x+ox,y+oy,w,h);
+  g.fillStyle=col[i]??'#f5dfbe';g.fillRect(x+ox,y+oy,w,h);
  }
  // Only verified contact or floor-ember positions warrant a bearing pointer.
  if(mark.angle!==null){
   g.rotate(mark.angle);
-  g.fillStyle=col[2];
+  g.fillStyle=col[2]??'#f5dfbe';
   g.fillRect(27,-2,7,4);g.fillRect(31,-5,3,3);g.fillRect(31,2,3,3);
-  g.fillStyle=col[1];g.fillRect(24,-1,4,2);
+  g.fillStyle=col[1]??'#f5dfbe';g.fillRect(24,-1,4,2);
   g.rotate(-mark.angle);
  }
- if(mark.amount>=2){g.fillStyle=col[2];g.fillRect(-29,-4,3,8);g.fillRect(26,-4,3,8);}
+ if(mark.amount>=2){g.fillStyle=col[2]??'#f5dfbe';g.fillRect(-29,-4,3,8);g.fillRect(26,-4,3,8);}
  g.restore();return true;
 }
 export class WoundInk {
@@ -85,7 +85,7 @@ export class WoundInk {
  step(dt:number):void{
   if(!Number.isFinite(dt)||dt<=0||dt>1/30)throw new RangeError('Wound art must follow simulation steps');
   for(let i=this.marks.length-1;i>=0;i--){
-   const mark=this.marks[i];mark.age+=dt;
+   const mark=this.marks[i]!;mark.age+=dt;
    if(mark.age>=mark.life)this.marks.splice(i,1);
   }
  }
