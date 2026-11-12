@@ -95,3 +95,12 @@ test('v0.09.37 Gate A keeps all mechanics, real eight relics, 25 rooms, separate
  const html=read('../dist/index.html');
  assert.ok(html.includes('grip grip-left')&&html.includes('grip grip-right'));
 });
+
+test('genuine second-phase crown has attached thorns, never hovering pixels',()=>{
+ for(const hp of [14,7]){
+  const m=fake();paintHostileAtlas(m.g,sample(2,hp),0,true);
+  const rects=m.calls.filter(c=>c[0]==='fillRect');
+  assert.ok(rects.length>40);
+  for(const [,x,,w] of rects)assert.ok(x>=-25&&x+w<=25,'Warden ink cannot float outside its physical body at '+x);
+ }
+});
