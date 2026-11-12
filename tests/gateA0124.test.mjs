@@ -58,10 +58,10 @@ test('locked v0.09 Gate A maintains eight functioning relics, 25 rooms, player-c
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
  const version=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
- assert.match(version,/APP_VERSION = '0\.09\.37'/);
+ assert.match(version,/APP_VERSION = '0\.09\.38'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.37/);
+ assert.match(sw,/runegrave-shell-v0\.09\.38/);
  assert.ok(sw.includes('js/enemies/attackLaneInk.js'));
  assert.ok(read('../sw.js').includes('js/enemies/attackLaneInk.js'));
  assert.match(read('../dist/js/scene/stage.js'),/drawEncounter\(/);
