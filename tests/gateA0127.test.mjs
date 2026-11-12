@@ -90,7 +90,7 @@ test('v0.09.37 Gate A keeps all mechanics, real eight relics, 25 rooms, separate
  assert.ok(read('../sw.js').includes('./js/scene/wardenUnboundInk.js'));
  assert.ok(read('../js/scene/wardenUnboundInk.js').includes('export function inkedWardenPhaseBody'));
  const atlas=read('../dist/js/scene/pixelSpriteAtlas.js');
- assert.match(atlas,/inkedWardenPhaseBody\(travelingBody,e.kind,e.phase,e.hp,e.maxHp\)/);
+ assert.match(atlas,/inkedWardenPhaseBody\(travelingBody,\s*e\.kind,\s*e\.phase,\s*e\.hp,\s*e\.maxHp\)/);
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
  const html=read('../dist/index.html');
  assert.ok(html.includes('grip grip-left')&&html.includes('grip grip-right'));
