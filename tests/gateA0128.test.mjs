@@ -104,14 +104,14 @@ test('both other collectible TYPES preserve same exact collection rule and disti
   assert.equal(nearDrop({x:106.99,y:100},drop),true);
  }
 });
-test('v0.09.40 advances only original artwork, strict offline version and outside-canvas stage wiring',()=>{
+test('v0.09.41 advances only original artwork, strict offline version and outside-canvas stage wiring',()=>{
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const stage=read('../dist/js/scene/stage.js'),version=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
  assert.match(stage,/drawRoomDrops\(g, drops, time, actor, reduced\.matches\)/);
- assert.match(version,/APP_VERSION = '0\.09\.40'/);
+ assert.match(version,/APP_VERSION = '0\.09\.41'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.40/);
+ assert.match(sw,/runegrave-shell-v0\.09\.41/);
  assert.ok(sw.includes('./js/run/sagaPlinthArt.js'));
  assert.ok(read('../sw.js').includes('./js/run/sagaPlinthArt.js'));
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
