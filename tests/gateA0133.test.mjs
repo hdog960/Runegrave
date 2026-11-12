@@ -42,6 +42,8 @@ test('all five real shipped speed/damage classes map to honest visually distinct
  }
  assert.equal(flightRuneClass(B(145,1)),'crosswind-spear','never call an ordinary-damage bolt a strong ember-cleaver');
  assert.equal(flightRuneClass(B(123,1)),'crosswind-spear','future unknown attacks receive safe generic art');
+ assert.equal(flightRuneClass(B(93,2)),'ember-cleaver','actual heavy-damage unknown-speed bolt remains visibly heavy');
+ assert.equal(flightRuneClass(B(93,1)),'crosswind-spear','actual regular-damage unknown-speed bolt remains visibly ordinary');
 });
 test('three LIFE-ONLY real flight silhouettes for every physical speed, without invented time progression',()=>{
  for(const [speed,damage] of profiles){

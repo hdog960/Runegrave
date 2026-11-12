@@ -21,6 +21,9 @@ export function flightRuneClass(b){
  if(Math.abs(speed-115)<.001)return 'root-tusk';
  if(Math.abs(speed-145)<.001&&b.damage>=2)return 'ember-cleaver';
  if(Math.abs(speed-155)<.001)return 'iron-fletch';
+ // For unknown speeds, a true high-damage projectile remains visually HEAVY,
+ // never masquerades as a weaker hit merely because the velocity is new.
+ if(b.damage>=2)return 'ember-cleaver';
  return 'crosswind-spear';
 }
 /** Same original lifetime thresholds as the previous production projectile.
