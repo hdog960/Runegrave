@@ -62,6 +62,19 @@ test('one actually earned relic shows exactly one authored seal, all 8 IDs produ
  }
  assert.equal(signatures.size,8);
 });
+test('genuine 1/2/3 earned seals never cover the actual Wayfarer helmet, body, or boots',()=>{
+ const center={x:210,y:110},avatar={x1:188,x2:232,y1:79,y2:136};
+ for(const count of [1,2,3,8]){
+  const output=orbit(EARNED_SEAL_IDS.slice(0,count));
+  const tiles=output.filter(c=>c[0]==='rect'&&c[3]===12&&c[4]===12);
+  assert.equal(tiles.length,Math.min(count,3));
+  for(const [,x,y,w,h] of tiles){
+   assert.ok(!(x<avatar.x2&&x+w>avatar.x1&&y<avatar.y2&&y+h>avatar.y1),
+    'an earned seal must not cover the playable Wayfarer silhouette');
+   assert.ok(x>=0&&x+w<=420&&y>=0&&y+h<=240);
+  }
+ }
+});
 test('existing MAX THREE actual owned item markers, no fourth or invented earned relic in full loadout',()=>{
  const all=EARNED_SEAL_IDS;
  const single=orbit([all[0]]);
