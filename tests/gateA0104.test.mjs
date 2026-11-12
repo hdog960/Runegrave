@@ -36,7 +36,7 @@ test('Each offensive relic changes projectile silhouette, including stacked reli
 test('Hero relic halo shows at most three equipped rune chips and freezes in reduced motion',()=>{
  const ids=FIRST_SOUL_RELICS.map(x=>x.id),player={x:200,y:120};
  const p=canvas();paintBoundRuneHalo(p.g,player,ids,4.4);
- // v0.09.46 explicitly replaces generic vector diamond fills with exactly
+ // v0.09.47 explicitly replaces generic vector diamond fills with exactly
  // three real 12×12 owned-pixel seal backgrounds, no fourth marker.
  assert.equal(p.calls.filter(c=>c[0]==='fillRect'&&c[3]===12&&c[4]===12).length,3);
  const a=canvas(),b=canvas();paintBoundRuneHalo(a.g,player,ids,0,true);paintBoundRuneHalo(b.g,player,ids,45,true);
@@ -49,8 +49,8 @@ test('Gate A remains v0.09 and offline preload has the new module; input prefs a
  const version=readFileSync(new URL('../src/core/version.ts',import.meta.url),'utf8');
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  const stage=readFileSync(new URL('../src/scene/stage.ts',import.meta.url),'utf8');
- assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.46'/);
- assert.match(version,/SAVE_SCHEMA_VERSION = 1/);assert.match(sw,/runegrave-shell-v0\.09\.46/);
+ assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.47'/);
+ assert.match(version,/SAVE_SCHEMA_VERSION = 1/);assert.match(sw,/runegrave-shell-v0\.09\.47/);
  assert.match(sw,/js\/run\/relicBattleArt\.js/);
  assert.match(stage,/paintEarnedSoulboltArt\(/);assert.match(stage,/paintBoundRuneHalo\(/);
  assert.doesNotMatch(stage,/setInterval|setTimeout/);
