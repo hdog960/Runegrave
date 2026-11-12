@@ -554,7 +554,7 @@ with sync_playwright() as p:
        data.add(cell.toDataURL());
        const x=phase*330+15,y=kind*245+15;
        g.drawImage(cell,x,y,315,196);
-       g.fillText((kind?'WARDEN ROOT EMBER':'SPECTRAL RUNE DART')+' · '+['EARLY','MID','LATE'][phase],x+155,y+220);
+       g.fillText((kind?'HEAVY 2-DAMAGE SHOT':'ORDINARY 1-DAMAGE SHOT')+' · '+['EARLY','MID','LATE'][phase],x+155,y+220);
      }
      if(data.size!==6)throw Error('Duplicate hostile projectile silhouette: '+data.size);
      document.body.appendChild(gallery);return {families:2,forms:data.size};

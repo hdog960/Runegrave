@@ -15,15 +15,15 @@ export function flightRuneClass(b){
  if(![b.x,b.y,b.dx,b.dy,b.speed,b.damage,b.life].every(Number.isFinite)
  ||b.speed<=0||b.damage<=0||b.life<=0||Math.hypot(b.dx,b.dy)<.1)
   throw new RangeError('Invalid actual hostile flight state');
+ // Physical damage strength wins over speed: even a 100-speed TEST heavy
+ // projectile must not look identical to an ordinary 100-speed shot.
+ // Real existing Warden phase-two side projectiles are damage=1.
+ if(b.damage>=2)return 'ember-cleaver';
  const speed=b.speed;
  if(Math.abs(speed-90)<.001)return 'sentry-hex';
  if(Math.abs(speed-100)<.001)return 'crosswind-spear';
  if(Math.abs(speed-115)<.001)return 'root-tusk';
- if(Math.abs(speed-145)<.001&&b.damage>=2)return 'ember-cleaver';
  if(Math.abs(speed-155)<.001)return 'iron-fletch';
- // For unknown speeds, a true high-damage projectile remains visually HEAVY,
- // never masquerades as a weaker hit merely because the velocity is new.
- if(b.damage>=2)return 'ember-cleaver';
  return 'crosswind-spear';
 }
 /** Same original lifetime thresholds as the previous production projectile.
