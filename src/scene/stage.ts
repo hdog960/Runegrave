@@ -246,13 +246,14 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     if(currentRoom&&mode==='crypt')paintSagaFloorFrieze(g!,W,H,currentRoom.family as FriezeFamily,Number(currentRoom.id.slice(-2))-1);
     if(currentRoom&&mode==='crypt')paintChamberAmbience(g!,W,H,time,currentRoom.family as ChamberAmbientFamily,roomIndex);
     motionTrails.paintGround(g!,W,H,currentRoom?.family||'ROOT',reduced.matches);
+        motionTrails.paintDissolves(g!,W,H,reduced.matches);
     if(exitTrail.length)paintWaystones(g!,exitTrail,time);
     if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected),reduced.matches,actor);
     drawRoomDrops(g!,drops,time,actor,reduced.matches);
     if(mode==='practice'&&practiceExit)drawRuneDoor(g!,practiceExit,'east',true,time);
     if(combat){drawPracticeTargets(g!,combat.targets,time);drawSoulbolts(g!,combat.bolts,time);paintEarnedSoulboltArt(g!,combat.bolts,inventory.state.relics,time,reduced.matches);}
     drawCombatSparks(g!,sparks);
-    motionTrails.paintDissolves(g!,W,H,reduced.matches);
+    
     paintSoulboltHeading(g!,actor,lastAim,firing,time,reduced.matches);
     feedback.paint(g!,W,H);
      woundInk.paint(g!,W,H,reduced.matches);

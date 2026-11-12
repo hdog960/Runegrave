@@ -1,3 +1,4 @@
+import { paintDeathRite } from './sagaDeathRites.js';
 export const TRAIL_CAP = 14;
 export const DISSOLVE_CAP = 8;
 export const GROUND_COLORS = Object.freeze({
@@ -77,30 +78,13 @@ export class MotionTrails {
         }
         g.restore();
     }
-    /** Distinct defeat blossoms for normal hostiles and the Warden, at the enemy's
-     * true death location. Never rendered from decorative scenery breakage. */
+    /** Seven true defeat sculptures; fixed-step and under living enemies. */
     paintDissolves(g, W, H, reduced = false) {
-        if (reduced)
-            return;
-        g.save();
+        if (reduced) return;
         for (const b of this.dissolves) {
-            const fade = 1 - b.age / b.life;
-            if (fade <= 0 || b.x < 0 || b.x > W || b.y < 0 || b.y > H)
-                continue;
-            const isBoss = b.kind === 'warden', radius = Math.min(isBoss ? 38 : 17, b.radius + 6 + b.age * (isBoss ? 15 : 10));
-            g.globalAlpha = Math.min(.85, fade * .75);
-            g.strokeStyle = isBoss ? '#f9c980' : '#aed2c1';
-            g.lineWidth = isBoss ? 2.2 : 1.4;
-            g.beginPath();
-            g.arc(b.x, b.y, radius, 0, Math.PI * 2);
-            g.stroke();
-            g.fillStyle = isBoss ? '#ffbe7d' : '#d4e7bc';
-            for (let k = 0; k < (isBoss ? 8 : 5); k++) {
-                const a = k * Math.PI * 2 / (isBoss ? 8 : 5);
-                const d = radius * (.55 + b.age / b.life * .34);
-                g.fillRect(Math.round(b.x + Math.cos(a) * d), Math.round(b.y + Math.sin(a) * d), isBoss ? 3 : 2, isBoss ? 3 : 2);
-            }
+            if (b.x >= 0 && b.x <= W && b.y >= 0 && b.y <= H)
+                paintDeathRite(g, b, W, H);
         }
-        g.restore();
     }
+
 }
