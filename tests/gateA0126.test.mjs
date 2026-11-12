@@ -83,10 +83,10 @@ test('the LIVE player health-loss code binds enemy/ember coordinates, but not fi
  assert.match(src,/woundInk\.step\(dt\)/);
  assert.match(src,/woundInk\.reset\(\)/);
  assert.ok(!src.includes('sourceProjectile'),'never infer a consumed bolt origin');
- assert.match(read('../dist/js/core/version.js'),/APP_VERSION = '0\.09\.44'/);
+ assert.match(read('../dist/js/core/version.js'),/APP_VERSION = '0\.09\.45'/);
  assert.match(read('../dist/js/core/version.js'),/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(read('../dist/js/core/version.js'),/SAVE_SCHEMA_VERSION = 1/);
- assert.match(read('../dist/sw.js'),/runegrave-shell-v0\.09\.44/);
+ assert.match(read('../dist/sw.js'),/runegrave-shell-v0\.09\.45/);
  assert.ok(read('../dist/sw.js').includes('./js/scene/woundSigilInk.js'));
  assert.ok(read('../sw.js').includes('./js/scene/woundSigilInk.js'));
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);

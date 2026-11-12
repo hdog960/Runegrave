@@ -96,10 +96,10 @@ test('actual production stage supplies live hero position and retains untouched 
  assert.match(enemy,/runeWarning\(g, e, t, hero\)/);
  assert.match(enemy,/paintThreatLane\(g, e, worldWidth, worldHeight\)/,'all v0.09.34 threat lanes survive');
  const v=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
- assert.match(v,/APP_VERSION = '0\.09\.44'/);
+ assert.match(v,/APP_VERSION = '0\.09\.45'/);
  assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(v,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.44/);
+ assert.match(sw,/runegrave-shell-v0\.09\.45/);
  assert.ok(sw.includes('./js/enemies/ritualWarningInk.js'));
  assert.ok(read('../sw.js').includes('./js/enemies/ritualWarningInk.js'));
  assert.ok(read('../js/enemies/ritualWarningInk.js').includes('export function paintRitualWarning'));

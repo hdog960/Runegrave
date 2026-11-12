@@ -36,18 +36,21 @@ test('Each offensive relic changes projectile silhouette, including stacked reli
 test('Hero relic halo shows at most three equipped rune chips and freezes in reduced motion',()=>{
  const ids=FIRST_SOUL_RELICS.map(x=>x.id),player={x:200,y:120};
  const p=canvas();paintBoundRuneHalo(p.g,player,ids,4.4);
- assert.equal(p.calls.filter(c=>c[0]==='fill').length,3);
+ // v0.09.45 explicitly replaces generic vector diamond fills with exactly
+ // three real 12×12 owned-pixel seal backgrounds, no fourth marker.
+ assert.equal(p.calls.filter(c=>c[0]==='fillRect'&&c[3]===12&&c[4]===12).length,3);
  const a=canvas(),b=canvas();paintBoundRuneHalo(a.g,player,ids,0,true);paintBoundRuneHalo(b.g,player,ids,45,true);
  assert.deepEqual(a.calls,b.calls);
- assert.ok(p.calls.length<65);assert.equal(p.calls.filter(c=>c[0]==='restore').length,1);
+ assert.ok(p.calls.length<220,'three 9×9 Norse pixel seals must remain bounded');
+ assert.equal(p.calls.filter(c=>c[0]==='restore').length,4,'one original halo + three uniquely painted seals');
  const quiet=canvas();paintBoundRuneHalo(quiet.g,player,[],1);assert.equal(quiet.calls.length,0);
 });
 test('Gate A remains v0.09 and offline preload has the new module; input prefs and canonical docs remain protected',()=>{
  const version=readFileSync(new URL('../src/core/version.ts',import.meta.url),'utf8');
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  const stage=readFileSync(new URL('../src/scene/stage.ts',import.meta.url),'utf8');
- assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.44'/);
- assert.match(version,/SAVE_SCHEMA_VERSION = 1/);assert.match(sw,/runegrave-shell-v0\.09\.44/);
+ assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);assert.match(version,/APP_VERSION = '0\.09\.45'/);
+ assert.match(version,/SAVE_SCHEMA_VERSION = 1/);assert.match(sw,/runegrave-shell-v0\.09\.45/);
  assert.match(sw,/js\/run\/relicBattleArt\.js/);
  assert.match(stage,/paintEarnedSoulboltArt\(/);assert.match(stage,/paintBoundRuneHalo\(/);
  assert.doesNotMatch(stage,/setInterval|setTimeout/);

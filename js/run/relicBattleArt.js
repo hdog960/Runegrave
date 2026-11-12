@@ -1,3 +1,4 @@
+import { paintEarnedRelicSeal } from './sagaEarnedRelicSeals.js';
 import { RELIC_CRESTS } from './relicCrests.js';
 export const RELIC_ART_CAP = 20;
 export const BOLT_RELICS = ['wyrd-fang', 'skald-drum', 'storm-feather', 'hugin-lens', 'ash-anchor'];
@@ -65,7 +66,7 @@ export function paintEarnedSoulboltArt(g, bolts, owned, time, reducedMotion = fa
     }
     g.restore();
 }
-/** Three small claimed-rune wisps orbit *just outside* the character silhouette.
+/** Three earned-rune seals stay completely CLEAR of the actual hero helmet, shield and boots.
  * Rotation shows every earned relic over time; reduced-motion mode is fixed.
  * Up to three marks per frame prevent full-run pickup spam and visual clutter.
  */
@@ -80,20 +81,9 @@ export function paintBoundRuneHalo(g, hero, owned, time, reducedMotion = false) 
     for (let i = 0; i < count; i++) {
         const id = owned[(cycle + i) % owned.length];
         const angle = 2 * Math.PI * i / count - Math.PI / 2 + (reducedMotion ? 0 : Math.sin(time * .8 + i) * .12);
-        const x = hero.x + Math.cos(angle) * 25, y = hero.y + Math.sin(angle) * 21;
-        const color = RELIC_CRESTS[id].color;
-        g.globalAlpha = .9;
-        px(g, x - 3, y - 3, 7, 7, '#10282b');
-        g.fillStyle = color;
-        g.beginPath();
-        g.moveTo(x, y - 3);
-        g.lineTo(x + 3, y);
-        g.lineTo(x, y + 3);
-        g.lineTo(x - 3, y);
-        g.closePath();
-        g.fill();
-        g.fillStyle = '#10282b';
-        g.fillRect(Math.round(x), Math.round(y), 1, 1);
+        const x = hero.x+Math.cos(angle)*39,y=hero.y+Math.sin(angle)*39;
+    g.globalAlpha=.9;
+    paintEarnedRelicSeal(g,id,x,y);
     }
     g.restore();
 }
