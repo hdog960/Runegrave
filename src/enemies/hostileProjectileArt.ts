@@ -1,3 +1,4 @@
+import { paintSagaFlightRune } from './sagaFlightRunes.js';
 import type {HostileBolt} from './encounters.js';
 type G=CanvasRenderingContext2D;
 /** v0.09.30: six ORIGINAL pixel-authored enemy projectiles in two authentic
@@ -31,17 +32,12 @@ function inkHostileBolt(g:G,rows:readonly string[],palette:Record<string,string>
   }
  }
 }
+/** Same incoming real bolt pool, purely cosmetic replacement. Old source
+ * sheets/styles stay exported for backward-compatible art regressions. */
 export function paintHostileProjectiles(g:G,bolts:readonly HostileBolt[],time:number):void{
  if(!Number.isFinite(time))throw new RangeError('Invalid projectile frame');
  for(const b of bolts){
-  const s=hostileProjectileStyle(b);
   if(![b.x,b.y,b.life].every(Number.isFinite)||b.life<=0)continue;
-  const frame=hostileProjectileFrame(b.life);
-  g.save();g.translate(Math.round(b.x),Math.round(b.y));
-  g.rotate(Math.atan2(b.dy,b.dx));
-  g.globalAlpha=Math.max(.3,Math.min(1,b.life*2));
-  const kind=s.kind==='warden-ember'?'warden-ember':'spectral-dart';
-  inkHostileBolt(g,HOSTILE_BOLT_PIXEL_SHEETS[kind][frame]!,HOSTILE_BOLT_INK[kind]);
-  g.restore();
+  paintSagaFlightRune(g,b);
  }
 }
