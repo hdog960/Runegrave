@@ -128,7 +128,7 @@ export function paintTruePracticeCarving(g:CanvasRenderingContext2D,target:Pick<
       const ink=line[x];
       if(ink==='.'){x++;continue;}
       let end=x+1;while(end<line.length&&line[end]===ink)end++;
-      g.fillStyle=target.flash>0&&(ink==='r'||ink==='h')?'#fff6cb':PRACTICE_MATERIALS[ink];
+      g.fillStyle=target.flash>0&&(ink==='r'||ink==='h')?'#fff6cb':PRACTICE_MATERIALS[ink as keyof typeof PRACTICE_MATERIALS];
       g.fillRect(ox+x,oy+y,end-x,1);
       x=end;
     }
