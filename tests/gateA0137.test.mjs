@@ -94,7 +94,7 @@ test('actual shipping live projectile painter is new authentic art and old gener
  assert.match(built,/paintTrueSoulbolt\s*\(\s*g\s*,\s*b\s*\)/);
  assert.ok(!built.includes('const pulse = .86 + .14 * Math.sin(time * 17)'),'remove independent false visual clock');
  assert.ok(!built.includes("combatPixelRect(g, -12, -6, 24, 12"),'no old fake giant 24px hitbox haze');
- assert.ok(built.includes('paintSagaCombatImpact(g,s)'),'no regression to genuine impact art');
+ assert.match(built,/paintSagaCombatImpact\s*\(\s*g\s*,\s*s\s*\)/,'retain exactly the real per-event impact artist in compiled combat renderer');
  assert.ok(text('../js/combat/combatArt.js').includes('paintTrueSoulbolt(g,b)'));
  assert.ok(text('../js/combat/sagaSoulboltRuneInk.js').includes('SOULBOLT_INK_PATTERNS'));
 });
