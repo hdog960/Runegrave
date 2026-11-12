@@ -37,6 +37,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: gate-a-v00947-real-norse-collision-carvings
+          name: gate-a-v00947-real-true-damage-soulbolt-ink
           path: gate-a-v00947-*.png
           if-no-files-found: ignore
