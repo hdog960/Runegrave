@@ -1,3 +1,4 @@
+import { paintWayfarerOathstaff } from './sagaWayfarerOathstaff.js';
 import { wayfarerPose } from './wayfarerMotion.js';
 import { paintHeroAtlas } from './pixelSpriteAtlas.js';
 import { paintChamberSetpieces, type ChamberFamily } from './chamberSetpieces.js';
@@ -190,16 +191,7 @@ export function drawWayfarer(g:G,x:number,y:number,t:number,dx:number,dy:number,
  ellipse(g,0,23,16,4,'#020b0bd0');
  ellipse(g,0,21,11,2,'#3d575044');
  paintHeroAtlas(g,pose,t,reducedMotion,damageGrace);
- // The equipped rune weapon remains physically attached to the real aimed hand.
- const fx=pose.aimX,fy=pose.aimY;
- const hx=fx*18,hy=fy*15-3,recoil=pose.recoil*3;
- stroke(g,[[pose.side<0?-5:5,-3],[hx-fx*recoil,hy-fy*recoil]],'#c1a984',3);
- ellipse(g,hx-fx*recoil,hy-fy*recoil,4.5,4.5,'#14353b');
- ellipse(g,hx-fx*recoil,hy-fy*recoil,2.8,2.8,firing?'#e7ffdf':'#9ddfcf');
- if(firing){
-  const ux=hx-fx*recoil,uy=hy-fy*recoil;
-  stroke(g,[[ux-4,uy-5],[ux,uy-8],[ux+4,uy-5]],'#f8e4a7',1.1);
-  box(g,ux-1,uy-1,2,2,'#fff4d3');
- }
+ // One coherent hand-carved eight-direction Norse staff from the REAL aim pose.
+ paintWayfarerOathstaff(g,pose,firing);
  g.restore();
 }
