@@ -817,6 +817,57 @@ with sync_playwright() as p:
   assert not errors,(label,errors)
   print(label,'PASS 25 story friezes, seven original weapon poses, real warnings and separate thumb grips, guided chamber, zero exceptions')
   page.close()
+ # v0.09.36: TRUE CHROMIUM SERVICE-WORKER OFFLINE RELOAD on localhost.
+ # Data-URL integration above cannot install a real service worker, so this
+ # separate deployment-shaped built-site test proves index + ALL JS modules
+ # are available without network, then exercises actual two-thumb input.
+ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+ from functools import partial
+ from threading import Thread
+ class QuietHandler(SimpleHTTPRequestHandler):
+  def log_message(self,*_args):pass
+ server=ThreadingHTTPServer(('127.0.0.1',0),partial(QuietHandler,directory=str(base.DIST)))
+ worker=Thread(target=server.serve_forever,daemon=True);worker.start()
+ offline_context=b.new_context(viewport={'width':844,'height':390},is_mobile=True,has_touch=True,service_workers='allow')
+ offline_page=offline_context.new_page()
+ offline_errors=[];offline_page.on('pageerror',lambda e:offline_errors.append(str(e)))
+ try:
+  target=f'http://127.0.0.1:{server.server_port}/'
+  offline_page.goto(target,wait_until='domcontentloaded',timeout=18000)
+  offline_page.wait_for_function("""() => navigator.serviceWorker?.controller && document.documentElement.dataset.version==='0.09.36'""",timeout=20000)
+  offline_page.wait_for_function("""async () => {
+    const names=await caches.keys();
+    if(!names.includes('runegrave-shell-v0.09.36'))return false;
+    const cache=await caches.open('runegrave-shell-v0.09.36');
+    const wanted=['index.html','js/main.js','js/scene/woundSigilInk.js','js/enemies/ritualWarningInk.js','styles.css'];
+    const keys=(await cache.keys()).map(k=>new URL(k.url).pathname);
+    return wanted.every(file=>keys.some(path=>path.endsWith('/'+file)));
+  }""",timeout=20000)
+  if offline_page.locator('#guide-start-btn').is_visible():offline_page.locator('#guide-start-btn').click()
+  offline_context.set_offline(True)
+  offline_page.reload(wait_until='domcontentloaded',timeout=18000)
+  offline_page.wait_for_function("""() => document.documentElement.dataset.version==='0.09.36'
+    && document.querySelector('#gameplay-canvas')?.dataset.actorX
+    && navigator.serviceWorker?.controller""",timeout=20000)
+  if offline_page.locator('#guide-start-btn').is_visible():offline_page.locator('#guide-start-btn').click()
+  offline_page.locator('#gameplay-canvas').wait_for(state='visible',timeout=15000)
+  for selector,pid in [('#move-rune-disc',72),('#aim-rune-disc',73)]:
+   offline_page.evaluate("""([selector,pid])=>{
+    const el=document.querySelector(selector),r=el.getBoundingClientRect();
+    el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerId:pid,
+     pointerType:'touch',isPrimary:pid===72,clientX:r.left+r.width*.81,clientY:r.top+r.height*.38}));
+   }""",[selector,pid])
+  offline_page.wait_for_timeout(380)
+  assert int(offline_page.locator('#gameplay-canvas').get_attribute('data-shots'))>0,'offline cached scripts must run actual combat'
+  for selector,pid in [('#move-rune-disc',72),('#aim-rune-disc',73)]:
+   offline_page.evaluate("""([selector,pid])=>document.querySelector(selector).dispatchEvent(
+     new PointerEvent('pointercancel',{bubbles:true,pointerId:pid,pointerType:'touch'}))""",[selector,pid])
+  assert not offline_errors,offline_errors
+  assert offline_page.evaluate("navigator.onLine") is False,'must be genuinely network-offline'
+  offline_page.screenshot(path=str(ROOT/'gate-a-v00936-real-sw-offline.png'))
+  print('v0.09.36 real Chromium OFFLINE registered service-worker reload + cached game + dual-thumb attacks PASS')
+ finally:
+  offline_context.close();server.shutdown();server.server_close()
  portrait=b.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
  portrait.set_content(base.HTML);portrait.add_style_tag(content=(base.DIST/'styles.css').read_text())
  assert portrait.locator('.rotate-message').is_visible()
