@@ -853,7 +853,7 @@ with sync_playwright() as p:
    print('v0.09.38 three real Warden HP/2-phase sculptures with single-body actual idle/recovery PASS')
    # v0.09.38 — 10 genuine world-drop sculptures rendered by the ACTUAL
    # production drawRoomDrops(). No concept images or data-only preview.
-   plinths=page.evaluate("""async (lootUrl,plinthUrl,firstUrl) => {
+   plinths=page.evaluate("""async ([lootUrl,plinthUrl,firstUrl]) => {
       const loot=await import(lootUrl),ink=await import(plinthUrl),run=await import(firstUrl);
       const all=run.FIRST_SOUL_RELICS.map(x=>({kind:'relic',relic:x,id:x.id}));
       all.push({kind:'silver',id:'silver'},{kind:'heart',id:'heart'});
@@ -883,7 +883,7 @@ with sync_playwright() as p:
       const types=Object.keys(ink.SAGA_PLINTH_SHEETS);
       if(types.length!==10)throw Error('must have eight actual relics and two resource cases');
       document.body.appendChild(board);return types.length;
-   }""",base.data_module('run/lootArt.js'),base.data_module('run/sagaPlinthArt.js'),base.data_module('run/firstSoul.js'))
+   }""",[base.data_module('run/lootArt.js'),base.data_module('run/sagaPlinthArt.js'),base.data_module('run/firstSoul.js')])
    assert plinths==10,plinths
    page.locator('#gate-a-v00938-loot-plinth-gallery').screenshot(path=str(ROOT/'gate-a-v00938-ten-true-pickup-plinths.png'))
    page.evaluate("()=>{document.querySelector('#gate-a-v00938-loot-plinth-gallery').remove();window.scrollTo(0,0)}")
