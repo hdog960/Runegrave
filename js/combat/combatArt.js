@@ -1,3 +1,4 @@
+import { paintTrueSoulbolt } from './sagaSoulboltRuneInk.js';
 import { paintSagaCombatImpact } from './sagaImpactCarvings.js';
 const combatPixelRect = (g, x, y, w, h, color) => { g.fillStyle = color; g.fillRect(Math.round(x), Math.round(y), w, h); };
 export function drawPracticeTargets(g, targets, t) {
@@ -43,23 +44,9 @@ export function drawPracticeTargets(g, targets, t) {
         }
     }
 }
-export function drawSoulbolts(g, bolts, time) {
-    const pulse = .86 + .14 * Math.sin(time * 17);
-    for (const b of bolts) {
-        if (!b.active)
-            continue;
-        g.save();
-        g.translate(Math.round(b.x), Math.round(b.y));
-        g.rotate(Math.atan2(b.dy, b.dx));
-        g.globalAlpha = .22 * pulse;
-        combatPixelRect(g, -12, -6, 24, 12, '#82d2cd');
-        g.globalAlpha = 1;
-        combatPixelRect(g, -9, -2, 12, 4, '#477e8b');
-        combatPixelRect(g, -5, -2, 12, 4, '#a7e2cd');
-        combatPixelRect(g, 1, -1, 6, 2, '#fff8ce');
-        combatPixelRect(g, -11, -1, 4, 2, '#c09658');
-        g.restore();
-    }
+export function drawSoulbolts(g,bolts,time){
+ if(!Number.isFinite(time))throw new RangeError('Invalid Soulbolt visual frame');
+ for(const b of bolts){if(b.active)paintTrueSoulbolt(g,b);}
 }
 /** Existing fixed-step spark count/position/remaining life only; art replacement. */
 export function drawCombatSparks(g,sparks){

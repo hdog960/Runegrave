@@ -97,7 +97,7 @@ test('root Pages production mirror exposes the REAL carvings and matches current
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const sw=read('../dist/sw.js');
  assert.equal(sw,read('../sw.js'));
- assert.match(sw,/runegrave-shell-v0\.09\.46/);
+ assert.match(sw,/runegrave-shell-v0\.09\.47/);
  assert.ok(sw.includes('./js/scene/sagaThresholdReliefs.js'));
  assert.ok(read('../js/scene/stage.js').includes('paintThresholdReliefs('));
  assert.ok(read('../js/scene/sagaThresholdReliefs.js').includes('THRESHOLD_CRESTS'));
@@ -116,7 +116,7 @@ test('Gate A original 25 rooms/eight functional relics/save schema1/two-thumb gr
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
  const version=read('../dist/js/core/version.js');
- assert.match(version,/APP_VERSION = '0\.09\.46'/);
+ assert.match(version,/APP_VERSION = '0\.09\.47'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
  const html=read('../dist/index.html');
