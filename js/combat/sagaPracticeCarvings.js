@@ -89,12 +89,12 @@ export function practiceCarvingPhase(hp,maxHp) {
 /** Damage appears ONLY after real HP is lost; cuts reveal through the wood/clay.
  * No procedural scene effect or fake enemy damage indicator is generated.
  */
-export function practiceCarvingRows(kind,hp,maxHp):readonly string[] {
+export function practiceCarvingRows(kind,hp,maxHp) {
   const base=PRACTICE_CARVINGS[kind],phase=practiceCarvingPhase(hp,maxHp);
   if(!base)throw new RangeError('Unknown genuine training target kind');
   if(phase===0)return base;
   const out=base.map(line=>line.split(''));
-  const slash=(from,to,guide:(y)=>number)=>{
+  const slash=(from,to,guide)=>{
     for(let y=from;y<=to&&y<out.length;y++){
       const line=out[y];
       if(!line)continue;
