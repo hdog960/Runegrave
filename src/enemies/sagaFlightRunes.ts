@@ -40,7 +40,7 @@ export function flightRuneRows(b:FlightRuneBolt):readonly string[]{
  if(age===0)return rows;
  // Crop exclusively the tail at the NEGATIVE-X rear (bolt always points +X
  // inside its local painter) — the moving nose stays on the real bolt.
- const start=age===1?2:5;
+ const start=age===1?5:8;
  return rows.map(row=>row.slice(0,start).replace(/[otbcr+]/g,'.')+row.slice(start));
 }
 type G=CanvasRenderingContext2D;

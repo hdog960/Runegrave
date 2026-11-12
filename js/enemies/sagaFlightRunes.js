@@ -37,7 +37,7 @@ export function flightRuneRows(b){
  if(age===0)return rows;
  // Crop exclusively the tail at the NEGATIVE-X rear (bolt always points +X
  // inside its local painter) — the moving nose stays on the real bolt.
- const start=age===1?2:5;
+ const start=age===1?5:8;
  return rows.map(row=>row.slice(0,start).replace(/[otbcr+]/g,'.')+row.slice(start));
 }
 /** Pure world-space ink at the REAL projectile coordinates and heading.
