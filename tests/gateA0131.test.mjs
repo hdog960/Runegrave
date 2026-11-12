@@ -102,15 +102,15 @@ test('actual production enemy renderer preserves accurate source attack lanes an
  assert.ok(stage.includes('drawEncounter(')&&stage.includes('motionTrails.paintDissolves('));
  assert.ok(stage.indexOf('motionTrails.paintDissolves(')<stage.indexOf('drawEncounter('));
 });
-test('v0.09.47 stays in Gate A and preserves every real content, save, dual-thumb and opt-in PWA invariant',()=>{
+test('v0.09.48 stays in Gate A and preserves every real content, save, dual-thumb and opt-in PWA invariant',()=>{
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const v=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
- assert.match(v,/APP_VERSION = '0\.09\.47'/);
+ assert.match(v,/APP_VERSION = '0\.09\.48'/);
  assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(v,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.47/);
+ assert.match(sw,/runegrave-shell-v0\.09\.48/);
  assert.ok(sw.includes('./js/enemies/sagaCastWards.js'));
  assert.equal(sw,read('../sw.js'));
  assert.ok(read('../js/enemies/sagaCastWards.js').includes('paintSagaCastWards'));
