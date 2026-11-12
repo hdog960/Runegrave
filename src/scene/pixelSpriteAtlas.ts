@@ -531,7 +531,7 @@ export function paintHostileSagaGuard(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'
  g.restore();
 }
 
-export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phase'|'flash'>,time:number,reducedMotion=false):void{
+export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phase'|'flash'> & Partial<Pick<Enemy,'hp'|'maxHp'>>,time:number,reducedMotion=false):void{
  if(!Object.hasOwn(HOSTILE_ATLAS,e.kind)||!Number.isFinite(time))throw new RangeError('Unknown hostile pixel sheet');
  const sheet=HOSTILE_ATLAS[e.kind];
  const palette=ENEMY_INK[e.kind];
@@ -545,7 +545,7 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  const windupBody=inkedWindupBody(sheet,e.kind,(e.state==='warning'||e.state==='charge')?band:0);
  const recoveringBody=inkedRecoveryBody(windupBody,e);
  const travelingBody=inkedTravelBody(recoveringBody,e,reducedMotion);
-  const visibleBody=inkedImpactBody(inkedWardenPhaseBody(travelingBody,e.kind,e.phase),e.kind,e.flash);
+  const visibleBody=inkedImpactBody(inkedWardenPhaseBody(travelingBody,e.kind,e.phase,e.hp,e.maxHp),e.kind,e.flash);
  drawSheet(g,visibleBody,-sheetWidth(sheet)*unit/2,top,unit,palette);
  paintHostileSagaGuard(g,e);
  paintEnemySagaWeapon(g,e,time,reducedMotion);
@@ -565,8 +565,8 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  if(isBoss&&e.phase===2){
   // Actual extra thorn branches distinguish phase two even without red cues.
   g.fillStyle=palette.g;
-  g.fillRect(-30,-33,5,12);g.fillRect(25,-33,5,12);
-  g.fillRect(-35,-38,5,5);g.fillRect(30,-38,5,5);
+  g.fillRect(-20,-33,7,9);g.fillRect(13,-33,7,9);
+  g.fillRect(-22,-38,5,6);g.fillRect(17,-38,5,6);
  }
  if(e.flash>0){g.fillStyle=palette.e;g.fillRect(-3,top+9,6,3);}
  g.restore();
