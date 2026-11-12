@@ -23,6 +23,7 @@ import { paintRoomFamily } from './familyArt.js';
 import { carvedWaystones, paintWaystones } from './routeArt.js';
 import { describeRelicImpact } from '../run/relicImpact.js';
 import { CombatFeedback, paintSoulboltHeading } from './combatFeedback.js';
+import { WoundInk } from './woundSigilInk.js';
 import { MotionTrails } from './motionTrails.js';
 import { threatStatus } from './threatReadout.js';
 import { paintChamberAmbience, type ChamberAmbientFamily } from './chamberAmbience.js';
@@ -96,6 +97,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
   let actor={x:WIDTH/2,y:120};let lastAim:Vector2={x:0,y:1};
   const sparks:CombatSpark[]=[];
   const feedback=new CombatFeedback();
+  const woundInk=new WoundInk();
   const motionTrails=new MotionTrails();
   let previousHeartUnits=health.state.units;
   const score=document.querySelector<HTMLElement>('[data-combat-score]');
@@ -217,7 +219,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     const previous=trial?.exportState();
     practiceExit=placeDirectedExit(world,actor,'east');
     if(encounter){encounter.reframe(world);gateDirection=encounter.exitDirection;}
-    exitTrail=[];routeRefresh=0;feedback.reset();motionTrails.reset();
+    exitTrail=[];routeRefresh=0;feedback.reset();woundInk.reset();motionTrails.reset();
     attachCombat(world);
     const movement=combat?.getMovementWorld()||world;
     if(!isPositionFree(movement,actor))actor=safeSpawn(movement,actor);
@@ -253,6 +255,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     motionTrails.paintDissolves(g!,W,H,reduced.matches);
     paintSoulboltHeading(g!,actor,lastAim,firing,time,reduced.matches);
     feedback.paint(g!,W,H);
+     woundInk.paint(g!,W,H,reduced.matches);
     // A subtle flicker is a shape-independent i-frame indicator; no HUD covers the playfield.
     // Keep the real invulnerable actor visible with an authentic scar pose.
       drawWayfarer(g!,actor.x,actor.y,time,walking.x,walking.y,lastAim.x,lastAim.y,firing,reduced.matches,health.state.grace);
@@ -269,7 +272,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
       if(roomIndex>=FIRST_SOUL_CHAMBERS){enterRoom('warden');return;}
       currentRoom=route[roomIndex];
     }else currentRoom=undefined;
-    mode=room;trial=undefined;sparks.length=0;feedback.reset();motionTrails.reset();clock.reset();
+    mode=room;trial=undefined;sparks.length=0;feedback.reset();woundInk.reset();motionTrails.reset();clock.reset();
     gateDirection=room==='warden'?'north':directionForChamber(roomIndex);
     drops=[];roomRewardPlaced=false;exitTrail=[];routeRefresh=0;
     actor=safeSpawn(world,{x:world.width*.26,y:world.minY+24});
@@ -331,9 +334,17 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     encounter?.step(dt,actor,health);
     if(encounter)motionTrails.observeEnemies(encounter.snapshot.enemies);
     motionTrails.step(dt,actor,walking);
-    if(health.state.units<previousHeartUnits)feedback.add(actor,'hurt',previousHeartUnits-health.state.units);
+    if(health.state.units<previousHeartUnits){
+       const hurtSource=health.state.source;
+       const sourceEnemy=hurtSource?.startsWith('enemy:')?encounter?.snapshot.enemies
+         .filter(e=>e.alive&&e.kind===hurtSource.slice(6))
+         .sort((a,b)=>Math.hypot(a.x-actor.x,a.y-actor.y)-Math.hypot(b.x-actor.x,b.y-actor.y))[0]:undefined;
+       const sourcePad=trial?.pads.find(p=>p.id===hurtSource);
+       feedback.add(actor,'hurt',previousHeartUnits-health.state.units);
+       woundInk.record(actor,hurtSource,sourceEnemy||sourcePad,previousHeartUnits-health.state.units);
+     }
     previousHeartUnits=health.state.units;
-    feedback.step(dt);
+    feedback.step(dt);woundInk.step(dt);
     if(encounter?.snapshot.phase==='gate'&&!roomRewardPlaced)placeDrops();
     collectDrops();
     // Waystones follow the current position instead of pointing toward the
@@ -394,7 +405,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     getPathToExit:()=>world&&walkableRoute(world,actor,encounter?.exit||practiceExit||actor),
     restart:()=>{
       if(!world||(!dead&&!complete))return false;
-      health.reset();previousHeartUnits=health.state.units;feedback.reset();motionTrails.reset();inventory.reset();dead=false;complete=false;mode='practice';encounter=undefined;paused=false;restarts++;clock.reset();lastFrameMs=-Infinity;
+      health.reset();previousHeartUnits=health.state.units;feedback.reset();woundInk.reset();motionTrails.reset();inventory.reset();dead=false;complete=false;mode='practice';encounter=undefined;paused=false;restarts++;clock.reset();lastFrameMs=-Infinity;
       roomIndex=-1;currentRoom=undefined;gateDirection='east';
       if(pickupInfo)pickupInfo.textContent='GOLD = UPGRADE · SILVER = CURRENCY';
       route=createFirstSoulRoute(`first-soul-${String(restarts+1).padStart(4,'0')}`);drops=[];roomRewardPlaced=false;exitTrail=[];routeRefresh=0;
