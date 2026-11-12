@@ -56,7 +56,8 @@ export function paintDeathRite(g:G,mark:DeathRiteMark,W:number,H:number):boolean
  const glyph=deathRiteGlyph(mark.kind,stage),color=DEATH_RITE_PALETTES[mark.kind];
  const width=Math.max(...glyph.map(row=>row.length)),height=glyph.length;
  if(width>19||height>16||height<7)throw new RangeError('Norse crest exceeded one enemy-sized physical footprint');
- const x0=mark.x-width,y0=mark.y-height-2+(stage===2?3:0);
+ const unit=3; // Three world pixels per engraved glyph cell: legible on iPhone at landscape scale.
+ const x0=mark.x-width*unit/2,y0=mark.y-height*unit/2-2+(stage===2?3:0);
  g.save();g.beginPath();g.rect(0,0,W,H);g.clip();
  g.globalAlpha=Math.max(.07,Math.min(.82,(mark.life-mark.age)/.28));
  for(let y=0;y<glyph.length;y++){
@@ -64,9 +65,9 @@ export function paintDeathRite(g:G,mark:DeathRiteMark,W:number,H:number):boolean
   for(let x=0;x<row.length;){
    const ink=row[x]!;if(ink==='.'||ink===' '){x++;continue;}
    let end=x+1;while(end<row.length&&row[end]===ink)end++;
-   const split=stage===1?(x<width/2?-2:2):0;
+   const split=stage===1?(x<width/2?-4:4):0;
    const shade=color[ink];if(!shade)throw new RangeError('Unknown runestone pixel');
-   g.fillStyle=shade;g.fillRect(Math.round(x0+x*2+split),Math.round(y0+y*2),(end-x)*2,2);
+   g.fillStyle=shade;g.fillRect(Math.round(x0+x*unit+split),Math.round(y0+y*unit),(end-x)*unit,unit);
    x=end;
   }
  }
