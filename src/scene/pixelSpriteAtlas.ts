@@ -565,8 +565,8 @@ export function paintHostileAtlas(g:G,e:Pick<Enemy,'kind'|'state'|'windup'|'phas
  if(isBoss&&e.phase===2){
   // Actual extra thorn branches distinguish phase two even without red cues.
   g.fillStyle=palette.g;
-  g.fillRect(-30,-33,5,12);g.fillRect(25,-33,5,12);
-  g.fillRect(-35,-38,5,5);g.fillRect(30,-38,5,5);
+  g.fillRect(-20,-33,7,9);g.fillRect(13,-33,7,9);
+  g.fillRect(-22,-38,5,6);g.fillRect(17,-38,5,6);
  }
  if(e.flash>0){g.fillStyle=palette.e;g.fillRect(-3,top+9,6,3);}
  g.restore();
