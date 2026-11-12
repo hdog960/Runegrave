@@ -102,8 +102,8 @@ test('real scene/warnings, eight functional relics, original save/PWA and locked
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(version,/APP_VERSION = '0\.09\.41'/);
+ assert.match(version,/APP_VERSION = '0\.09\.42'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.41/);
+ assert.match(sw,/runegrave-shell-v0\.09\.42/);
  assert.ok(sw.includes('scene/sagaImpactFractures.js'));
 });

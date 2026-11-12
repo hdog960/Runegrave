@@ -90,9 +90,9 @@ test('render integration, 8 real relics, versioned PWA, save schema and Gate A l
  assert.match(pixel,/inkedRecoveryBody\(windupBody,\s*e\)/,'body recovery must be in production renderer');
  assert.match(stage,/drawEncounter\(/,'authentic existing combat drawn');
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
- assert.match(version,/APP_VERSION = '0\.09\.41'/);
+ assert.match(version,/APP_VERSION = '0\.09\.42'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.41/);
+ assert.match(sw,/runegrave-shell-v0\.09\.42/);
  assert.ok(sw.includes('./js/scene/sagaRecoveryInk.js'));
 });

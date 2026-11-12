@@ -80,8 +80,8 @@ test('real health source always renders hero, save/relic/PWA/controls stay intac
  assert.equal(FIRST_SOUL_RELICS.length,8);
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
- assert.match(version,/APP_VERSION = '0\.09\.41'/);
+ assert.match(version,/APP_VERSION = '0\.09\.42'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.41/);
+ assert.match(sw,/runegrave-shell-v0\.09\.42/);
  assert.ok(sw.includes('wayfarerHurtInk.js')&&sw.includes('wardenUnboundInk.js'));
 });
