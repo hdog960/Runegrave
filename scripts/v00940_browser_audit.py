@@ -1020,11 +1020,11 @@ with sync_playwright() as p:
     const kind=kinds[row],stages=[];
     for(let col=0;col<3;col++){
       const hp=[maxima[kind],Math.ceil(maxima[kind]/2),1][col];
-      const sub=document.createElement('canvas');sub.width=212;sub.height=89;
+      const sub=document.createElement('canvas');sub.width=212;sub.height=132;
       const sg=sub.getContext('2d');
       sg.fillStyle='#29403e';sg.fillRect(0,0,212,89);
       const e={kind,x:106,y:27,radius:radii[kind],hp,maxHp:maxima[kind],alive:true,state:'warning'};
-      ink.paintVitalRunePlaque(sg,e,212,89);
+      ink.paintVitalRunePlaque(sg,e,212,132);
       const bytes=sub.toDataURL();stages.push(bytes);
       const x=col*380+20,y=row*158+5;
       g.fillStyle='#2e4542';g.fillRect(x+10,y+7,348,137);
