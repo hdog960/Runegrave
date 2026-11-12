@@ -102,15 +102,15 @@ test('the plaque replaces the earlier generic four-pixel health bar, not an extr
  const html=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
  assert.ok(html.includes('grip grip-left')&&html.includes('grip grip-right'));
 });
-test('v0.09.45 stays in Gate A: actual 25 rooms, eight real relics, schema1, consented OFFLINE cache and identical root Pages mirror',()=>{
+test('v0.09.46 stays in Gate A: actual 25 rooms, eight real relics, schema1, consented OFFLINE cache and identical root Pages mirror',()=>{
  const read=x=>readFileSync(new URL(x,import.meta.url),'utf8');
  assert.equal(FIRST_SOUL_ROOMS.length,25);
  assert.equal(FIRST_SOUL_RELICS.length,8);
- assert.match(read('../dist/js/core/version.js'),/APP_VERSION = '0\.09\.45'/);
+ assert.match(read('../dist/js/core/version.js'),/APP_VERSION = '0\.09\.46'/);
  assert.match(read('../dist/js/core/version.js'),/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(read('../dist/js/core/version.js'),/SAVE_SCHEMA_VERSION = 1/);
  const cache=read('../dist/sw.js'),root=read('../sw.js');
- assert.match(cache,/runegrave-shell-v0\.09\.45/);
+ assert.match(cache,/runegrave-shell-v0\.09\.46/);
  assert.equal(cache,root);
  assert.ok(cache.includes('./js/scene/sagaVitalRunes.js'));
  assert.ok(read('../js/scene/sagaVitalRunes.js').includes('paintVitalRunePlaque'));
