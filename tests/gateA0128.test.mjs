@@ -8,7 +8,7 @@ const hero={x:90,y:100};
 const kinds=[...FIRST_SOUL_RELICS.map(r=>r.id),'silver','heart'];
 function mock(){
  const calls=[],g={};
- for(const n of ['save','restore','translate','fillRect','beginPath','ellipse','arc','fill','stroke','strokeRect','moveTo','lineTo','closePath'])
+ for(const n of ['save','restore','translate','fillRect','beginPath','ellipse','arc','fill','stroke','strokeRect','moveTo','lineTo','closePath','fillText'])
   g[n]=(...a)=>calls.push([n,...a]);
  g.createRadialGradient=(...a)=>{calls.push(['gradient',...a]);return {addColorStop:(...args)=>calls.push(['stop',...args])};};
  for(const n of ['fillStyle','strokeStyle','font','textAlign','globalAlpha','lineWidth','lineCap','lineJoin'])
