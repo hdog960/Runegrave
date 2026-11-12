@@ -100,12 +100,12 @@ test('actual shipping live projectile painter is new authentic art and old gener
 });
 test('new visuals preserve frozen v0.09 Gate A, root production parity, schema1 and user-consented OFFLINE PWA',()=>{
  const v=text('../dist/js/core/version.js');
- assert.match(v,/APP_VERSION = '0\.09\.47'/);
+ assert.match(v,/APP_VERSION = '0\.09\.48'/);
  assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(v,/SAVE_SCHEMA_VERSION = 1/);
  const sw=text('../dist/sw.js');
  assert.equal(sw,text('../sw.js'));
- assert.match(sw,/runegrave-shell-v0\.09\.47/);
+ assert.match(sw,/runegrave-shell-v0\.09\.48/);
  assert.ok(sw.includes('./js/combat/sagaSoulboltRuneInk.js'));
  assert.ok(sw.includes('ACTIVATE_UPDATE')&&sw.includes('cache.addAll(ASSETS.map('),'player must approve new offline update');
  const html=text('../dist/index.html');
