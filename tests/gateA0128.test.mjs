@@ -84,6 +84,9 @@ test('production drop painter attaches every authentic relic crest and true floo
   assert.equal(collected.calls.length,0,'collected relic never continues to paint');
   assert.ok(a.calls.length>far.calls.length,'only nearby player receives real-world pickup radius notches');
   assert.ok(RELIC_PEDESTAL_BONUS[relic.id].length>0,'real reward description must survive');
+  const plaques=a.calls.filter(x=>x[0]==='fillRect'&&(x[2]===-41||x[2]===23));
+  assert.ok(plaques.some(([,x,y,w])=>x===-41&&y===-41&&w===82),'relic title must fit top tablet');
+  assert.ok(plaques.some(([,x,y,w])=>x===-41&&y===23&&w===82),'relic bonus must fit bottom tablet');
   art.push(JSON.stringify(a.calls));
  }
  assert.equal(new Set(art).size,8);
