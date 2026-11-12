@@ -103,12 +103,12 @@ test('invalid physical aim and damage-grace-free art are rejected rather than dr
 });
 test('shipping hero renderer calls new eight-way art rather than retaining generic 2-circle line tip',()=>{
  const scene=source('../dist/js/scene/sanctuaryArt.js');
- const origin=scene.indexOf('paintHeroAtlas(g, pose');
- const custom=scene.indexOf('paintWayfarerOathstaff(g,pose,firing)');
- assert.ok(origin>0&&custom>origin,'paint one coherent atlas body then authentic attached staff');
- assert.equal(scene.split('paintWayfarerOathstaff(g,pose,firing)').length-1,1);
+ const origin=scene.search(/paintHeroAtlas\s*\(\s*g\s*,\s*pose\b/);
+ const call=/paintWayfarerOathstaff\s*\(\s*g\s*,\s*pose\s*,\s*firing\s*\)/g;
+ const all=[...scene.matchAll(call)];
+ assert.ok(origin>0&&all.length===1&&all[0].index>origin,'actual compiled hero must paint the original sprite before exactly one new staff');
  assert.ok(!scene.includes("ellipse(g,hx-fx*recoil"),'no generic circular tip layered on the new premium head');
- assert.ok(source('../js/scene/sanctuaryArt.js').includes("paintWayfarerOathstaff(g,pose,firing)"));
+ assert.match(source('../js/scene/sanctuaryArt.js'),/paintWayfarerOathstaff\s*\(\s*g\s*,\s*pose\s*,\s*firing\s*\)/);
  assert.ok(source('../js/scene/sagaWayfarerOathstaff.js').includes('OATHSTAFF_CARVINGS'));
 });
 test('full Gate A game and locked controller/PWA acceptance remains unchanged',()=>{
