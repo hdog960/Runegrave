@@ -9,7 +9,7 @@ import {paintRoomFamily} from '../dist/js/scene/familyArt.js';
 function painter(){
  const calls=[];
  const obj={canvas:{width:840,height:450},getTransform:()=>({a:2,d:2})};
- for(const name of ['save','restore','fillRect','strokeRect','fill','stroke','beginPath','moveTo','lineTo','closePath','ellipse','arc','translate','rotate','scale','fillText','strokeText'])
+ for(const name of ['save','restore','fillRect','strokeRect','fill','stroke','beginPath','moveTo','lineTo','closePath','ellipse','arc','rect','clip','translate','rotate','scale','fillText','strokeText'])
   obj[name]=(...a)=>calls.push([name,...a]);
  obj.createRadialGradient=()=>({addColorStop:()=>{}});
  return {g:new Proxy(obj,{set(t,k,v){t[k]=v;calls.push(['set',k,v]);return true}}),calls};
@@ -36,7 +36,8 @@ test('Soul-ash blooms require an actual living-to-dead hostile transition',()=>{
  fx.observeEnemies([{...e,alive:false}]);fx.observeEnemies([{...e,alive:false}]);
  assert.equal(fx.state.dissolves,1,'death should bloom exactly once');
  const {g,calls}=painter();fx.paintDissolves(g,420,220);
- assert.ok(calls.some(c=>c[0]==='arc'));
+ assert.ok(calls.some(c=>c[0]==='fillRect'),'authored rune-pixel death art must replace prior generic circle');
+ assert.ok(!calls.some(c=>c[0]==='arc'),'no duplicated generic circular fake-death flash');
  for(let i=0;i<18;i++)fx.observeEnemies([{...e,id:'other'+i,alive:true},{...e,id:'other'+i,alive:false}]);
  assert.ok(fx.state.dissolves<=DISSOLVE_CAP);
  for(let n=0;n<120;n++)fx.step(1/120,{x:180,y:130},{x:0,y:0});
@@ -51,7 +52,8 @@ test('Reduced-motion presentation draws no transient FX and never touches player
  const {g,calls}=painter();fx.paintGround(g,420,215,'FATE',true);fx.paintDissolves(g,420,215,true);
  assert.equal(calls.length,0);
  const live=painter();fx.paintGround(live.g,420,215,'ROOT',false);fx.paintDissolves(live.g,420,215,false);
- assert.ok(live.calls.some(c=>c[0]==='arc'));
+ assert.ok(live.calls.some(c=>c[0]==='fillRect'));
+ assert.ok(!live.calls.some(c=>c[0]==='arc'));
  assert.equal(live.calls.filter(c=>c[0]==='save').length,live.calls.filter(c=>c[0]==='restore').length);
  assert.equal(Object.keys(GROUND_COLORS).length,5);
 });
