@@ -327,6 +327,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             paintSagaFloorFrieze(g, W, H, currentRoom.family, Number(currentRoom.id.slice(-2)) - 1);
             paintChamberAmbience(g, W, H, time, currentRoom.family, roomIndex);
         motionTrails.paintGround(g, W, H, currentRoom?.family || 'ROOT', reduced.matches);
+        motionTrails.paintDissolves(g, W, H, reduced.matches);
         if (exitTrail.length)
             paintWaystones(g, exitTrail, time);
         if (encounter)
@@ -340,7 +341,7 @@ export function mountStage(canvas, readInput = () => ({ move: ZERO, aim: ZERO, f
             paintEarnedSoulboltArt(g, combat.bolts, inventory.state.relics, time, reduced.matches);
         }
         drawCombatSparks(g, sparks);
-        motionTrails.paintDissolves(g, W, H, reduced.matches);
+        
         paintSoulboltHeading(g, actor, lastAim, firing, time, reduced.matches);
         feedback.paint(g, W, H);
         woundInk.paint(g, W, H, reduced.matches);

@@ -79,13 +79,13 @@ test('real production hostile atlas paints all three health-dependent Warden var
  }
  assert.equal(new Set(images).size,3,'three real torso states on ONE entity');
 });
-test('v0.09.38 Gate A keeps all mechanics, real eight relics, 25 rooms, separate grips and user-consented offline SW update',()=>{
+test('v0.09.39 Gate A keeps all mechanics, real eight relics, 25 rooms, separate grips and user-consented offline SW update',()=>{
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const version=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
- assert.match(version,/APP_VERSION = '0\.09\.38'/);
+ assert.match(version,/APP_VERSION = '0\.09\.39'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.38/);
+ assert.match(sw,/runegrave-shell-v0\.09\.39/);
  assert.ok(sw.includes('./js/scene/wardenUnboundInk.js'));
  assert.ok(read('../sw.js').includes('./js/scene/wardenUnboundInk.js'));
  assert.ok(read('../js/scene/wardenUnboundInk.js').includes('export function inkedWardenPhaseBody'));
