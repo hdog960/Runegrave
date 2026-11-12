@@ -1,4 +1,4 @@
-"""v0.09.47 Gate A real Chromium runtime, test-only warning pose and input.
+"""v0.09.48 Gate A real Chromium runtime, test-only warning pose and input.
 Not a physical iPhone Safari check, unaided boss victory or installed PWA test.
 """
 import sys
@@ -623,7 +623,7 @@ with sync_playwright() as p:
    assert page.evaluate('window.scrollY')==0
 
 
-   # v0.09.47: proof of five actual entire chamber floors reauthored
+   # v0.09.48: proof of five actual entire chamber floors reauthored
    # with larger flags, not tiny decorative additions on top of old art.
    # Same production function as the real canvas, five authoritative families.
    floor_count=page.evaluate("""async url => {
@@ -651,7 +651,7 @@ with sync_playwright() as p:
    page.evaluate("()=>{document.querySelector('#gate-a-v00947-grand-masonry').remove();window.scrollTo(0,0)}")
    assert page.evaluate('window.scrollY')==0
 
-   # v0.09.47: capture the REAL final production renderer for 5 physically
+   # v0.09.48: capture the REAL final production renderer for 5 physically
    # mobile foes x 4 distance-gated travel poses. Synthetic travel snapshots
    # for controlled art comparison; the encounter below still tests real motion.
    moving=page.evaluate("""async atlasUrl => {
@@ -687,7 +687,7 @@ with sync_playwright() as p:
      return e?e.filter(z=>z.stride>0 && Number.isFinite(z.stride)).map(z=>z.kind):[];
    }""")
    assert actual,('no enemy actually traveled in live verified encounter',actual)
-   print('v0.09.47 5 x 4 authentic hostile motion-ink poses, live collision-resolved travel PASS',actual)
+   print('v0.09.48 5 x 4 authentic hostile motion-ink poses, live collision-resolved travel PASS',actual)
 
    for selector,pid in [('#move-rune-disc',57),('#aim-rune-disc',58)]:
     page.evaluate("""([selector,pid])=>{const el=document.querySelector(selector),r=el.getBoundingClientRect();
@@ -696,7 +696,7 @@ with sync_playwright() as p:
    page.wait_for_timeout(175)
    assert int(page.locator('#gameplay-canvas').get_attribute('data-shots'))>0
    page.screenshot(path=str(ROOT/'gate-a-v00947-two-thumb.png'))
-   # Gate A v0.09.47: no invented attack vectors. Same ship-ready pure painter
+   # Gate A v0.09.48: no invented attack vectors. Same ship-ready pure painter
    # that production warning uses; four real charge/archer/Warden state examples.
    shown=page.evaluate("""async url => {
      const mod=await import(url),all=[
@@ -724,8 +724,8 @@ with sync_playwright() as p:
    page.locator('#gate-a-v00947-real-lanes').screenshot(path=str(ROOT/'gate-a-v00947-true-attack-lanes.png'))
    page.evaluate("()=>{document.querySelector('#gate-a-v00947-real-lanes').remove();window.scrollTo(0,0)}")
    assert page.evaluate('window.scrollY')==0
-   print('v0.09.47 THREE genuine hostile shot/dash/fan telegraphs + true phase2 side shots PASS')
-   # v0.09.47: real production Canvas PIXEL RITUAL GALLERY. Three honest
+   print('v0.09.48 THREE genuine hostile shot/dash/fan telegraphs + true phase2 side shots PASS')
+   # v0.09.48: real production Canvas PIXEL RITUAL GALLERY. Three honest
    # behaviors by three actual target/countdown frames, not new abilities.
    # Only the specific enemy's real WARNING state produces each design.
    ritual=page.evaluate("""async url => {
@@ -766,9 +766,9 @@ with sync_playwright() as p:
    page.locator('#gate-a-v00947-norse-rituals').screenshot(path=str(ROOT/'gate-a-v00947-true-ritual-telegraphs.png'))
    page.evaluate("()=>{document.querySelector('#gate-a-v00947-norse-rituals').remove();window.scrollTo(0,0)}")
    assert page.evaluate('window.scrollY')==0
-   print('v0.09.47 actual wisp hero tracking, six sentinel shot channels and three shade fold states PASS')
+   print('v0.09.48 actual wisp hero tracking, six sentinel shot channels and three shade fold states PASS')
 
-   # Gate A v0.09.47: nine genuine production Canvas wound-pixel poses.
+   # Gate A v0.09.48: nine genuine production Canvas wound-pixel poses.
    # Controlled ACTUAL-source marks, not fictitious player damage or a new HUD.
    wounds=page.evaluate("""async url => {
      const {WoundInk}=await import(url);
@@ -809,9 +809,9 @@ with sync_playwright() as p:
    page.locator('#gate-a-v00947-real-wound-gallery').screenshot(path=str(ROOT/'gate-a-v00947-real-wound-sigils.png'))
    page.evaluate("()=>{document.querySelector('#gate-a-v00947-real-wound-gallery').remove();window.scrollTo(0,0)}")
    assert page.evaluate('window.scrollY')==0
-   print('v0.09.47 real damage source and 3 aged original wound silhouettes x3 PASS')
+   print('v0.09.48 real damage source and 3 aged original wound silhouettes x3 PASS')
 
-   # v0.09.47 — The actual production single-body boss renderer, not a
+   # v0.09.48 — The actual production single-body boss renderer, not a
    # painted concept. Three true HP-derived states in idle and real recovery.
    bossproof=page.evaluate("""async url => {
       const mod=await import(url);
@@ -850,8 +850,8 @@ with sync_playwright() as p:
    page.locator('#gate-a-v00947-boss-armour-gallery').screenshot(path=str(ROOT/'gate-a-v00947-full-body-warden-health-gallery.png'))
    page.evaluate("()=>{document.querySelector('#gate-a-v00947-boss-armour-gallery').remove();window.scrollTo(0,0)}")
    assert page.evaluate('window.scrollY')==0
-   print('v0.09.47 three real Warden HP/2-phase sculptures with single-body actual idle/recovery PASS')
-   # v0.09.47 — 10 genuine world-drop sculptures rendered by the ACTUAL
+   print('v0.09.48 three real Warden HP/2-phase sculptures with single-body actual idle/recovery PASS')
+   # v0.09.48 — 10 genuine world-drop sculptures rendered by the ACTUAL
    # production drawRoomDrops(). No concept images or data-only preview.
    plinths=page.evaluate("""async ([lootUrl,plinthUrl,firstUrl]) => {
       const loot=await import(lootUrl),ink=await import(plinthUrl),run=await import(firstUrl);
@@ -888,8 +888,8 @@ with sync_playwright() as p:
    page.locator('#gate-a-v00947-loot-plinth-gallery').screenshot(path=str(ROOT/'gate-a-v00947-ten-true-pickup-plinths.png'))
    page.evaluate("()=>{document.querySelector('#gate-a-v00947-loot-plinth-gallery').remove();window.scrollTo(0,0)}")
    assert page.evaluate('window.scrollY')==0
-   print('v0.09.47 10 original production Canvas loot slabs with truthful near-but-not-picked band PASS')
-   # v0.09.47: genuine production 7 species × 3 LIFE-STEPS death gallery.
+   print('v0.09.48 10 original production Canvas loot slabs with truthful near-but-not-picked band PASS')
+   # v0.09.48: genuine production 7 species × 3 LIFE-STEPS death gallery.
    # Each rite is spawned via the REAL existing living->dead tracker and only
    # progresses through fixed physics steps, not a fabricated kill animation.
    deathproof=page.evaluate("""async ([trailUrl,riteUrl])=>{
@@ -931,14 +931,14 @@ with sync_playwright() as p:
    page.locator('#gate-a-v00947-seven-death-rites').screenshot(path=str(ROOT/'gate-a-v00947-seven-species-death-rites.png'))
    page.evaluate("()=>{document.querySelector('#gate-a-v00947-seven-death-rites').remove();window.scrollTo(0,0)}")
    assert page.evaluate('window.scrollY')==0
-   print('v0.09.47 seven species x three real-kill fixed-step death silhouettes PASS')
+   print('v0.09.48 seven species x three real-kill fixed-step death silhouettes PASS')
    for selector,pid in [('#move-rune-disc',57),('#aim-rune-disc',58)]:
     page.evaluate("""([selector,pid])=>document.querySelector(selector).dispatchEvent(
      new PointerEvent('pointercancel',{bubbles:true,pointerId:pid,pointerType:'touch'}))""",[selector,pid])
   assert not errors,(label,errors)
   print(label,'PASS 25 story friezes, seven original weapon poses, real warnings and separate thumb grips, guided chamber, zero exceptions')
   page.close()
- # v0.09.47: TRUE CHROMIUM SERVICE-WORKER OFFLINE RELOAD on localhost.
+ # v0.09.48: TRUE CHROMIUM SERVICE-WORKER OFFLINE RELOAD on localhost.
  # Data-URL integration above cannot install a real service worker, so this
  # separate deployment-shaped built-site test proves index + ALL JS modules
  # are available without network, then exercises actual two-thumb input.
@@ -955,11 +955,11 @@ with sync_playwright() as p:
  try:
   target=f'http://127.0.0.1:{server.server_port}/'
   offline_page.goto(target,wait_until='domcontentloaded',timeout=18000)
-  offline_page.wait_for_function("""() => navigator.serviceWorker?.controller && document.documentElement.dataset.version==='0.09.47'""",timeout=20000)
+  offline_page.wait_for_function("""() => navigator.serviceWorker?.controller && document.documentElement.dataset.version==='0.09.48'""",timeout=20000)
   offline_page.wait_for_function("""async () => {
     const names=await caches.keys();
-    if(!names.includes('runegrave-shell-v0.09.47'))return false;
-    const cache=await caches.open('runegrave-shell-v0.09.47');
+    if(!names.includes('runegrave-shell-v0.09.48'))return false;
+    const cache=await caches.open('runegrave-shell-v0.09.48');
     const wanted=['index.html','js/main.js','js/scene/woundSigilInk.js','js/enemies/ritualWarningInk.js','js/run/sagaPlinthArt.js','js/scene/sagaDeathRites.js','js/enemies/sagaCastWards.js','js/scene/sagaThresholdReliefs.js','js/enemies/sagaFlightRunes.js','js/scene/sagaWayfarerOathstaff.js','js/run/sagaEarnedRelicSeals.js','js/combat/sagaImpactCarvings.js','js/combat/sagaSoulboltRuneInk.js','styles.css'];
     const keys=(await cache.keys()).map(k=>new URL(k.url).pathname);
     return wanted.every(file=>keys.some(path=>path.endsWith('/'+file)));
@@ -967,7 +967,7 @@ with sync_playwright() as p:
   if offline_page.locator('#guide-start-btn').is_visible():offline_page.locator('#guide-start-btn').click()
   offline_context.set_offline(True)
   offline_page.reload(wait_until='domcontentloaded',timeout=18000)
-  offline_page.wait_for_function("""() => document.documentElement.dataset.version==='0.09.47'
+  offline_page.wait_for_function("""() => document.documentElement.dataset.version==='0.09.48'
     && document.querySelector('#gameplay-canvas')?.dataset.actorX
     && navigator.serviceWorker?.controller""",timeout=20000)
   if offline_page.locator('#guide-start-btn').is_visible():offline_page.locator('#guide-start-btn').click()
@@ -986,7 +986,7 @@ with sync_playwright() as p:
   assert not offline_errors,offline_errors
   assert offline_page.evaluate("navigator.onLine") is False,'must be genuinely network-offline'
   offline_page.screenshot(path=str(ROOT/'gate-a-v00947-real-sw-offline.png'))
-  print('v0.09.47 real Chromium OFFLINE registered service-worker reload + cached game + dual-thumb attacks PASS')
+  print('v0.09.48 real Chromium OFFLINE registered service-worker reload + cached game + dual-thumb attacks PASS')
  finally:
   offline_context.close();server.shutdown();server.server_close()
  portrait=b.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
@@ -996,7 +996,7 @@ with sync_playwright() as p:
  b.close()
 
 
-# v0.09.47: the SAME Norse vitality painter shipped in the real enemy renderer.
+# v0.09.48: the SAME Norse vitality painter shipped in the real enemy renderer.
 # These controlled health states are authentic module rasterizations, not
 # claims of 21 naturally played encounters or native physical Safari.
 with sync_playwright() as p:
@@ -1040,11 +1040,11 @@ with sync_playwright() as p:
  assert scores=={'kinds':7,'actualHealthImages':21},scores
  page.locator('#gate-a-v00947-true-health-plaques').screenshot(path=str(ROOT/'gate-a-v00947-true-health-plaques.png'))
  assert not errors,errors
- print('v0.09.47 real Chromium original seven-clan vitality gallery 21 physically authored damage states PASS',scores)
+ print('v0.09.48 real Chromium original seven-clan vitality gallery 21 physically authored damage states PASS',scores)
  b.close()
 
 
-# v0.09.47: Seven original physically different Norse rune-cast designs ×
+# v0.09.48: Seven original physically different Norse rune-cast designs ×
 # four REAL existing windup urgency stages. This real Chromium gallery calls
 # the actual shipping module and displays production enemy atlas bodies;
 # it is controlled visual comparison, NOT 28 naturally played attacks.
@@ -1095,11 +1095,11 @@ with sync_playwright() as p:
  assert summary=={'distinctSpecies':7,'realWindupFrames':28,'stageCount':4},summary
  page.locator('#gate-a-v00947-cast-ward-gallery').screenshot(path=str(ROOT/'gate-a-v00947-cast-ward-gallery.png'))
  assert not errors,errors
- print('v0.09.47 real Chromium: seven distinct Norse cast wards × 4 authentic warning beats PASS',summary)
+ print('v0.09.48 real Chromium: seven distinct Norse cast wards × 4 authentic warning beats PASS',summary)
  b.close()
 
 
-# v0.09.47 — true Chromium production mural gallery, not an image generator.
+# v0.09.48 — true Chromium production mural gallery, not an image generator.
 # EXACT scene artist is imported from the compiled product module. 25 paintings
 # use the canonical 25 authored fs-serials, not route progression.
 with sync_playwright() as p:
@@ -1144,11 +1144,11 @@ with sync_playwright() as p:
  assert evidence=={'realRooms':25,'families':5,'episodes':5},evidence
  page.locator('#gate-a-v00947-25-lower-wall-saga-reliefs').screenshot(path=str(ROOT/'gate-a-v00947-25-lower-wall-saga-reliefs.png'))
  assert not errors,errors
- print('v0.09.47: 25 unique canonical Norse bottom-wall masonry gallery + untouched real Chromium/offline PASS',evidence)
+ print('v0.09.48: 25 unique canonical Norse bottom-wall masonry gallery + untouched real Chromium/offline PASS',evidence)
  b.close()
 
 
-# v0.09.47: genuinely rendered five existing hostile flight speed/damage
+# v0.09.48: genuinely rendered five existing hostile flight speed/damage
 # silhouettes at three ACTUAL remaining lifetimes (controlled production
 # gallery, not 15 naturally fired bolts; true enemy firing audited above).
 with sync_playwright() as p:
@@ -1190,11 +1190,11 @@ with sync_playwright() as p:
  assert result=={'existingSpeedClasses':5,'realLifetimeFrames':15},result
  page.locator('#gate-a-v00947-five-true-flight-runes').screenshot(path=str(ROOT/'gate-a-v00947-five-true-flight-runes.png'))
  assert not errors,errors
- print('v0.09.47 5 physical hostile speed classes × 3 real lifetime stages authentic Chromium PASS',result)
+ print('v0.09.48 5 physical hostile speed classes × 3 real lifetime stages authentic Chromium PASS',result)
  b.close()
 
 
-# v0.09.47 — true production-rendered hero + attached weapon, sixteen
+# v0.09.48 — true production-rendered hero + attached weapon, sixteen
 # original 8 real aim directions × held-fire states in actual shipping painter.
 # These are controlled display scenarios, not sixteen naturally won battles.
 with sync_playwright() as p:
@@ -1234,11 +1234,11 @@ with sync_playwright() as p:
  assert gallery=={'facingMasks':8,'actualActorFrames':16},gallery
  page.locator('#gate-a-v00947-eight-wayfarer-aim-staffs').screenshot(path=str(ROOT/'gate-a-v00947-eight-wayfarer-aim-staffs.png'))
  assert not errors,errors
- print('v0.09.47 EIGHT authored true-aim attached Wayfarer weapons × actual held state, 16 genuine actor PNG states PASS',gallery)
+ print('v0.09.48 EIGHT authored true-aim attached Wayfarer weapons × actual held state, 16 genuine actor PNG states PASS',gallery)
  b.close()
 
 
-# v0.09.47 — authentic ORIGINAL earned-relic Norse marker art:
+# v0.09.48 — authentic ORIGINAL earned-relic Norse marker art:
 # eight real First Soul owned relics, each inspected beside the full live
 # Wayfarer painter; final cell uses eight earned actual IDs but MAX THREE
 # existing orbiting marks. Controlled renderer gallery, NOT a claim these
@@ -1278,11 +1278,11 @@ with sync_playwright() as p:
  assert gallery=={'authoredRelics':8,'realActorGalleryScenes':9,'maximumSimultaneousSeals':3},gallery
  page.locator('#gate-a-v00947-eight-earned-norse-relic-seals').screenshot(path=str(ROOT/'gate-a-v00947-eight-earned-norse-relic-seals.png'))
  assert not errors,errors
- print('v0.09.47 eight distinct actually earned Norse relic seals plus max three real player orbit painter PASS',gallery)
+ print('v0.09.48 eight distinct actually earned Norse relic seals plus max three real player orbit painter PASS',gallery)
  b.close()
 
 
-# v0.09.47: controlled AUTHENTIC production-rendered nine collision
+# v0.09.48: controlled AUTHENTIC production-rendered nine collision
 # animations: impact/wall actual 0.3s and break 0.65s fixed-step life.
 # These are nine genuine real-painter art states, NOT nine new attacks.
 with sync_playwright() as p:
@@ -1324,11 +1324,11 @@ with sync_playwright() as p:
  assert result=={'realExistingKinds':3,'distinctSourceFrames':9},result
  page.locator('#gate-a-v00947-three-authentic-collision-carvings').screenshot(path=str(ROOT/'gate-a-v00947-three-authentic-collision-carvings.png'))
  assert not errors,errors
- print('v0.09.47 three ORIGINAL actual collision classes x 3 TRUE fixed-step lifetime stages PASS',result)
+ print('v0.09.48 three ORIGINAL actual collision classes x 3 TRUE fixed-step lifetime stages PASS',result)
  b.close()
 
 
-# v0.09.47 — genuinely RENDERED ORIGINAL Soulbolt damage and fixed-step
+# v0.09.48 — genuinely RENDERED ORIGINAL Soulbolt damage and fixed-step
 # traveled-distance classes. Production drawSoulbolts (not painted concept)
 # in six controlled 2x3 scenarios using real damage/travel/direction fields.
 # These pictures DO NOT mean six new projectiles, powers or combat levels.
@@ -1373,5 +1373,5 @@ with sync_playwright() as p:
  assert gallery=={'originalDamageClasses':2,'realTravelStages':3,'distinctProductionArt':6},gallery
  page.locator('#gate-a-v00947-six-true-soulbolt-rune-inks').screenshot(path=str(ROOT/'gate-a-v00947-six-true-soulbolt-rune-inks.png'))
  assert not errors,errors
- print('v0.09.47 six actual outgoing Soulbolt damage×distance original production Canvas portraits PASS',gallery)
+ print('v0.09.48 six actual outgoing Soulbolt damage×distance original production Canvas portraits PASS',gallery)
  b.close()
