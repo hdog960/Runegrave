@@ -1,3 +1,4 @@
+import { paintSagaCombatImpact } from './sagaImpactCarvings.js';
 /** Original, authored pixel-style combat sprites. Everything is world-space art. */
 import { SOULBOLT_STATS, type Soulbolt, type TrainingTarget } from './soulbolts.js';
 export type CombatSpark={x:number;y:number;life:number;maxLife:number;kind:'impact'|'break'|'wall'};
@@ -32,11 +33,12 @@ export function drawSoulbolts(g:CanvasRenderingContext2D,bolts:readonly Soulbolt
     combatPixelRect(g,1,-1,6,2,'#fff8ce');combatPixelRect(g,-11,-1,4,2,'#c09658');g.restore();
   }
 }
-export function drawCombatSparks(g:CanvasRenderingContext2D,sparks:readonly CombatSpark[]){
-  for(const s of sparks){const p=1-s.life/s.maxLife;g.save();g.globalAlpha=Math.max(0,1-p);
-    const palette=s.kind==='break'?['#bd9560','#ffe4a4','#827863']:s.kind==='wall'?['#887d6a','#b5aaa0','#7d8e8c']:['#c2e3ca','#e8eece','#82d3c8'];
-    for(let i=0;i<6;i++){const a=i*Math.PI/3+p*.18;const spread=2+p*(s.kind==='break'?20:11);
-      combatPixelRect(g,s.x+Math.cos(a)*spread,s.y+Math.sin(a)*spread,2+(i%2),2,palette[i%3]!);}
-    g.restore();
-  }
+/** True combat simulation owns every live spark, its type and remaining life.
+ * Only the nine original visual cuts change; no new event or particles.
+ */
+export function drawCombatSparks(g:CanvasRenderingContext2D,sparks:readonly CombatSpark[]):void{
+ for(const s of sparks){
+  if(s.life<=0)continue;
+  paintSagaCombatImpact(g,s);
+ }
 }

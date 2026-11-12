@@ -130,10 +130,10 @@ test('v0.09 Gate A relics, rooms, save schema and real consented offline asset r
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const v=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
- assert.match(v,/APP_VERSION = '0\.09\.45'/);
+ assert.match(v,/APP_VERSION = '0\.09\.46'/);
  assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(v,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.45/);
+ assert.match(sw,/runegrave-shell-v0\.09\.46/);
  assert.ok(sw.includes('./js/scene/sagaDeathRites.js'));
  assert.ok(read('../sw.js').includes('./js/scene/sagaDeathRites.js'));
  const controls=read('../dist/js/input/twinStick.js');

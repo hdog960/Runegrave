@@ -1,3 +1,4 @@
+import { paintSagaCombatImpact } from './sagaImpactCarvings.js';
 const combatPixelRect = (g, x, y, w, h, color) => { g.fillStyle = color; g.fillRect(Math.round(x), Math.round(y), w, h); };
 export function drawPracticeTargets(g, targets, t) {
     for (const d of targets) {
@@ -60,17 +61,10 @@ export function drawSoulbolts(g, bolts, time) {
         g.restore();
     }
 }
-export function drawCombatSparks(g, sparks) {
-    for (const s of sparks) {
-        const p = 1 - s.life / s.maxLife;
-        g.save();
-        g.globalAlpha = Math.max(0, 1 - p);
-        const palette = s.kind === 'break' ? ['#bd9560', '#ffe4a4', '#827863'] : s.kind === 'wall' ? ['#887d6a', '#b5aaa0', '#7d8e8c'] : ['#c2e3ca', '#e8eece', '#82d3c8'];
-        for (let i = 0; i < 6; i++) {
-            const a = i * Math.PI / 3 + p * .18;
-            const spread = 2 + p * (s.kind === 'break' ? 20 : 11);
-            combatPixelRect(g, s.x + Math.cos(a) * spread, s.y + Math.sin(a) * spread, 2 + (i % 2), 2, palette[i % 3]);
-        }
-        g.restore();
-    }
+/** Existing fixed-step spark count/position/remaining life only; art replacement. */
+export function drawCombatSparks(g,sparks){
+ for(const s of sparks){
+  if(s.life<=0)continue;
+  paintSagaCombatImpact(g,s);
+ }
 }
