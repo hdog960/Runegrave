@@ -10,6 +10,7 @@ import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
 import { paintVitalRunePlaque } from '../scene/sagaVitalRunes.js';
 import { paintThreatLane } from './attackLaneInk.js';
 import { paintRitualWarning } from './ritualWarningInk.js';
+import { paintSagaCastWards } from './sagaCastWards.js';
 import type {Vec2} from '../physics/world.js';
 const px=(g:CanvasRenderingContext2D,x:number,y:number,w:number,h:number,c:string)=>{g.fillStyle=c;g.fillRect(Math.round(x),Math.round(y),w,h);};
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
@@ -33,20 +34,13 @@ function runeWarning(g:CanvasRenderingContext2D,e:Enemy,t:number,hero?:Vec2){
  if(e.state!=='warning')return;
  const tell=ENEMY_ATTACK_TELLS[e.kind];
  const imminent=warningBeat(e.windup)===3;
- const r=e.radius+9+Math.sin(t*11)*1.5;
+ // The old generic flickering ring and four spinning dots are intentionally gone.
+ // Seven original non-colour-only clan wards now frame the SAME genuine windup.
  const tf=g.getTransform();
  const worldWidth=tf.a>0?g.canvas.width/tf.a:420;
  const worldHeight=tf.d>0?g.canvas.height/tf.d:240;
  g.save();
- // Telegraph sits in world space around the attacker; the central HUD remains empty.
- g.strokeStyle=imminent?'#ff684f':tell.color;
- g.lineWidth=imminent?3:2;
- g.beginPath();g.arc(e.x,e.y,r,0,Math.PI*2);g.stroke();
- g.strokeStyle=imminent?'#ffab8a':tell.color;g.lineWidth=1.5;
- for(let a=0;a<4;a++){
-   const theta=Math.PI*a/2+t*.25,x=e.x+Math.cos(theta)*(r+5),y=e.y+Math.sin(theta)*(r+5);
-   px(g,x-3,y-2,6,4,imminent?'#ff855e':tell.color);
- }
+ paintSagaCastWards(g,e,worldWidth,worldHeight);
  if(e.kind==='charger'||e.kind==='archer'||e.kind==='warden'){
   paintThreatLane(g,e,worldWidth,worldHeight);
  }else if(e.kind==='sentinel'||e.kind==='wisp'||e.kind==='shade'){

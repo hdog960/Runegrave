@@ -6,6 +6,7 @@ import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
 import { paintVitalRunePlaque } from '../scene/sagaVitalRunes.js';
 import { paintThreatLane } from './attackLaneInk.js';
 import { paintRitualWarning } from './ritualWarningInk.js';
+import { paintSagaCastWards } from './sagaCastWards.js';
 const px = (g, x, y, w, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), w, h); };
 /** Each hostile has a concrete, behavior-specific tell, not an interchangeable flash. */
 export const ENEMY_ATTACK_TELLS = Object.freeze({
@@ -32,23 +33,12 @@ function runeWarning(g, e, t, hero) {
         return;
     const tell = ENEMY_ATTACK_TELLS[e.kind];
     const imminent = warningBeat(e.windup) === 3;
-    const r = e.radius + 9 + Math.sin(t * 11) * 1.5;
+    // Original non-color clan wards only during the SAME real warning.
     const tf = g.getTransform();
     const worldWidth = tf.a > 0 ? g.canvas.width / tf.a : 420;
     const worldHeight = tf.d > 0 ? g.canvas.height / tf.d : 240;
     g.save();
-    // Telegraph sits in world space around the attacker; the central HUD remains empty.
-    g.strokeStyle = imminent ? '#ff684f' : tell.color;
-    g.lineWidth = imminent ? 3 : 2;
-    g.beginPath();
-    g.arc(e.x, e.y, r, 0, Math.PI * 2);
-    g.stroke();
-    g.strokeStyle = imminent ? '#ffab8a' : tell.color;
-    g.lineWidth = 1.5;
-    for (let a = 0; a < 4; a++) {
-        const theta = Math.PI * a / 2 + t * .25, x = e.x + Math.cos(theta) * (r + 5), y = e.y + Math.sin(theta) * (r + 5);
-        px(g, x - 3, y - 2, 6, 4, imminent ? '#ff855e' : tell.color);
-    }
+    paintSagaCastWards(g,e,worldWidth,worldHeight);
     if (e.kind === 'charger' || e.kind === 'archer' || e.kind === 'warden') {
         paintThreatLane(g, e, worldWidth, worldHeight);
     }
