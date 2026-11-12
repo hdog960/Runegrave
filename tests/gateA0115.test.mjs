@@ -104,10 +104,10 @@ test('art is wired into actual game, all 25 chambers, eight functional relics an
  assert.match(stage,/Number\(currentRoom\.id\.slice\(-2\)\)\s*-\s*1/);
  assert.match(atlas,/paintHeroSagaMantle\(/);
  assert.match(atlas,/paintHostileSagaGuard\(/);
- assert.match(version,/APP_VERSION = '0\.09\.43'/);
+ assert.match(version,/APP_VERSION = '0\.09\.44'/);
  assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.43/);
+ assert.match(sw,/runegrave-shell-v0\.09\.44/);
  assert.ok(sw.includes('scene/sagaPillarRelief.js'));
  assert.equal(FIRST_SOUL_RELICS.length,8);assert.equal(FIRST_SOUL_ROOMS.length,25);
  const src=file('../dist/js/enemies/enemyArt.js');

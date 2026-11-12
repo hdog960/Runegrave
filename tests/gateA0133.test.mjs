@@ -94,13 +94,13 @@ test('real runtime hostileProjectile painter uses new five-source masks, with al
 });
 test('original hostile simulation, fixed-step collision, player saves and opt-in offline refresh remain strictly unchanged',()=>{
  const code=read('../dist/js/core/version.js');
- assert.match(code,/APP_VERSION = '0\.09\.43'/);
+ assert.match(code,/APP_VERSION = '0\.09\.44'/);
  assert.match(code,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(code,/SAVE_SCHEMA_VERSION = 1/);
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
  const sw=read('../dist/sw.js');
  assert.equal(sw,read('../sw.js'));
- assert.match(sw,/runegrave-shell-v0\.09\.43/);
+ assert.match(sw,/runegrave-shell-v0\.09\.44/);
  assert.match(sw,/js\/enemies\/sagaFlightRunes\.js/);
  assert.ok(sw.includes('ACTIVATE_UPDATE')&&sw.includes('cache.addAll(ASSETS'));
 });
