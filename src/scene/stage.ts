@@ -33,6 +33,7 @@ import { paintChronicleFloor, type ChronicleFamily } from './chronicleFloor.js';
 import { paintVaultCanopies } from './sagaVaultCanopies.js';
 import { paintSagaPillars } from './sagaPillarRelief.js';
 import { paintSagaFloorFrieze, type FriezeFamily } from './sagaFloorFrieze.js';
+import { paintThresholdReliefs } from './sagaThresholdReliefs.js';
 import { paintChamberSagaStones, type StoneSagaFamily } from './ageStoneArt.js';
 import { paintSagaStandards, type SagaFamily } from './sagaArtwork.js';
 import { paintEarnedSoulboltArt, paintBoundRuneHalo } from '../run/relicBattleArt.js';
@@ -244,6 +245,8 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     if(currentRoom&&mode==='crypt')paintVaultCanopies(g!,W,H,currentRoom.family as 'ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE',Number(currentRoom.id.slice(-2))-1);
     if(currentRoom&&mode==='crypt')paintSagaPillars(g!,W,H,currentRoom.family as 'ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE',Number(currentRoom.id.slice(-2))-1);
     if(currentRoom&&mode==='crypt')paintSagaFloorFrieze(g!,W,H,currentRoom.family as FriezeFamily,Number(currentRoom.id.slice(-2))-1);
+    // Paired 25-room lower-wall historical masonry paints strictly UNDER all threats/loot.
+    if(currentRoom&&mode==='crypt')paintThresholdReliefs(g!,W,H,currentRoom.family as 'ASH'|'IRON'|'ROOT'|'SPIRIT'|'FATE',Number(currentRoom.id.slice(-2))-1);
     if(currentRoom&&mode==='crypt')paintChamberAmbience(g!,W,H,time,currentRoom.family as ChamberAmbientFamily,roomIndex);
     motionTrails.paintGround(g!,W,H,currentRoom?.family||'ROOT',reduced.matches);
         motionTrails.paintDissolves(g!,W,H,reduced.matches);
