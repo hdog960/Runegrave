@@ -33,5 +33,5 @@ test('the tutorial is a pre-combat paused screen and is replayable from pause',(
  assert.match(module,/controls\.setPaused\(true\)/);
  assert.match(module,/controls\.setPaused\(false\)/);
  assert.ok(sw.includes('./js/platform/firstRunGuide.js'));
- assert.ok(sw.includes('runegrave-shell-v0.09.39'));
+ assert.ok(sw.includes('runegrave-shell-v0.09.40'));
 });
