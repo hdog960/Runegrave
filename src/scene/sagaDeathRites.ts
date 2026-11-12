@@ -62,7 +62,7 @@ export function paintDeathRite(g:G,mark:DeathRiteMark,W:number,H:number):boolean
  for(let y=0;y<glyph.length;y++){
   const row=glyph[y]!;
   for(let x=0;x<row.length;){
-   const ink=row[x];if(ink==='.'||ink===' '){x++;continue;}
+   const ink=row[x]!;if(ink==='.'||ink===' '){x++;continue;}
    let end=x+1;while(end<row.length&&row[end]===ink)end++;
    const split=stage===1?(x<width/2?-2:2):0;
    const shade=color[ink];if(!shade)throw new RangeError('Unknown runestone pixel');
