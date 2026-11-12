@@ -82,7 +82,7 @@ test('production atlas paints real four-frame silhouettes; no free-running gait 
   assert.deepEqual(a.c,b.c,'reduced-motion must ignore physical gait');
  }
 });
-test('v0.09.42 stays inside original Gate A contract, keeps proper root/offline mirrors and 8 actual relics',()=>{
+test('v0.09.43 stays inside original Gate A contract, keeps proper root/offline mirrors and 8 actual relics',()=>{
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const stage=read('../dist/js/scene/stage.js'),enemies=read('../dist/js/enemies/encounters.js');
  const atlas=read('../dist/js/scene/pixelSpriteAtlas.js'),v=read('../dist/js/core/version.js');
@@ -91,10 +91,10 @@ test('v0.09.42 stays inside original Gate A contract, keeps proper root/offline 
  assert.match(enemies,/e\.stepping = false/);
  assert.match(stage,/drawEncounter\(/);
  assert.ok(root.includes('export function inkedTravelBody')&&read('../dist/js/scene/sagaFootfalls.js').includes('export function inkedTravelBody'),'both root and built gait entrypoints must be functional');
- assert.match(v,/APP_VERSION = '0\.09\.42'/);
+ assert.match(v,/APP_VERSION = '0\.09\.43'/);
  assert.match(v,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(v,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\.09\.42/);
+ assert.match(sw,/runegrave-shell-v0\.09\.43/);
  assert.ok(sw.includes('./js/scene/sagaFootfalls.js'));
  assert.ok(read('../sw.js').includes('./js/scene/sagaFootfalls.js'));
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
