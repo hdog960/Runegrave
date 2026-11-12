@@ -20,7 +20,7 @@ with sync_playwright() as p:
    const c=b('#gameplay-canvas'),left=b('.grip-left'),right=b('.grip-right');
    return {c:[c.left,c.right],left:left.right,right:right.left,version:document.documentElement.dataset.version};
   }""")
-  assert metrics['version']=='0.09.47',metrics
+  assert metrics['version']=='0.09.48',metrics
   assert metrics['c'][0]>=metrics['left']-2 and metrics['c'][1]<=metrics['right']+2,(label,metrics)
   exit=page.evaluate("""() => {const c=document.querySelector('#gameplay-canvas');return [+c.dataset.exitX,+c.dataset.exitY];}""")
   page.evaluate("pt=>window.__runegraveTest.stage.testJump({x:pt[0],y:pt[1]})",exit)
