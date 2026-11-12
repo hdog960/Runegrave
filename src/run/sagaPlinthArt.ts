@@ -104,7 +104,7 @@ export function paintPickupBoundary(g:G,id:PlinthId,band:PickupBand):void{
  g.save();g.fillStyle=active?'#fff0c7':col;
  // Four small hand-hewn rune notches at the same 17-unit true nearDrop
  // threshold; NEVER a false radius for silver or health or extra prompt.
- for(const [x,y,side] of [[p,0,0],[-p,0,0],[0,p,1],[0,-p,1]]){
+ for(const [x,y,side] of [[p,0,0],[-p,0,0],[0,p,1],[0,-p,1]] as const){
   g.fillRect(x-(side?4:1),y-(side?1:4),side?8:2,side?2:8);
   g.fillRect(x-(side?1:4),y-(side?2:1),side?2:8,side?8:2);
  }
