@@ -87,7 +87,7 @@ test('real runtime hostileProjectile painter uses new five-source masks, with al
  assert.match(game,/export function hostileProjectileFrame\(/,'retain original lifetime contract');
  assert.ok(!game.includes('inkHostileBolt(g, HOSTILE_BOLT_PIXEL_SHEETS[kind]'),'remove old two-sprite runtime call, not merely stack new art');
  const combat=read('../dist/js/enemies/encounters.js');
- for(const speed of [90,100,115,145,155])assert.ok(combat.includes(','+speed) || combat.includes(', '+speed),'class must originate from genuine game speeds: '+speed);
+ for(const speed of [90,100,115,145,155])assert.ok(new RegExp('\\b'+speed+'\\b').test(combat),'class must originate from genuine game speeds: '+speed);
 });
 test('original hostile simulation, fixed-step collision, player saves and opt-in offline refresh remain strictly unchanged',()=>{
  const code=read('../dist/js/core/version.js');

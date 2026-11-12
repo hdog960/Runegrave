@@ -40,7 +40,7 @@ export function flightRuneRows(b:FlightRuneBolt):readonly string[]{
  if(age===0)return rows;
  // Crop exclusively the tail at the NEGATIVE-X rear (bolt always points +X
  // inside its local painter) — the moving nose stays on the real bolt.
- const start=age===1?5:8;
+ const start=age===1?5:6;
  return rows.map(row=>row.slice(0,start).replace(/[otbcr+]/g,'.')+row.slice(start));
 }
 type G=CanvasRenderingContext2D;
@@ -57,15 +57,14 @@ export function paintSagaFlightRune(g:G,b:FlightRuneBolt):boolean{
  const x0=-8,y0=-4;
  for(let row=0;row<9;row++){
   const ink=rows[row]!;
-  for(let x=0;x<17;){
+  // Render each hand-carved pixel individually: subtle narrow fletching must
+  // remain physically legible on native iPhone without blur or false area.
+  for(let x=0;x<17;x++){
    const ch=ink[x]!;
-   if(ch==='.') {x++;continue;}
-   let end=x+1;while(end<17&&ink[end]===ch)end++;
+   if(ch==='.')continue;
    g.fillStyle=pal[ch as keyof typeof pal];
-   g.fillRect(x0+x,y0+row,(end-x)*FLIGHT_RUNE_CELL,FLIGHT_RUNE_CELL);
-   x=end;
-  }
- }
+   g.fillRect(x0+x,y0+row,FLIGHT_RUNE_CELL,FLIGHT_RUNE_CELL);
+  }}
  g.restore();
  return true;
 }
