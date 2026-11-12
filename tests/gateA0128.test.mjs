@@ -12,7 +12,7 @@ function mock(){
   g[n]=(...a)=>calls.push([n,...a]);
  g.createRadialGradient=(...a)=>{calls.push(['gradient',...a]);return {addColorStop:(...args)=>calls.push(['stop',...args])};};
  for(const n of ['fillStyle','strokeStyle','font','textAlign','globalAlpha','lineWidth','lineCap','lineJoin'])
-  Object.defineProperty(g,n,{set:value=>calls.push([n,value])});
+  Object.defineProperty(g,n,{set:value=>calls.push([n,n==='fillStyle'&&typeof value==='object'?'[canvas-gradient]':value])});
  return {g,calls};
 }
 test('all 8 genuinely playable relics and 2 resource types have 10 unique hand-carved MATERIAL silhouettes',()=>{
