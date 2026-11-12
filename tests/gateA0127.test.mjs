@@ -82,15 +82,15 @@ test('real production hostile atlas paints all three health-dependent Warden var
 test('v0.09.37 Gate A keeps all mechanics, real eight relics, 25 rooms, separate grips and user-consented offline SW update',()=>{
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const version=read('../dist/js/core/version.js'),sw=read('../dist/sw.js');
- assert.match(version,/APP_VERSION = '0\\.09\\.37'/);
- assert.match(version,/ROADMAP_VERSION = 'v0\\.09'/);
+ assert.match(version,/APP_VERSION = '0\.09\.37'/);
+ assert.match(version,/ROADMAP_VERSION = 'v0\.09'/);
  assert.match(version,/SAVE_SCHEMA_VERSION = 1/);
- assert.match(sw,/runegrave-shell-v0\\.09\\.37/);
+ assert.match(sw,/runegrave-shell-v0\.09\.37/);
  assert.ok(sw.includes('./js/scene/wardenUnboundInk.js'));
  assert.ok(read('../sw.js').includes('./js/scene/wardenUnboundInk.js'));
  assert.ok(read('../js/scene/wardenUnboundInk.js').includes('export function inkedWardenPhaseBody'));
  const atlas=read('../dist/js/scene/pixelSpriteAtlas.js');
- assert.match(atlas,/inkedWardenPhaseBody\\(travelingBody,e.kind,e.phase,e.hp,e.maxHp\\)/);
+ assert.match(atlas,/inkedWardenPhaseBody\(travelingBody,e.kind,e.phase,e.hp,e.maxHp\)/);
  assert.equal(FIRST_SOUL_ROOMS.length,25);assert.equal(FIRST_SOUL_RELICS.length,8);
  const html=read('../dist/index.html');
  assert.ok(html.includes('grip grip-left')&&html.includes('grip grip-right'));
