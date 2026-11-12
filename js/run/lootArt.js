@@ -79,19 +79,19 @@ export function drawRoomDrops(g, drops, t, hero, reducedMotion = false) {
             // A world-space inscription tells first-time players what the object IS.
             // This is attached to the pedestal and never steals a touch target.
             g.fillStyle = '#101a1cd9';
-            g.fillRect(-26, -41, 52, 11);
+            g.fillRect(-41, -41, 82, 12);
             g.strokeStyle = '#d7bb83';
             g.lineWidth = 1;
-            g.strokeRect(-26, -41, 52, 11);
+            g.strokeRect(-41, -41, 82, 12);
             g.fillStyle = crest.color;
             g.font = 'bold 7px system-ui,sans-serif';
             g.fillText(`RELIC · ${crest.label}`, 0, -33);
             const bonus = RELIC_PEDESTAL_BONUS[drop.relic.id];
-            g.fillStyle = '#0b1b1dcc'; g.fillRect(-26, 23, 52, 12);
+            g.fillStyle = '#0b1b1dcc'; g.fillRect(-41, 23, 82, 12);
             g.fillStyle = '#cfe8ce'; g.font = 'bold 8px system-ui,sans-serif'; g.fillText(bonus, 0, 32);
             for (const side of [-1, 1]) {
-                g.fillStyle = crest.color; g.fillRect(side * 22 - 1, 24, 3, 9);
-                g.fillStyle = '#efd9a3'; g.fillRect(side * 22, 26, 1, 4);
+                g.fillStyle = crest.color; g.fillRect(side * 37 - 1, 24, 3, 9);
+                g.fillStyle = '#efd9a3'; g.fillRect(side * 37, 26, 1, 4);
             }
             g.strokeStyle = '#eacb89';
             g.lineWidth = 1.4;
