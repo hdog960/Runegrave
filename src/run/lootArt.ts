@@ -44,17 +44,17 @@ export function drawRoomDrops(g:CanvasRenderingContext2D,drops:readonly RoomDrop
     g.save();g.translate(0,bob-1);drawRelicCrest(g,drop.relic.id);g.restore();
     // A world-space inscription tells first-time players what the object IS.
     // This is attached to the pedestal and never steals a touch target.
-    g.fillStyle='#101a1cd9';g.fillRect(-26,-41,52,11);
-    g.strokeStyle='#d7bb83';g.lineWidth=1;g.strokeRect(-26,-41,52,11);
+    g.fillStyle='#101a1cd9';g.fillRect(-41,-41,82,12);
+    g.strokeStyle='#d7bb83';g.lineWidth=1;g.strokeRect(-41,-41,82,12);
     g.fillStyle=crest.color;g.font='bold 7px system-ui,sans-serif';
     g.fillText(`RELIC · ${crest.label}`,0,-33);
     // Under-pedestal tablet avoids collision with the actual door plaque.
     const bonus=RELIC_PEDESTAL_BONUS[drop.relic.id];
-    g.fillStyle='#0b1b1dcc';g.fillRect(-26,23,52,12);
+    g.fillStyle='#0b1b1dcc';g.fillRect(-41,23,82,12);
     g.fillStyle='#cfe8ce';g.font='bold 8px system-ui,sans-serif';g.fillText(bonus,0,32);
     for(const s of [-1,1]){
-      g.fillStyle=crest.color;g.fillRect(s*22-1,24,3,9);
-      g.fillStyle='#efd9a3';g.fillRect(s*22,26,1,4);
+      g.fillStyle=crest.color;g.fillRect(s*37-1,24,3,9);
+      g.fillStyle='#efd9a3';g.fillRect(s*37,26,1,4);
     }
     g.strokeStyle='#eacb89';g.lineWidth=1.4;g.beginPath();g.moveTo(-13,-13);g.lineTo(0,-25);g.lineTo(13,-13);g.stroke();
   }else{
