@@ -29,9 +29,9 @@ test('two physically distinct original 17x9 outgoing projectile silhouettes keye
  assert.equal(distinct.size,2,'must not just recolor the original generic projectile');
  assert.equal(SOULBOLT_STATS.damage,2);
  const inv=new FirstSoulInventory(),h=new MortalHearts();
- assert.equal(inv.combatProfile.damage,2);
+ assert.equal(inv.profile().damage,2);
  inv.acquire('wyrd-fang',h);
- assert.equal(inv.combatProfile.damage,3);
+ assert.equal(inv.profile().damage,3);
  assert.equal(soulboltInkClass(B(2)),'ordinary-oath');
  assert.equal(soulboltInkClass(B(3)),'fang-bound');
  assert.equal(soulboltInkClass(B(5)),'fang-bound','future stronger actual shot does not look like weak base');
