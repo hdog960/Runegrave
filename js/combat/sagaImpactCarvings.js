@@ -26,7 +26,7 @@ export function sagaImpactFrame(s){
  return remaining>2/3?0:remaining>1/3?1:2;
 }
 export function sagaImpactPixels(s){
- return SAGA_IMPACT_CELS[s.kind][sagaImpactFrame(s)]!;
+ return SAGA_IMPACT_CELS[s.kind][sagaImpactFrame(s)];
 }
 /** Render ON real fixed-step collision x/y within a maximum 15×15 region;
  * row-run painting limits smartphone draw calls even at original 24 sparks.
