@@ -60,10 +60,10 @@ test('new status exists only inside left controller grip, and no new controls ov
  assert.match(style,/pointer-events:none/);
 });
 
-test('v0.09.37 retains all eight functional relics and cached modules, with later gates unapproved',()=>{
+test('v0.09.38 retains all eight functional relics and cached modules, with later gates unapproved',()=>{
  assert.equal(FIRST_SOUL_RELICS.length,8);
  const ver=readFileSync(new URL('../dist/js/core/version.js',import.meta.url),'utf8');
- assert.match(ver,/ROADMAP_VERSION = 'v0\.09'/);assert.match(ver,/APP_VERSION = '0\.09\.37'/);
+ assert.match(ver,/ROADMAP_VERSION = 'v0\.09'/);assert.match(ver,/APP_VERSION = '0\.09\.38'/);
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  for(const asset of ['js/scene/roomReliefs.js','js/scene/threatReadout.js','js/run/firstSoul.js','js/enemies/encounters.js','js/input/twinStick.js'])assert.ok(sw.includes(asset));
  assert.doesNotMatch(sw.split("self.addEventListener('install'")[1].split("self.addEventListener('activate'")[0],/skipWaiting\(/);

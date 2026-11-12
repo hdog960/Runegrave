@@ -248,7 +248,7 @@ export function mountStage(canvas:HTMLCanvasElement,readInput:()=>InputSnapshot=
     motionTrails.paintGround(g!,W,H,currentRoom?.family||'ROOT',reduced.matches);
     if(exitTrail.length)paintWaystones(g!,exitTrail,time);
     if(encounter)drawEncounter(g!,encounter,time,!drops.some(d=>d.kind==='relic'&&!d.collected),reduced.matches,actor);
-    drawRoomDrops(g!,drops,time);
+    drawRoomDrops(g!,drops,time,actor,reduced.matches);
     if(mode==='practice'&&practiceExit)drawRuneDoor(g!,practiceExit,'east',true,time);
     if(combat){drawPracticeTargets(g!,combat.targets,time);drawSoulbolts(g!,combat.bolts,time);paintEarnedSoulboltArt(g!,combat.bolts,inventory.state.relics,time,reduced.matches);}
     drawCombatSparks(g!,sparks);
