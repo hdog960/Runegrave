@@ -31,7 +31,7 @@ export function wardenBodyWear(kind:string,phase:number,hp?:number,maxHp?:number
  if(!Number.isFinite(phase))throw new RangeError('Invalid boss phase');
  if(kind!=='warden'||phase!==2)return 'bound';
  if(hp===undefined&&maxHp===undefined)return 'unbound';
- if(!Number.isFinite(hp)||!Number.isFinite(maxHp)||maxHp<=0||hp<0||hp>maxHp)throw new RangeError('Invalid Warden physical heartstone health');
+ if(typeof hp!=='number'||typeof maxHp!=='number'||!Number.isFinite(hp)||!Number.isFinite(maxHp)||maxHp<=0||hp<0||hp>maxHp)throw new RangeError('Invalid Warden physical heartstone health');
  return hp<=maxHp/4?'sundered':'unbound';
 }
 export function inkedWardenPhaseBody(base:readonly string[],kind:string,phase:number,hp?:number,maxHp?:number):readonly string[]{
