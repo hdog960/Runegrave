@@ -7,6 +7,7 @@ import { enemyVisualMotion, clampWarningLabel, visibleWarningEnd } from './visua
 import { warningBeat, warningLabelY, drawWarningBeats } from './warningClarity.js';
 import { paintHostileProjectiles } from './hostileProjectileArt.js';
 import { paintHostileAtlas } from '../scene/pixelSpriteAtlas.js';
+import { paintVitalRunePlaque } from '../scene/sagaVitalRunes.js';
 import { paintThreatLane } from './attackLaneInk.js';
 import { paintRitualWarning } from './ritualWarningInk.js';
 import type {Vec2} from '../physics/world.js';
@@ -79,11 +80,13 @@ function sprite(g:CanvasRenderingContext2D,e:Enemy,t:number,reducedMotion=false)
  // New authored single weapon silhouette lives inside the atlas. The world
  // warning ring and directional lance remain the only separate attack tell.
  g.restore();
- if(e.hp<e.maxHp || e.kind==='warden'||e.state==='warning'){
-  const width=e.kind==='warden'?45:19;
-  px(g,x-width/2,y-e.radius-17,width,4,'#171d21');
-  px(g,x-width/2,y-e.radius-17,width*e.hp/e.maxHp,3,e.kind==='warden'?'#d3a15c':'#b5c68a');
- }
+ // A single real-HP, hand-carved family plaque REPLACES the generic four-pixel bar.
+ // Its bounds are the same center-only world canvas; existing windup labels
+ // remain above the actor, and enemy projectiles render afterwards.
+ const tform=typeof g.getTransform==='function'?g.getTransform():undefined;
+ const viewWidth=tform&&tform.a>0&&g.canvas?g.canvas.width/tform.a:420;
+ const viewHeight=tform&&tform.d>0&&g.canvas?g.canvas.height/tform.d:235;
+ paintVitalRunePlaque(g,e,viewWidth,viewHeight);
 }
 export function drawEncounter(g:CanvasRenderingContext2D,encounter:HostileEncounter,t:number,relicCollected=true,reducedMotion=false,hero?:Vec2){
  const state=encounter.snapshot;
